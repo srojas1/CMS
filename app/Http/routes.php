@@ -51,3 +51,8 @@ if (Config::get('cms.blogging')) {
 if (Config::get('cms.events')) {
     $router->resource('events', 'EventController');
 }
+
+// categorias routes
+//if (Config::get('cms.categorias')) {
+	$router->resource('categorias', 'CategoriaController');
+//}

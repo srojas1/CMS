@@ -58,6 +58,13 @@ class NavigationSubscriber
      */
     protected $events;
 
+	/**
+	 * The category flag.
+	 *
+	 * @var bool
+	 */
+	protected $categorias;
+
     /**
      * The cloudflare flag.
      *
@@ -83,12 +90,14 @@ class NavigationSubscriber
         PageRepository $pagerepository,
         $blogging = false,
         $events = false,
+		$categorias = false,
         $cloudflare = false
     ) {
         $this->navigation = $navigation;
         $this->credentials = $credentials;
         $this->pagerepository = $pagerepository;
         $this->blogging = $blogging;
+		$this->categorias = $categorias;
         $this->events = $events;
         $this->cloudflare = $cloudflare;
     }
@@ -144,16 +153,23 @@ class NavigationSubscriber
         // add the blog
         if ($this->blogging) {
             $this->navigation->addToMain(
-                ['title' => 'Blog', 'slug' => 'blog/posts', 'icon' => 'book']
+                ['title' => 'Pedidos', 'slug' => 'blog/posts', 'icon' => 'book']
             );
         }
 
         // add the events
         if ($this->events) {
             $this->navigation->addToMain(
-                ['title' => 'Events', 'slug' => 'events', 'icon' => 'calendar']
+                ['title' => 'Productos/Categorias', 'slug' => 'categorias', 'icon' => 'book']
             );
         }
+
+		// add the events 2
+		if ($this->events) {
+			$this->navigation->addToMain(
+				['title' => 'Promociones', 'slug' => 'events', 'icon' => 'calendar']
+			);
+		}
     }
 
     /**

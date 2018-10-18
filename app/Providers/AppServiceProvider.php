@@ -218,6 +218,7 @@ class AppServiceProvider extends ServiceProvider
             $pagerepository = $app['pagerepository'];
             $blogging = $app['config']['cms.blogging'];
             $events = $app['config']['cms.events'];
+			$categorias = $app['config']['cms.categorias'];
             $cloudflare = class_exists('GrahamCampbell\CloudFlare\CloudFlareServiceProvider');
 
             return new NavigationSubscriber(
@@ -226,6 +227,7 @@ class AppServiceProvider extends ServiceProvider
                 $pagerepository,
                 $blogging,
                 $events,
+                $categorias,
                 $cloudflare
             );
         });
