@@ -16,6 +16,7 @@ use GrahamCampbell\BootstrapCMS\Navigation\Factory;
 use GrahamCampbell\BootstrapCMS\Observers\PageObserver;
 use GrahamCampbell\BootstrapCMS\Repositories\CommentRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\EventRepository;
+use GrahamCampbell\BootstrapCMS\Repositories\CategoriaRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\PageRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\PostRepository;
 use GrahamCampbell\BootstrapCMS\Subscribers\CommandSubscriber;
@@ -88,6 +89,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerEventRepository();
         $this->registerPageRepository();
         $this->registerPostRepository();
+        $this->registerCategoriaRepository();
 
         $this->registerCommandSubscriber();
         $this->registerNavigationSubscriber();
@@ -151,6 +153,26 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->alias('eventrepository', 'GrahamCampbell\BootstrapCMS\Repositories\EventRepository');
+    }
+
+    /**
+     * Register the categoria repository class.
+     *
+     * @return void
+     */
+    protected function registerCategoriaRepository()
+    {
+        $this->app->singleton('categoriarepository', function ($app) {
+            $model = $app['config']['cms.categoria'];
+            $event = new $model();
+
+            $validator = $app['validator'];
+
+            return new CategoriaRepository($event, $validator);
+        });
+
+        $this->app->alias('categoriarepository',
+            'GrahamCampbell\BootstrapCMS\Repositories\CategoriaRepository');
     }
 
     /**
@@ -218,7 +240,7 @@ class AppServiceProvider extends ServiceProvider
             $pagerepository = $app['pagerepository'];
             $blogging = $app['config']['cms.blogging'];
             $events = $app['config']['cms.events'];
-			$categorias = $app['config']['cms.categorias'];
+			$categoria = $app['config']['cms.categoria'];
             $cloudflare = class_exists('GrahamCampbell\CloudFlare\CloudFlareServiceProvider');
 
             return new NavigationSubscriber(
@@ -227,7 +249,7 @@ class AppServiceProvider extends ServiceProvider
                 $pagerepository,
                 $blogging,
                 $events,
-                $categorias,
+                $categoria,
                 $cloudflare
             );
         });
@@ -262,6 +284,7 @@ class AppServiceProvider extends ServiceProvider
             'folderprovider',
             'pagerepository',
             'postrepository',
+            'categoriarepository'
         ];
     }
 }

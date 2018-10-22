@@ -9,7 +9,7 @@
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 use Carbon\Carbon;
 use GrahamCampbell\Binput\Facades\Binput;
-use GrahamCampbell\BootstrapCMS\Facades\EventRepository;
+use GrahamCampbell\BootstrapCMS\Facades\CategoriaRepository;
 use GrahamCampbell\Credentials\Facades\Credentials;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
@@ -47,10 +47,12 @@ class CategoriaController extends AbstractController {
 	 */
 	public function index()
 	{
-		$categorias = EventRepository::paginate();
-		$links = EventRepository::links();
+		$categoria = CategoriaRepository::paginate();
+        //$links = EventRepository::links();
 
-		return View::make('categorias.index', ['categorias' => $categorias, 'links' => $links]);
+
+
+		return View::make('categorias.index', ['categoria' => $categoria]);
 	}
 
 }
