@@ -50,8 +50,6 @@ class CategoriaController extends AbstractController {
 		$categoria = CategoriaRepository::paginate();
         //$links = EventRepository::links();
 
-
-
 		return View::make('categorias.index', ['categoria' => $categoria]);
 	}
 

@@ -158,7 +158,7 @@ class NavigationSubscriber
         }
 
         // add the events
-        if ($this->categoria) {
+        if ($this->events) {
             $this->navigation->addToMain(
                 ['title' => 'Productos/Categorias', 'slug' => 'categoria', 'icon' => 'book']
             );

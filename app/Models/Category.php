@@ -14,7 +14,7 @@ use GrahamCampbell\Credentials\Models\Relations\RevisionableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
 
-class Categoria extends AbstractModel implements HasPresenter {
+class Category extends AbstractModel implements HasPresenter {
 
     use BelongsToUserTrait, RevisionableTrait, SoftDeletes;
     /**
@@ -22,21 +22,21 @@ class Categoria extends AbstractModel implements HasPresenter {
      *
      * @var string
      */
-    protected $table = 'categoria';
+    protected $table = 'categories';
 
     /**
      * The model name.
      *
      * @var string
      */
-    public static $name = 'categoria';
+    public static $name = 'category';
 
     /**
      * The properties on the model that are dates.
      *
      * @var array
      */
-    protected $dates = ['eliminado'];
+    protected $dates = ['created_at','updated_at','deleted_at'];
 
     /**
      * The revisionable columns.
@@ -50,7 +50,7 @@ class Categoria extends AbstractModel implements HasPresenter {
      *
      * @var array
      */
-    public static $index = ['categoria'];
+    public static $index = ['id','categoria'];
 
     /**
      * The max events per page when displaying a paginated index.
@@ -89,7 +89,7 @@ class Categoria extends AbstractModel implements HasPresenter {
      */
     public function getPresenterClass()
     {
-        return 'GrahamCampbell\BootstrapCMS\Presenters\CategoriaPresenter';
+        return 'GrahamCampbell\BootstrapCMS\Presenters\CategoryPresenter';
     }
 
 }

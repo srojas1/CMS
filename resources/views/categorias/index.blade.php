@@ -38,20 +38,19 @@
             <th>Acciones</th>
             </thead>
             <tbody>
-            @foreach ($categoria as $user)
+            @foreach ($categoria as $cat)
                 <tr>
-                    <td>aaa</td>
+                    <td>{{$cat->categoria}}</td>
                     <td>4</td>
                     <td>4</td>
                     <td>29.192</td>
                     <td>
-                        <a class="btn btn-info" href="{!! URL::route('users.edit', array('users' => $user->id)) !!}"><i class="fa fa-pencil-square-o"></i></a>
-                        <a class="btn btn-danger" href="#delete_user_{!! $user->id !!}" data-toggle="modal" data-target="#delete_user_{!! $user->id !!}"><i class="fa fa-times"></i></a>&nbsp;
+                        <a class="btn btn-info" href=""><i class="fa fa-pencil-square-o"></i></a>
+                        <a class="btn btn-danger" href=""><i class="fa fa-times"></i></a>&nbsp;
                     </td>
                 </tr>
             @endforeach
             </tbody>
         </table>
     </div>
-    {!! $links !!}
 @stop

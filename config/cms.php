@@ -183,4 +183,17 @@ return [
 
     'post' => 'GrahamCampbell\BootstrapCMS\Models\Post',
 
+    /*
+   |--------------------------------------------------------------------------
+   | Category Model
+   |--------------------------------------------------------------------------
+   |
+   | This defines the categoria model to be used.
+   |
+   | Default: 'GrahamCampbell\BootstrapCMS\Models\Category'
+   |
+   */
+
+    'categoria' => 'GrahamCampbell\BootstrapCMS\Models\Category',
+
 ];

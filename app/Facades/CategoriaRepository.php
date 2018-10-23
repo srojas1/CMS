@@ -10,7 +10,7 @@ class CategoriaRepository extends Facade {
     /**
      * Get the registered name of the component.
      *
-     * @return string|void
+     * @return string
      */
     protected static function getFacadeAccessor()
     {

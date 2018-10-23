@@ -54,5 +54,5 @@ if (Config::get('cms.events')) {
 
 // categorias routes
 //if (Config::get('cms.categorias')) {
-	$router->resource('categorias', 'CategoriaController');
+	$router->resource('categoria', 'CategoriaController');
 //}

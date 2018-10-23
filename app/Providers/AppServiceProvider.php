@@ -164,11 +164,11 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton('categoriarepository', function ($app) {
             $model = $app['config']['cms.categoria'];
-            $event = new $model();
+            $categoria = new $model();
 
             $validator = $app['validator'];
 
-            return new CategoriaRepository($event, $validator);
+            return new CategoriaRepository($categoria, $validator);
         });
 
         $this->app->alias('categoriarepository',
