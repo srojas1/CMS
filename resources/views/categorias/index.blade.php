@@ -23,7 +23,7 @@
         </div>
             <div class="col-xs-4">
                 <div class="pull-right">
-                    <a class="btn btn-primary" href="{!! URL::route('users.create') !!}">Crear Categoría</a>
+                    <a class="btn btn-primary" href="{!! URL::route('categoria.create') !!}">Crear Categoría</a>
                 </div>
             </div>
     </div>
