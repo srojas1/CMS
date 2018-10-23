@@ -41,16 +41,49 @@ class CategoriaController extends AbstractController {
 	}
 
 	/**
-	 * Display a listing of the events.
+	 * Display a listing of the categories.
 	 *
 	 * @return \Illuminate\View\View
 	 */
-	public function index()
-	{
+	public function index() {
 		$categoria = CategoriaRepository::paginate();
+
         //$links = EventRepository::links();
 
 		return View::make('categorias.index', ['categoria' => $categoria]);
 	}
+
+	/**
+	 * Show the form for creating a new category.
+	 *
+	 * @return \Illuminate\View\View
+	 */
+	public function create() {
+		return View::make('categorias.create');
+	}
+
+	/**
+	 * Store a new category.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function store() {
+		$input = array_merge(['user_id' => Credentials::getuser()->id], Binput::only([
+			'categoria',
+		]));
+
+		$val = CategoriaRepository::validate($input, array_keys($input));
+
+		if ($val->fails()) {
+			return Redirect::route('categorias.create')->withInput()->withErrors($val->errors());
+		}
+
+		$categoria = CategoriaRepository::create($input);
+
+		var_dump($categoria);
+
+		return Redirect::route('categorias.index', ['categoria' => $categoria]);
+	}
+
 
 }

@@ -157,14 +157,14 @@ class NavigationSubscriber
             );
         }
 
-        // add the events
-        if ($this->events) {
+        // add the categories
+        if ($this->categoria) {
             $this->navigation->addToMain(
                 ['title' => 'Productos/Categorias', 'slug' => 'categoria', 'icon' => 'book']
             );
         }
 
-		// add the events 2
+		// add the events
 		if ($this->events) {
 			$this->navigation->addToMain(
 				['title' => 'Promociones', 'slug' => 'events', 'icon' => 'calendar']

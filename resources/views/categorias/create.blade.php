@@ -1,36 +1,31 @@
-<?php
 @extends('layouts.default')
 
 @section('title')
-    Create Event
+    Nueva Categoría
 @stop
 
 @section('top')
     <div class="page-header">
-        <h1>Create Event</h1>
+        <h1>Crear Categoría</h1>
     </div>
 @stop
 
 @section('content')
     <div class="well">
-    <?php
-    $form = ['url' => URL::route('events.store'),
-        'method'   => 'POST',
-        'button'   => 'Create New Event',
-        'defaults' => [
-            'title'    => '',
-            'date'     => Carbon\Carbon::now()->addMinutes(30)->format(Config::get('date.php_format')),
-            'location' => '',
-            'body'     => '',
-    ], ];
-    ?>
+        <?php
+        $form = ['url' => URL::route('categoria.store'),
+            'method'   => 'POST',
+            'button'   => 'Crear Categoria',
+            'defaults' => [
+                'categoria'    => ''
+        ], ];
+        ?>
         @include('categorias.form')
     </div>
 @stop
 
 @section('css')
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.8.0/css/bootstrap-markdown.min.css">
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.3/css/bootstrap-datetimepicker.min.css">
 @stop
 
 @section('js')
