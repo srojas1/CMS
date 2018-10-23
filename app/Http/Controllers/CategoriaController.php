@@ -69,8 +69,11 @@ class CategoriaController extends AbstractController {
 	 */
 	public function store() {
 		$input = array_merge(['user_id' => Credentials::getuser()->id], Binput::only([
-			'categoria',
+			'categoria'
 		]));
+
+		var_dump($input);
+		exit;
 
 		$val = CategoriaRepository::validate($input, array_keys($input));
 
@@ -81,6 +84,7 @@ class CategoriaController extends AbstractController {
 		$categoria = CategoriaRepository::create($input);
 
 		var_dump($categoria);
+		exit;
 
 		return Redirect::route('categorias.index', ['categoria' => $categoria]);
 	}

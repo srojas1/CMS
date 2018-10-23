@@ -79,6 +79,9 @@ class EventController extends AbstractController
             'title', 'location', 'date', 'body',
         ]));
 
+		var_dump($input);
+		exit;
+
         $val = EventRepository::validate($input, array_keys($input));
         if ($val->fails()) {
             return Redirect::route('events.create')->withInput()->withErrors($val->errors());
