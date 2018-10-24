@@ -27,12 +27,12 @@
     <hr>
     <div class="well">
         <?php
-        $form = ['url' => URL::route('categoria.update', ['categorias' => $categoria->id]),
+        $form = ['url' => URL::route('categoria.update',['categoria' => $categoria->id]),
             '_method'   => 'PATCH',
             'method' => 'POST',
             'button'   => 'Guardar Categoria',
             'defaults' => [
-                'categoria'    => $categoria->categoria,
+                'categoria'   => $categoria->categoria,
             ], ];
         ?>
         @include('categorias.form')

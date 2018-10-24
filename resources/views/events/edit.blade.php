@@ -26,7 +26,7 @@ Edit {{ $event->title }}
 <hr>
 <div class="well">
     <?php
-    $form = ['url' => URL::route('events.update', ['events' => $event->id]),
+    $form = ['url' => URL::route('events.show', ['events' => $event->id]),
         '_method'   => 'PATCH',
         'method' => 'POST',
         'button'   => 'Save Event',
@@ -36,6 +36,9 @@ Edit {{ $event->title }}
             'location' => $event->location,
             'body'     => $event->body,
     ], ];
+
+    var_dump($form);
+    exit;
     ?>
     @include('events.form')
 </div>

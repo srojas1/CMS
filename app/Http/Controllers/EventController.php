@@ -79,10 +79,7 @@ class EventController extends AbstractController
             'title', 'location', 'date', 'body',
         ]));
 
-		var_dump($input);
-		exit;
-
-        $val = EventRepository::validate($input, array_keys($input));
+		$val = EventRepository::validate($input, array_keys($input));
         if ($val->fails()) {
             return Redirect::route('events.create')->withInput()->withErrors($val->errors());
         }
@@ -90,6 +87,9 @@ class EventController extends AbstractController
         $input['date'] = Carbon::createFromFormat(Config::get('date.php_format'), $input['date']);
 
         $event = EventRepository::create($input);
+
+        var_dump($event);
+        exit;
 
         return Redirect::route('events.show', ['events' => $event->id])
             ->with('success', trans('messages.event.store_success'));
@@ -134,7 +134,7 @@ class EventController extends AbstractController
      */
     public function update($id)
     {
-        $input = Binput::only(['title', 'location', 'date', 'body']);
+    	$input = Binput::only(['title', 'location', 'date', 'body']);
 
         $val = $val = EventRepository::validate($input, array_keys($input));
         if ($val->fails()) {

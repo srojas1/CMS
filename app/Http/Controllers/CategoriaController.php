@@ -69,6 +69,7 @@ class CategoriaController extends AbstractController {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function store(Request $request) {
+
 		$input = array_merge(['user_id' => Credentials::getuser()->id], Binput::only([
 			'categoria'
 		]));
@@ -76,12 +77,12 @@ class CategoriaController extends AbstractController {
 		$val = CategoriaRepository::validate($input, array_keys($input));
 
 		if ($val->fails()) {
-			return Redirect::route('categorias.create')->withInput()->withErrors($val->errors());
+			return Redirect::route('categoria.create')->withInput()->withErrors($val->errors());
 		}
 
 		$categoria = CategoriaRepository::create($request->all());
 
-		return Redirect::route('categoria.show', [''])
+		return Redirect::route('categoria.show', ['categoria'=>$categoria->id])
             ->with('success', trans('messages.categoria.store_success'));
 	}
 
@@ -100,7 +101,7 @@ class CategoriaController extends AbstractController {
     }
 
     /**
-     * Show the form for editing the specified event.
+     * Show the form for editing the specified category.
      *
      * @param int $id
      *
@@ -123,11 +124,12 @@ class CategoriaController extends AbstractController {
      */
     public function update($id)
     {
-        $input = Binput::only(['categoria']);
+
+		$input = Binput::only(['categoria']);
 
         $val = $val = CategoriaRepository::validate($input, array_keys($input));
         if ($val->fails()) {
-            return Redirect::route('categorias.edit', ['categoria' => $id])->withInput()->withErrors($val->errors());
+            return Redirect::route('categoria.edit', ['categoria' => $id])->withInput()->withErrors($val->errors());
         }
 
         $categoria = CategoriaRepository::find($id);
@@ -135,7 +137,7 @@ class CategoriaController extends AbstractController {
 
         $categoria->update($input);
 
-        return Redirect::route('categorias.show', ['categoria' => $categoria->id])
+        return Redirect::route('categoria.show', ['categoria' => $categoria->id])
             ->with('success', trans('messages.categoria.update_success'));
     }
 
@@ -171,7 +173,7 @@ class CategoriaController extends AbstractController {
     protected function checkCategory($category)
     {
         if (!$category) {
-            throw new NotFoundHttpException('Event Not Found');
+            throw new NotFoundHttpException('Category Not Found');
         }
     }
 }
