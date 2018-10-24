@@ -21,11 +21,11 @@
                 @endif
             </p>
         </div>
-            <div class="col-xs-4">
-                <div class="pull-right">
-                    <a class="btn btn-primary" href="{!! URL::route('categoria.create') !!}">Crear Categoría</a>
-                </div>
+        <div class="col-xs-4">
+            <div class="pull-right">
+                <a class="btn btn-primary" href="{!! URL::route('categoria.create') !!}">Crear Categoría</a>
             </div>
+        </div>
     </div>
     <hr>
     <div class="well">
@@ -45,7 +45,7 @@
                     <td>4</td>
                     <td>29.192</td>
                     <td>
-                        <a class="btn btn-info" href="{!! URL::route('categoria.edit', array('categoria' => $cat->id)) !!}"><i class="fa fa-pencil-square-o"></i></a>
+                        <a class="btn btn-info" href=""><i class="fa fa-pencil-square-o"></i></a>
                         <a class="btn btn-danger" href="#delete_categoria_{!! $cat->id !!}" data-toggle="modal" data-target="#delete_categoria_{!! $cat->id !!}"><i class="fa fa-times"></i></a>&nbsp
                     </td>
                 </tr>
@@ -53,10 +53,4 @@
             </tbody>
         </table>
     </div>
-@stop
-
-@section('bottom')
-    @auth('edit')
-@include('categorias.deletes')
-    @endauth
 @stop

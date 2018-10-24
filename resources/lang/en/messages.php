@@ -35,4 +35,10 @@ return [
         'update_success' => 'Your post has been updated successfully.',
         'delete_success' => 'Your post has been deleted successfully.',
     ],
+
+    'categoria' => [
+        'store_success'  => 'La categoria fue creada correctamente',
+        'update_success' => 'La categoria fue actualizada correctamente',
+        'delete_success' => 'La categoria fue eliminada correctamente',
+    ],
 ];
