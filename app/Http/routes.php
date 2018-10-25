@@ -56,3 +56,8 @@ if (Config::get('cms.events')) {
 if (Config::get('cms.categoria')) {
 	$router->resource('categoria', 'CategoriaController');
 }
+
+// dashboard routes
+//if (Config::get('cms.categoria')) {
+	$router->resource('dashboard', 'DashboardController');
+//}

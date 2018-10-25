@@ -150,7 +150,12 @@ class NavigationSubscriber
      */
     public function onNavigationMainFirst()
     {
-        // add the blog
+		//if ($this->blogging) {
+			$this->navigation->addToMain(
+				['title' => 'Dashboard', 'slug' => 'dashboard', 'icon' => 'book']
+			);
+		//}
+
         if ($this->blogging) {
             $this->navigation->addToMain(
                 ['title' => 'Pedidos', 'slug' => 'blog/posts', 'icon' => 'book']

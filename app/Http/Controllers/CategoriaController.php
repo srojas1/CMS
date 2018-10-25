@@ -7,12 +7,10 @@
  */
 
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
-use Carbon\Carbon;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\BootstrapCMS\Facades\CategoriaRepository;
 use GrahamCampbell\Credentials\Facades\Credentials;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
