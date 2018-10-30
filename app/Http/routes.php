@@ -52,12 +52,21 @@ if (Config::get('cms.events')) {
     $router->resource('events', 'EventController');
 }
 
+/**
+ *   CMS Developing
+ */
+
+// dashboard routes
+//if (Config::get('cms.categoria')) {
+$router->resource('dashboard', 'DashboardController');
+//}
+
 // categorias routes
 if (Config::get('cms.categoria')) {
 	$router->resource('categoria', 'CategoriaController');
 }
 
-// dashboard routes
+// categorias routes
 //if (Config::get('cms.categoria')) {
-	$router->resource('dashboard', 'DashboardController');
+	$router->resource('producto', 'ProductoController');
 //}

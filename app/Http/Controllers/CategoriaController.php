@@ -151,8 +151,6 @@ class CategoriaController extends AbstractController {
         $categoria = CategoriaRepository::find($id);
         $this->checkCategory($categoria);
 
-        var_dump($categoria);
-
         $categoria->delete();
 
         return Redirect::route('categoria.index')

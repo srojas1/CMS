@@ -65,6 +65,13 @@ class NavigationSubscriber
 	 */
 	protected $categoria;
 
+	/**
+	 * The product flag.
+	 *
+	 * @var bool
+	 */
+	protected $producto;
+
     /**
      * The cloudflare flag.
      *
@@ -91,6 +98,7 @@ class NavigationSubscriber
         $blogging = false,
         $events = false,
 		$categoria = false,
+		$producto = false,
         $cloudflare = false
     ) {
         $this->navigation = $navigation;
@@ -98,6 +106,7 @@ class NavigationSubscriber
         $this->pagerepository = $pagerepository;
         $this->blogging = $blogging;
 		$this->categoria = $categoria;
+		$this->producto = $producto;
         $this->events = $events;
         $this->cloudflare = $cloudflare;
     }
@@ -162,10 +171,17 @@ class NavigationSubscriber
             );
         }
 
+		// add the products
+		//if ($this->producto) {
+			$this->navigation->addToMain(
+				['title' => 'Productos', 'slug' => 'producto', 'icon' => 'book']
+			);
+		//}
+
         // add the categories
         if ($this->categoria) {
             $this->navigation->addToMain(
-                ['title' => 'Productos/Categorias', 'slug' => 'categoria', 'icon' => 'book']
+                ['title' => 'Categorias', 'slug' => 'categoria', 'icon' => 'book']
             );
         }
 

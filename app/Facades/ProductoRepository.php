@@ -1,0 +1,19 @@
+<?php
+
+namespace GrahamCampbell\BootstrapCMS\Facades;
+
+use Illuminate\Support\Facades\Facade;
+
+
+class ProductoRepository extends Facade {
+
+	/**
+	 * Get the registered name of the component.
+	 *
+	 * @return string
+	 */
+	protected static function getFacadeAccessor()
+	{
+		return 'productorepository';
+	}
+}

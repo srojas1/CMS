@@ -19,6 +19,7 @@ use GrahamCampbell\BootstrapCMS\Repositories\EventRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\CategoriaRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\PageRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\PostRepository;
+use GrahamCampbell\BootstrapCMS\Repositories\ProductoRepository;
 use GrahamCampbell\BootstrapCMS\Subscribers\CommandSubscriber;
 use GrahamCampbell\BootstrapCMS\Subscribers\NavigationSubscriber;
 use Illuminate\Support\ServiceProvider;
@@ -90,6 +91,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerPageRepository();
         $this->registerPostRepository();
         $this->registerCategoriaRepository();
+		$this->registerProductoRepository();
 
         $this->registerCommandSubscriber();
         $this->registerNavigationSubscriber();
@@ -174,6 +176,26 @@ class AppServiceProvider extends ServiceProvider
         $this->app->alias('categoriarepository',
             'GrahamCampbell\BootstrapCMS\Repositories\CategoriaRepository');
     }
+
+	/**
+	 * Register the producto repository class.
+	 *
+	 * @return void
+	 */
+	protected function registerProductoRepository()
+	{
+		$this->app->singleton('productorepository', function ($app) {
+			$model = $app['config']['cms.producto'];
+			$producto = new $model();
+
+			$validator = $app['validator'];
+
+			return new ProductoRepository($producto, $validator);
+		});
+
+		$this->app->alias('productorepository',
+			'GrahamCampbell\BootstrapCMS\Repositories\ProductoRepository');
+	}
 
     /**
      * Register the page repository class.
