@@ -21,26 +21,43 @@
     <div class="form-group{!! ($errors->has('descripcion')) ? ' has-error' : '' !!}">
         <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">Descripción</label>
         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
-            <input name="descripcion" id="descripcion" value="{!! Request::old('title', $form['defaults']['descripcion']) !!}" type="text" class="form-control" placeholder="descripcion">
-            {!! ($errors->has('descripcion') ? $errors->first('descripcion') : '') !!}
+            <textarea name="descripcion" id="descripcion" class="form-control" placeholder="Descripcion" rows="2">
+                {!! Request::old('title', $form['defaults']['descripcion']) !!}
+            </textarea>
+        </div>
+    </div>
+    <div class="form-group{!! ($errors->has('id_categoria')) ? ' has-error' : '' !!}">
+        <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">Categoría</label>
+        <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
+            {{--<select name="categoria" id="stock" value="a" type="text" class="form-control" placeholder="Categoria">--}}
+            {{--</select>--}}
+            <select class="form-control m-bot15" name="categoria">
+                @if($categorias->count() > 0)
+                    @foreach($categorias as $cats)
+                        <option value={{$cats->id}}>{{$cats->categoria}}</option>
+                    @endforeach
+                @else
+                    No se encontraron resultados
+                @endif
+            </select>
         </div>
     </div>
     <div class="form-group{!! ($errors->has('stock')) ? ' has-error' : '' !!}">
         <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">Inventario</label>
         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
-            <input name="stock" id="stock" value="{!! Request::old('title', $form['defaults']['stock']) !!}" type="text" class="form-control" placeholder="stock">
+            <input name="stock" id="stock" value="{!! Request::old('title', $form['defaults']['stock']) !!}" type="text" class="form-control" placeholder="Stock">
             {!! ($errors->has('stock') ? $errors->first('stock') : '') !!}
         </div>
     </div>
     <div class="form-group{!! ($errors->has('precio')) ? ' has-error' : '' !!}">
         <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">Precio de lista</label>
         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
-            <input name="precio" id="precio" value="{!! Request::old('title', $form['defaults']['precio']) !!}" type="text" class="form-control" placeholder="precio">
+            <input name="precio" id="precio" value="{!! Request::old('title', $form['defaults']['precio']) !!}" type="text" class="form-control" placeholder="Precio">
             {!! ($errors->has('precio') ? $errors->first('precio') : '') !!}
         </div>
         <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">Oferta</label>
         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
-            <input name="oferta" id="oferta" value="{!! Request::old('title', $form['defaults']['oferta']) !!}" type="text" class="form-control" placeholder="oferta">
+            <input name="oferta" id="oferta" value="{!! Request::old('title', $form['defaults']['oferta']) !!}" type="text" class="form-control" placeholder="Oferta">
             {!! ($errors->has('oferta') ? $errors->first('oferta') : '') !!}
         </div>
     </div>

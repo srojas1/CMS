@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    Nueva Producto
+    Nuevo Producto
 @stop
 
 @section('top')
@@ -20,6 +20,7 @@
 				'producto'    => '',
 				'codigo'    => '',
                 'descripcion' => '',
+                'id_categoria'=>'',
                 'stock' =>'',
                 'precio' => '',
                 'oferta' => ''

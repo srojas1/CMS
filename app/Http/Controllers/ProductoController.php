@@ -4,6 +4,7 @@ namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\BootstrapCMS\Facades\ProductoRepository;
+use GrahamCampbell\BootstrapCMS\Facades\CategoriaRepository;
 use GrahamCampbell\Credentials\Facades\Credentials;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -49,7 +50,9 @@ class ProductoController extends AbstractController
 	 */
 	public function create()
 	{
-		return View::make('productos.create');
+		$categorias = CategoriaRepository::all();
+
+		return View::make('productos.create',['categorias' => $categorias]);
 	}
 
 	/**
