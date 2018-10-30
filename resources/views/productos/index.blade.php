@@ -23,7 +23,7 @@
         </div>
         <div class="col-xs-4">
             <div class="pull-right">
-                <a class="btn btn-primary" href="{!! URL::route('categoria.create') !!}">Crear Producto</a>
+                <a class="btn btn-primary" href="{!! URL::route('producto.create') !!}">Crear Producto</a>
             </div>
         </div>
     </div>

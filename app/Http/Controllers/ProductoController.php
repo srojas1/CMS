@@ -49,7 +49,7 @@ class ProductoController extends AbstractController
 	 */
 	public function create()
 	{
-		//
+		return View::make('productos.create');
 	}
 
 	/**
@@ -60,7 +60,20 @@ class ProductoController extends AbstractController
 	 */
 	public function store(Request $request)
 	{
-		//
+		$input = array_merge(['user_id' => Credentials::getuser()->id], Binput::only([
+			'producto'
+		]));
+
+		$val = ProductoRepository::validate($input, array_keys($input));
+
+		if ($val->fails()) {
+			return Redirect::route('producto.create')->withInput()->withErrors($val->errors());
+		}
+
+		$producto = ProductoRepository::create($request->all());
+
+		return Redirect::route('producto.show', ['producto'=>$producto->id])
+			->with('success', trans('messages.producto.store_success'));
 	}
 
 	/**
