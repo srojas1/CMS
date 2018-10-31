@@ -52,7 +52,9 @@ class ProductoController extends AbstractController
 	{
 		$categorias = CategoriaRepository::all();
 
-		return View::make('productos.create',['categorias' => $categorias]);
+		$stockName = array('En Stock','Agotado');
+
+		return View::make('productos.create',['categorias' => $categorias, 'stock' => $object]);
 	}
 
 	/**

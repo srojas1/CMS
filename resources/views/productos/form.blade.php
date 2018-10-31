@@ -45,8 +45,9 @@
     <div class="form-group{!! ($errors->has('stock')) ? ' has-error' : '' !!}">
         <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">Inventario</label>
         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
-            <input name="stock" id="stock" value="{!! Request::old('title', $form['defaults']['stock']) !!}" type="text" class="form-control" placeholder="Stock">
-            {!! ($errors->has('stock') ? $errors->first('stock') : '') !!}
+            @foreach($stock as $st)
+                <input type="radio" name={{$st->nombre}} checked> {{$st->nombre}}
+            @endforeach
         </div>
     </div>
     <div class="form-group{!! ($errors->has('precio')) ? ' has-error' : '' !!}">
