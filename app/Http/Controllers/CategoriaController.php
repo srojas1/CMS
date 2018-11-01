@@ -122,7 +122,6 @@ class CategoriaController extends AbstractController {
      */
     public function update($id)
     {
-
 		$input = Binput::only(['categoria']);
 
         $val = $val = CategoriaRepository::validate($input, array_keys($input));
@@ -169,7 +168,7 @@ class CategoriaController extends AbstractController {
     protected function checkCategory($category)
     {
         if (!$category) {
-            throw new NotFoundHttpException('Category Not Found');
+            throw new NotFoundHttpException('Categoria No Encontrada');
         }
     }
 }

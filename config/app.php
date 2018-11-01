@@ -170,6 +170,7 @@ return [
         'GrahamCampbell\LogViewer\LogViewerServiceProvider',
         'GrahamCampbell\BootstrapCMS\Providers\AppServiceProvider',
         'GrahamCampbell\BootstrapCMS\Providers\RouteServiceProvider',
+        'GrahamCampbell\BootstrapCMS\Providers\HelperServiceProvider',
 
     ],
 

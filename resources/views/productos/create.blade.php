@@ -21,7 +21,7 @@
 				'codigo'    => '',
                 'descripcion' => '',
                 'id_categoria'=>'',
-                'stock' =>'',
+                'id_stock' =>'',
                 'precio' => '',
                 'oferta' => ''
 			], ];

@@ -94,7 +94,9 @@ class ProductoController extends AbstractController
 	 */
 	public function show($id)
 	{
-		//
+        $producto = ProductoRepository::paginate();
+
+        return View::make('productos.show', ['producto' => $producto]);
 	}
 
 	/**
@@ -105,7 +107,21 @@ class ProductoController extends AbstractController
 	 */
 	public function edit($id)
 	{
-		//
+        $producto = ProductoRepository::find($id);
+        $this->checkProduct($producto);
+
+        $categoria = CategoriaRepository::all();
+
+        $stockName = array(
+            array('nombre'=>Config::EN_STOCK_LABEL,'value'=>Config::EN_STOCK),
+            array('nombre'=>Config::AGOTADO_LABEL,'value'=>Config::AGOTADO),
+            array('nombre'=>Config::PRONTO_LABEL,'value'=>Config::PRONTO)
+        );
+
+        return View::make('productos.edit', [
+            'producto' => $producto,
+            'categorias' => $categoria,
+            'stock' => $stockName]);
 	}
 
 	/**
@@ -117,7 +133,20 @@ class ProductoController extends AbstractController
 	 */
 	public function update(Request $request, $id)
 	{
-		//
+        $input = Binput::only(['producto']);
+
+        $val = $val = ProductoRepository::validate($input, array_keys($input));
+        if ($val->fails()) {
+            return Redirect::route('producto.edit', ['producto' => $id])->withInput()->withErrors($val->errors());
+        }
+
+        $producto = ProductoRepository::find($id);
+        $this->checkProduct($producto);
+
+        $producto->update($input);
+
+        return Redirect::route('producto.show', ['producto' => $producto->id])
+            ->with('success', trans('messages.producto.update_success'));
 	}
 
 	/**
@@ -128,6 +157,28 @@ class ProductoController extends AbstractController
 	 */
 	public function destroy($id)
 	{
-		//
+        $producto = ProductoRepository::find($id);
+        $this->checkProduct($producto);
+
+        $producto->delete();
+
+        return Redirect::route('producto.index')
+            ->with('success', trans('messages.producto.delete_success'));
 	}
+
+    /**
+     * Check the product model.
+     *
+     * @param mixed $product
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return void
+     */
+    protected function checkProduct($product)
+    {
+        if (!$product) {
+            throw new NotFoundHttpException('Producto No Encontrado');
+        }
+    }
 }

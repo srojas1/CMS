@@ -1,12 +1,12 @@
 @extends('layouts.default')
 
 @section('title')
-    Editar {{ $categoria->categoria }}
+    Editar {{ $producto->producto }}
 @stop
 
 @section('top')
     <div class="page-header">
-        <h1>Editar {{ $categoria->categoria }}</h1>
+        <h1>Editar {{ $producto->producto }}</h1>
     </div>
 @stop
 
@@ -14,34 +14,42 @@
     <div class="row">
         <div class="col-xs-6">
             <p class="lead">
-                Editar la categoria:
+                Editar producto:
             </p>
         </div>
         <div class="col-xs-6">
             <div class="pull-right">
-                <a class="btn btn-success" href="{!! URL::route('categoria.show', array('categoria' => $categoria->id)) !!}"><i class="fa fa-file-text"></i> Mostrar Categorias</a>
-                <a class="btn btn-danger" href="#delete_categoria" data-toggle="modal" data-target="#delete_categoria"><i class="fa fa-times"></i>Eliminar</a>
+                <a class="btn btn-success" href="{!! URL::route('producto.show', array('producto' => $producto->id)) !!}"><i class="fa fa-file-text"></i> Mostrar productos</a>
+                <a class="btn btn-danger" href="#delete_producto" data-toggle="modal" data-target="#delete_producto"><i class="fa fa-times"></i>Eliminar</a>
             </div>
         </div>
     </div>
     <hr>
     <div class="well">
         <?php
-        $form = ['url' => URL::route('categoria.update',['categoria' => $categoria->id]),
+        $form = ['url' => URL::route('producto.update',['producto' => $producto->id]),
             '_method'   => 'PATCH',
             'method' => 'POST',
-            'button'   => 'Guardar Categoria',
+            'button'   => 'Guardar producto',
             'defaults' => [
-                'categoria'   => $categoria->categoria,
+                'producto'   => $producto->producto,
+                //'categoria' => $categoria->categorias,
+                'codigo' => $producto->codigo,
+                'descripcion' => $producto->descripcion,
+                'id_categoria'=> $producto->id_categoria,
+                'id_stock' => $producto->id_stock,
+                'precio' => $producto->precio,
+                'oferta' => $producto->oferta
+
             ], ];
         ?>
-        @include('categorias.form')
+        @include('productos.form')
     </div>
 @stop
 
 @section('bottom')
     @auth('edit')
-        @include('categorias.delete')
+        @include('productos.delete')
     @endauth
 @stop
 

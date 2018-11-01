@@ -41,4 +41,10 @@ return [
         'update_success' => 'La categoria fue actualizada correctamente',
         'delete_success' => 'La categoria fue eliminada correctamente',
     ],
+
+    'producto' => [
+        'store_success'  => 'El producto fue creado correctamente',
+        'update_success' => 'El producto fue actualizado correctamente',
+        'delete_success' => 'El producto fue eliminado correctamente',
+    ],
 ];

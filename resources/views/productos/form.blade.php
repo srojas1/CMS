@@ -29,9 +29,7 @@
     <div class="form-group{!! ($errors->has('id_categoria')) ? ' has-error' : '' !!}">
         <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">Categoría</label>
         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
-            {{--<select name="categoria" id="stock" value="a" type="text" class="form-control" placeholder="Categoria">--}}
-            {{--</select>--}}
-            <select class="form-control m-bot15" name="categoria">
+            <select class="form-control m-bot15" name="id_categoria">
                 @if($categorias->count() > 0)
                     @foreach($categorias as $cats)
                         <option value={{$cats->id}}>{{$cats->categoria}}</option>
@@ -42,11 +40,11 @@
             </select>
         </div>
     </div>
-    <div class="form-group{!! ($errors->has('stock')) ? ' has-error' : '' !!}">
+    <div class="form-group{!! ($errors->has('id_stock')) ? ' has-error' : '' !!}">
         <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">Inventario</label>
         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
             @foreach($stock as $st)
-                <input type="radio" name='stock' value={{$st['value']}} checked> {{$st['nombre']}}
+                <input type="radio" name='id_stock' value={{$st['value']}} checked> {{$st['nombre']}}
             @endforeach
         </div>
     </div>

@@ -49,8 +49,8 @@
                         <a class="btn btn-info" href="{!! URL::route('producto.edit', array('producto' => $prod->id)) !!}"><i class="fa fa-pencil-square-o"></i></a>
                         <a class="btn btn-danger" href="#delete_producto_{!! $prod->id !!}" data-toggle="modal" data-target="#delete_producto_{!! $prod->id !!}"><i class="fa fa-times"></i></a>&nbsp
                     </td>
-                    </tr>
-                @endforeach
+                </tr>
+            @endforeach
             </tbody>
         </table>
     </div>
