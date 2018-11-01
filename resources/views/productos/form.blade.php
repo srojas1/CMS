@@ -46,7 +46,7 @@
         <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">Inventario</label>
         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
             @foreach($stock as $st)
-                <input type="radio" name={{$st->nombre}} checked> {{$st->nombre}}
+                <input type="radio" name='stock' value={{$st['value']}} checked> {{$st['nombre']}}
             @endforeach
         </div>
     </div>

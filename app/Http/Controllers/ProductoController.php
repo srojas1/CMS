@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use GrahamCampbell\BootstrapCMS\Http\Constants as Config;
 
 class ProductoController extends AbstractController
 {
@@ -52,9 +53,13 @@ class ProductoController extends AbstractController
 	{
 		$categorias = CategoriaRepository::all();
 
-		$stockName = array('En Stock','Agotado');
+		$stockName = array(
+		    array('nombre'=>Config::EN_STOCK_LABEL,'value'=>Config::EN_STOCK),
+            array('nombre'=>Config::AGOTADO_LABEL,'value'=>Config::AGOTADO),
+            array('nombre'=>Config::PRONTO_LABEL,'value'=>Config::PRONTO)
+        );
 
-		return View::make('productos.create',['categorias' => $categorias, 'stock' => $object]);
+		return View::make('productos.create',['categorias' => $categorias, 'stock' => $stockName]);
 	}
 
 	/**
