@@ -10,7 +10,7 @@
             </div>
             <div class="col-xs-4">
                 <p class="text-muted credit pull-right">
-                    Generated in {{ round((microtime(1) - LARAVEL_START), 4) }} sec.
+                    Generado en {{ round((microtime(1) - LARAVEL_START), 4) }} sec.
                 </p>
             </div>
         </div>

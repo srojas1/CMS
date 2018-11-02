@@ -91,4 +91,8 @@ class Product extends AbstractModel implements HasPresenter {
 	{
 		return 'GrahamCampbell\BootstrapCMS\Presenters\ProductPresenter';
 	}
+
+	public function categoria() {
+        return $this->belongsTo(Category::class);
+    }
 }

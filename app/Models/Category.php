@@ -92,4 +92,8 @@ class Category extends AbstractModel implements HasPresenter {
         return 'GrahamCampbell\BootstrapCMS\Presenters\CategoryPresenter';
     }
 
+    public function producto(){
+        return $this->hasMany(Category::class);
+    }
+
 }
