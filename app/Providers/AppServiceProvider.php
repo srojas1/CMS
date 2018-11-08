@@ -14,6 +14,7 @@ namespace GrahamCampbell\BootstrapCMS\Providers;
 use GrahamCampbell\BootstrapCMS\Http\Controllers\CommentController;
 use GrahamCampbell\BootstrapCMS\Navigation\Factory;
 use GrahamCampbell\BootstrapCMS\Observers\PageObserver;
+use GrahamCampbell\BootstrapCMS\Repositories\ClienteRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\CommentRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\EventRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\CategoriaRepository;
@@ -92,6 +93,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerPostRepository();
         $this->registerCategoriaRepository();
 		$this->registerProductoRepository();
+        $this->registerClienteRepository();
 
         $this->registerCommandSubscriber();
         $this->registerNavigationSubscriber();
@@ -196,6 +198,26 @@ class AppServiceProvider extends ServiceProvider
 		$this->app->alias('productorepository',
 			'GrahamCampbell\BootstrapCMS\Repositories\ProductoRepository');
 	}
+
+    /**
+     * Register the cliente repository class.
+     *
+     * @return void
+     */
+    protected function registerClienteRepository()
+    {
+        $this->app->singleton('clienterepository', function ($app) {
+            $model = $app['config']['cms.cliente'];
+            $cliente = new $model();
+
+            $validator = $app['validator'];
+
+            return new ClienteRepository($cliente, $validator);
+        });
+
+        $this->app->alias('clienterepository',
+            'GrahamCampbell\BootstrapCMS\Repositories\ClienteRepository');
+    }
 
     /**
      * Register the page repository class.

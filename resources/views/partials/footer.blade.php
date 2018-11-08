@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-xs-8">
                 <p class="text-muted credit">
-                    &copy; Samuel Rojas  - Lima, 2018
+                    &copy; Terms of use. Privacy Policy
                 </p>
             </div>
             <div class="col-xs-4">

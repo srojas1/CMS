@@ -171,26 +171,31 @@ class NavigationSubscriber
             );
         }
 
-		// add the products
+		// add productos
 		//if ($this->producto) {
 			$this->navigation->addToMain(
 				['title' => 'Productos', 'slug' => 'producto', 'icon' => 'book']
 			);
 		//}
 
-        // add the categories
+        // add categorias
         if ($this->categoria) {
             $this->navigation->addToMain(
                 ['title' => 'Categorias', 'slug' => 'categoria', 'icon' => 'book']
             );
         }
 
-		// add the events
+		// add promociones
 		if ($this->events) {
 			$this->navigation->addToMain(
 				['title' => 'Promociones', 'slug' => 'events', 'icon' => 'calendar']
 			);
 		}
+
+		// add clientes
+        $this->navigation->addToMain(
+                ['title' => 'Clientes', 'slug' => 'clientes', 'icon' => 'book']
+        );
     }
 
     /**

@@ -47,6 +47,8 @@ class CategoriaController extends AbstractController {
 	public function index() {
 		$categoria = CategoriaRepository::paginate();
 
+		var_dump($categoria);
+
         //$links = EventRepository::links();
 
 		return View::make('categorias.index', ['categoria' => $categoria]);

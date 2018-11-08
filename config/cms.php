@@ -105,7 +105,7 @@ return [
     | Comment Transition Time
     |--------------------------------------------------------------------------
     |
-    | This defines how long comment transitions take to complete in
+    | This defines how long comment transitions take to complete inproducto
     | milliseconds. It must be a number divisible by 2.
     |
     | Default to 300.
@@ -147,7 +147,7 @@ return [
     /*
     |--------------------------------------------------------------------------
     | Event Model
-    |--------------------------------------------------------------------------
+    |---------------------------------------------------------------producto-----------
     |
     | This defines the event model to be used.
     |
@@ -208,5 +208,18 @@ return [
 	*/
 
 	'producto' => 'GrahamCampbell\BootstrapCMS\Models\Product',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Client Model
+    |--------------------------------------------------------------------------
+    |
+    | This defines the cliente model to be used.
+    |
+    | Default: 'GrahamCampbell\BootstrapCMS\Models\Client'
+    |
+    */
+
+    'cliente' => 'GrahamCampbell\BootstrapCMS\Models\Client',
 
 ];
