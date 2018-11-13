@@ -41,7 +41,7 @@
             @foreach ($producto as $prod)
                 <tr>
                     <td>{{$prod->producto}}</td>
-                    <td>{{$prod->categoria['categoria']}}</td>
+                    <td>{{$prod->getCategoryById->categoria}}</td>
                     <td>{{getStockName($prod->id_stock)}}</td>
                     <td>{{$prod->precio}}</td>
                     <td>{{$prod->oferta}}</td>

@@ -5,6 +5,8 @@ namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\BootstrapCMS\Facades\ProductoRepository;
 use GrahamCampbell\BootstrapCMS\Facades\CategoriaRepository;
+use GrahamCampbell\BootstrapCMS\Models\Category;
+use GrahamCampbell\BootstrapCMS\Models\Product;
 use GrahamCampbell\Credentials\Facades\Credentials;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -29,6 +31,8 @@ class ProductoController extends AbstractController
 			'destroy' => 'edit',
 		]);
 
+        $this->producto = Product::with('getCategoryById')->get();
+
 		parent::__construct();
 	}
 
@@ -41,7 +45,7 @@ class ProductoController extends AbstractController
 	{
 		$producto = ProductoRepository::paginate();
 
-		return View::make('productos.index', ['producto' => $producto]);
+        return View::make('productos.index', ['producto' => $producto]);
 	}
 
 	/**
@@ -92,7 +96,7 @@ class ProductoController extends AbstractController
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show(Request $request)
 	{
         $producto = ProductoRepository::paginate();
 

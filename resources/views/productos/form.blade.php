@@ -31,8 +31,12 @@
         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
             <select class="form-control m-bot15" name="id_categoria">
                 @if($categorias->count() > 0)
-                    @foreach($categorias as $cats)
-                        <option value={{$cats->id}}>{{$cats->categoria}}</option>
+                    @foreach($categorias as $key => $cats)
+                        @if ($cats->id == $producto->id_categoria)
+                            <option value={{$cats->id}} selected>{{$cats->categoria}}</option>
+                        @else
+                            <option value="{{$cats->id}}">{{$cats->categoria}}</option>
+                        @endif
                     @endforeach
                 @else
                     No se encontraron resultados
@@ -44,7 +48,11 @@
         <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">Inventario</label>
         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
             @foreach($stock as $st)
-                <input type="radio" name='id_stock' value={{$st['value']}} checked> {{$st['nombre']}}
+                @if ($st['value'] == $producto->id_stock)
+                    <input type="radio" name='id_stock' value={{$st['value']}} checked> {{$st['nombre']}}
+                @else
+                    <input type="radio" name='id_stock' value={{$st['value']}}> {{$st['nombre']}}
+                @endif
             @endforeach
         </div>
     </div>

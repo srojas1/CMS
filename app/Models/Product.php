@@ -92,7 +92,12 @@ class Product extends AbstractModel implements HasPresenter {
 		return 'GrahamCampbell\BootstrapCMS\Presenters\ProductPresenter';
 	}
 
-	public function categoria() {
-        return $this->belongsTo(Category::class);
+    /**
+     * Get Category by Product
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function getCategoryById() {
+        return $this->hasOne(Category::class,'id','id_categoria');
     }
 }
