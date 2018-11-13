@@ -21,8 +21,9 @@
     <div class="form-group{!! ($errors->has('descripcion')) ? ' has-error' : '' !!}">
         <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">Descripción</label>
         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
-            <textarea name="descripcion" id="descripcion" class="form-control" placeholder="Descripcion" rows="2">
-                {!! Request::old('title', $form['defaults']['descripcion']) !!}
+            <textarea name="descripcion" id="descripcion" class="form-control"
+                   value="{!! Request::old('title', $form['defaults']['descripcion']) !!}">
+            {!! ($errors->has('descripcion') ? $errors->first('descripcion') : '') !!}
             </textarea>
         </div>
     </div>
@@ -32,7 +33,7 @@
             <select class="form-control m-bot15" name="id_categoria">
                 @if($categorias->count() > 0)
                     @foreach($categorias as $key => $cats)
-                        @if ($cats->id == $producto->id_categoria)
+                        @if ($cats->id == $form['defaults']['id_categoria'])
                             <option value={{$cats->id}} selected>{{$cats->categoria}}</option>
                         @else
                             <option value="{{$cats->id}}">{{$cats->categoria}}</option>
@@ -48,7 +49,7 @@
         <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">Inventario</label>
         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
             @foreach($stock as $st)
-                @if ($st['value'] == $producto->id_stock)
+                @if ($st['value'] == $form['defaults']['id_stock'])
                     <input type="radio" name='id_stock' value={{$st['value']}} checked> {{$st['nombre']}}
                 @else
                     <input type="radio" name='id_stock' value={{$st['value']}}> {{$st['nombre']}}

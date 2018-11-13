@@ -33,7 +33,6 @@
             'button'   => 'Guardar producto',
             'defaults' => [
                 'producto'   => $producto->producto,
-                //'categoria' => $categoria->categorias,
                 'codigo' => $producto->codigo,
                 'descripcion' => $producto->descripcion,
                 'id_categoria'=> $producto->id_categoria,

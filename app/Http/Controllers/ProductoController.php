@@ -137,7 +137,13 @@ class ProductoController extends AbstractController
 	 */
 	public function update(Request $request, $id)
 	{
-        $input = Binput::only(['producto']);
+        $input = Binput::only(['producto',
+                                'codigo',
+                                'descripcion',
+                                'id_categoria',
+                                'id_stock',
+                                'precio',
+                                'oferta']);
 
         $val = $val = ProductoRepository::validate($input, array_keys($input));
         if ($val->fails()) {
