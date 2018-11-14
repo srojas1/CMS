@@ -31,6 +31,7 @@
             <th>MONTO</th>
             <th>DESTINO</th>
             <th>ESTADO</th>
+            <th></th>
             </thead>
             <tbody>
             @foreach ($pedido as $ped)
@@ -38,13 +39,25 @@
                     <td>#{{$ped->id}} {{$ped->getClientById->nombres}}
                         {{$ped->getClientById->apaterno}}
                         {{$ped->getClientById->amaterno}}</td>
-                    <td>{{timeSince($ped->fecha_pedido)}}</td>
+                    <td>Hace {{timeSince($ped->fecha_pedido)}}</td>
                     <td>{{$ped->total}}</td>
                     <td>Direccion Test</td>
-                    <td>{{$ped->id_estado}}</td>
+                    <td>{{$ped->getStatusById->estado}}</td>
+                    <td>
+                        <a class="btn btn-success"
+                           href="#detail_pedido_{!! $ped->id !!}"
+                           data-toggle="modal"
+                           data-target="#detail_pedido_{!! $ped->id !!}">
+                           <i class="fa fa-info"></i>
+                        </a>
+                    </td>
                 </tr>
             @endforeach
             </tbody>
         </table>
     </div>
+@stop
+
+@section('bottom')
+    @include('pedidos.detail')
 @stop

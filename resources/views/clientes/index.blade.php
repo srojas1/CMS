@@ -49,7 +49,7 @@
                     <td>29,192.00</td>
                     <td>
                         <a class="btn btn-info" href="{!! URL::route('cliente.edit', array('cliente' => $cli->id)) !!}"><i class="fa fa-pencil-square-o"></i></a>
-                        <a class="btn btn-danger" href="#delete_cliente_{!! $cli->id !!}" data-toggle="modal" data-target="#delete_cliente_{!! $cli->id !!}" data-toggle="modal" data-target=""><i class="fa fa-times"></i></a>&nbsp
+                        <a class="btn btn-danger" href="#delete_cliente_{!! $cli->id !!}" data-toggle="modal" data-target="#delete_cliente_{!! $cli->id !!}" data-toggle="modal" data-target="#delete_cliente_{!! $cli->id !!}"><i class="fa fa-times"></i></a>&nbsp
                     </td>
                 </tr>
             @endforeach

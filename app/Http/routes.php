@@ -66,3 +66,4 @@ if (Config::get('cms.categoria')) {
 $router->resource('producto', 'ProductoController');
 $router->resource('cliente', 'ClienteController');
 $router->resource('pedido', 'PedidoController');
+$router->resource('promocion', 'PromocionController');

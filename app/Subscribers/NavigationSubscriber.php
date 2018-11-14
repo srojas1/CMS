@@ -186,11 +186,11 @@ class NavigationSubscriber
         }
 
 		// add promociones
-		if ($this->events) {
+		//if ($this->events) {
 			$this->navigation->addToMain(
-				['title' => 'Promociones', 'slug' => 'events', 'icon' => 'calendar']
+				['title' => 'Promociones y Recompensas', 'slug' => 'promocion', 'icon' => 'book']
 			);
-		}
+		//}
 
 		// add clientes
         $this->navigation->addToMain(
