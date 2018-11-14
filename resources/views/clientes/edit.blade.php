@@ -27,7 +27,7 @@
     <hr>
     <div class="well">
         <?php
-        $form = ['url' => URL::route('clientes.update',['cliente' => $cliente->id]),
+        $form = ['url' => URL::route('cliente.update',['cliente' => $cliente->id]),
             '_method'   => 'PATCH',
             'method' => 'POST',
             'button'   => 'Actualizar cliente',

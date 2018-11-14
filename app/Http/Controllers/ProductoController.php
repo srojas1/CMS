@@ -44,8 +44,9 @@ class ProductoController extends AbstractController
 	public function index()
 	{
 		$producto = ProductoRepository::paginate();
+        $links = ProductoRepository::links();
 
-        return View::make('productos.index', ['producto' => $producto]);
+        return View::make('productos.index', ['producto' => $producto,'links'=>$links]);
 	}
 
 	/**
@@ -96,11 +97,12 @@ class ProductoController extends AbstractController
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show(Request $request)
+	public function show()
 	{
         $producto = ProductoRepository::paginate();
+        $links = ProductoRepository::links();
 
-        return View::make('productos.show', ['producto' => $producto]);
+        return View::make('productos.show', ['producto' => $producto,'links'=>$links]);
 	}
 
 	/**

@@ -4,18 +4,15 @@ namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\BootstrapCMS\Facades\ClienteRepository;
-use GrahamCampbell\Credentials\Facades\Credentials;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class ClienteController extends AbstractController
-{
+class ClienteController extends AbstractController {
+
     /**
      * Create a new instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -66,12 +63,14 @@ class ClienteController extends AbstractController
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $cliente = ClienteRepository::paginate();
+        //$links = ClienteRepository::links();
+
+        return View::make('clientes.show', ['cliente' => $cliente]);
     }
 
     /**
@@ -97,7 +96,15 @@ class ClienteController extends AbstractController
      */
     public function update(Request $request, $id)
     {
-        $input = Binput::only(['cliente']);
+        $input = Binput::only([
+            'nombres',
+            'apaterno',
+            'amaterno',
+            'movil',
+            'email',
+            'fecha_nacimiento',
+            'documento'
+            ]);
 
         $val = $val = ClienteRepository::validate($input, array_keys($input));
         if ($val->fails()) {
@@ -105,7 +112,7 @@ class ClienteController extends AbstractController
         }
 
         $cliente = ClienteRepository::find($id);
-        $this->checkCategory($cliente);
+        $this->checkClient($cliente);
 
         $cliente->update($input);
 
@@ -121,13 +128,19 @@ class ClienteController extends AbstractController
      */
     public function destroy($id)
     {
-        //
+        $cliente = ClienteRepository::find($id);
+        $this->checkClient($cliente);
+
+        $cliente->delete();
+
+        return Redirect::route('cliente.index')
+            ->with('success', trans('messages.cliente.delete_success'));
     }
 
     /**
-     * Check the category model.
+     * Check the client model.
      *
-     * @param mixed $category
+     * @param mixed $client
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *

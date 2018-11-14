@@ -4,7 +4,7 @@ namespace GrahamCampbell\BootstrapCMS\Presenters;
 
 use McCool\LaravelAutoPresenter\BasePresenter;
 
-class ClientPresenter extends BasePresenter {
+class OrderPresenter extends BasePresenter {
 
-	use OwnerPresenterTrait, ContentPresenterTrait;
+    use OwnerPresenterTrait, ContentPresenterTrait;
 }

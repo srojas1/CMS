@@ -222,4 +222,30 @@ return [
 
     'cliente' => 'GrahamCampbell\BootstrapCMS\Models\Client',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Order Model
+    |--------------------------------------------------------------------------
+    |
+    | This defines the order model to be used.
+    |
+    | Default: 'GrahamCampbell\BootstrapCMS\Models\Order'
+    |
+    */
+
+    'pedido' => 'GrahamCampbell\BootstrapCMS\Models\Order',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Status Model
+    |--------------------------------------------------------------------------
+    |
+    | This defines the order model to be used.
+    |
+    | Default: 'GrahamCampbell\BootstrapCMS\Models\Status'
+    |
+    */
+
+    'estado' => 'GrahamCampbell\BootstrapCMS\Models\Status',
+
 ];

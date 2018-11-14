@@ -47,4 +47,9 @@ return [
         'update_success' => 'El producto fue actualizado correctamente',
         'delete_success' => 'El producto fue eliminado correctamente',
     ],
+
+    'cliente' => [
+        'update_success' => 'El cliente fue actualizado correctamente',
+        'delete_success' => 'El cliente fue eliminado correctamente',
+    ],
 ];

@@ -165,11 +165,11 @@ class NavigationSubscriber
 			);
 		//}
 
-        if ($this->blogging) {
+        //if ($this->blogging) {
             $this->navigation->addToMain(
-                ['title' => 'Pedidos', 'slug' => 'blog/posts', 'icon' => 'book']
+                ['title' => 'Pedidos', 'slug' => 'pedido', 'icon' => 'book']
             );
-        }
+        //}
 
 		// add productos
 		//if ($this->producto) {
@@ -194,7 +194,7 @@ class NavigationSubscriber
 
 		// add clientes
         $this->navigation->addToMain(
-                ['title' => 'Clientes', 'slug' => 'clientes', 'icon' => 'book']
+                ['title' => 'Clientes', 'slug' => 'cliente', 'icon' => 'book']
         );
     }
 

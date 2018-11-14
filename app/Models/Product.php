@@ -57,7 +57,7 @@ class Product extends AbstractModel implements HasPresenter {
 	 *
 	 * @var int
 	 */
-	public static $paginate = 10;
+	public static $paginate = 1;
 
 	/**
 	 * The columns to order by when displaying an index.

@@ -15,7 +15,7 @@
         <div class="col-xs-8">
             <p class="lead">
                 @if (count($producto) == 0)
-                    No hay productos registradas por el momento
+                    No hay productos registrados por el momento
                 @else
                     Lista de Productos:
                 @endif
@@ -54,6 +54,7 @@
             </tbody>
         </table>
     </div>
+{!! $links !!}
 @stop
 
 @section('bottom')

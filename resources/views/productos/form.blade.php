@@ -21,10 +21,9 @@
     <div class="form-group{!! ($errors->has('descripcion')) ? ' has-error' : '' !!}">
         <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">Descripción</label>
         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
-            <textarea name="descripcion" id="descripcion" class="form-control"
+            <input name="descripcion" id="descripcion" class="form-control"
                    value="{!! Request::old('title', $form['defaults']['descripcion']) !!}">
             {!! ($errors->has('descripcion') ? $errors->first('descripcion') : '') !!}
-            </textarea>
         </div>
     </div>
     <div class="form-group{!! ($errors->has('id_categoria')) ? ' has-error' : '' !!}">

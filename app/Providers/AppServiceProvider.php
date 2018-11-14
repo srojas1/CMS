@@ -21,6 +21,7 @@ use GrahamCampbell\BootstrapCMS\Repositories\CategoriaRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\PageRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\PostRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\ProductoRepository;
+use GrahamCampbell\BootstrapCMS\Repositories\PedidoRepository;
 use GrahamCampbell\BootstrapCMS\Subscribers\CommandSubscriber;
 use GrahamCampbell\BootstrapCMS\Subscribers\NavigationSubscriber;
 use Illuminate\Support\ServiceProvider;
@@ -94,6 +95,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerCategoriaRepository();
 		$this->registerProductoRepository();
         $this->registerClienteRepository();
+        $this->registerPedidoRepository();
 
         $this->registerCommandSubscriber();
         $this->registerNavigationSubscriber();
@@ -217,6 +219,26 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->alias('clienterepository',
             'GrahamCampbell\BootstrapCMS\Repositories\ClienteRepository');
+    }
+
+    /**
+     * Register the pedido repository class.
+     *
+     * @return void
+     */
+    protected function registerPedidoRepository()
+    {
+        $this->app->singleton('pedidorepository', function ($app) {
+            $model = $app['config']['cms.pedido'];
+            $pedido = new $model();
+
+            $validator = $app['validator'];
+
+            return new PedidoRepository($pedido, $validator);
+        });
+
+        $this->app->alias('pedidorepository',
+            'GrahamCampbell\BootstrapCMS\Repositories\PedidoRepository');
     }
 
     /**

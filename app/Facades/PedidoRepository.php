@@ -4,7 +4,7 @@ namespace GrahamCampbell\BootstrapCMS\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class ClienteRepository extends Facade {
+class PedidoRepository extends Facade {
 
     /**
      * Get the registered name of the component.
@@ -13,6 +13,6 @@ class ClienteRepository extends Facade {
      */
     protected static function getFacadeAccessor()
     {
-        return 'clienterepository';
+        return 'pedidorepository';
     }
 }
