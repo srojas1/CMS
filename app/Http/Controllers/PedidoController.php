@@ -33,8 +33,6 @@ class PedidoController extends AbstractController {
     {
         $pedido = PedidoRepository::paginate();
 
-        $producto = Order::all();
-
-        return View::make('pedidos.index', ['pedido' => $pedido,'producto'=>$producto]);
+        return View::make('pedidos.index', ['pedido' => $pedido]);
     }
 }

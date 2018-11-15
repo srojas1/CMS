@@ -27,10 +27,10 @@
                             <h4 class="modal-title">
                                 Detalles del pedido
                             </h4>
-                            @foreach($producto as $prod)
-                                <p>{{$prod->orderProducts[0]->producto}}- {{$prod->precio}}</p>
+                            @foreach($ped->getProductsById as $prod)
+                                <p>{{$prod->producto}} - {{$prod->precio}}</p>
                             @endforeach
-                            <label>Total - 60.00</label>
+                            <label>Total - {{$ped->total}}</label>
 
                         </div>
                         <div role="tabpanel"

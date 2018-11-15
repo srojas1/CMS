@@ -104,8 +104,11 @@ class Order extends AbstractModel implements HasPresenter {
         return $this->hasOne(Status::class,'id','id_estado');
     }
 
-    public function orderProducts() {
-        return $this->belongsToMany(Product::class,'orders_products');
+    public function getProductsById() {
+        return $this->belongsToMany(Product::class,
+            'orders_products',
+            'id_pedido',
+            'id_producto');
     }
 
 }
