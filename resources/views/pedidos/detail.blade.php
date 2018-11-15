@@ -27,10 +27,9 @@
                             <h4 class="modal-title">
                                 Detalles del pedido
                             </h4>
-                            {{--@foreach()--}}
-                            <p>Producto 1 - 25.00</p>
-                            <p>Producto 2 - 35.00</p>
-                            {{--@endforeach--}}
+                            @foreach($producto as $prod)
+                                <p>{{$prod->orderProducts[0]->producto}}- {{$prod->precio}}</p>
+                            @endforeach
                             <label>Total - 60.00</label>
 
                         </div>

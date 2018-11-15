@@ -8,22 +8,23 @@ use GrahamCampbell\Credentials\Models\Relations\RevisionableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
 
-class Order extends AbstractModel implements HasPresenter {
+class OrderProduct extends AbstractModel implements HasPresenter {
 
     use BelongsToUserTrait, RevisionableTrait, SoftDeletes;
+
     /**
      * The table the events are stored in.
      *
      * @var string
      */
-    protected $table = 'orders';
+    protected $table = 'orders_products';
 
     /**
      * The model name.
      *
      * @var string
      */
-    public static $name = 'order';
+    public static $name = 'orderproduct';
 
     /**
      * The properties on the model that are dates.
@@ -44,14 +45,14 @@ class Order extends AbstractModel implements HasPresenter {
      *
      * @var array
      */
-    public static $index = ['id','id_cliente','total','id_estado','fecha_pedido'];
+    public static $index = ['id'];
 
     /**
      * The max events per page when displaying a paginated index.
      *
      * @var int
      */
-    public static $paginate = 2;
+    public static $paginate = 5;
 
     /**
      * The columns to order by when displaying an index.
@@ -83,29 +84,7 @@ class Order extends AbstractModel implements HasPresenter {
      */
     public function getPresenterClass()
     {
-        return 'GrahamCampbell\BootstrapCMS\Presenters\OrderPresenter';
-    }
-
-    /**
-     * Get Client by Order
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function getClientById() {
-        return $this->hasOne(Client::class,'id','id_cliente');
-    }
-
-    /**
-     * Get Status by Order
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function getStatusById() {
-        return $this->hasOne(Status::class,'id','id_estado');
-    }
-
-    public function orderProducts() {
-        return $this->belongsToMany(Product::class,'orders_products');
+        return 'GrahamCampbell\BootstrapCMS\Presenters\OrderProductPresenter';
     }
 
 }
