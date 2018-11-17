@@ -1,4 +1,4 @@
-@foreach ($pedido as $ped)
+@foreach ($pedido as $nkey=>$ped)
 <div id="detail_pedido_{!! $ped->id !!}" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -17,12 +17,12 @@
             <div class="modal-body">
                 <div class="tabpanel">
                     <ul class="nav nav-tabs" role="tablist">
-                        <li><a href="#pedido" data-toggle="tab">1. Pedido</a></li>
-                        <li><a href="#entrega" data-toggle="tab">2. Datos Entrega y Pago</a></li>
+                        <li><a href="#pedido_{!! $nkey !!}" data-toggle="tab">1. Pedido</a></li>
+                        <li><a href="#entrega_{!! $nkey !!}" data-toggle="tab">2. Datos Entrega y Pago</a></li>
                     </ul>
                     <div class="tab-content">
                         <div role="tabpanel"
-                        class="tab-pane active" id="pedido">
+                        class="tab-pane active" id="pedido_{!! $nkey !!}"">
 
                             <h4 class="modal-title">
                                 Detalles del pedido
@@ -34,17 +34,21 @@
 
                         </div>
                         <div role="tabpanel"
-                             class="tab-pane" id="entrega">
+                             class="tab-pane" id="entrega_{!! $nkey !!}"">
+
                             <h4 class="modal-title">
                                 Datos de Entrega
                             </h4>
-                            <p>Contacto: [Nombre Cliente]</p>
-                            <p>Cel: [Movil Cliente]</p>
-                            <p>[Direccion Cliente]</p>
+                            <p>Contacto: {{$ped->contacto_entrega}}</p>
+                            <p>Cel: {{$ped->movil_contacto_entrega}}</p>
+                            <p>{{$ped->id_direccion}}</p>
                             <h4 class="modal-title">
                                 Forma de Pago
                             </h4>
-                            <p>Mastercard xxxx</p>
+                            <p>
+                                {{$ped->getPaymentCardByIdClient->marca}} -
+                                {{$ped->getPaymentCardByIdClient->nro_tarjeta}}
+                            </p>
                         </div>
                     </div>
                 </div>

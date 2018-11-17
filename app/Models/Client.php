@@ -86,4 +86,8 @@ class Client extends AbstractModel implements HasPresenter {
 		return 'GrahamCampbell\BootstrapCMS\Presenters\ClientPresenter';
 	}
 
+    public function address(){
+        return $this->hasMany(Client::class);
+    }
+
 }

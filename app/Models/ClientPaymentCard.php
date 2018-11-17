@@ -8,7 +8,7 @@ use GrahamCampbell\Credentials\Models\Relations\RevisionableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
 
-class Order extends AbstractModel implements HasPresenter {
+class ClientPaymentCard extends AbstractModel implements HasPresenter {
 
     use BelongsToUserTrait, RevisionableTrait, SoftDeletes;
     /**
@@ -16,14 +16,14 @@ class Order extends AbstractModel implements HasPresenter {
      *
      * @var string
      */
-    protected $table = 'orders';
+    protected $table = 'client_payment_card';
 
     /**
      * The model name.
      *
      * @var string
      */
-    public static $name = 'order';
+    public static $name = 'clientpaymentcard';
 
     /**
      * The properties on the model that are dates.
@@ -37,30 +37,21 @@ class Order extends AbstractModel implements HasPresenter {
      *
      * @var array
      */
-    protected $keepRevisionOf = ['id'];
+    protected $keepRevisionOf = ['nro_tarjeta'];
 
     /**
      * The columns to select when displaying an index.
      *
      * @var array
      */
-    public static $index =
-        ['id',
-         'id_cliente',
-         'total',
-         'contacto_entrega',
-         'movil_contacto_entrega',
-         'id_estado',
-         'fecha_pedido',
-         'id_cliente_tipo_pago'
-        ];
+    public static $index = ['id','nro_tarjeta','marca','detalles'];
 
     /**
      * The max events per page when displaying a paginated index.
      *
      * @var int
      */
-    public static $paginate = 2;
+    public static $paginate = 10;
 
     /**
      * The columns to order by when displaying an index.
@@ -82,7 +73,7 @@ class Order extends AbstractModel implements HasPresenter {
      * @var array
      */
     public static $rules = [
-        'id'    => 'required'
+        'nro_tarjeta'    => 'required'
     ];
 
     /**
@@ -92,36 +83,7 @@ class Order extends AbstractModel implements HasPresenter {
      */
     public function getPresenterClass()
     {
-        return 'GrahamCampbell\BootstrapCMS\Presenters\OrderPresenter';
-    }
-
-    /**
-     * Get Client by Order
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function getClientById() {
-        return $this->hasOne(Client::class,'id','id_cliente');
-    }
-
-    /**
-     * Get Status by Order
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function getStatusById() {
-        return $this->hasOne(Status::class,'id','id_estado');
-    }
-
-    public function getProductsById() {
-        return $this->belongsToMany(Product::class,
-            'orders_products',
-            'id_pedido',
-            'id_producto');
-    }
-
-    public function getPaymentCardByIdClient() {
-        return $this->hasOne(ClientPaymentCard::class,'id','id_cliente_tipo_pago');
+        return 'GrahamCampbell\BootstrapCMS\Presenters\ClientPaymentCardPresenter';
     }
 
 }
