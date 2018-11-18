@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: samuel
- * Date: 22/10/18
- * Time: 09:56 PM
- */
 
 namespace GrahamCampbell\BootstrapCMS\Models\Relations;
 

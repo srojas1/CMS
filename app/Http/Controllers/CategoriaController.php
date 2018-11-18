@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: srojas
- * Date: 18/10/18
- * Time: 04:29 PM
- */
 
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 use GrahamCampbell\Binput\Facades\Binput;

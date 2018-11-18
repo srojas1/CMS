@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: samuel
- * Date: 01/11/18
- * Time: 02:10 PM
- */
 
 use GrahamCampbell\BootstrapCMS\Http\Constants as Config;
 

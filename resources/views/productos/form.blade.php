@@ -1,3 +1,20 @@
+{{--@if (count($errors) > 0)--}}
+    {{--<div class="alert alert-danger">--}}
+        {{--<strong>Whoops!</strong> There were some problems with your input.<br><br>--}}
+        {{--<ul>--}}
+            {{--@foreach ($errors->all() as $error)--}}
+                {{--<li>{{ $error }}</li>--}}
+            {{--@endforeach--}}
+        {{--</ul>--}}
+    {{--</div>--}}
+{{--@endif--}}
+
+{{--@if(session('success'))--}}
+    {{--<div class="alert alert-success">--}}
+        {{--{{ session('success') }}--}}
+    {{--</div>--}}
+{{--@endif--}}
+
 <form class="form-horizontal" action="{{ $form['url'] }}" method="{{ $form['method'] }}">
 
     {{ csrf_field() }}
@@ -44,6 +61,21 @@
             </select>
         </div>
     </div>
+    <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">Imágenes</label>
+    <div class="input-group control-group increment image-field" >
+        <input type="file" name="filename[]" class="form-control">
+        <div class="input-group-btn">
+            <button class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus"></i>Add</button>
+        </div>
+    </div>
+    <div class="clone hide">
+        <div class="control-group input-group image-field margin-cloned" style="margin-top:10px">
+            <input type="file" name="filename[]" class="form-control">
+            <div class="input-group-btn">
+                <button class="btn btn-danger" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+            </div>
+        </div>
+    </div>
     <div class="form-group{!! ($errors->has('id_stock')) ? ' has-error' : '' !!}">
         <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">Inventario</label>
         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
@@ -73,4 +105,22 @@
             <button class="btn btn-primary" type="submit"><i class="fa fa-rocket"></i> {!! $form['button'] !!}</button>
         </div>
     </div>
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+
+            $(".btn-success").click(function(){
+                var html = $(".clone").html();
+                $(".increment").after(html);
+            });
+
+            $("body").on("click",".btn-danger",function(){
+                $(this).parents(".control-group").remove();
+            });
+
+        });
+
+    </script>
+
 </form>

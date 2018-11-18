@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: samuel
- * Date: 31/10/18
- * Time: 10:47 PM
- */
 
 namespace GrahamCampbell\BootstrapCMS\Http;
 

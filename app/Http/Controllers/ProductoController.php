@@ -85,6 +85,13 @@ class ProductoController extends AbstractController
 			return Redirect::route('producto.create')->withInput()->withErrors($val->errors());
 		}
 
+        if($request->hasfile('filename')) {
+            var_dump($request->file('filename'));
+        }
+//        foreach($request->file('filename') as $image) {
+//            var_dump($image);
+//        }
+
 		$producto = ProductoRepository::create($request->all());
 
 		return Redirect::route('producto.show', ['producto'=>$producto->id])

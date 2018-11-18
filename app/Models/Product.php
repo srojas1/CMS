@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: srojas
- * Date: 29/10/18
- * Time: 06:18 PM
- */
 
 namespace GrahamCampbell\BootstrapCMS\Models;
 
