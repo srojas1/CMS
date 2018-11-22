@@ -15,7 +15,7 @@
     {{--</div>--}}
 {{--@endif--}}
 
-<form class="form-horizontal" action="{{ $form['url'] }}" method="{{ $form['method'] }}">
+<form class="form-horizontal" action="{{ $form['url'] }}" method="{{ $form['method'] }}" enctype="{{ $form['enctype'] }}">
 
     {{ csrf_field() }}
     <input type="hidden" name="_method" value="{{ isset($form['_method'])? $form['_method'] : $form['method'] }}">
@@ -63,7 +63,7 @@
     </div>
     <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">Imágenes</label>
     <div class="input-group control-group increment image-field" >
-        <input type="file" name="filename[]" class="form-control">
+        <input type="file" name="filename[]" class="form-control" >
         <div class="input-group-btn">
             <button class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus"></i>Add</button>
         </div>

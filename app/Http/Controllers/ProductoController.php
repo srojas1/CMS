@@ -67,6 +67,25 @@ class ProductoController extends AbstractController
 		return View::make('productos.create',['categorias' => $categorias, 'stock' => $stockName]);
 	}
 
+    /**
+     * Get the user input.
+     *
+     * @return string[]
+     */
+    protected function getInput()
+    {
+        return [
+            'producto'   => Binput::get('producto'),
+            'codigo'     => Binput::get('codigo'),
+            'descripcion'=> Binput::get('descripcion'),
+            'id_categoria' => Binput::get('id_categoria'),
+            'id_stock' => Binput::get('id_stock'),
+            'precio' => Binput::get('precio'),
+            'oferta' => Binput::get('oferta'),
+            'filename' => ''
+        ];
+    }
+
 	/**
 	 * Store a newly created resource in storage.
 	 *
@@ -75,9 +94,9 @@ class ProductoController extends AbstractController
 	 */
 	public function store(Request $request)
 	{
-		$input = array_merge(['user_id' => Credentials::getuser()->id], Binput::only([
-			'producto'
-		]));
+		$input = array_merge(
+		    $this->getInput()
+        );
 
 		$val = ProductoRepository::validate($input, array_keys($input));
 
@@ -85,14 +104,26 @@ class ProductoController extends AbstractController
 			return Redirect::route('producto.create')->withInput()->withErrors($val->errors());
 		}
 
-        if($request->hasfile('filename')) {
-            var_dump($request->file('filename'));
-        }
-//        foreach($request->file('filename') as $image) {
-//            var_dump($image);
-//        }
+        if($request->hasfile('filename'))
+        {
+            $images = $request->file('filename');
 
-		$producto = ProductoRepository::create($request->all());
+            foreach($images as $key=>$image)
+            {
+                if(!empty($image)) {
+                    $name = $image->getClientOriginalName();
+                    $image->move(public_path().'/images/', $name);
+                    $data[] = $name;
+                }
+                else {
+                   continue;
+                }
+            }
+        }
+
+        $input['filename'] = json_encode($data);
+
+		$producto = ProductoRepository::create($input);
 
 		return Redirect::route('producto.show', ['producto'=>$producto->id])
 			->with('success', trans('messages.producto.store_success'));
@@ -154,7 +185,7 @@ class ProductoController extends AbstractController
                                 'precio',
                                 'oferta']);
 
-        $val = $val = ProductoRepository::validate($input, array_keys($input));
+        $val = ProductoRepository::validate($input, array_keys($input));
         if ($val->fails()) {
             return Redirect::route('producto.edit', ['producto' => $id])->withInput()->withErrors($val->errors());
         }

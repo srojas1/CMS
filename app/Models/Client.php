@@ -87,7 +87,7 @@ class Client extends AbstractModel implements HasPresenter {
 	}
 
     public function address(){
-        return $this->hasMany(Client::class);
+        return $this->hasMany(Promo::class);
     }
 
 }

@@ -22,6 +22,7 @@ use GrahamCampbell\BootstrapCMS\Repositories\PageRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\PostRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\ProductoRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\PedidoRepository;
+use GrahamCampbell\BootstrapCMS\Repositories\PromocionRepository;
 use GrahamCampbell\BootstrapCMS\Subscribers\CommandSubscriber;
 use GrahamCampbell\BootstrapCMS\Subscribers\NavigationSubscriber;
 use Illuminate\Support\ServiceProvider;
@@ -96,6 +97,7 @@ class AppServiceProvider extends ServiceProvider
 		$this->registerProductoRepository();
         $this->registerClienteRepository();
         $this->registerPedidoRepository();
+        $this->registerPromocionRepository();
 
         $this->registerCommandSubscriber();
         $this->registerNavigationSubscriber();
@@ -235,6 +237,26 @@ class AppServiceProvider extends ServiceProvider
             $validator = $app['validator'];
 
             return new PedidoRepository($pedido, $validator);
+        });
+
+        $this->app->alias('pedidorepository',
+            'GrahamCampbell\BootstrapCMS\Repositories\PedidoRepository');
+    }
+
+    /**
+     * Register the promocion repository class.
+     *
+     * @return void
+     */
+    protected function registerPromocionRepository()
+    {
+        $this->app->singleton('promocionrepository', function ($app) {
+            $model = $app['config']['cms.promocion'];
+            $pedido = new $model();
+
+            $validator = $app['validator'];
+
+            return new PromocionRepository($pedido, $validator);
         });
 
         $this->app->alias('pedidorepository',

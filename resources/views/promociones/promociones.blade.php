@@ -13,14 +13,14 @@
         <th>ACCIONES</th>
         </thead>
         <tbody>
-        {{--@foreach ($cliente as $cli)--}}
+        @foreach ($promocion as $prom)
         <tr>
-            <td>2x1</td>
+            <td>{{$prom->descripcion}}</td>
             <td>[imagen]</td>
-            <td>29,192.00</td>
-            <td>[fecha inicio]</td>
-            <td>[fecha fin]</td>
-            <td>[stock maximo]</td>
+            <td>{{$prom->precio}}</td>
+            <td>{{$prom->fecha_inicio}}</td>
+            <td>{{$prom->fecha_fin}}</td>
+            <td>{{$prom->stock_maximo}}</td>
             <td>[ventas]</td>
             <td>[ingresos]</td>
             <td>
@@ -28,7 +28,7 @@
                 <a class="btn btn-danger" href="" data-toggle="modal" data-target=""><i class="fa fa-times"></i></a>&nbsp
             </td>
         </tr>
-        {{--@endforeach--}}
+        @endforeach
         </tbody>
     </table>
 </div>

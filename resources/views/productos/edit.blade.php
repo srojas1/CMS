@@ -30,6 +30,7 @@
         $form = ['url' => URL::route('producto.update',['producto' => $producto->id]),
             '_method'   => 'PATCH',
             'method' => 'POST',
+            'enctype'  => 'multipart/form-data',
             'button'   => 'Guardar producto',
             'defaults' => [
                 'producto'   => $producto->producto,

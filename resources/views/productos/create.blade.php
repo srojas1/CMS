@@ -15,6 +15,7 @@
 		<?php
 		$form = ['url' => URL::route('producto.store'),
 			'method'   => 'POST',
+            'enctype'  => 'multipart/form-data',
 			'button'   => 'Crear Producto',
 			'defaults' => [
 				'producto'    => '',

@@ -3,7 +3,7 @@
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 use GrahamCampbell\Binput\Facades\Binput;
-//use GrahamCampbell\BootstrapCMS\Facades\PromocionRepository;
+use GrahamCampbell\BootstrapCMS\Facades\PromocionRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
@@ -34,7 +34,9 @@ class PromocionController extends AbstractController {
      */
     public function index()
     {
-       return View::make('promociones.index', []);
+       $promocion = PromocionRepository::paginate();
+
+       return View::make('promociones.index', ['promocion'=>$promocion]);
     }
 
     /**

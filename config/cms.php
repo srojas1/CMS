@@ -220,7 +220,7 @@ return [
     |
     */
 
-    'cliente' => 'GrahamCampbell\BootstrapCMS\Models\Client',
+    'cliente' => 'GrahamCampbell\BootstrapCMS\Models\Promo',
 
     /*
     |--------------------------------------------------------------------------
@@ -247,5 +247,18 @@ return [
     */
 
     'estado' => 'GrahamCampbell\BootstrapCMS\Models\Status',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Promo Model
+    |--------------------------------------------------------------------------
+    |
+    | This defines the order model to be used.
+    |
+    | Default: 'GrahamCampbell\BootstrapCMS\Models\Promo'
+    |
+    */
+
+    'promocion' => 'GrahamCampbell\BootstrapCMS\Models\Promo',
 
 ];
