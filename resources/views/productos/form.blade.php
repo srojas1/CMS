@@ -114,21 +114,20 @@
         </div>
     </div>
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
-        $(document).ready(function() {
+    $(document).ready(function() {
 
-            $(".btn-success").click(function(){
-                var html = $(".clone").html();
-                $(".increment").after(html);
-            });
-
-            $("body").on("click",".btn-danger",function(){
-                $(this).parents(".control-group").remove();
-            });
-
+        $(".btn-success").click(function(){
+            var html = $(".clone").html();
+            $(".increment").after(html);
         });
 
-    </script>
+        $("body").on("click",".btn-danger",function(){
+            $(this).parents(".control-group").remove();
+        });
+    });
+
+</script>
 
 </form>

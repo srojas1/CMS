@@ -67,4 +67,5 @@ $router->resource('producto', 'ProductoController');
 $router->resource('cliente', 'ClienteController');
 $router->resource('pedido', 'PedidoController');
 $router->resource('promocion', 'PromocionController');
+$router->resource('cupon', 'CuponController');
 $router->resource('atributo', 'AtributoController');

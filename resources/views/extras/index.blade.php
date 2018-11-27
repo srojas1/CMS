@@ -50,15 +50,15 @@
         <div class="tab-content">
             <div role="tabpanel"
                  class="tab-pane active" id="promociones">
-                @include('promociones.promociones')
+                @include('extras.promociones.index')
             </div>
             <div role="tabpanel"
                  class="tab-pane" id="cupones">
-                @include('promociones.cupones')
+                @include('extras.cupones.index')
             </div>
             <div role="tabpanel"
                  class="tab-pane" id="recompensas">
-                @include('promociones.recompensas')
+                @include('extras.recompensas.index')
             </div>
         </div>
     </div>

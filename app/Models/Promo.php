@@ -37,14 +37,14 @@ class Promo extends AbstractModel implements HasPresenter {
      *
      * @var array
      */
-    protected $keepRevisionOf = ['descripcion'];
+    protected $keepRevisionOf = ['promocion'];
 
     /**
      * The columns to select when displaying an index.
      *
      * @var array
      */
-    public static $index = ['id','descripcion','precio','stock_maximo','fecha_inicio','fecha_fin'];
+    public static $index = ['id','promocion','precio','stock_maximo','fecha_inicio','fecha_fin'];
 
     /**
      * The max events per page when displaying a paginated index.
@@ -73,7 +73,7 @@ class Promo extends AbstractModel implements HasPresenter {
      * @var array
      */
     public static $rules = [
-        'descripcion'    => 'required'
+        'promocion'    => 'required'
     ];
 
     /**

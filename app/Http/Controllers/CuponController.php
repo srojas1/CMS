@@ -3,13 +3,13 @@
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 use GrahamCampbell\Binput\Facades\Binput;
-use GrahamCampbell\BootstrapCMS\Facades\PromocionRepository;
+use GrahamCampbell\BootstrapCMS\Facades\CuponRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class PromocionController extends AbstractController {
+class CuponController extends AbstractController {
 
     /**
      * Create a new instance.
@@ -34,9 +34,9 @@ class PromocionController extends AbstractController {
      */
     public function index()
     {
-       $promocion = PromocionRepository::paginate();
+        $cupon = CuponRepository::paginate();
 
-       return View::make('extras.index', ['promocion'=>$promocion]);
+        return View::make('extras.index', ['cupon'=>$cupon]);
     }
 
     /**
@@ -46,7 +46,7 @@ class PromocionController extends AbstractController {
      */
     public function create()
     {
-        return View::make('extras.promociones.create');
+        return View::make('extras.cupones.create');
     }
 
     /**
@@ -67,7 +67,7 @@ class PromocionController extends AbstractController {
      */
     public function show()
     {
-       //
+        //
     }
 
     /**

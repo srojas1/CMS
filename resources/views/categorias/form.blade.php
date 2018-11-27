@@ -3,7 +3,6 @@
     {{ csrf_field() }}
     <input type="hidden" name="_method" value="{{ isset($form['_method'])? $form['_method'] : $form['method'] }}">
 
-
     <div class="form-group{!! ($errors->has('categoria')) ? ' has-error' : '' !!}">
         <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">Nombre categoria</label>
         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">

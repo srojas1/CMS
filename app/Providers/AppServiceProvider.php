@@ -24,6 +24,7 @@ use GrahamCampbell\BootstrapCMS\Repositories\PostRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\ProductoRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\PedidoRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\PromocionRepository;
+use GrahamCampbell\BootstrapCMS\Repositories\CuponRepository;
 use GrahamCampbell\BootstrapCMS\Subscribers\CommandSubscriber;
 use GrahamCampbell\BootstrapCMS\Subscribers\NavigationSubscriber;
 use Illuminate\Support\ServiceProvider;
@@ -99,6 +100,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerClienteRepository();
         $this->registerPedidoRepository();
         $this->registerPromocionRepository();
+        $this->registerCuponRepository();
         $this->registerAtributoRepository();
 
         $this->registerCommandSubscriber();
@@ -254,16 +256,37 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton('promocionrepository', function ($app) {
             $model = $app['config']['cms.promocion'];
-            $pedido = new $model();
+            $promocion = new $model();
 
             $validator = $app['validator'];
 
-            return new PromocionRepository($pedido, $validator);
+            return new PromocionRepository($promocion, $validator);
         });
 
         $this->app->alias('pedidorepository',
             'GrahamCampbell\BootstrapCMS\Repositories\PedidoRepository');
     }
+
+    /**
+     * Register the cupon repository class.
+     *
+     * @return void
+     */
+    protected function registerCuponRepository()
+    {
+        $this->app->singleton('cuponrepository', function ($app) {
+            $model = $app['config']['cms.cupon'];
+            $cupon = new $model();
+
+            $validator = $app['validator'];
+
+            return new CuponRepository($cupon, $validator);
+        });
+
+        $this->app->alias('cuponrepository',
+            'GrahamCampbell\BootstrapCMS\Repositories\CuponRepository');
+    }
+
 
     /**
      * Register the atributo repository class.

@@ -1,3 +1,15 @@
+<div class="row">
+    <div class="col-xs-8">
+        <p class="lead">
+        </p>
+    </div>
+    <div class="col-xs-4">
+        <div class="pull-right">
+            <br>
+            <a class="btn btn-primary" href="{!! URL::route('promocion.create') !!}">Agregar Promoción</a>
+        </div>
+    </div>
+</div>
 <hr>
 <div class="well">
     <table class="table">
@@ -15,7 +27,7 @@
         <tbody>
         @foreach ($promocion as $prom)
         <tr>
-            <td>{{$prom->descripcion}}</td>
+            <td>{{$prom->promocion}}</td>
             <td>[imagen]</td>
             <td>{{$prom->precio}}</td>
             <td>{{$prom->fecha_inicio}}</td>

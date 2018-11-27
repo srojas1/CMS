@@ -185,7 +185,7 @@ class NavigationSubscriber
             );
         }
 
-		// add promociones
+		// add extras
 		//if ($this->events) {
 			$this->navigation->addToMain(
 				['title' => 'Promociones y Recompensas', 'slug' => 'promocion', 'icon' => 'book']
