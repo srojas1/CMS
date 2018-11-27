@@ -1,4 +1,4 @@
-{{--@if (count($errors) > 0)--}}
+    {{--@if (count($errors) > 0)--}}
     {{--<div class="alert alert-danger">--}}
         {{--<strong>Whoops!</strong> There were some problems with your input.<br><br>--}}
         {{--<ul>--}}
@@ -100,6 +100,14 @@
             {!! ($errors->has('oferta') ? $errors->first('oferta') : '') !!}
         </div>
     </div>
+    @foreach(array("Color","Marca") as $key=>$arr)
+        <div class="form-group">
+            <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">{{$arr}}</label>
+            <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
+                <input name="atributo" id="atributo" value="test_{{$key+1}}" type="text" class="form-control" placeholder="Valor">
+            </div>
+        </div>
+    @endforeach
     <div class="form-group">
         <div class="col-md-offset-2 col-sm-offset-3 col-sm-10 col-xs-12">
             <button class="btn btn-primary" type="submit"><i class="fa fa-rocket"></i> {!! $form['button'] !!}</button>

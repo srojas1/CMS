@@ -14,6 +14,7 @@ namespace GrahamCampbell\BootstrapCMS\Providers;
 use GrahamCampbell\BootstrapCMS\Http\Controllers\CommentController;
 use GrahamCampbell\BootstrapCMS\Navigation\Factory;
 use GrahamCampbell\BootstrapCMS\Observers\PageObserver;
+use GrahamCampbell\BootstrapCMS\Repositories\AtributoRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\ClienteRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\CommentRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\EventRepository;
@@ -98,6 +99,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerClienteRepository();
         $this->registerPedidoRepository();
         $this->registerPromocionRepository();
+        $this->registerAtributoRepository();
 
         $this->registerCommandSubscriber();
         $this->registerNavigationSubscriber();
@@ -261,6 +263,26 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->alias('pedidorepository',
             'GrahamCampbell\BootstrapCMS\Repositories\PedidoRepository');
+    }
+
+    /**
+     * Register the atributo repository class.
+     *
+     * @return void
+     */
+    protected function registerAtributoRepository()
+    {
+        $this->app->singleton('atributorepository', function ($app) {
+            $model = $app['config']['cms.atributo'];
+            $pedido = new $model();
+
+            $validator = $app['validator'];
+
+            return new AtributoRepository($pedido, $validator);
+        });
+
+        $this->app->alias('atributorepository',
+            'GrahamCampbell\BootstrapCMS\Repositories\AtributoRepository');
     }
 
     /**

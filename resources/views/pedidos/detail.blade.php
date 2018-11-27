@@ -11,7 +11,7 @@
                 </h4>
             </div>
             <div class="modal-body">
-                <p>{{$ped->fecha_pedido}}</p>
+                <p>{{formatTimeText($ped->fecha_pedido)}}</p>
                 <p>{{$ped->getStatusById->estado}}</p>
             </div>
             <div class="modal-body">
@@ -28,9 +28,9 @@
                                 Detalles del pedido
                             </h4>
                             @foreach($ped->getProductsById as $prod)
-                                <p>{{$prod->producto}} - {{$prod->precio}}</p>
+                                <p>{{$prod->producto}} - {{$prod->getCurrencyById->simbolo}} {{$prod->precio}}</p>
                             @endforeach
-                            <label>Total - {{$ped->total}}</label>
+                            <label>Total - {{$prod->getCurrencyById->simbolo}} {{$ped->total}}</label>
 
                         </div>
                         <div role="tabpanel"
@@ -41,7 +41,9 @@
                             </h4>
                             <p>Contacto: {{$ped->contacto_entrega}}</p>
                             <p>Cel: {{$ped->movil_contacto_entrega}}</p>
-                            <p>{{$ped->id_direccion}}</p>
+                            @if($ped->getAddressById)
+                                <p>{{$ped->getAddressById->direccion}} {{$ped->getAddressById->detalles}}</p>
+                            @endif
                             <h4 class="modal-title">
                                 Forma de Pago
                             </h4>

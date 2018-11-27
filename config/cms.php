@@ -261,4 +261,31 @@ return [
 
     'promocion' => 'GrahamCampbell\BootstrapCMS\Models\Promo',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Attribute Model
+    |--------------------------------------------------------------------------
+    |
+    | This defines the order model to be used.
+    |
+    | Default: 'GrahamCampbell\BootstrapCMS\Models\Attribute'
+    |
+    */
+
+    'atributo' => 'GrahamCampbell\BootstrapCMS\Models\Attribute',
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Currency Model
+    |--------------------------------------------------------------------------
+    |
+    | This defines the order model to be used.
+    |
+    | Default: 'GrahamCampbell\BootstrapCMS\Models\Attribute'
+    |
+    */
+
+    'moneda' => 'GrahamCampbell\BootstrapCMS\Models\Currency',
+
 ];

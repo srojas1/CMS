@@ -23,7 +23,7 @@
         </div>
         <div class="col-xs-4">
             <div class="pull-right">
-                <a class="btn btn-success" href="{!! URL::route('atributos.index') !!}">Mostrar Atributos</a>
+                <a class="btn btn-success" href="{!! URL::route('atributo.index') !!}">Mostrar Atributos</a>
                 <a class="btn btn-primary" href="{!! URL::route('producto.create') !!}">Crear Producto</a>
             </div>
         </div>
@@ -37,6 +37,8 @@
             <th>Stock</th>
             <th>Precio</th>
             <th>Oferta</th>
+            <th>Ventas</th>
+            <th>Ingresos</th>
             </thead>
             <tbody>
             @foreach ($producto as $prod)
@@ -46,6 +48,8 @@
                     <td>{{getStockName($prod->id_stock)}}</td>
                     <td>{{$prod->precio}}</td>
                     <td>{{$prod->oferta}}</td>
+                    <td>[ventas]</td>
+                    <td>[ingresos]</td>
                     <td>
                         <a class="btn btn-info" href="{!! URL::route('producto.edit', array('producto' => $prod->id)) !!}"><i class="fa fa-pencil-square-o"></i></a>
                         <a class="btn btn-danger" href="#delete_producto_{!! $prod->id !!}" data-toggle="modal" data-target="#delete_producto_{!! $prod->id !!}"><i class="fa fa-times"></i></a>&nbsp

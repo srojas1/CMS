@@ -2,6 +2,12 @@
 
 use GrahamCampbell\BootstrapCMS\Http\Constants as Config;
 
+function formatTimeText($date) {
+    setlocale(LC_TIME, 'es_CO.UTF-8');
+    $formattedDate = strtotime($date);
+    $hour = date('H:i:s', $formattedDate);
+    return strftime("%d de %B de %G a las $hour", $formattedDate);
+}
 function getStockName($stockId) {
 
         $stockName = "";

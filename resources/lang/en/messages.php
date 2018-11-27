@@ -52,4 +52,10 @@ return [
         'update_success' => 'El cliente fue actualizado correctamente',
         'delete_success' => 'El cliente fue eliminado correctamente',
     ],
+
+    'atributo' => [
+        'store_success'  => 'El atributo fue creado correctamente',
+        'update_success' => 'El atributo fue actualizado correctamente',
+        'delete_success' => 'El atributo fue eliminado correctamente',
+    ],
 ];
