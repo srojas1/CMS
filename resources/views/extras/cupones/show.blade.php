@@ -24,20 +24,20 @@
         <th>ACCIONES</th>
         </thead>
         <tbody>
-        @foreach ($cupon as $cup)
+        {{--@foreach ($cliente as $cli)--}}
         <tr>
-            <td></td>
-            <td>{{$atr->cupon}}</td>
-            <td>{{$atr->descuento}}</td>
-            <td>{{$atr->vencimiento}}</td>
-            <td>{{$atr->stock_maximo}}</td>
+            <td>ADRELK1234</td>
+            <td>[NOMBRE CUPON]</td>
+            <td>50.00</td>
+            <td>[vencimiento]</td>
+            <td>[stock]</td>
             <td>[nro. reclamados]</td>
             <td>
-                <a class="btn btn-info" href="{!! URL::route('cupon.edit', array('cupon' => $cup->id)) !!}"><i class="fa fa-pencil-square-o"></i></a>
-                <a class="btn btn-danger" href="#delete_cupon_{!! $atr->id !!}" data-toggle="modal" data-target="#delete_cupon_{!! $atr->id !!}" data-toggle="modal" data-target=""><i class="fa fa-times"></i></a>&nbsp
+                <a class="btn btn-info" href=""><i class="fa fa-pencil-square-o"></i></a>
+                <a class="btn btn-danger" href="" data-toggle="modal" data-target=""><i class="fa fa-times"></i></a>&nbsp
             </td>
         </tr>
-        @endforeach
+        {{--@endforeach--}}
         </tbody>
     </table>
 </div>

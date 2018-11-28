@@ -58,4 +58,10 @@ return [
         'update_success' => 'El atributo fue actualizado correctamente',
         'delete_success' => 'El atributo fue eliminado correctamente',
     ],
+
+	'cupon' => [
+		'store_success'  => 'El cupon fue creado correctamente',
+		'update_success' => 'El cupon fue actualizado correctamente',
+		'delete_success' => 'El cupon fue eliminado correctamente',
+	],
 ];
