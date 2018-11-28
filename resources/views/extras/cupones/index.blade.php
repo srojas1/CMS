@@ -26,15 +26,15 @@
         <tbody>
         @foreach ($cupon as $cup)
         <tr>
-            <td></td>
-            <td>{{$atr->cupon}}</td>
-            <td>{{$atr->descuento}}</td>
-            <td>{{$atr->vencimiento}}</td>
-            <td>{{$atr->stock_maximo}}</td>
+            <td>{{$cup->cupon}}</td>
+            <td>{{$cup->condicion}}</td>
+            <td>{{$cup->descuento}}</td>
+            <td>{{$cup->vencimiento}}</td>
+            <td>{{$cup->stock_maximo}}</td>
             <td>[nro. reclamados]</td>
             <td>
                 <a class="btn btn-info" href="{!! URL::route('cupon.edit', array('cupon' => $cup->id)) !!}"><i class="fa fa-pencil-square-o"></i></a>
-                <a class="btn btn-danger" href="#delete_cupon_{!! $atr->id !!}" data-toggle="modal" data-target="#delete_cupon_{!! $atr->id !!}" data-toggle="modal" data-target=""><i class="fa fa-times"></i></a>&nbsp
+                <a class="btn btn-danger" href="#delete_cupon_{!! $cup->id !!}" data-toggle="modal" data-target="#delete_cupon_{!! $cup->id !!}" data-toggle="modal" data-target=""><i class="fa fa-times"></i></a>&nbsp
             </td>
         </tr>
         @endforeach

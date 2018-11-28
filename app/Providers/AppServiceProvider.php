@@ -25,6 +25,7 @@ use GrahamCampbell\BootstrapCMS\Repositories\ProductoRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\PedidoRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\PromocionRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\CuponRepository;
+use GrahamCampbell\BootstrapCMS\Repositories\RecompensaRepository;
 use GrahamCampbell\BootstrapCMS\Subscribers\CommandSubscriber;
 use GrahamCampbell\BootstrapCMS\Subscribers\NavigationSubscriber;
 use Illuminate\Support\ServiceProvider;
@@ -102,6 +103,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerPromocionRepository();
         $this->registerCuponRepository();
         $this->registerAtributoRepository();
+        $this->registerRecompensaRepository();
 
         $this->registerCommandSubscriber();
         $this->registerNavigationSubscriber();
@@ -287,7 +289,26 @@ class AppServiceProvider extends ServiceProvider
             'GrahamCampbell\BootstrapCMS\Repositories\CuponRepository');
     }
 
+    /**
+     * Register the cupon repository class.
+     *
+     * @return void
+     */
+    protected function registerRecompensaRepository()
+    {
+        $this->app->singleton('recompensarepository', function ($app) {
+            $model = $app['config']['cms.recompensa'];
+            $recompensa = new $model();
 
+            $validator = $app['validator'];
+
+            return new RecompensaRepository($recompensa, $validator);
+        });
+
+        $this->app->alias('recompensarepository',
+            'GrahamCampbell\BootstrapCMS\Repositories\RecompensaRepository');
+    }
+    
     /**
      * Register the atributo repository class.
      *

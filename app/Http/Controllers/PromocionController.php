@@ -3,7 +3,9 @@
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 use GrahamCampbell\Binput\Facades\Binput;
+use GrahamCampbell\BootstrapCMS\Facades\CuponRepository;
 use GrahamCampbell\BootstrapCMS\Facades\PromocionRepository;
+use GrahamCampbell\BootstrapCMS\Facades\RecompensaRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
@@ -35,8 +37,14 @@ class PromocionController extends AbstractController {
     public function index()
     {
        $promocion = PromocionRepository::paginate();
+       $cupon     = CuponRepository::paginate();
+       $recompensa= RecompensaRepository::paginate();
 
-       return View::make('extras.index', ['promocion'=>$promocion]);
+       return View::make('extras.index', [
+           'promocion'=>$promocion,
+           'cupon'=>$cupon,
+           'recompensa'=>$recompensa
+       ]);
     }
 
     /**
