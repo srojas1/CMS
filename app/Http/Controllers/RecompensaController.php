@@ -35,8 +35,9 @@ class RecompensaController extends AbstractController {
 	public function index()
 	{
 		$recompensa = RecompensaRepository::paginate();
+        $links = RecompensaRepository::links();
 
-		return View::make('extras.index', ['recompensa'=>$recompensa]);
+		return View::make('extras.index', ['recompensa'=>$recompensa,'links'=>$links]);
 	}
 
 	/**

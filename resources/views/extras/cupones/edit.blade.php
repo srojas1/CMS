@@ -19,7 +19,7 @@
         </div>
         <div class="col-xs-6">
             <div class="pull-right">
-                <a class="btn btn-success" href="{!! URL::route('cupon.show', array('cupon' => $cupon->id)) !!}"><i class="fa fa-file-text"></i> Mostrar Cuppones</a>
+                <a class="btn btn-success" href="{!! URL::route('cupon.show', array('cupon' => $cupon->id)) !!}"><i class="fa fa-file-text"></i> Mostrar Cupones</a>
                 <a class="btn btn-danger" href="#delete_cupon" data-toggle="modal" data-target="#delete_cupon"><i class="fa fa-times"></i>Eliminar</a>
             </div>
         </div>
@@ -27,6 +27,10 @@
     <hr>
     <div class="well">
 		<?php
+
+        var_dump($cupon->vencimiento);
+        exit();
+
 		$form = ['url' => URL::route('cupon.update',['cupon' => $cupon->id]),
 			'_method'   => 'PATCH',
 			'method' => 'POST',
@@ -35,17 +39,17 @@
 				'cupon'   => $cupon->cupon,
 				'condicion'   => $cupon->condicion,
 				'descuento'   => $cupon->descuento,
-				'vencimiento'   => $cupon->vencimiento,
+				'vencimiento'   => $cupon->vencimiento->format(Config::get('date.php_format')),
 				'stock_maximo'   => $cupon->stock_maximo,
 			], ];
 		?>
-        @include('cupons.form')
+        @include('extras.cupones.form')
     </div>
 @stop
 
 @section('bottom')
     @auth('edit')
-        @include('cupons.delete')
+        @include('extras.cupones.delete')
     @endauth
 @stop
 

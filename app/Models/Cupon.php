@@ -51,7 +51,7 @@ class Cupon extends AbstractModel implements HasPresenter {
      *
      * @var int
      */
-    public static $paginate = 10;
+    public static $paginate = 2;
 
     /**
      * The columns to order by when displaying an index.

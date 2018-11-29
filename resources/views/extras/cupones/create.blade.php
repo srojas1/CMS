@@ -32,7 +32,7 @@
             'defaults' => [
                 'cupon'        => '',
                 'descuento'    => '',
-                'vencimiento'  => Carbon\Carbon::now()->addMinutes(30)->format(Config::get('date.php_format')),
+                'vencimiento'  => Carbon\Carbon::now()->format(Config::get('date.php_format')),
                 'stock_maximo' => '',
                 'condicion'    => '',
             ], ];

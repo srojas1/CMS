@@ -40,8 +40,17 @@ public function __construct()
 public function index()
 {
     $cupon = CuponRepository::paginate();
+    $promocion     = PromocionRepository::paginate();
+    $recompensa    = RecompensaRepository::paginate();
 
-    return View::make('extras.index', ['cupon'=>$cupon]);
+    $links = CuponRepository::links();
+
+    return View::make('extras.index', [
+        'promocion'=>$promocion,
+        'cupon'=>$cupon,
+        'recompensa'=>$recompensa,
+        'links'=>$links
+    ]);
 }
 
 /**
@@ -61,8 +70,8 @@ public function create()
  */
 public function store()
 {
-    $input = array_merge(Binput::only([
-        'cupon', 'descuento', 'vencimiento', 'stock_maximo', 'condicion'
+    $input = array_merge(['user_id' => Credentials::getuser()->id],
+        Binput::only(['cupon', 'descuento', 'vencimiento', 'stock_maximo', 'condicion',
     ]));
 
     $val = CuponRepository::validate($input, array_keys($input));
@@ -84,15 +93,23 @@ public function store()
  *
  * @return Response
  */
-public function show()
+public function show($id)
 {
-    $cupon = CuponRepository::paginate();
+    $cupon         = CuponRepository::paginate();
     $promocion     = PromocionRepository::paginate();
-    $recompensa= RecompensaRepository::paginate();
+    $recompensa    = RecompensaRepository::paginate();
 
-    return View::make('extras.index', [ 'promocion'=>$promocion,
+    $links = CuponRepository::links();
+
+    $cupon = CuponRepository::find($id);
+    $this->checkCupon($cupon);
+
+    return View::make('extras.index', [
+        'promocion'=>$promocion,
         'cupon'=>$cupon,
-        'recompensa'=>$recompensa]);
+        'recompensa'=>$recompensa,
+        'links'=>$links
+    ]);
 }
 
 /**
@@ -106,7 +123,7 @@ public function edit($id)
     $cupon = CuponRepository::find($id);
     $this->checkCupon($cupon);
 
-    return View::make('cupones.edit', ['cupon' => $cupon]);
+    return View::make('extras.cupones.edit', ['cupon' => $cupon]);
 }
 
 /**
@@ -118,12 +135,14 @@ public function edit($id)
  */
 public function update(Request $request, $id)
 {
-    $input = Binput::only(['cupon']);
+    $input = Binput::only(['cupon', 'descuento', 'vencimiento', 'stock_maximo', 'condicion']);
 
     $val = $val = CuponRepository::validate($input, array_keys($input));
     if ($val->fails()) {
         return Redirect::route('cupon.edit', ['cupon' => $id])->withInput()->withErrors($val->errors());
     }
+
+    $input['vencimiento'] = Carbon::createFromFormat(Config::get('date.php_format'), $input['vencimiento']);
 
     $cupon = CuponRepository::find($id);
     $this->checkCupon($cupon);

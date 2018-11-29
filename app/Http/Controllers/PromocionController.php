@@ -40,10 +40,13 @@ class PromocionController extends AbstractController {
        $cupon     = CuponRepository::paginate();
        $recompensa= RecompensaRepository::paginate();
 
+       $links = PromocionRepository::links();
+
        return View::make('extras.index', [
            'promocion'=>$promocion,
            'cupon'=>$cupon,
-           'recompensa'=>$recompensa
+           'recompensa'=>$recompensa,
+           'links'=>$links
        ]);
     }
 

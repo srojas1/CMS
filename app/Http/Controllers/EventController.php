@@ -75,8 +75,8 @@ class EventController extends AbstractController
      */
     public function store()
     {
-        $input = array_merge(['user_id' => Credentials::getuser()->id], Binput::only([
-            'title', 'location', 'date', 'body',
+        $input = array_merge(['user_id' => Credentials::getuser()->id],
+            Binput::only(['title', 'location', 'date', 'body',
         ]));
 
 		$val = EventRepository::validate($input, array_keys($input));

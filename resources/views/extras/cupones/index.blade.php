@@ -41,3 +41,10 @@
         </tbody>
     </table>
 </div>
+{!! $links !!}
+
+@section('bottom')
+    @auth('edit')
+        @include('extras.cupones.deletes')
+    @endauth
+@stop
