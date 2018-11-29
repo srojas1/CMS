@@ -49,15 +49,15 @@
         </ul>
         <div class="tab-content">
             <div role="tabpanel"
-                 class="tab-pane active" id="promociones">
+                 class="tab-pane {{$arrStatus['promoStatus']}}" id="promociones">
                 @include('extras.promociones.index')
             </div>
             <div role="tabpanel"
-                 class="tab-pane" id="cupones">
+                 class="tab-pane {{$arrStatus['cuponStatus']}}" id="cupones">
                 @include('extras.cupones.index')
             </div>
             <div role="tabpanel"
-                 class="tab-pane" id="recompensas">
+                 class="tab-pane {{$arrStatus['recompensaStatus']}}" id="recompensas">
                 @include('extras.recompensas.index')
             </div>
         </div>

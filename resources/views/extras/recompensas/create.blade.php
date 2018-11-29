@@ -31,10 +31,8 @@
             'button'   => 'Crear Cupón',
             'defaults' => [
                 'recompensa'        => '',
-                'descuento'    => '',
-                'vencimiento'  => '',
-                'stock_maximo' => '',
-                'condicion'    => '',
+                'puntos'            =>'',
+				'descripcion'       =>'',
             ], ];
         ?>
         @include('extras.recompensas.form')

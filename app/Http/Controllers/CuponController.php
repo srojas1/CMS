@@ -45,11 +45,18 @@ public function index()
 
     $links = CuponRepository::links();
 
+	$arrStatus = array(
+		'promoStatus'=>'',
+		'cuponStatus'=>'active',
+		'recompensaStatus'=>'',
+	);
+
     return View::make('extras.index', [
         'promocion'=>$promocion,
         'cupon'=>$cupon,
         'recompensa'=>$recompensa,
-        'links'=>$links
+        'links'=>$links,
+		'arrStatus'=>$arrStatus,
     ]);
 }
 
@@ -70,8 +77,7 @@ public function create()
  */
 public function store()
 {
-    $input = array_merge(['user_id' => Credentials::getuser()->id],
-        Binput::only(['cupon', 'descuento', 'vencimiento', 'stock_maximo', 'condicion',
+    $input = array_merge(Binput::only(['cupon', 'descuento', 'vencimiento', 'stock_maximo', 'condicion',
     ]));
 
     $val = CuponRepository::validate($input, array_keys($input));
@@ -101,14 +107,20 @@ public function show($id)
 
     $links = CuponRepository::links();
 
-    $cupon = CuponRepository::find($id);
     $this->checkCupon($cupon);
+
+	$arrStatus = array(
+		'promoStatus'=>'',
+		'cuponStatus'=>'active',
+		'recompensaStatus'=>'',
+	);
 
     return View::make('extras.index', [
         'promocion'=>$promocion,
         'cupon'=>$cupon,
         'recompensa'=>$recompensa,
-        'links'=>$links
+        'links'=>$links,
+		'arrStatus'=>$arrStatus,
     ]);
 }
 

@@ -69,3 +69,4 @@ $router->resource('pedido', 'PedidoController');
 $router->resource('promocion', 'PromocionController');
 $router->resource('cupon', 'CuponController');
 $router->resource('atributo', 'AtributoController');
+$router->resource('recompensa', 'RecompensaController');

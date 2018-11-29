@@ -30,7 +30,7 @@ class Cupon extends AbstractModel implements HasPresenter {
      *
      * @var array
      */
-    protected $dates = ['created_at','updated_at','deleted_at'];
+    protected $dates = ['vencimiento','created_at','updated_at','deleted_at'];
 
     /**
      * The revisionable columns.

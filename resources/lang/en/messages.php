@@ -64,4 +64,10 @@ return [
 		'update_success' => 'El cupon fue actualizado correctamente',
 		'delete_success' => 'El cupon fue eliminado correctamente',
 	],
+
+	'recompensa' => [
+		'store_success'  => 'La recompensa fue creada correctamente',
+		'update_success' => 'La recompensa fue actualizada correctamente',
+		'delete_success' => 'La recompensa fue eliminada correctamente',
+	],
 ];

@@ -24,20 +24,27 @@
         <th>ACCIONES</th>
         </thead>
         <tbody>
-        {{--@foreach ($cliente as $cli)--}}
-        <tr>
-            <td>ADRELK1234</td>
-            <td>[NOMBRE CUPON]</td>
-            <td>50.00</td>
-            <td>[vencimiento]</td>
-            <td>[stock]</td>
-            <td>[nro. reclamados]</td>
-            <td>
-                <a class="btn btn-info" href=""><i class="fa fa-pencil-square-o"></i></a>
-                <a class="btn btn-danger" href="" data-toggle="modal" data-target=""><i class="fa fa-times"></i></a>&nbsp
-            </td>
-        </tr>
-        {{--@endforeach--}}
+        @foreach ($cupon as $cup)
+            <tr>
+                <td>{{$cup->cupon}}</td>
+                <td>{{$cup->condicion}}</td>
+                <td>{{$cup->descuento}}</td>
+                <td>{{$cup->vencimiento}}</td>
+                <td>{{$cup->stock_maximo}}</td>
+                <td>[nro. reclamados]</td>
+                <td>
+                    <a class="btn btn-info" href="{!! URL::route('cupon.edit', array('cupon' => $cup->id)) !!}"><i class="fa fa-pencil-square-o"></i></a>
+                    <a class="btn btn-danger" href="#delete_cupon_{!! $cup->id !!}" data-toggle="modal" data-target="#delete_cupon_{!! $cup->id !!}" data-toggle="modal" data-target=""><i class="fa fa-times"></i></a>&nbsp
+                </td>
+            </tr>
+        @endforeach
         </tbody>
     </table>
 </div>
+{!! $links !!}
+
+@section('bottom')
+    @auth('edit')
+        @include('extras.cupones.deletes')
+    @endauth
+@stop

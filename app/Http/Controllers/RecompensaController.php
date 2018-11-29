@@ -4,6 +4,8 @@ namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\BootstrapCMS\Facades\RecompensaRepository;
+use GrahamCampbell\BootstrapCMS\Facades\CuponRepository;
+use GrahamCampbell\BootstrapCMS\Facades\PromocionRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
@@ -37,7 +39,13 @@ class RecompensaController extends AbstractController {
 		$recompensa = RecompensaRepository::paginate();
         $links = RecompensaRepository::links();
 
-		return View::make('extras.index', ['recompensa'=>$recompensa,'links'=>$links]);
+		$arrStatus = array(
+			'promoStatus'=>'',
+			'cuponStatus'=>'',
+			'recompensaStatus'=>'active',
+		);
+
+		return View::make('extras.index', ['recompensa'=>$recompensa,'links'=>$links,'arrStatus'=>$arrStatus,]);
 	}
 
 	/**
@@ -56,10 +64,12 @@ class RecompensaController extends AbstractController {
 	 * @param  Request  $request
 	 * @return Response
 	 */
-	public function store(Request $request)
+	public function store()
 	{
-		$input = array_merge(['user_id' => Credentials::getuser()->id], Binput::only([
-			'recompensa'
+		$input = array_merge(Binput::only([
+			'recompensa',
+			'puntos',
+			'descripcion'
 		]));
 
 		$val = RecompensaRepository::validate($input, array_keys($input));
@@ -68,7 +78,7 @@ class RecompensaController extends AbstractController {
 			return Redirect::route('recompensa.create')->withInput()->withErrors($val->errors());
 		}
 
-		$recompensa = RecompensaRepository::create($request->all());
+		$recompensa = RecompensaRepository::create($input);
 
 		return Redirect::route('recompensa.show', ['recompensa'=>$recompensa->id])
 			->with('success', trans('messages.recompensa.store_success'));
@@ -81,9 +91,27 @@ class RecompensaController extends AbstractController {
 	 */
 	public function show()
 	{
-		$recompensa = RecompensaRepository::paginate();
+		$cupon         = CuponRepository::paginate();
+		$promocion     = PromocionRepository::paginate();
+		$recompensa    = RecompensaRepository::paginate();
 
-		return View::make('recompensa.show', ['recompensa' => $recompensa]);
+		$links = RecompensaRepository::links();
+
+		$this->checkRecompensa($recompensa);
+
+		$arrStatus = array(
+			'promoStatus'=>'',
+			'cuponStatus'=>'',
+			'recompensaStatus'=>'active',
+		);
+
+		return View::make('extras.index', [
+			'promocion'=>$promocion,
+			'cupon'=>$cupon,
+			'recompensa'=>$recompensa,
+			'links'=>$links,
+			'arrStatus'=>$arrStatus,
+		]);
 	}
 
 	/**

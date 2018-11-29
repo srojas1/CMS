@@ -42,11 +42,18 @@ class PromocionController extends AbstractController {
 
        $links = PromocionRepository::links();
 
+		$arrStatus = array(
+			'promoStatus'=>'active',
+			'cuponStatus'=>'',
+			'recompensaStatus'=>'',
+		);
+
        return View::make('extras.index', [
            'promocion'=>$promocion,
            'cupon'=>$cupon,
            'recompensa'=>$recompensa,
-           'links'=>$links
+           'links'=>$links,
+		   'arrStatus'=>$arrStatus
        ]);
     }
 

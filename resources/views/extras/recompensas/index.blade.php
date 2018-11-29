@@ -6,7 +6,7 @@
     <div class="col-xs-4">
         <div class="pull-right">
             <br>
-            <a class="btn btn-primary" href="">Agregar Recompensa</a>
+            <a class="btn btn-primary" href="{!! URL::route('recompensa.create') !!}">Agregar Recompensa</a>
         </div>
     </div>
 </div>
@@ -27,10 +27,17 @@
             <td>{{$rec->descripcion}}</td>
             <td>
                 <a class="btn btn-info" href=""><i class="fa fa-pencil-square-o"></i></a>
-                <a class="btn btn-danger" href="" data-toggle="modal" data-target=""><i class="fa fa-times"></i></a>&nbsp
+                <a class="btn btn-danger" href="#delete_recompensa_{!! $rec->id !!}" data-toggle="modal" data-target="#delete_recompensa_{!! $rec->id !!}" data-toggle="modal" data-target=""><i class="fa fa-times"></i></a>&nbsp
             </td>
         </tr>
         @endforeach
         </tbody>
     </table>
 </div>
+{!! $links !!}
+
+@section('bottom')
+    @auth('edit')
+        @include('extras.recompensas.deletes')
+    @endauth
+@stop

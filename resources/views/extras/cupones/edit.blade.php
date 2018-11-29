@@ -28,9 +28,6 @@
     <div class="well">
 		<?php
 
-        var_dump($cupon->vencimiento);
-        exit();
-
 		$form = ['url' => URL::route('cupon.update',['cupon' => $cupon->id]),
 			'_method'   => 'PATCH',
 			'method' => 'POST',
