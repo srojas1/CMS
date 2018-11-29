@@ -4,14 +4,14 @@
     <input type="hidden" name="_method" value="{{ isset($form['_method'])? $form['_method'] : $form['method'] }}">
 
     <div class="form-group{!! ($errors->has('cupon')) ? ' has-error' : '' !!}">
-        <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">Nombre Cupón</label>
+        <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="cupon">Nombre Cupón</label>
         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
             <input name="cupon" id="cupon" value="{!! Request::old('title', $form['defaults']['cupon']) !!}" type="text" class="form-control" placeholder="Nombre Cupon">
             {!! ($errors->has('cupon') ? $errors->first('cupon') : '') !!}
         </div>
     </div>
     <div class="form-group{!! ($errors->has('descuento')) ? ' has-error' : '' !!}">
-        <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">Descuento</label>
+        <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="descuento">Descuento</label>
         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
             <input name="descuento" id="descuento" value="{!! Request::old('title', $form['defaults']['descuento']) !!}" type="text" class="form-control" placeholder="Descuento">
             {!! ($errors->has('descuento') ? $errors->first('descuento') : '') !!}
@@ -21,7 +21,7 @@
         <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="vencimiento">Vencimiento</label>
         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
             <div class="input-group date" id="datetimepicker1">
-                <input name="vencimiento" value="{!! Request::old('vencimiento', $form['defaults']['vencimiento']) !!}" type='text' class="form-control" placeholder="Vencimiento">
+                <input name="vencimiento" id="vencimiento" value="{!! Request::old('vencimiento', $form['defaults']['vencimiento']) !!}" type='text' class="form-control" placeholder="Vencimiento">
                 <span class="input-group-addon"><span class="fa fa-calendar fa-fw"></span></span>
             </div>
         </div>
@@ -35,7 +35,7 @@
         </div>
     </div>
     <div class="form-group{!! ($errors->has('condicion')) ? ' has-error' : '' !!}">
-        <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">Condición</label>
+        <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="condicion">Condición</label>
         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-10">
             <input name="condicion" id="condicion" value="{!! Request::old('title', $form['defaults']['condicion']) !!}" type="text" class="form-control" placeholder="Condición">
             {!! ($errors->has('condicion') ? $errors->first('condicion') : '') !!}

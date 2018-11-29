@@ -40,7 +40,7 @@
                         {{$ped->getClientById->apaterno}}
                         {{$ped->getClientById->amaterno}}</td>
                     <td>Hace {{timeSince($ped->fecha_pedido)}}</td>
-                    <td>{{$ped->total}}</td>
+                    <td>S/ {{$ped->total}}</td>
                     <td>Direccion Test</td>
                     <td>{{$ped->getStatusById->estado}}</td>
                     <td>

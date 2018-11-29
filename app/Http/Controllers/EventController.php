@@ -88,9 +88,6 @@ class EventController extends AbstractController
 
         $event = EventRepository::create($input);
 
-        var_dump($event);
-        exit;
-
         return Redirect::route('events.show', ['events' => $event->id])
             ->with('success', trans('messages.event.store_success'));
     }
