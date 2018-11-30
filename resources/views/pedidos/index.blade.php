@@ -42,7 +42,11 @@
                     <td>Hace {{timeSince($ped->fecha_pedido)}}</td>
                     <td>S/ {{$ped->total}}</td>
                     <td>Direccion Test</td>
+                    @if ($ped->getStatusById->estado)
                     <td>{{$ped->getStatusById->estado}}</td>
+                    @else
+                        <td>{{\GrahamCampbell\BootstrapCMS\Http\Constants::STATUS_EMPTY}}</td>
+                    @endif
                     <td>
                         <a class="btn btn-success"
                            href="#detail_pedido_{!! $ped->id !!}"

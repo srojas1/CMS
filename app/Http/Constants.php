@@ -9,4 +9,5 @@ class Constants {
     const AGOTADO_LABEL = 'Agotado';
     const PRONTO = 3;
     const PRONTO_LABEL = 'Muy Pronto';
+    const STATUS_EMPTY = 'Sin estado asignado';
 }

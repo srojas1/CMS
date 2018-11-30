@@ -12,7 +12,11 @@
             </div>
             <div class="modal-body">
                 <p>{{formatTimeText($ped->fecha_pedido)}}</p>
-                <p>{{$ped->getStatusById->estado}}</p>
+                @if ($ped->getStatusById->estado)
+                    <p>{{$ped->getStatusById->estado}}</p>
+                @else
+                    <td>{{\GrahamCampbell\BootstrapCMS\Http\Constants::STATUS_EMPTY}}</td>
+                @endif
             </div>
             <div class="modal-body">
                 <div class="tabpanel">
@@ -28,10 +32,16 @@
                                 Detalles del pedido
                             </h4>
                             @foreach($ped->getProductsById as $prod)
-                                <p>{{$prod->producto}} - {{$prod->getCurrencyById->simbolo}} {{$prod->precio}}</p>
-                            @endforeach
-                            <label>Total - {{$prod->getCurrencyById->simbolo}} {{$ped->total}}</label>
 
+                                <p>{{$prod->producto}} -
+                                    @if($prod->getCurrencyById->simbolo)
+                                        {{$prod->getCurrencyById->simbolo}}
+                                    @endif
+                                {{$prod->precio}}</p>
+                            @endforeach
+                            @if (isset($ped->getCurrencyById->simbolo))
+                                <label>Total - {{$prod->getCurrencyById->simbolo}} {{$ped->total}}</label>
+                            @endif
                         </div>
                         <div role="tabpanel"
                              class="tab-pane" id="entrega_{!! $nkey !!}"">

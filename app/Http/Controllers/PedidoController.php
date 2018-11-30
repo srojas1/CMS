@@ -3,7 +3,6 @@
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 use GrahamCampbell\BootstrapCMS\Facades\PedidoRepository;
-use GrahamCampbell\BootstrapCMS\Models\Order;
 use Illuminate\Support\Facades\View;
 
 class PedidoController extends AbstractController {
