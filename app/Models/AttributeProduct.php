@@ -8,7 +8,7 @@ use GrahamCampbell\Credentials\Models\Relations\RevisionableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
 
-class Product extends AbstractModel implements HasPresenter {
+class AttributeProduct extends AbstractModel implements HasPresenter {
 
 	use BelongsToUserTrait, RevisionableTrait, SoftDeletes;
 	/**
@@ -16,14 +16,14 @@ class Product extends AbstractModel implements HasPresenter {
 	 *
 	 * @var string
 	 */
-	protected $table = 'products';
+	protected $table = 'attributes_products';
 
 	/**
 	 * The model name.
 	 *
 	 * @var string
 	 */
-	public static $name = 'product';
+	public static $name = 'attributeProduct';
 
 	/**
 	 * The properties on the model that are dates.
@@ -37,21 +37,21 @@ class Product extends AbstractModel implements HasPresenter {
 	 *
 	 * @var array
 	 */
-	protected $keepRevisionOf = ['producto'];
+	protected $keepRevisionOf = ['valor'];
 
 	/**
 	 * The columns to select when displaying an index.
 	 *
 	 * @var array
 	 */
-	public static $index = ['id','producto','id_categoria','id_stock','precio','oferta','filename'];
+	public static $index = ['id','valor'];
 
 	/**
 	 * The max events per page when displaying a paginated index.
 	 *
 	 * @var int
 	 */
-	public static $paginate = 2;
+	public static $paginate = 10;
 
 	/**
 	 * The columns to order by when displaying an index.
@@ -68,42 +68,13 @@ class Product extends AbstractModel implements HasPresenter {
 	public static $sort = 'asc';
 
 	/**
-	 * The event validation rules.
-	 *
-	 * @var array
-	 */
-	public static $rules = [
-		'producto'    => 'required'
-	];
-
-	/**
 	 * Get the presenter class.
 	 *
 	 * @return string
 	 */
 	public function getPresenterClass()
 	{
-		return 'GrahamCampbell\BootstrapCMS\Presenters\ProductPresenter';
+		return 'GrahamCampbell\BootstrapCMS\Presenters\AttributeProductPresenter';
 	}
 
-    /**
-     * Get Category by Product
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function getCategoryById() {
-        return $this->hasOne(Category::class,'id','id_categoria');
-    }
-
-    public function orders() {
-        return $this->belongsToMany(Order::class,'orders_products');
-    }
-
-    public function getCurrencyById() {
-        return $this->hasOne(Currency::class,'id','id_moneda');
-    }
-
-	public function getAttributesByProductId() {
-		return $this->hasMany(AttributeProduct::class,'id','id_producto');
-	}
 }
