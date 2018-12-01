@@ -14,14 +14,8 @@
     <div class="row">
         <div class="col-xs-6">
             <p class="lead">
-                Editar el recompensa:
+                Editar la recompensa:
             </p>
-        </div>
-        <div class="col-xs-6">
-            <div class="pull-right">
-                <a class="btn btn-success" href="{!! URL::route('recompensa.show', array('recompensa' => $recompensa->id)) !!}"><i class="fa fa-file-text"></i> Mostrar Cuppones</a>
-                <a class="btn btn-danger" href="#delete_recompensa" data-toggle="modal" data-target="#delete_recompensa"><i class="fa fa-times"></i>Eliminar</a>
-            </div>
         </div>
     </div>
     <hr>
@@ -37,14 +31,8 @@
 				'descripcion'   => $recompensa->descripcion,
 			], ];
 		?>
-        @include('recompensas.form')
+        @include('extras.recompensas.form')
     </div>
-@stop
-
-@section('bottom')
-    @auth('edit')
-        @include('recompensas.delete')
-    @endauth
 @stop
 
 @section('css')

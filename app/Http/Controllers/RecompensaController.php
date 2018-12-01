@@ -37,7 +37,7 @@ class RecompensaController extends AbstractController {
 	public function index()
 	{
 		$recompensa = RecompensaRepository::paginate();
-        $links = RecompensaRepository::links();
+		$links = RecompensaRepository::links();
 
 		$arrStatus = array(
 			'promoStatus'=>'',
@@ -125,7 +125,7 @@ class RecompensaController extends AbstractController {
 		$recompensa = RecompensaRepository::find($id);
 		$this->checkRecompensa($recompensa);
 
-		return View::make('recompensas.edit', ['recompensa' => $recompensa]);
+		return View::make('extras.recompensas.edit', ['recompensa' => $recompensa]);
 	}
 
 	/**
@@ -135,9 +135,9 @@ class RecompensaController extends AbstractController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update(Request $request, $id)
+	public function update($id)
 	{
-		$input = Binput::only(['recompensa']);
+		$input = Binput::only(['recompensa','puntos','descripcion']);
 
 		$val = $val = RecompensaRepository::validate($input, array_keys($input));
 		if ($val->fails()) {

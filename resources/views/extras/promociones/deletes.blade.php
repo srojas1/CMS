@@ -1,5 +1,5 @@
-@foreach ($recompensa as $rec)
-	<div id="delete_recompensa_{!! $rec->id !!}" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+@foreach ($promocion as $prom)
+	<div id="delete_promocion_{!! $prom->id !!}" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -11,7 +11,7 @@
 					<p>Está seguro que desea continuar?</p>
 				</div>
 				<div class="modal-footer">
-					<a class="btn btn-success" href="{!! URL::route('recompensa.destroy', array('cupon' => $rec->id)) !!}" data-token="{!! Session::getToken() !!}" data-method="DELETE">Yes</a>
+					<a class="btn btn-success" href="{!! URL::route('promocion.destroy', array('promocion' => $prom->id)) !!}" data-token="{!! Session::getToken() !!}" data-method="DELETE">Yes</a>
 					<button class="btn btn-danger" data-dismiss="modal">No</button>
 				</div>
 			</div>
