@@ -313,4 +313,17 @@
 	*/
 
 	'recompensa' => 'GrahamCampbell\BootstrapCMS\Models\Recompensa',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Atributo Producto Model
+    |--------------------------------------------------------------------------
+    |
+    | This defines the recompensa model to be used.
+    |
+    | Default: 'GrahamCampbell\BootstrapCMS\Models\AtributoProducto'
+    |
+    */
+
+    'atributoproducto' => 'GrahamCampbell\BootstrapCMS\Models\AttributeProduct',
 ];

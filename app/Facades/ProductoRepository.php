@@ -4,7 +4,6 @@ namespace GrahamCampbell\BootstrapCMS\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-
 class ProductoRepository extends Facade {
 
 	/**

@@ -10,7 +10,7 @@
 		</div>
 	</div>
 </div>
-<hr>
+<br>
 <div class="well">
 	<table class="table">
 		<thead>

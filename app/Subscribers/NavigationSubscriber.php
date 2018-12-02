@@ -125,11 +125,11 @@ class NavigationSubscriber
             'GrahamCampbell\BootstrapCMS\Subscribers\NavigationSubscriber@onNavigationMainFirst',
             8
         );
-        $events->listen(
-            'navigation.main',
-            'GrahamCampbell\BootstrapCMS\Subscribers\NavigationSubscriber@onNavigationMainSecond',
-            5
-        );
+//        $events->listen(
+//            'navigation.main',
+//            'GrahamCampbell\BootstrapCMS\Subscribers\NavigationSubscriber@onNavigationMainSecond',
+//            5
+//        );
         $events->listen(
             'navigation.main',
             'GrahamCampbell\BootstrapCMS\Subscribers\NavigationSubscriber@onNavigationMainThird',

@@ -21,13 +21,13 @@
 				'producto'    => '',
 				'codigo'    => '',
                 'descripcion' => '',
-                'id_categoria'=>'',
-                'id_stock' =>'',
+                'id_categoria'=> '',
+                'id_stock' => '',
                 'precio' => '',
                 'oferta' => ''
-			], ];
+			],];
 		?>
-        @include('productos.form')
+        @include('productos.form_new')
     </div>
 @stop
 

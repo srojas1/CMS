@@ -3,6 +3,8 @@
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 use GrahamCampbell\Binput\Facades\Binput;
+use GrahamCampbell\BootstrapCMS\Facades\AtributoRepository;
+use GrahamCampbell\BootstrapCMS\Facades\AtributoProductoRepository;
 use GrahamCampbell\BootstrapCMS\Facades\ProductoRepository;
 use GrahamCampbell\BootstrapCMS\Facades\CategoriaRepository;
 use GrahamCampbell\BootstrapCMS\Models\Category;
@@ -57,6 +59,7 @@ class ProductoController extends AbstractController
 	public function create()
 	{
 		$categorias = CategoriaRepository::all();
+		$atributos  = AtributoRepository::all();
 
 		$stockName = array(
 		    array('nombre'=>Config::EN_STOCK_LABEL,'value'=>Config::EN_STOCK),
@@ -64,7 +67,11 @@ class ProductoController extends AbstractController
             array('nombre'=>Config::PRONTO_LABEL,'value'=>Config::PRONTO)
         );
 
-		return View::make('productos.create',['categorias' => $categorias, 'stock' => $stockName]);
+		return View::make('productos.create',[
+		    'categorias' => $categorias,
+            'stock' => $stockName,
+            'atributos'=>$atributos
+        ]);
 	}
 
     /**
@@ -93,40 +100,49 @@ class ProductoController extends AbstractController
 	 * @return Response
 	 */
 	public function store(Request $request)
-	{
-		$input = array_merge(
-		    $this->getInput()
+    {
+        $input = array_merge(
+            $this->getInput()
         );
 
-		$val = ProductoRepository::validate($input, array_keys($input));
+        $val = ProductoRepository::validate($input, array_keys($input));
 
-		if ($val->fails()) {
-			return Redirect::route('producto.create')->withInput()->withErrors($val->errors());
-		}
+        if ($val->fails()) {
+            return Redirect::route('producto.create')->withInput()->withErrors($val->errors());
+        }
 
-        if($request->hasfile('filename'))
-        {
+        $atributos = $request->input('valor');
+
+        foreach ($atributos as $key => $atr) {
+            $arr['valor'] = $atr;
+        }
+
+        if ($request->hasfile('filename')) {
             $images = $request->file('filename');
 
-            foreach($images as $key=>$image)
-            {
-                if(!empty($image)) {
+            foreach ($images as $key => $image) {
+                if (!empty($image)) {
                     $name = $image->getClientOriginalName();
-                    $image->move(public_path().'/images/', $name);
+                    $image->move(public_path() . '/images/', $name);
                     $data[] = $name;
-                }
-                else {
-                   continue;
+                } else {
+                    continue;
                 }
             }
         }
 
-        $input['filename'] = json_encode($data);
+        if (!empty($data)) {
+            $input['filename'] = json_encode($data);
+        }
 
-		$producto = ProductoRepository::create($input);
+        $producto = ProductoRepository::create($input);
 
-		return Redirect::route('producto.show', ['producto'=>$producto->id])
-			->with('success', trans('messages.producto.store_success'));
+        $arr['product_id'] = $producto->id;
+
+        AtributoProductoRepository::create($arr);
+
+        return Redirect::route('producto.show', ['producto' => $producto->id])
+            ->with('success', trans('messages.producto.store_success'));
 	}
 
 	/**

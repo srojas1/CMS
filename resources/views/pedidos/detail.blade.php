@@ -21,7 +21,7 @@
             <div class="modal-body">
                 <div class="tabpanel">
                     <ul class="nav nav-tabs" role="tablist">
-                        <li><a href="#pedido_{!! $nkey !!}" data-toggle="tab">1. Pedido</a></li>
+                        <li class="active"><a href="#pedido_{!! $nkey !!}" data-toggle="tab">1. Pedido</a></li>
                         <li><a href="#entrega_{!! $nkey !!}" data-toggle="tab">2. Datos Entrega y Pago</a></li>
                     </ul>
                     <div class="tab-content">
@@ -39,9 +39,7 @@
                                     @endif
                                 {{$prod->precio}}</p>
                             @endforeach
-                            @if (isset($ped->getCurrencyById->simbolo))
-                                <label>Total - {{$prod->getCurrencyById->simbolo}} {{$ped->total}}</label>
-                            @endif
+                                <label>Total - S/ {{$ped->total}}</label>
                         </div>
                         <div role="tabpanel"
                              class="tab-pane" id="entrega_{!! $nkey !!}"">

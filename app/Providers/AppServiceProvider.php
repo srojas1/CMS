@@ -15,6 +15,7 @@ use GrahamCampbell\BootstrapCMS\Http\Controllers\CommentController;
 use GrahamCampbell\BootstrapCMS\Navigation\Factory;
 use GrahamCampbell\BootstrapCMS\Observers\PageObserver;
 use GrahamCampbell\BootstrapCMS\Repositories\AtributoRepository;
+use GrahamCampbell\BootstrapCMS\Repositories\AtributoProductoRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\ClienteRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\CommentRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\EventRepository;
@@ -104,6 +105,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerCuponRepository();
         $this->registerAtributoRepository();
         $this->registerRecompensaRepository();
+        $this->registerAtributoProductoRepository();
 
         $this->registerCommandSubscriber();
         $this->registerNavigationSubscriber();
@@ -208,6 +210,26 @@ class AppServiceProvider extends ServiceProvider
 		$this->app->alias('productorepository',
 			'GrahamCampbell\BootstrapCMS\Repositories\ProductoRepository');
 	}
+
+    /**
+     * Register the atributo producto repository class.
+     *
+     * @return void
+     */
+    protected function registerAtributoProductoRepository()
+    {
+        $this->app->singleton('atributoproductorepository', function ($app) {
+            $model = $app['config']['cms.atributoproducto'];
+            $atributoproducto = new $model();
+
+            $validator = $app['validator'];
+
+            return new AtributoProductoRepository($atributoproducto, $validator);
+        });
+
+        $this->app->alias('atributoproductorepository',
+            'GrahamCampbell\BootstrapCMS\Repositories\AtributoProductoRepository');
+    }
 
     /**
      * Register the cliente repository class.

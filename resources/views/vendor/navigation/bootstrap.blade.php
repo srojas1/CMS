@@ -58,6 +58,24 @@
                         @endif
                     @endif
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Notificaciones
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            {{--todo-samuel: add foreach for history--}}
+                            <li>
+                                <a href="{!! $item['url'] !!}">
+                                    <strong>David Lee</strong> acaba de hacer un pedido
+                                    <strong>David Lee</strong> acaba de hacer un pedido
+                                    <strong>David Lee</strong> acaba de hacer un pedido
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

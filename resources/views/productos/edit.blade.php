@@ -28,8 +28,8 @@
     <div class="well">
         <?php
         $form = ['url' => URL::route('producto.update',['producto' => $producto->id]),
-            '_method'   => 'PATCH',
-            'method' => 'POST',
+            '_method'  => 'PATCH',
+            'method'   => 'POST',
             'enctype'  => 'multipart/form-data',
             'button'   => 'Guardar producto',
             'defaults' => [
@@ -40,7 +40,6 @@
                 'id_stock' => $producto->id_stock,
                 'precio' => $producto->precio,
                 'oferta' => $producto->oferta
-
             ], ];
         ?>
         @include('productos.form')

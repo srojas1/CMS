@@ -1,18 +1,18 @@
-    {{--@if (count($errors) > 0)--}}
-    {{--<div class="alert alert-danger">--}}
-        {{--<strong>Whoops!</strong> There were some problems with your input.<br><br>--}}
-        {{--<ul>--}}
-            {{--@foreach ($errors->all() as $error)--}}
-                {{--<li>{{ $error }}</li>--}}
-            {{--@endforeach--}}
-        {{--</ul>--}}
-    {{--</div>--}}
+{{--@if (count($errors) > 0)--}}
+{{--<div class="alert alert-danger">--}}
+{{--<strong>Whoops!</strong> There were some problems with your input.<br><br>--}}
+{{--<ul>--}}
+{{--@foreach ($errors->all() as $error)--}}
+{{--<li>{{ $error }}</li>--}}
+{{--@endforeach--}}
+{{--</ul>--}}
+{{--</div>--}}
 {{--@endif--}}
 
 {{--@if(session('success'))--}}
-    {{--<div class="alert alert-success">--}}
-        {{--{{ session('success') }}--}}
-    {{--</div>--}}
+{{--<div class="alert alert-success">--}}
+{{--{{ session('success') }}--}}
+{{--</div>--}}
 {{--@endif--}}
 
 <form class="form-horizontal" action="{{ $form['url'] }}" method="{{ $form['method'] }}" enctype="{{ $form['enctype'] }}">
@@ -102,11 +102,11 @@
     </div>
     <hr class="hr_div">
     <div>Atributos</div>
-    @foreach($producto->getAttributesById as $nkey=>$atr)
+    @foreach($atributos as $nkey=>$atr)
         <div class="form-group">
             <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">{{$atr->atributo}}</label>
             <div class="input-group control-group attribute-field" >
-                <input name="atributo" id="atributo" value="{{$atr->pivot->valor}}" type="text" class="form-control" placeholder="Valor">
+                <input id="valor" name="valor[]" value="" type="text" class="form-control" placeholder="Valor">
                 <div class="input-group-btn">
                     <button class="btn btn-danger" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
                 </div>
@@ -119,19 +119,19 @@
         </div>
     </div>
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-    $(document).ready(function() {
+        $(document).ready(function() {
 
-        $(".btn-success").click(function(){
-            var html = $(".clone").html();
-            $(".increment").after(html);
+            $(".btn-success").click(function(){
+                var html = $(".clone").html();
+                $(".increment").after(html);
+            });
+
+            $("body").on("click",".btn-danger",function(){
+                $(this).parents(".control-group").prev().remove();
+                $(this).parents(".control-group").remove();
+            });
         });
-
-        $("body").on("click",".btn-danger",function(){
-            $(this).parents(".control-group").prev().remove();
-            $(this).parents(".control-group").remove();
-        });
-    });
-</script>
+    </script>
 </form>

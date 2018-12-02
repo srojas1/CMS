@@ -14,7 +14,7 @@
 	<div class="tabpanel">
 
 		<ul class="nav nav-tabs" role="tablist">
-			<li><a href="#promociones" data-toggle="tab">
+			<li class="active"><a href="#promociones" data-toggle="tab">
 					<div class="row">
 						<div class="col-xs-8">
 							<p class="lead">

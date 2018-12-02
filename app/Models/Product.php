@@ -103,7 +103,7 @@ class Product extends AbstractModel implements HasPresenter {
         return $this->hasOne(Currency::class,'id','id_moneda');
     }
 
-	public function getAttributesByProductId() {
-		return $this->hasMany(AttributeProduct::class,'id','id_producto');
+	public function getAttributesById() {
+		return $this->belongsToMany(Attribute::class,'attributes_products')->withPivot('valor');
 	}
 }
