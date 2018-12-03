@@ -106,7 +106,7 @@
         <div class="form-group">
             <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">{{$atr->atributo}}</label>
             <div class="input-group control-group attribute-field" >
-                <input id="valor" name="valor[]" value="" type="text" class="form-control" placeholder="Valor">
+                <input id="valor" name="valor[{{$atr->id}}]" value="" type="text" class="form-control" placeholder="Valor">
                 <div class="input-group-btn">
                     <button class="btn btn-danger" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
                 </div>

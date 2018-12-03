@@ -112,10 +112,7 @@ class ProductoController extends AbstractController
         }
 
         $atributos = $request->input('valor');
-
-        foreach ($atributos as $key => $atr) {
-            $arr['valor'] = $atr;
-        }
+		$id_atributos = $request->input('id_atributo');
 
         if ($request->hasfile('filename')) {
             $images = $request->file('filename');
@@ -137,9 +134,12 @@ class ProductoController extends AbstractController
 
         $producto = ProductoRepository::create($input);
 
-        $arr['product_id'] = $producto->id;
-
-        AtributoProductoRepository::create($arr);
+		foreach ($atributos as $key => $atr) {
+			$arr['attribute_id'] = $key;
+			$arr['valor'] = $atr;
+			$arr['product_id'] = $producto->id;
+			AtributoProductoRepository::create($arr);
+		}
 
         return Redirect::route('producto.show', ['producto' => $producto->id])
             ->with('success', trans('messages.producto.store_success'));

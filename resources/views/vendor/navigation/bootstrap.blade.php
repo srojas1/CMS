@@ -68,9 +68,9 @@
                             {{--todo-samuel: add foreach for history--}}
                             <li>
                                 <a href="{!! $item['url'] !!}">
-                                    <strong>David Lee</strong> acaba de hacer un pedido
-                                    <strong>David Lee</strong> acaba de hacer un pedido
-                                    <strong>David Lee</strong> acaba de hacer un pedido
+                                    <strong>David Lee</strong> acaba de hacer un pedido<br/>
+                                    <strong>David Lee</strong> acaba de hacer un pedido<br/>
+                                    <strong>David Lee</strong> acaba de hacer un pedido<br/>
                                 </a>
                             </li>
                         </ul>
