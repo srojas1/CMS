@@ -161,7 +161,7 @@ class NavigationSubscriber
     {
 		//if ($this->blogging) {
 			$this->navigation->addToMain(
-				['title' => 'Dashboard', 'slug' => 'dashboard', 'icon' => 'book']
+				['title' => 'Dashboard2', 'slug' => 'dashboard', 'icon' => 'dashboard']
 			);
 		//}
 
