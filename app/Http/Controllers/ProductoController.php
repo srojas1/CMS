@@ -112,6 +112,7 @@ class ProductoController extends AbstractController
         }
 
         $atributos = $request->input('valor');
+        $idAtributo = $request->input('id_atributo');
 
         foreach ($atributos as $key => $atr) {
             $arr['valor'] = $atr;
@@ -138,6 +139,7 @@ class ProductoController extends AbstractController
         $producto = ProductoRepository::create($input);
 
         $arr['product_id'] = $producto->id;
+        $arr['attribute_id'] = $idAtributo;
 
         AtributoProductoRepository::create($arr);
 

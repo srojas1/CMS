@@ -112,6 +112,7 @@
                 </div>
             </div>
         </div>
+        <hidden name="id_atributo" value={{$atr->id}}></hidden>
     @endforeach
     <div class="form-group">
         <div class="col-md-offset-2 col-sm-offset-3 col-sm-10 col-xs-12">
