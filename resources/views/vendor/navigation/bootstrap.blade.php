@@ -7,7 +7,7 @@
         <ul class="nav flex-column">
             @foreach($main as $item)
                 <li class="nav-item">
-                    <a class="nav-link" href="{!! $item['url'] !!}"><i class="material-icons">  {!! ((!$item['icon'] == '') ? '<i class="fa fa-'.$item['icon'].' fa-inverse fa-fw"></i> ' : '') !!}</i> {{ $item['title'] }}</a>
+                    <a class="nav-link" href="{!! $item['url'] !!}"><i class="material-icons">  {!! ((!$item['icon'] == '') ? $item['icon'] : '') !!}</i> {{ $item['title'] }}</a>
                 </li>
             @endforeach
             {{--<li class="nav-item">--}}

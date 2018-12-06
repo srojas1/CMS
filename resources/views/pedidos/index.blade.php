@@ -5,7 +5,6 @@
 @stop
 
 @section('content')
-    <div class="container col-12 col-sm-12 col-md-9 col-lg-9 col-xl-10">
         <div class="modulo container-fluid">
             <!--- CABECERA DE MÓDULO --->
             <div class="modulo-head row">
@@ -99,7 +98,6 @@
                 <span>Samuel Rojas P.</span>
             </div>
         </div>
-    </div>
     {{--<div class="well">--}}
         {{--<table class="table">--}}
             {{--<thead>--}}

@@ -7,9 +7,9 @@
 @show</title>
 @include('partials.header')
 </head>
-<body>
+<body class="page page-principal">
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-    <a class="navbar-brand" href="">CCC</a>
+    <a class="navbar-brand" href="">Cordapp</a>
     <div class="collapse navbar-collapse">
     </div>
 </nav>

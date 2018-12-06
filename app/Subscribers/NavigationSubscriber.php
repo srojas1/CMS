@@ -125,11 +125,7 @@ class NavigationSubscriber
             'GrahamCampbell\BootstrapCMS\Subscribers\NavigationSubscriber@onNavigationMainFirst',
             8
         );
-//        $events->listen(
-//            'navigation.main',
-//            'GrahamCampbell\BootstrapCMS\Subscribers\NavigationSubscriber@onNavigationMainSecond',
-//            5
-//        );
+
         $events->listen(
             'navigation.main',
             'GrahamCampbell\BootstrapCMS\Subscribers\NavigationSubscriber@onNavigationMainThird',
@@ -161,20 +157,20 @@ class NavigationSubscriber
     {
 		//if ($this->blogging) {
 			$this->navigation->addToMain(
-				['title' => 'Dashboard2', 'slug' => 'dashboard', 'icon' => 'dashboard']
+				['title' => 'Dashboard', 'slug' => 'dashboard', 'icon' => 'dashboard']
 			);
 		//}
 
         //if ($this->blogging) {
             $this->navigation->addToMain(
-                ['title' => 'Pedidos', 'slug' => 'pedido', 'icon' => 'book']
+                ['title' => 'Pedidos', 'slug' => 'pedido', 'icon' => 'assignment']
             );
         //}
 
 		// add productos
 		//if ($this->producto) {
 			$this->navigation->addToMain(
-				['title' => 'Productos', 'slug' => 'producto', 'icon' => 'book']
+				['title' => 'Productos', 'slug' => 'producto', 'icon' => 'store']
 			);
 		//}
 
@@ -188,13 +184,13 @@ class NavigationSubscriber
 		// add extras
 		//if ($this->events) {
 			$this->navigation->addToMain(
-				['title' => 'Promociones y Recompensas', 'slug' => 'promocion', 'icon' => 'book']
+				['title' => 'Promociones y Recompensas', 'slug' => 'promocion', 'icon' => 'card_giftcard']
 			);
 		//}
 
 		// add clientes
         $this->navigation->addToMain(
-                ['title' => 'Clientes', 'slug' => 'cliente', 'icon' => 'book']
+                ['title' => 'Clientes', 'slug' => 'cliente', 'icon' => 'group']
         );
     }
 
@@ -240,23 +236,23 @@ class NavigationSubscriber
      */
     public function onNavigationMainThird()
     {
-        // get the pages
-        $pages = $this->pagerepository->navigation();
-
-        // select the home page
-        $page = $pages[0];
-
-        // add the page to the start of the main nav bars
-        $this->navigation->addToMain($page, 'default', true);
-        $this->navigation->addToMain($page, 'admin', true);
-
-        // add the view users link
-        if ($this->credentials->check() && $this->credentials->hasAccess('mod')) {
-            $this->navigation->addToMain(
-                ['title' => 'Users', 'slug' => 'users', 'icon' => 'user'],
-                'admin'
-            );
-        }
+//        // get the pages
+//        $pages = $this->pagerepository->navigation();
+//
+//        // select the home page
+//        $page = $pages[0];
+//
+//        // add the page to the start of the main nav bars
+//        $this->navigation->addToMain($page, 'default', true);
+//        $this->navigation->addToMain($page, 'admin', true);
+//
+//        // add the view users link
+//        if ($this->credentials->check() && $this->credentials->hasAccess('mod')) {
+//            $this->navigation->addToMain(
+//                ['title' => 'Users', 'slug' => 'users', 'icon' => 'user'],
+//                'admin'
+//            );
+//        }
     }
 
     /**
