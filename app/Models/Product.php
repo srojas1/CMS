@@ -51,7 +51,7 @@ class Product extends AbstractModel implements HasPresenter {
 	 *
 	 * @var int
 	 */
-	public static $paginate = 2;
+	public static $paginate = 7;
 
 	/**
 	 * The columns to order by when displaying an index.
@@ -96,7 +96,7 @@ class Product extends AbstractModel implements HasPresenter {
     }
 
     public function orders() {
-        return $this->belongsToMany(Order::class,'orders_products');
+        return $this->belongsToMany(Order::class,'orders_products')->withPivot('cantidad');
     }
 
     public function getCurrencyById() {

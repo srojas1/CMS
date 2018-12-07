@@ -9,14 +9,14 @@
             <!--- CABECERA DE MÓDULO --->
             <div class="modulo-head row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-7"><h2>Pedidos</h2></div>
-                {{--<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-5">--}}
-                    {{--<div class="input-group">--}}
-                        {{--<div class="input-group-prepend">--}}
-                            {{--<div class="input-group-text"><i class="material-icons">search</i></div>--}}
-                        {{--</div>--}}
-                        {{--<input type="text" class="form-control buscador" placeholder="Buscar pedido">--}}
-                    {{--</div>--}}
-                {{--</div>--}}
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-5">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="material-icons">search</i></div>
+                        </div>
+                        <input type="text" class="form-control buscador" placeholder="Buscar pedido">
+                    </div>
+                </div>
             </div>
             <!--- CONTENIDO DE MÓDULO--->
             <div class="modulo-tabs">
@@ -40,7 +40,6 @@
                                 <th scope="col">MONTO</th>
                                 <th scope="col">DESTINO</th>
                                 <th scope="col">ESTADO</th>
-                                <th scope="col">VER</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -53,18 +52,12 @@
                                 <td>S/ {{$ped->total}}</td>
                                 <td>Direccion Test</td>
                                 @if ($ped->getStatusById->estado)
-                                    <td><button type="button" class="btn btn-danger">{{$ped->getStatusById->estado}}</button></td>
+                                    <td>
+                                     <button type="button" class="btn btn-danger" href="#detail_pedido_{!! $ped->id !!}" data-toggle="modal" data-target="#detail_pedido_{!! $ped->id !!}">{{$ped->getStatusById->estado}}</button>
+                                    </td>
                                 @else
                                     <td>{{\GrahamCampbell\BootstrapCMS\Http\Constants::STATUS_EMPTY}}</td>
                                 @endif
-                                <td>
-                                    <a class="btn btn-success"navbar-inverse
-                                       href="#detail_pedido_{!! $ped->id !!}"
-                                       data-toggle="modal"
-                                       data-target="#detail_pedido_{!! $ped->id !!}">
-                                        <i class="fa fa-info"></i>
-                                    </a>
-                                </td>
                             </tr>
                             @endforeach
                             </tbody>

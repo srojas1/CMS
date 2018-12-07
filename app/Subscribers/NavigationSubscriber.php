@@ -174,12 +174,12 @@ class NavigationSubscriber
 			);
 		//}
 
-        // add categorias
-        if ($this->categoria) {
-            $this->navigation->addToMain(
-                ['title' => 'Categorias', 'slug' => 'categoria', 'icon' => 'book']
-            );
-        }
+//        // add categorias
+//        if ($this->categoria) {
+//            $this->navigation->addToMain(
+//                ['title' => 'Categorias', 'slug' => 'categoria', 'icon' => 'book']
+//            );
+//        }
 
 		// add extras
 		//if ($this->events) {
