@@ -45,10 +45,16 @@ class ProductoController extends AbstractController
 	 */
 	public function index()
 	{
-		$producto = ProductoRepository::paginate();
-        $links = ProductoRepository::links();
+		$producto  = ProductoRepository::paginate();
+        $categoria = CategoriaRepository::paginate();
+        $links     = ProductoRepository::links();
 
-        return View::make('productos.index', ['producto' => $producto,'links'=>$links]);
+        return View::make('productos.index',
+            [
+              'producto' => $producto,
+              'links'=>$links,
+              'categoria'=>$categoria
+            ]);
 	}
 
 	/**
