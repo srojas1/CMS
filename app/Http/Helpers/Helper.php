@@ -2,6 +2,27 @@
 
 use GrahamCampbell\BootstrapCMS\Http\Constants as Config;
 
+function getCantidadPedidos($arr) {
+    return count($arr);
+}
+
+function formatNumber($id) {
+    return str_pad($id, Config::NUMBER_FORMAT_ZEROS, '0', STR_PAD_LEFT);
+}
+
+function getColorByStatus($idEstado) {
+
+    $color = '';
+
+    switch($idEstado) {
+        case 1: $color='btn-danger';break;
+        case 3: $color='btn-success';break;
+    }
+
+    return $color;
+}
+
+
 function formatTimeText($date) {
     setlocale(LC_TIME, 'es_CO.UTF-8');
     $formattedDate = strtotime($date);

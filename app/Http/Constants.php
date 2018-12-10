@@ -10,4 +10,5 @@ class Constants {
     const PRONTO = 3;
     const PRONTO_LABEL = 'Muy Pronto';
     const STATUS_EMPTY = 'Sin estado asignado';
+    const NUMBER_FORMAT_ZEROS=5;
 }

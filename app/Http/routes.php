@@ -70,3 +70,6 @@ $router->resource('promocion', 'PromocionController');
 $router->resource('cupon', 'CuponController');
 $router->resource('atributo', 'AtributoController');
 $router->resource('recompensa', 'RecompensaController');
+
+//Ajax Contoller
+Route::post('pedido/changeStatus', 'PedidoController@ChangeStatus');

@@ -4,6 +4,7 @@ namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 use GrahamCampbell\BootstrapCMS\Facades\PedidoRepository;
 use Illuminate\Support\Facades\View;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PedidoController extends AbstractController {
 
@@ -33,5 +34,25 @@ class PedidoController extends AbstractController {
         $pedido = PedidoRepository::paginate();
 
         return View::make('pedidos.index', ['pedido' => $pedido]);
+    }
+
+    public function changeStatus() {
+
+        $id = $_POST['id_pedido'];
+        $idEstado = $_POST['id_estado'];
+
+        $pedido = PedidoRepository::find($id);
+        $this->checkPedido($pedido);
+
+        $input = ['id_estado'=>$idEstado];
+
+        $pedido->update($input);
+    }
+
+    protected function checkPedido($pedido)
+    {
+        if (!$pedido) {
+            throw new NotFoundHttpException('Pedido No Encontrado');
+        }
     }
 }
