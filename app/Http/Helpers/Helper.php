@@ -12,10 +12,11 @@ function formatNumber($id) {
 
 function getColorByStatus($idEstado) {
 
-    $color = '';
+    $color = 'btn-secondary';
 
     switch($idEstado) {
         case 1: $color='btn-danger';break;
+        case 2: $color='btn-warning';break;
         case 3: $color='btn-success';break;
     }
 

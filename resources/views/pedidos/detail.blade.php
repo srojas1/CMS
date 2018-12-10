@@ -16,20 +16,17 @@
                 @if ($ped->getStatusById->estado)
                     <button id="cambiar_estado" class="cambiar_estado">Cambiar Estado</button>
                     <p>{{$ped->getStatusById->estado}}</p>
-                    <input type="hidden" id="id_estado" value="2"/>
-                    {{--<select class="form-control m-bot15" class="id_estado">--}}
-                        {{--@if($categorias->count() > 0)--}}
-                            {{--@foreach(array('1','2') as $key => $est)--}}
-                                {{--@if ($est->id == $form['defaults']['id_categoria'])--}}
-                                    {{--<option value={{$est}}> {{$est}}</option>--}}
-                                {{--@else--}}
-                                    {{--<option value="{{$cats->id}}">{{$cats->categoria}}</option>--}}
-                                {{--@endif--}}
-                            {{--@endforeach--}}
-                        {{--@else--}}
-                            {{--No se encontraron resultados--}}
-                        {{--@endif--}}
-                    {{--</select>--}}
+                    <input type="hidden" id="id_estado" value="{{$ped->id}}"/>
+                    <select class="form-control m-bot15" id="id_estado_change">
+                        {{--todo: poner estados desde la bd--}}
+                            @foreach(array('1'=>'NO ATENDIDO',
+                                           '2'=>'PROCESADO',
+                                           '3'=>'ENTREGADO',
+                                           '4'=>'FALLIDO',
+                                           '5'=>'RECHAZADO') as $key => $est)
+                                    <option value={{$key}}> {{$est}}</option>
+                            @endforeach
+                    </select>
                 @else
                     <td>{{\GrahamCampbell\BootstrapCMS\Http\Constants::STATUS_EMPTY}}</td>
                 @endif

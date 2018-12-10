@@ -53,7 +53,9 @@
                                 <td>Direccion Test</td>
                                 @if ($ped->getStatusById->estado)
                                     <td>
-                                     <button type="button" class="btn_modal btn {{getColorByStatus($ped->id_estado)}}" data-toggle="modal">{{$ped->getStatusById->estado}}</button>
+                                        <button type="button" class="btn_modal btn {{getColorByStatus($ped->id_estado)}}" href="#detail_pedido_{!! $ped->id !!}"
+                                           data-toggle="modal"
+                                           data-target="#detail_pedido_{!! $ped->id !!}">{{$ped->getStatusById->estado}}</button>
                                     </td>
                                 @else
                                     <td>{{\GrahamCampbell\BootstrapCMS\Http\Constants::STATUS_EMPTY}}</td>
