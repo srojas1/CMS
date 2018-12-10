@@ -117,8 +117,8 @@ class Order extends AbstractModel implements HasPresenter {
     public function getProductsById() {
         return $this->belongsToMany(Product::class,
             'orders_products',
-            'id_pedido',
-            'id_producto');
+            'order_id',
+            'product_id');
     }
 
     public function getPaymentCardByIdClient() {
