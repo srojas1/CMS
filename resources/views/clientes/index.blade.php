@@ -33,13 +33,23 @@
                         @foreach ($cliente as $cli)
                             <tr>
                                 <th scope="row">{{$cli->nombres}} {{$cli->apaterno}} {{$cli->amaterno}}</th>
-                                <td>Ate</td>
-                                <td>10</td>
+                                <td>{{$cli->address->direccion}}</td>
+                                <td>1</td>
                                 <td>{{$cli->puntos}}</td>
                                 <td>{{$cli->last_login}}</td>
-                                <td>Ultima compra</td>
-                                <td>2</td>
-                                <td>29,192.00</td>
+                                @if($cli->lastOrder)
+                                    <td>{{$cli->lastOrder->fecha_compra}}</td>
+                                @endif
+                                <?php $sumPedidos = 0 ?>
+                                @foreach($cli->orders as $key=>$ord)
+                                    <?php $sumPedidos ++?>
+                                @endforeach
+                                <td>{{$sumPedidos}}</td>
+                                <?php $sumTotales = 0 ?>
+                                @foreach($cli->orders as $key=>$ord)
+                                    <?php $sumTotales+=$ord->total?>
+                                @endforeach
+                                <td>S/ {{$sumTotales}}</td>
                                 <td>
                                     <a class="btn btn-info" href="{!! URL::route('cliente.edit', array('cliente' => $cli->id)) !!}"><i class="fa fa-pencil-square-o"></i></a>
                                     <a class="btn btn-danger" href="#delete_cliente_{!! $cli->id !!}" data-toggle="modal" data-target="#delete_cliente_{!! $cli->id !!}" data-toggle="modal" data-target="#delete_cliente_{!! $cli->id !!}"><i class="fa fa-times"></i></a>&nbsp

@@ -46,12 +46,13 @@ class Order extends AbstractModel implements HasPresenter {
      */
     public static $index =
         ['id',
-         'id_cliente',
+         'client_id',
          'total',
          'contacto_entrega',
          'movil_contacto_entrega',
          'id_estado',
          'fecha_pedido',
+         'fecha_compra',
          'id_cliente_tipo_pago',
          'id_direccion'
         ];
@@ -102,7 +103,7 @@ class Order extends AbstractModel implements HasPresenter {
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function getClientById() {
-        return $this->hasOne(Client::class,'id','id_cliente');
+        return $this->hasOne(Client::class,'id','client_id');
     }
 
     /**

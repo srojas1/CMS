@@ -24,7 +24,6 @@ $(document).ready(function(){
         
         $(this).on('hidden.bs.modal', function (){
             window.location.reload();
-            alert('El estado fue cambiad exitosamente');
         });
 
 });

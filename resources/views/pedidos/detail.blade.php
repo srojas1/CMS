@@ -1,15 +1,15 @@
 @foreach ($pedido as $nkey=>$ped)
-<div data-backdrop="static" id="detail_pedido_{!! $ped->id !!}" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+<div id="detail_pedido_{!! $ped->id !!}" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <input type="hidden" id="id_pedido" value="{{$ped->id}}"/>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">
                     #{{$ped->id}} | {{$ped->getClientById->nombres}}
                     {{$ped->getClientById->apaterno}}
                     {{$ped->getClientById->amaterno}}
                 </h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body">
                 <p>{{formatTimeText($ped->fecha_pedido)}}</p>
@@ -36,7 +36,7 @@
                     </ul>
                     <div class="tab-content">
                         <div role="tabpanel"
-                        class="tab-pane active" id="pedido_{!! $nkey !!}"">
+                        class="tab-pane active" id="pedido_{!! $nkey !!}">
 
                             <h4 class="modal-title">
                                 Detalles del pedido

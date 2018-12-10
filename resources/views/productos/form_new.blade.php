@@ -1,25 +1,7 @@
-{{--@if (count($errors) > 0)--}}
-{{--<div class="alert alert-danger">--}}
-{{--<strong>Whoops!</strong> There were some problems with your input.<br><br>--}}
-{{--<ul>--}}
-{{--@foreach ($errors->all() as $error)--}}
-{{--<li>{{ $error }}</li>--}}
-{{--@endforeach--}}
-{{--</ul>--}}
-{{--</div>--}}
-{{--@endif--}}
-
-{{--@if(session('success'))--}}
-{{--<div class="alert alert-success">--}}
-{{--{{ session('success') }}--}}
-{{--</div>--}}
-{{--@endif--}}
-
 <form class="form-horizontal" action="{{ $form['url'] }}" method="{{ $form['method'] }}" enctype="{{ $form['enctype'] }}">
 
     {{ csrf_field() }}
     <input type="hidden" name="_method" value="{{ isset($form['_method'])? $form['_method'] : $form['method'] }}">
-
 
     <div class="form-group{!! ($errors->has('producto')) ? ' has-error' : '' !!}">
         <label class="col-md-2 col-sm-3 col-xs-10 control-label" for="first_name">Nombre producto</label>

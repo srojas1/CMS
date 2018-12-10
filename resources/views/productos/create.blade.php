@@ -27,7 +27,7 @@
                 'oferta' => ''
 			],];
 		?>
-        @include('productos.form_new')
+        @include('productos.detail1')
     </div>
 @stop
 

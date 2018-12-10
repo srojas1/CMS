@@ -6,6 +6,7 @@ use GrahamCampbell\Credentials\Models\AbstractModel;
 use GrahamCampbell\Credentials\Models\Relations\BelongsToUserTrait;
 use GrahamCampbell\Credentials\Models\Relations\RevisionableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 use McCool\LaravelAutoPresenter\HasPresenter;
 
 class Client extends AbstractModel implements HasPresenter {
@@ -87,7 +88,14 @@ class Client extends AbstractModel implements HasPresenter {
 	}
 
     public function address(){
-        return $this->hasMany(Promo::class);
+        return $this->hasOne(Address::class);
     }
 
+    public function orders(){
+        return $this->hasMany(Order::class);
+    }
+
+    public function lastOrder() {
+          return $this->hasOne(Order::class)->orderBy('fecha_compra', 'desc');
+    }
 }

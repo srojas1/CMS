@@ -12,7 +12,10 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-5">
                 <div class="input-group">
                         <a class="btn btn-success" href="{!! URL::route('atributo.index') !!}">Mostrar Atributos</a>
-                        <a class="btn btn-primary" href="{!! URL::route('producto.create') !!}">Crear Producto</a>
+                        {{--<a class="btn btn-primary" href="{!! URL::route('producto.create') !!}">Crear Producto</a>--}}
+                        <button type="button" class="btn btn-primary" href="#detail_producto"
+                            data-toggle="modal"
+                            data-target="#detail_producto">Crear Producto</button>
                     <div class="input-group-prepend">
                         <div class="input-group-text"><i class="material-icons">search</i></div>
                     </div>
@@ -55,14 +58,15 @@
                                             <th scope="row">{{$prod->producto}}</th>
                                             <td>{{$prod->getCategoryById->categoria}}</td>
                                             <td>{{getStockName($prod->id_stock)}}</td>
-                                            <td>{{$prod->precio}}</td>
-                                            <td>{{$prod->oferta}}</td>
-                                            <td>
-                                                @foreach($prod->orders as $ord_prod)
-													{{$ord_prod->pivot->cantidad}}
-                                                @endforeach
-                                            </td>
-                                            <td>0.00</td>
+                                            <td>S/ {{$prod->precio}}</td>
+                                            <td>S/ {{$prod->oferta}}</td>
+                                            <?php $sumVentas= 0 ?>
+                                            @foreach($prod->orders as $key=>$ord_prod)
+                                                <?php $sumVentas+=$ord_prod->pivot->cantidad?>
+                                            @endforeach
+                                            <td>{{$sumVentas}}</td>
+                                            <?php $ingreso=$sumVentas*$prod->precio?>
+                                            <td>S/ {{$ingreso}}</td>
                                             <td>
                                                 <a class="btn btn-info" href="{!! URL::route('producto.edit', array('producto' => $prod->id)) !!}"><i class="fa fa-pencil-square-o"></i></a>
                                                 <a class="btn btn-danger" href="#delete_producto_{!! $prod->id !!}" data-toggle="modal" data-target="#delete_producto_{!! $prod->id !!}"><i class="fa fa-times"></i></a>&nbsp
@@ -91,12 +95,19 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ($categoria as $cat)
+                                    @foreach ($categoria as $key1=>$cat)
                                         <tr>
                                             <th scope="row">{{$cat->categoria}}</th>
-                                            <td>[cant_productos]</td>
-                                            <td>[ventas]</td>
-                                            <td>[ingresos]</td>
+                                            <?php $sumProductos = 0 ?>
+                                            @foreach($cat->products as $key=>$cat)
+                                                <?php $sumProductos++?>
+                                            @endforeach
+                                            <td>{{$sumProductos}}</td>
+                                            <td>{{$cat->products}}</td></td>
+                                            {{--todo: samuel desarrollar obtener cantidad de ventas--}}
+                                            <td>29</td>
+                                            {{--todo: samuel desarrollar obtener cantidad de ingreso--}}
+                                            <td>S/ 1970.00</td>
                                             <td>
                                                 <a class="btn btn-info" href="{!! URL::route('categoria.edit', array('categoria' => $cat->id)) !!}"><i class="fa fa-pencil-square-o"></i></a>
                                                 <a class="btn btn-danger" href="#delete_categoria_{!! $cat->id !!}" data-toggle="modal" data-target="#delete_categoria_{!! $cat->id !!}"><i class="fa fa-times"></i></a>&nbsp
@@ -150,4 +161,5 @@
     @auth('edit')
         @include('productos.deletes')
     @endauth
+    @include('productos.detail_create')
 @stop

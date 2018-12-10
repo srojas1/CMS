@@ -220,7 +220,7 @@
 	|
 	*/
 
-	'cliente' => 'GrahamCampbell\BootstrapCMS\Models\Promo',
+	'cliente' => 'GrahamCampbell\BootstrapCMS\Models\Client',
 
 	/*
 	|--------------------------------------------------------------------------

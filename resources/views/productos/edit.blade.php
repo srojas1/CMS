@@ -42,7 +42,7 @@
                 'oferta' => $producto->oferta
             ], ];
         ?>
-        @include('productos.form')
+        @include('productos.detail1')
     </div>
 @stop
 
