@@ -71,5 +71,6 @@ $router->resource('cupon', 'CuponController');
 $router->resource('atributo', 'AtributoController');
 $router->resource('recompensa', 'RecompensaController');
 
-//Ajax Contoller
+//Ajax Contollers
 Route::post('pedido/changeStatus', 'PedidoController@ChangeStatus');
+Route::post('producto/store1', 'ProductoController@store1');

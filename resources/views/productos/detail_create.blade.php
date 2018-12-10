@@ -20,18 +20,15 @@
                     <div role="tabpanel"
                          class="tab-pane active" id="producto_1">
                         <?php
-                        $form = ['url' => URL::route('producto.store'),
+                        $form = ['url' => 'producto/store1',
                             'method'   => 'POST',
                             'enctype'  => 'multipart/form-data',
-                            'button'   => 'Crear Producto',
+                            'button'   => 'Siguiente',
                             'defaults' => [
                                 'producto'    => '',
                                 'codigo'    => '',
                                 'descripcion' => '',
-                                'id_categoria'=> '',
-                                'id_stock' => '',
-                                'precio' => '',
-                                'oferta' => ''
+                                'id_categoria'=> ''
                             ],];
                         ?>
                         @include('productos.detail1')
@@ -39,24 +36,59 @@
                 <div role="tabpanel"
                      class="tab-pane" id="producto_2">
                     <h4 class="modal-title">
+                        <?php
+                        $form = ['url' => URL::route('producto.store'),
+                            'method'   => 'POST',
+                            'enctype'  => 'multipart/form-data',
+                            'button'   => 'Siguiente',
+                            'defaults' => [
+                            ],];
+                        ?>
                         @include('productos.detail2')
                     </h4>
                 </div>
                 <div role="tabpanel"
                      class="tab-pane" id="producto_3">
                     <h4 class="modal-title">
+                        <?php
+                        $form = ['url' => URL::route('producto.store'),
+                            'method'   => 'POST',
+                            'enctype'  => 'multipart/form-data',
+                            'button'   => 'Siguiente',
+                            'defaults' => [
+                                'id_stock' => '',
+                                'precio' => '',
+                                'oferta' => ''
+                            ],];
+                        ?>
                         @include('productos.detail3')
                     </h4>
                 </div>
                 <div role="tabpanel"
                      class="tab-pane" id="producto_4">
                     <h4 class="modal-title">
+                        <?php
+                        $form = ['url' => URL::route('producto.store'),
+                            'method'   => 'POST',
+                            'enctype'  => 'multipart/form-data',
+                            'button'   => 'Siguiente',
+                            'defaults' => [
+                            ],];
+                        ?>
                         @include('productos.detail4')
                     </h4>
                 </div>
                 <div role="tabpanel"
                      class="tab-pane" id="producto_5">
                     <h4 class="modal-title">
+                        <?php
+                        $form = ['url' => URL::route('producto.store'),
+                            'method'   => 'POST',
+                            'enctype'  => 'multipart/form-data',
+                            'button'   => 'Siguiente',
+                            'defaults' => [
+                            ],];
+                        ?>
                         @include('productos.detail5')
                     </h4>
                 </div>

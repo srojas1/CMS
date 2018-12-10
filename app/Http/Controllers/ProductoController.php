@@ -28,6 +28,7 @@ class ProductoController extends AbstractController
 		$this->setPermissions([
 			'create'  => 'edit',
 			'store'   => 'edit',
+			'store1'  => 'edit',
 			'edit'    => 'edit',
 			'update'  => 'edit',
 			'destroy' => 'edit',
@@ -48,12 +49,21 @@ class ProductoController extends AbstractController
 		$producto  = ProductoRepository::paginate();
         $categoria = CategoriaRepository::paginate();
         $links     = ProductoRepository::links();
+        $atributos  = AtributoRepository::all();
+
+        $stockName = array(
+            array('nombre'=>Config::EN_STOCK_LABEL,'value'=>Config::EN_STOCK),
+            array('nombre'=>Config::AGOTADO_LABEL,'value'=>Config::AGOTADO),
+            array('nombre'=>Config::PRONTO_LABEL,'value'=>Config::PRONTO)
+        );
 
         return View::make('productos.index',
             [
               'producto' => $producto,
               'links'=>$links,
-              'categoria'=>$categoria
+              'categoria'=>$categoria,
+              'stock' => $stockName,
+               'atributos'=>$atributos
             ]);
 	}
 
@@ -85,6 +95,16 @@ class ProductoController extends AbstractController
      *
      * @return string[]
      */
+    protected function getInput1()
+    {
+        return [
+            'producto'   => Binput::get('producto'),
+            'codigo'     => Binput::get('codigo'),
+            'descripcion'=> Binput::get('descripcion'),
+            'category_id' => Binput::get('id_categoria'),
+        ];
+    }
+
     protected function getInput()
     {
         return [
@@ -99,6 +119,30 @@ class ProductoController extends AbstractController
         ];
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function store1(Request $request)
+    {
+        $input = array_merge(
+            $this->getInput1()
+        );
+
+        $val = ProductoRepository::validate($input, array_keys($input));
+
+        if ($val->fails()) {
+            return Redirect::route('producto.detail_create')->withInput()->withErrors($val->errors());
+        }
+
+        $producto = ProductoRepository::create($input);
+
+        return Redirect::route('producto.index', ['producto' => $producto->id])
+            ->with('success', trans('messages.producto.store_success'));
+    }
+
 	/**
 	 * Store a newly created resource in storage.
 	 *
@@ -110,6 +154,7 @@ class ProductoController extends AbstractController
         $input = array_merge(
             $this->getInput()
         );
+
 
         $val = ProductoRepository::validate($input, array_keys($input));
 
