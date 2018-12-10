@@ -14,9 +14,6 @@
             <div class="modal-body">
                 <p>{{formatTimeText($ped->fecha_pedido)}}</p>
                 @if ($ped->getStatusById->estado)
-                    <button id="cambiar_estado" class="cambiar_estado">Cambiar Estado</button>
-                    <p>{{$ped->getStatusById->estado}}</p>
-                    <input type="hidden" id="id_estado" value="{{$ped->id}}"/>
                     <select class="form-control m-bot15" id="id_estado_change">
                         {{--todo: poner estados desde la bd--}}
                             @foreach(array('1'=>'NO ATENDIDO',
