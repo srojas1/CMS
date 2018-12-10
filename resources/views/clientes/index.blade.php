@@ -1,14 +1,14 @@
 @extends('layouts.default')
 
 @section('title')
-    Clientes
+    Usuarios
 @stop
 
 @section('content')
     <div class="modulo container-fluid">
         <!--- CABECERA DE MÓDULO --->
         <div class="modulo-head row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-7"><h2>Clientes</h2></div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-7"><h2>Usuarios</h2></div>
             </div>
         </div>
         <!--- CONTENIDO DE MÓDULO--->
@@ -18,7 +18,7 @@
                     <table class="table">
                         <thead class="thead-light">
                         <tr>
-                            <th scope="col">CLIENTE/USUARIO</th>
+                            <th scope="col">USUARIO</th>
                             <th scope="col">DISTRITO</th>
                             <th scope="col">RANKING</th>
                             <th scope="col">PUNTOS</th>
@@ -33,8 +33,8 @@
                         @foreach ($cliente as $cli)
                             <tr>
                                 <th scope="row">{{$cli->nombres}} {{$cli->apaterno}} {{$cli->amaterno}}</th>
-                                <td>{{$cli->address->direccion}}</td>
-                                <td>1</td>
+                                <td>{{$cli->address[0]->getDistrict->distrito}}</td>
+                                <td>#{{$cli->ranking}}</td>
                                 <td>{{$cli->puntos}}</td>
                                 <td>{{$cli->last_login}}</td>
                                 @if($cli->lastOrder)
@@ -45,13 +45,15 @@
                                     <?php $sumPedidos ++?>
                                 @endforeach
                                 <td>{{$sumPedidos}}</td>
-                                <?php $sumTotales = 0 ?>
+                                <?php $sumTotales = 0.00 ?>
                                 @foreach($cli->orders as $key=>$ord)
-                                    <?php $sumTotales+=$ord->total?>
+                                    <?php $sumTotales += $ord->total?>
                                 @endforeach
-                                <td>S/ {{$sumTotales}}</td>
+                                <td>S/ {{number_format($sumTotales,2)}}</td>
                                 <td>
-                                    <a class="btn btn-info" href="{!! URL::route('cliente.edit', array('cliente' => $cli->id)) !!}"><i class="fa fa-pencil-square-o"></i></a>
+                                    <a class="btn btn-info" href="#detail_producto_{!! $cli->id !!}"
+                                       data-toggle="modal"
+                                       data-target="#detail_producto_{!! $cli->id !!}"><i class="fa fa-pencil-square-o"></i></a>
                                     <a class="btn btn-danger" href="#delete_cliente_{!! $cli->id !!}" data-toggle="modal" data-target="#delete_cliente_{!! $cli->id !!}" data-toggle="modal" data-target="#delete_cliente_{!! $cli->id !!}"><i class="fa fa-times"></i></a>&nbsp
                                 </td>
                             </tr>
@@ -89,5 +91,6 @@
 @stop
 
 @section('bottom')
-        @include('clientes.deletes')
+    @include('clientes.deletes')
+    @include('clientes.detail')
 @stop

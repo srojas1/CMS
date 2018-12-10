@@ -13,15 +13,15 @@ class PedidoController extends AbstractController {
      */
     public function __construct()
     {
-        $this->setPermissions([
-            'create'  => 'edit',
-            'store'   => 'edit',
-            'edit'    => 'edit',
-            'update'  => 'edit',
-            'destroy' => 'edit',
-        ]);
-
-        parent::__construct();
+//        $this->setPermissions([
+//            'create'  => 'edit',
+//            'store'   => 'edit',
+//            'edit'    => 'edit',
+//            'update'  => 'edit',
+//            'destroy' => 'edit',
+//        ]);
+//
+//        parent::__construct();
     }
 
     /**

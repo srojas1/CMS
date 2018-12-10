@@ -326,4 +326,30 @@
     */
 
     'atributoproducto' => 'GrahamCampbell\BootstrapCMS\Models\AttributeProduct',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Distrito Model
+	|--------------------------------------------------------------------------
+	|
+	| This defines the recompensa model to be used.
+	|
+	| Default: 'GrahamCampbell\BootstrapCMS\Models\District'
+	|
+	*/
+
+		'districts' => 'GrahamCampbell\BootstrapCMS\Models\Districts',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Tipo Direccion Model
+	|--------------------------------------------------------------------------
+	|
+	| This defines the model to be used.
+	|
+	| Default: 'GrahamCampbell\BootstrapCMS\Models\AddressType'
+	|
+	*/
+
+		'addresstype' => 'GrahamCampbell\BootstrapCMS\Models\AddressType',
 ];

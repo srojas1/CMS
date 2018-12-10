@@ -8,7 +8,7 @@ use GrahamCampbell\Credentials\Models\Relations\RevisionableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
 
-class Address extends AbstractModel implements HasPresenter {
+class AddressType extends AbstractModel implements HasPresenter {
 
     use BelongsToUserTrait, RevisionableTrait, SoftDeletes;
     /**
@@ -16,14 +16,14 @@ class Address extends AbstractModel implements HasPresenter {
      *
      * @var string
      */
-    protected $table = 'addresses';
+    protected $table = 'address_type';
 
     /**
      * The model name.
      *
      * @var string
      */
-    public static $name = 'address';
+    public static $name = 'addresstype';
 
     /**
      * The properties on the model that are dates.
@@ -37,21 +37,21 @@ class Address extends AbstractModel implements HasPresenter {
      *
      * @var array
      */
-    protected $keepRevisionOf = ['direccion','id_cliente'];
+    protected $keepRevisionOf = ['address_type'];
 
     /**
      * The columns to select when displaying an index.
      *
      * @var array
      */
-    public static $index = ['id','direccion','id_cliente'];
+    public static $index = ['address_type'];
 
     /**
      * The max events per page when displaying a paginated index.
      *
      * @var int
      */
-    public static $paginate = 10;
+    public static $paginate = 2;
 
     /**
      * The columns to order by when displaying an index.
@@ -73,7 +73,7 @@ class Address extends AbstractModel implements HasPresenter {
      * @var array
      */
     public static $rules = [
-        'direccion'    => 'required'
+        'id'    => 'required'
     ];
 
     /**
@@ -83,15 +83,7 @@ class Address extends AbstractModel implements HasPresenter {
      */
     public function getPresenterClass()
     {
-        return 'GrahamCampbell\BootstrapCMS\Presenters\AddressPresenter';
+        return 'GrahamCampbell\BootstrapCMS\Presenters\AddressTypePresenter';
     }
-
-    public function getDistrict() {
-		return $this->hasOne(Districts::class,'id','id_distrito');
-	}
-
-	public function getAddressType() {
-    	return $this->hasOne(AddressType::class,'id','id_tipo_direccion');
-	}
 
 }
