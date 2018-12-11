@@ -22,10 +22,10 @@
             <div class="modulo-tabs">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Recibidos ({{getCantidadPedidos($pedido)}})</a>
+                        <a class="nav-link active" href="#">Recibidos ({{getCantidadElementos($pedido)}})</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Histórico ({{getCantidadPedidos($pedido)}})</a>
+                        <a class="nav-link" href="#">Histórico ({{getCantidadElementos($pedido)}})</a>
                     </li>
                 </ul>
             </div>

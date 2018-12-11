@@ -2,7 +2,7 @@
 
 use GrahamCampbell\BootstrapCMS\Http\Constants as Config;
 
-function getCantidadPedidos($arr) {
+function getCantidadElementos($arr) {
     return count($arr);
 }
 
