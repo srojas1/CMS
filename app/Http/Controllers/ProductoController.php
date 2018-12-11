@@ -118,8 +118,7 @@ class ProductoController extends AbstractController
             'producto'=>$nombreProducto,
             'codigo'=>$codigoProducto,
             'descripcion'=>$descripcionProducto,
-            'category_id'=>$selectCategorias]
-        ;
+            'category_id'=>$selectCategorias];
 
         $producto = ProductoRepository::create($input);
 

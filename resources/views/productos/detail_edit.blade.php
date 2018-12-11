@@ -13,7 +13,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="board-tabs">
-					<ul class="nav nav-tabs" id="agregarProductoTAB" role="tablist">
+					<ul class="nav nav-tabs" id="editarProductoTAB" role="tablist">
 						<li class="nav-item">
 							<a class="nav-link active" id="agregarProductoDescripcion-tab" data-toggle="tab" href="#agregarProductoDescripcion" role="tab" aria-controls="agregarProductoDescripcion" aria-selected="true">1. Descripción</a>
 						</li>

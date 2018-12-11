@@ -14,24 +14,24 @@
 				<div class="board-tabs">
 					<ul class="nav nav-tabs" id="agregarProductoTAB" role="tablist">
 						<li class="nav-item">
-							<a class="nav-link active" id="agregarProductoDescripcion-tab" data-toggle="tab" href="#agregarProductoDescripcion" role="tab" aria-controls="agregarProductoDescripcion" aria-selected="true">1. Descripción</a>
+							<a class="nav-link active" id="editarProductoDescripcion-tab" data-toggle="tab" href="#editarProductoDescripcion" role="tab" aria-controls="editarProductoDescripcion" aria-selected="true">1. Descripción</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">2. Imágenes</a>
+							<a class="nav-link" id="editarProductoImagenes-tab" data-toggle="tab" href="#editarProductoImagenes" role="tab" aria-controls="editarProductoImagenes" aria-selected="false">2. Imágenes</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id="agregarProductoInventario-tab" data-toggle="tab" href="#agregarProductoInventario" role="tab" aria-controls="agregarProductoInventario" aria-selected="false">3. Inventario</a>
+							<a class="nav-link" id="editarProductoInventario-tab" data-toggle="tab" href="#editarProductoInventario" role="tab" aria-controls="editarProductoInventario" aria-selected="false">3. Inventario</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id="agregarProductoAtributos-tab" data-toggle="tab" href="#agregarProductoAtributos" role="tab" aria-controls="agregarProductoAtributos" aria-selected="false">4. Atributos</a>
+							<a class="nav-link" id="editarProductoAtributos-tab" data-toggle="tab" href="#editarProductoAtributos" role="tab" aria-controls="editarProductoAtributos" aria-selected="false">4. Atributos</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id="agregarProductoVinculacion-tab" data-toggle="tab" href="#agregarProductoVinculacion" role="tab" aria-controls="agregarProductoVinculacion" aria-selected="false">5. Vinculación</a>
+							<a class="nav-link" id="editarProductoVinculacion-tab" data-toggle="tab" href="#editarProductoVinculacion" role="tab" aria-controls="editarProductoVinculacion" aria-selected="false">5. Vinculación</a>
 						</li>
 					</ul>
 				</div>
 				<div class="tab-content" id="agregarProdcutoTABcontent">
-					<div class="tab-pane fade show active" id="agregarProductoDescripcion" role="tabpanel" aria-labelledby="agregarProductoDescripcion-tab">
+					<div class="tab-pane fade show active" id="editarProductoDescripcion" role="tabpanel" aria-labelledby="editarProductoDescripcion-tab">
 						<div class="board-body">
 							<h4>Descripción del producto</h4>
 							<div class="container-fluid">
@@ -109,7 +109,7 @@
 						</div>
 					</div>
 
-					<div class="tab-pane fade show" id="agregarProductoImagenes" role="tabpanel" aria-labelledby="agregarProductoImagenes-tab">
+					<div class="tab-pane fade show" id="editarProductoImagenes" role="tabpanel" aria-labelledby="editarProductoImagenes-tab">
 						<div class="board-body">
 							<h4>Imágenes del producto</h4>
 							<div class="d-flex">
@@ -197,7 +197,7 @@
 						</div>
 					</div>
 
-					<div class="tab-pane fade show" id="agregarProductoInventario" role="tabpanel" aria-labelledby="agregarProductoInventario-tab">
+					<div class="tab-pane fade show" id="editarProductoInventario" role="tabpanel" aria-labelledby="editarProductoInventario-tab">
 						<div class="board-body">
 							<h4>Inventario del producto</h4>
 							<div class="container-fluid row align-items-center justify-content-start">
@@ -269,7 +269,7 @@
 						</div>
 					</div>
 
-					<div class="tab-pane fade show" id="agregarProductoAtributos" role="tabpanel" aria-labelledby="agregarProductoAtributos-tab">
+					<div class="tab-pane fade show" id="editarProductoAtributos" role="tabpanel" aria-labelledby="editarProductoAtributos-tab">
 						<div class="board-body">
 							<h4>Atributos del producto</h4>
 							<div class="pt-4 pb-3 pl-3 mr-0 ml-0">
@@ -358,7 +358,7 @@
 						</div>
 					</div>
 
-					<div class="tab-pane fade show" id="agregarProductoVinculacion" role="tabpanel" aria-labelledby="agregarProductoVinculacion-tab">
+					<div class="tab-pane fade show" id="editarProductoVinculacion" role="tabpanel" aria-labelledby="editarProductoVinculacion-tab">
 						<div class="board-body">
 							<h4>Vincular con otros productos (OPCIONAL)</h4>
 							<div class="pt-4 pb-3 pl-3 mr-0 ml-0">

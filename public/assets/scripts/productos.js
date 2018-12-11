@@ -36,9 +36,12 @@ $(document).ready(function(){
                 selectCategorias: $selectCategorias
             }
         }).done(function(data) {
-            alert('Se agregó el producto exitosamente');
+            console.log($.parseJSON(data));
+            // alert('Se agregó el producto exitosamente');
+            // alert(data.id);
+            // $("#modalAgregarProducto").modal('hide');
+            // $("#modalEditarProducto_"+data.id).modal('show');
         });
-
     });
 
     //images
