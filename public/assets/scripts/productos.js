@@ -39,7 +39,6 @@ $(document).ready(function(){
             alert('Se agregó el producto exitosamente');
         });
 
-
     });
 
     //images
@@ -77,4 +76,48 @@ $(document).ready(function(){
     $(".gallery_image").change(function() {
         readURL(this);
     });
+
+    //atributos
+
+    $('.crear_atributo').on('click',function () {
+
+        $nombreAtributo  = $('.nuevo_atributo').val();
+        $selectAtributos = $('#atributoProducto');
+        $valores = $('#valores').val();
+
+        $values = $valores.split(",");
+        $arr=[];
+
+        for(var i=0; i < $values.length; i++) {
+            $arr.push($values[i]);
+        }
+
+        $.ajax({
+            type: "POST",
+            url: 'atributo/storeAtributo',
+            data: {
+                    atributo: $nombreAtributo,
+                    valores:$arr
+                  }
+        }).done(function(data) {
+            postsjson = $.parseJSON(data);
+            $selectAtributos.append($('<option>', {
+                value: postsjson.id,
+                text: $nombreAtributo
+            }));
+
+            $('.atributo_contenedor').load(' .atributo_contenedor');
+
+            alert('Se agregó el atributo exitosamente');
+        });
+    });
+
+    $('#producto_vincular').selectize();
+
+    $('.crear_vinculacion').on('click', function(){
+
+        alert('test vinculacion');
+
+    });
+
 });

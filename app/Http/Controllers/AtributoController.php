@@ -49,6 +49,23 @@ class AtributoController extends AbstractController {
         return View::make('atributos.create');
     }
 
+	/**
+	 * Store a new category.
+	 */
+	public function storeAtributo() {
+
+		$atributo = $_POST['atributo'];
+		$valores  = $_POST['valores'];
+
+		$jsonValores = json_encode($valores);
+
+		$input = ['atributo'=>$atributo,'valor'=>$jsonValores];
+
+		$atributo = AtributoRepository::create($input);
+
+		return json_encode($atributo);
+	}
+
     /**
      * Store a newly created resource in storage.
      *

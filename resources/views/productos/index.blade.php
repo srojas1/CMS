@@ -194,7 +194,11 @@
     @include('productos.detail_create')
 @stop
 
+@section('css')
+	<link rel="stylesheet" type="text/css" href="{{ asset('assets/styles/selectize.default.css')}}">
+@stop
 @section('js')
+	<script type="text/javascript" src="{{ asset('assets/scripts/selectize.min.js')}}"></script>
 	<script type="text/javascript" src="{{ asset('assets/scripts/categorias.js')}}"></script>
 	<script type="text/javascript" src="{{ asset('assets/scripts/productos.js')}}"></script>
 @endsection

@@ -278,11 +278,11 @@
 										Asignar un atributo:
 									</div>
 									<div class="form-group col-7">
-										<select class="custom-select" id="categoriaProducto" rows="3">
+										<select class="custom-select" id="atributoProducto" rows="3">
 											<option>Selecciona un atributo</option>
-											<option>Color</option>
-											<option>Tamaño</option>
-											<option>Temperatura</option>
+											@foreach($atributos as $nkey=>$atr)
+												<option value={{$atr->id}}>{{$atr->atributo}}</option>
+											@endforeach
 										</select>
 									</div>
 								</div>
@@ -302,12 +302,12 @@
 												<div class="agregar-atributos container-fluid row justify-content-start align-items-center pt-2 pl-0 pr-0 mr-0 ml-0">
 													<div class="col-12 d-flex pl-0 pr-0">
 														<div class="form-group">
-															<input type="text" class="form-control nombre-nueva-categoria" placeholder="Atributo">
+															<input type="text" class="form-control nuevo_atributo nombre-nueva-categoria" placeholder="Atributo">
 														</div>
 														<div class="form-group pl-2">
-															<input type="text" class="form-control nombre-nueva-categoria" placeholder="Agrega valores separados por comas.">
+															<input id="valores" type="text" class="form-control nombre-nueva-categoria" placeholder="Agrega valores separados por comas.">
 														</div>
-														<div class="form-group pl-2">
+														<div class="crear_atributo form-group pl-2">
 															<button type="submit" class="btn btn-primary">+</button>
 														</div>
 														<div class="form-group">
@@ -324,65 +324,33 @@
 									</div>
 								</div>
 							</div>
-							<div class="pt-4 pb-3 pl-3 mr-0 ml-0 border-top">
-								<div class="container-fluid row col-12 justify-content-start align-items-center">
-									<div class="form-group col-3">
-										Color:
+							<div class="atributo_contenedor pt-4 pb-3 pl-3 mr-0 ml-0 border-top">
+								@foreach($atributos as $nkey=>$atr)
+									<div class="container-fluid row col-12 justify-content-start align-items-center">
+										<div class="form-group col-3">
+											{{$atr->atributo}}:
+										</div>
+										<div class="form-group col-7">
+											<select class="custom-select" id="categoriaProducto" rows="3">
+												<option>Selecciona un valor</option>
+												<?php $values = json_decode($atr->valor) ?>
+												@foreach($values as $val)
+													<option>{{$val}}</option>
+												@endforeach
+											</select>
+										</div>
+										{{--<div class="form-group col-2">--}}
+											{{--<a href="#" class="badge-pill eliminarAtributo shadow-sm">--}}
+												{{--<i class="material-icons">clear</i>--}}
+											{{--</a>--}}
+										{{--</div>--}}
 									</div>
-									<div class="form-group col-7">
-										<select class="custom-select" id="categoriaProducto" rows="3">
-											<option>Selecciona un valor</option>
-											<option>Rojo</option>
-											<option>Verde</option>
-											<option>Morado galáctico</option>
-											<option>Azul marino</option>
-										</select>
-									</div>
-									<div class="form-group col-2">
-										<a href="#" class="badge-pill eliminarAtributo shadow-sm">
-											<i class="material-icons">clear</i>
-										</a>
-									</div>
-								</div>
-								<div class="container-fluid row col-12 justify-content-start align-items-center">
-									<div class="form-group col-3">
-										Tamaño:
-									</div>
-									<div class="form-group col-7">
-										<select class="custom-select" id="categoriaProducto" rows="3">
-											<option>Selecciona un valor</option>
-											<option>Grande</option>
-											<option>Chico</option>
-										</select>
-									</div>
-									<div class="form-group col-2">
-										<a href="#" class="badge-pill eliminarAtributo shadow-sm">
-											<i class="material-icons">clear</i>
-										</a>
-									</div>
-								</div>
-								<div class="container-fluid row col-12 justify-content-start align-items-center">
-									<div class="form-group col-3">
-										Temperatura:
-									</div>
-									<div class="form-group col-7">
-										<select class="custom-select" id="categoriaProducto" rows="3">
-											<option>Selecciona un valor</option>
-											<option>Frio</option>
-											<option>Caliente</option>
-										</select>
-									</div>
-									<div class="form-group col-2">
-										<a href="#" class="badge-pill eliminarAtributo shadow-sm">
-											<i class="material-icons">clear</i>
-										</a>
-									</div>
-								</div>
+								@endforeach
 							</div>
 							<div class="form-group d-flex justify-content-end pt-4 border-top">
-								<a tabindex="0" class="btn" role="button" data-toggle="tooltip" title="Eliminar">
-									<i class="material-icons">delete</i>
-								</a>
+								{{--<a tabindex="0" class="btn" role="button" data-toggle="tooltip" title="Eliminar">--}}
+									{{--<i class="material-icons">delete</i>--}}
+								{{--</a>--}}
 								<a class="btn btn-primary" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">
 									Agregar producto
 								</a>
@@ -396,61 +364,18 @@
 							<div class="pt-4 pb-3 pl-3 mr-0 ml-0">
 								<div class="container-fluid row col-12 justify-content-start align-items-center">
 									<div class="form-group col-8">
-										<input type="buscar" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Buscar producto a vincular">
+										<select id="producto_vincular" placeholder="Buscar producto a vincular">
+											@foreach($producto as $nkey=>$prod)
+												<option value="{{$prod->id}}">{{$prod->producto}}</option>
+											@endforeach
+										</select>
+									</div>
+									<div class="form-group">
+										<button type="submit" class="crear_vinculacion btn btn-primary">Vincular</button>
 									</div>
 								</div>
 							</div>
 							<div class="pt-4 pb-3 pl-3 mr-0 ml-0 border-top">
-								<div class="container-fluid row col-12 justify-content-start align-items-center">
-									<div class="form-group col-9">
-										<div class="d-inline-flex"><img src="{{ asset('assets/img/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">Cervezas Cusqueñas de 567ml.</div>
-									</div>
-									<div class="form-group col-3">
-										<a href="#" class="badge-pill eliminarRelacion shadow-sm">
-											<i class="material-icons">clear</i>
-										</a>
-									</div>
-								</div>
-								<div class="container-fluid row col-12 justify-content-start align-items-center">
-									<div class="form-group col-9">
-										<div class="d-inline-flex"><img src="{{ asset('assets/img/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">Cervezas Cusqueñas de 567ml.</div>
-									</div>
-									<div class="form-group col-3">
-										<a href="#" class="badge-pill eliminarRelacion shadow-sm">
-											<i class="material-icons">clear</i>
-										</a>
-									</div>
-								</div>
-								<div class="container-fluid row col-12 justify-content-start align-items-center">
-									<div class="form-group col-9">
-										<div class="d-inline-flex"><img src="{{ asset('assets/img/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">Cervezas Cusqueñas de 567ml.</div>
-									</div>
-									<div class="form-group col-3">
-										<a href="#" class="badge-pill eliminarRelacion shadow-sm">
-											<i class="material-icons">clear</i>
-										</a>
-									</div>
-								</div>
-								<div class="container-fluid row col-12 justify-content-start align-items-center">
-									<div class="form-group col-9">
-										<div class="d-inline-flex"><img src="{{ asset('assets/img/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">Cervezas Cusqueñas de 567ml.</div>
-									</div>
-									<div class="form-group col-3">
-										<a href="#" class="badge-pill eliminarRelacion shadow-sm">
-											<i class="material-icons">clear</i>
-										</a>
-									</div>
-								</div>
-								<div class="container-fluid row col-12 justify-content-start align-items-center">
-									<div class="form-group col-9">
-										<div class="d-inline-flex"><img src="{{ asset('assets/img/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">Cervezas Cusqueñas de 567ml.</div>
-									</div>
-									<div class="form-group col-3">
-										<a href="#" class="badge-pill eliminarRelacion shadow-sm">
-											<i class="material-icons">clear</i>
-										</a>
-									</div>
-								</div>
 								<div class="container-fluid row col-12 justify-content-start align-items-center">
 									<div class="form-group col-9">
 										<div class="d-inline-flex"><img src="{{ asset('assets/img/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">Cervezas Cusqueñas de 567ml.</div>
@@ -477,4 +402,4 @@
 			</div>
 		</div>
 	</div>
-	</div>
+</div>

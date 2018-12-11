@@ -37,7 +37,7 @@ class Attribute extends AbstractModel implements HasPresenter {
 	 *
 	 * @var array
 	 */
-	protected $keepRevisionOf = ['atributo'];
+	protected $keepRevisionOf = ['atributo','valor'];
 
 	/**
 	 * The columns to select when displaying an index.

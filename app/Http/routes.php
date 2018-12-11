@@ -75,3 +75,4 @@ $router->resource('recompensa', 'RecompensaController');
 Route::post('pedido/changeStatus', 'PedidoController@ChangeStatus');
 Route::post('categoria/storeCategory', 'CategoriaController@storeCategory');
 Route::post('producto/storeProducto', 'ProductoController@storeProducto');
+Route::post('atributo/storeAtributo', 'AtributoController@storeAtributo');

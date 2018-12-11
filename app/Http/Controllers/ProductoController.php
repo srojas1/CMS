@@ -47,24 +47,24 @@ class ProductoController extends AbstractController
 	public function index()
 	{
 		$producto  = ProductoRepository::paginate();
-        $categoria = CategoriaRepository::paginate();
-        $links     = ProductoRepository::links();
-        $atributos  = AtributoRepository::all();
+		$categoria = CategoriaRepository::paginate();
+		$links     = ProductoRepository::links();
+		$atributos  = AtributoRepository::all();
 
-        $stockName = array(
-            array('nombre'=>Config::EN_STOCK_LABEL,'value'=>Config::EN_STOCK),
-            array('nombre'=>Config::AGOTADO_LABEL,'value'=>Config::AGOTADO),
-            array('nombre'=>Config::PRONTO_LABEL,'value'=>Config::PRONTO)
-        );
+		$stockName = array(
+			array('nombre'=>Config::EN_STOCK_LABEL,'value'=>Config::EN_STOCK),
+			array('nombre'=>Config::AGOTADO_LABEL,'value'=>Config::AGOTADO),
+			array('nombre'=>Config::PRONTO_LABEL,'value'=>Config::PRONTO)
+		);
 
-        return View::make('productos.index',
-            [
-              'producto' => $producto,
-              'links'=>$links,
-              'categoria'=>$categoria,
-              'stock' => $stockName,
-               'atributos'=>$atributos
-            ]);
+		return View::make('productos.index',
+			[
+			'producto' => $producto,
+			'links'=>$links,
+			'categoria'=>$categoria,
+			'stock' => $stockName,
+			'atributos'=>$atributos
+			]);
 	}
 
 	/**
@@ -104,12 +104,6 @@ class ProductoController extends AbstractController
         ];
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  Request  $request
-     * @return Response
-     */
     /**
      * Store a new product.
      */
