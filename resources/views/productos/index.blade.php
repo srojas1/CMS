@@ -8,15 +8,13 @@
     <div class="modulo container-fluid">
         <!--- CABECERA DE MÓDULO --->
         <div class="modulo-head row">
-
-
 			<div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-4 pb-4">
 				<h2>Productos</h2>
 			</div>
 
 			<div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-2 d-flex align-items-center justify-content-end pb-4">
 				<div>
-					<a href="#detail_producto" class="" data-toggle="modal" data-target="#detail_producto">Agregar producto (+)</a>
+					<a href="#modalAgregarProducto" class="" data-toggle="modal" data-target="#modalAgregarProducto">Agregar producto (+)</a>
 				</div>
 			</div>
 			<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 d-flex align-items-center justify-content-end pb-4">
@@ -199,4 +197,5 @@
 
 @section('js')
 	<script type="text/javascript" src="{{ asset('assets/scripts/categorias.js')}}"></script>
+	<script type="text/javascript" src="{{ asset('assets/scripts/productos.js')}}"></script>
 @endsection
