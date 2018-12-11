@@ -121,3 +121,6 @@
     @include('clientes.deletes')
     @include('clientes.detail')
 @stop
+@section('js')
+    <script type="text/javascript" src="{{ asset('assets/scripts/clientes.js')}}"></script>
+@endsection

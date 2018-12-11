@@ -26,4 +26,24 @@ $(document).ready(function(){
             window.location.reload();
         });
 
+    $(".buscador").on("keyup", function() {
+        var value = $(this).val();
+
+        $("table tr").each(function(index) {
+            if (index !== 0) {
+
+                $row = $(this);
+
+                var id = $row.find("th:first").text();
+
+                if (id.indexOf(value) !== 0) {
+                    $row.hide();
+                }
+                else {
+                    $row.show();
+                }
+            }
+        });
+    });
+
 });

@@ -101,7 +101,7 @@
 									<a tabindex="0" class="btn" role="button" data-toggle="tooltip" title="Eliminar">
 										<i class="material-icons">delete</i>
 									</a>
-									<a class="btn btn-primary" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">
+									<a class="crear_producto btn btn-primary" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">
 										Agregar producto
 									</a>
 								</div>
@@ -392,7 +392,7 @@
 								<a tabindex="0" class="btn" role="button" data-toggle="tooltip" title="Cancelar / Descontinuar Producto">
 									<i class="material-icons">delete</i>
 								</a>
-								<a class="crear_producto btn btn-primary" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">
+								<a class="btn btn-primary" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">
 									Agregar producto
 								</a>
 							</div>
