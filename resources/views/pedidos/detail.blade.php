@@ -83,16 +83,3 @@
 @section('js')
 <script type="text/javascript" src="{{ asset('assets/scripts/pedidos.js')}}"></script>
 @endsection
-
-
-
-
-
-
-
-
-
-
-
-
-

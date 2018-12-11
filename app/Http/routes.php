@@ -74,3 +74,4 @@ $router->resource('recompensa', 'RecompensaController');
 //Ajax Contollers
 Route::post('pedido/changeStatus', 'PedidoController@ChangeStatus');
 Route::post('producto/store1', 'ProductoController@store1');
+Route::post('categoria/storeCategory', 'CategoriaController@storeCategory');

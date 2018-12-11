@@ -124,7 +124,7 @@
 															<input type="text" class="form-control nombre-nueva-categoria" placeholder="Nombre de categoría">
 														</div>
 														<div class="form-group">
-															<button type="submit" class="btn btn-primary">Crear categoría</button>
+															<button type="submit" class="crear_categoria btn btn-primary">Crear categoría</button>
 														</div>
 														<div class="form-group">
 															<small class="help">
@@ -192,6 +192,11 @@
 @section('bottom')
     @auth('edit')
         @include('productos.deletes')
+		@include('categorias.deletes')
     @endauth
     @include('productos.detail_create')
 @stop
+
+@section('js')
+	<script type="text/javascript" src="{{ asset('assets/scripts/categorias.js')}}"></script>
+@endsection

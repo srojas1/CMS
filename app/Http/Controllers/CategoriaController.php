@@ -78,7 +78,23 @@ class CategoriaController extends AbstractController {
             ->with('success', trans('messages.categoria.store_success'));
 	}
 
-    /**
+	/**
+	* Store a new category.
+	*
+	*/
+	public function storeCategory() {
+
+		$categoria = $_POST['categoria'];
+
+		$input = ['categoria'=>$categoria];
+
+		$categoria = CategoriaRepository::create($input);
+
+		return Redirect::route('categoria.index', ['categoria'=>$categoria->id])
+			->with('success', trans('messages.categoria.store_success'));
+	}
+
+	/**
      * Show the specified category.
      *
      * @param int $id
@@ -146,7 +162,7 @@ class CategoriaController extends AbstractController {
 
         $categoria->delete();
 
-        return Redirect::route('categoria.index')
+        return Redirect::route('producto.index')
             ->with('success', trans('messages.categoria.delete_success'));
     }
 
