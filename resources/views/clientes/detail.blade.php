@@ -96,7 +96,7 @@
 									<h4>{{$pay->label}}</h4>
 									<div class="container-fluid row">
 										<div class="col-12 pt-1 pb-4">
-											<div><strong>{{$pay->nro_tarjeta}}</strong><br>{{$pay->vencimiento}} - {{$pay->cvv}}<br>{{$pay->nombre_completo}}</div>
+											<div><strong>{{$pay->marca}} - {{$pay->nro_tarjeta}}</strong><br>{{$pay->vencimiento}} - {{$pay->cvv}}<br>{{$pay->nombre_completo}}</div>
 										</div>
 									</div>
 								</div>

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\VarDumper\Cloner\VarCloner;
 
 /**
  * Class CategoriaController
@@ -80,7 +81,6 @@ class CategoriaController extends AbstractController {
 
 	/**
 	* Store a new category.
-	*
 	*/
 	public function storeCategory() {
 
@@ -90,9 +90,11 @@ class CategoriaController extends AbstractController {
 
 		$categoria = CategoriaRepository::create($input);
 
-		return Redirect::route('categoria.index', ['categoria'=>$categoria->id])
+		Redirect::route('categoria.index', ['categoria'=>$categoria->id])
 			->with('success', trans('messages.categoria.store_success'));
-	}
+
+        return json_encode($categoria);
+    }
 
 	/**
      * Show the specified category.

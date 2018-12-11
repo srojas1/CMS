@@ -90,21 +90,6 @@ class ProductoController extends AbstractController
         ]);
 	}
 
-    /**
-     * Get the user input.
-     *
-     * @return string[]
-     */
-    protected function getInput1()
-    {
-        return [
-            'producto'   => Binput::get('producto'),
-            'codigo'     => Binput::get('codigo'),
-            'descripcion'=> Binput::get('descripcion'),
-            'category_id' => Binput::get('id_categoria'),
-        ];
-    }
-
     protected function getInput()
     {
         return [
@@ -125,22 +110,26 @@ class ProductoController extends AbstractController
      * @param  Request  $request
      * @return Response
      */
-    public function store1(Request $request)
-    {
-        $input = array_merge(
-            $this->getInput1()
-        );
+    /**
+     * Store a new product.
+     */
+    public function storeProducto() {
 
-        $val = ProductoRepository::validate($input, array_keys($input));
+        $nombreProducto = $_POST["nombreProducto"];
+        $codigoProducto = $_POST["codigoProducto"];
+        $descripcionProducto = $_POST["descripcionProducto"];
+        $selectCategorias = $_POST["selectCategorias"];
 
-        if ($val->fails()) {
-            return Redirect::route('producto.detail_create')->withInput()->withErrors($val->errors());
-        }
+        $input = [
+            'producto'=>$nombreProducto,
+            'codigo'=>$codigoProducto,
+            'descripcion'=>$descripcionProducto,
+            'category_id'=>$selectCategorias]
+        ;
 
         $producto = ProductoRepository::create($input);
 
-        return Redirect::route('producto.index', ['producto' => $producto->id])
-            ->with('success', trans('messages.producto.store_success'));
+        return json_encode($producto);
     }
 
 	/**

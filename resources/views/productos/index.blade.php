@@ -119,7 +119,7 @@
 															</div>
 														</div>
 														<div class="form-group">
-															<input type="text" class="form-control nombre-nueva-categoria" placeholder="Nombre de categoría">
+															<input type="text" class="form-control nombre-nueva-categoria nueva_categoria" placeholder="Nombre de categoría">
 														</div>
 														<div class="form-group">
 															<button type="submit" class="crear_categoria btn btn-primary">Crear categoría</button>
@@ -143,7 +143,6 @@
 												<?php $sumProductos++?>
 											@endforeach
 											<td class="align-middle"><div class="d-flex justify-content-center">{{$sumProductos}}</div></td>
-											{{--todo: desarrollar samuel--}}
 											<td class="align-middle"><div class="d-flex justify-content-center">29</div></td>
 											<td class="align-middle"><div class="d-flex justify-content-center">S/ 1970.00</div></td>
 											<td class="align-middle">
