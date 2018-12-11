@@ -74,7 +74,9 @@
 													<a href="" class="accion">
 														<i class="material-icons">remove_red_eye</i>
 													</a>
-													<a href="{!! URL::route('producto.edit', array('producto' => $prod->id)) !!}" class="accion">
+													<a href="#modalEditarProducto_{!! $prod->id !!}" class="accion"
+													   data-toggle="modal"
+													   data-target="#modalEditarProducto_{!! $prod->id !!}">
 														<i class="material-icons">edit</i>
 													</a>
 													<a href="#delete_producto_{!! $prod->id !!}" data-toggle="modal" data-target="#delete_producto_{!! $prod->id !!}" class="accion">
@@ -192,6 +194,7 @@
 		@include('categorias.deletes')
     @endauth
     @include('productos.detail_create')
+	@include('productos.detail_edit')
 @stop
 
 @section('css')
