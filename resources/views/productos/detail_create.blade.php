@@ -376,7 +376,7 @@
 								</div>
 							</div>
 							<div class="pt-4 pb-3 pl-3 mr-0 ml-0 border-top">
-								<div class="container-fluid row col-12 justify-content-start align-items-center">
+								<div class="container_vinculacion container-fluid row col-12 justify-content-start align-items-center">
 									<div class="form-group col-9">
 										<div class="d-inline-flex"><img src="{{ asset('assets/img/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">Cervezas Cusqueñas de 567ml.</div>
 									</div>

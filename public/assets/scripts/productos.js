@@ -116,8 +116,19 @@ $(document).ready(function(){
 
     $('.crear_vinculacion').on('click', function(){
 
-        alert('test vinculacion');
+        productoVinculadoId = $('#producto_vincular').val();
+        productoVinculadoText = $('#producto_vincular').text();
 
+        $('.container_vinculacion').append('<div class="form-group col-9">' +
+            '<input type="hidden" value="'+ productoVinculadoId +'">' +
+            '<div class="d-inline-flex"><img src="{{ asset(\'assets/img/producto-icon.jpg\') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">' +
+            productoVinculadoText +'</div>' +
+            '</div>' +
+            '<div class="form-group col-3">' +
+            '<a href="#" class="badge-pill eliminarRelacion shadow-sm">' +
+            '<i class="material-icons">clear</i>' +
+            '</a>' +
+            '</div>');
     });
 
 });
