@@ -25,6 +25,11 @@ $(document).ready(function(){
         $codigoProducto       = $('#codigoProducto').val();
         $descripcionProducto  = $('#descripcionProducto').val();
         $selectCategorias     = $('#categoriaProducto').val();
+        $stockValue           = $('.stockValue').val();
+        $sku                  = $('#sku').val();
+        $precio               = $('#precio').val();
+        $oferta               = $('#oferta').val();
+        $visibilidad          = $('.visibilidad').val();
 
         $.ajax({
             type: "POST",
@@ -33,11 +38,14 @@ $(document).ready(function(){
                 nombreProducto: $nombreProducto,
                 codigoProducto: $codigoProducto,
                 descripcionProducto: $descripcionProducto,
-                selectCategorias: $selectCategorias
+                selectCategorias: $selectCategorias,
+                stockValue: $stockValue,
+                sku:$sku,
+                precio:$precio,
+                oferta:$oferta,
+                visibilidad: $visibilidad
             }
         }).done(function(data) {
-            console.log($.parseJSON(data));
-            // alert('Se agregó el producto exitosamente');
             // alert(data.id);
             // $("#modalAgregarProducto").modal('hide');
             // $("#modalEditarProducto_"+data.id).modal('show');

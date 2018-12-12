@@ -190,7 +190,7 @@
 								<a tabindex="0" class="btn" role="button" data-toggle="tooltip" title="Eliminar">
 									<i class="material-icons">delete</i>
 								</a>
-								<a class="btn btn-primary" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">
+								<a class="crear_producto btn btn-primary" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">
 									Agregar producto
 								</a>
 							</div>
@@ -202,23 +202,17 @@
 							<h4>Inventario del producto</h4>
 							<div class="container-fluid row align-items-center justify-content-start">
 								<div class="d-flex col-12 col-sm-12 col-md-12 col-lg-6">
-									<div class="form-group custom-control custom-radio custom-control-inline">
-										<input type="radio" id="customRadioInline1" name="customRadioInline" class="custom-control-input">
-										<label class="custom-control-label" for="customRadioInline1">Muy pronto</label>
-									</div>
-									<div class="form-group custom-control custom-radio custom-control-inline">
-										<input type="radio" id="customRadioInline2" name="customRadioInline" class="custom-control-input">
-										<label class="custom-control-label" for="customRadioInline2">En stock</label>
-									</div>
-									<div class="form-group custom-control custom-radio custom-control-inline">
-										<input type="radio" id="customRadioInline3" name="customRadioInline" class="custom-control-input">
-										<label class="custom-control-label" for="customRadioInline3">Agotado</label>
-									</div>
+									@foreach($stock as $nkey=>$st)
+										<div class="form-group custom-control custom-radio custom-control-inline">
+											<input type="radio" id="customRadioInline_{{$nkey+1}}" name="customRadioInline" class="stockValue customRadioInline custom-control-input" value="{{$st['value']}}">
+											<label class="custom-control-label" for="customRadioInline_{{$nkey+1}}">{{$st['nombre']}}</label>
+										</div>
+									@endforeach
 								</div>
 
 								<div class="d-flex col-12 col-sm-12 col-md-12 col-lg-6">
 									<div class="form-group col-10 col-md-9 pl-0">
-										<input type="text" class="form-control" placeholder="SKU">
+										<input id="sku" type="text" class="form-control" placeholder="SKU">
 									</div>
 									<div class="form-group col-2 col-md-3 pl-0">
 										<small class="help">
@@ -233,13 +227,13 @@
 							<div class="container-fluid row align-items-center justify-content-start">
 								<div class="d-flex col-12 col-sm-12 col-md-12 col-lg-4">
 									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Precio de lista">
+										<input id="precio" type="text" class="form-control" placeholder="Precio de lista">
 									</div>
 								</div>
 
 								<div class="d-flex col-12 col-sm-12 col-md-12 col-lg-4">
 									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Precio oferta">
+										<input id="oferta" type="text" class="form-control" placeholder="Precio oferta">
 									</div>
 								</div>
 							</div>
@@ -248,11 +242,11 @@
 							<div class="container-fluid row align-items-center justify-content-start">
 								<div class="d-flex col-12 col-sm-12 col-md-12 col-lg-6">
 									<div class="form-group custom-control custom-radio custom-control-inline">
-										<input type="radio" id="visibilidadShow" name="visibilidad" class="custom-control-input">
+										<input type="radio" id="visibilidadShow" name="visibilidad" class="visibilidad custom-control-input">
 										<label class="custom-control-label" for="visibilidadShow">Mostrar</label>
 									</div>
 									<div class="form-group custom-control custom-radio custom-control-inline">
-										<input type="radio" id="visibilidadHide" name="visibilidad" class="custom-control-input">
+										<input type="radio" id="visibilidadHide" name="visibilidad" class="visibilidad custom-control-input">
 										<label class="custom-control-label" for="visibilidadHide">Ocultar</label>
 									</div>
 								</div>
@@ -262,7 +256,7 @@
 								<a tabindex="0" class="btn" role="button" data-toggle="tooltip" title="Eliminar">
 									<i class="material-icons">delete</i>
 								</a>
-								<a class="btn btn-primary" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">
+								<a class="crear_producto btn btn-primary" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">
 									Agregar producto
 								</a>
 							</div>

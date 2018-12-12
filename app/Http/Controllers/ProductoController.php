@@ -113,17 +113,33 @@ class ProductoController extends AbstractController
         $codigoProducto = $_POST["codigoProducto"];
         $descripcionProducto = $_POST["descripcionProducto"];
         $selectCategorias = $_POST["selectCategorias"];
+        $stockValue = $_POST["stockValue"];
+        $sku = $_POST["sku"];
+        $precio = $_POST["precio"];
+        $oferta = $_POST["oferta"];
+        $visibilidad = $_POST["visibilidad"];
 
         $input = [
             'producto'=>$nombreProducto,
             'codigo'=>$codigoProducto,
             'descripcion'=>$descripcionProducto,
-            'category_id'=>$selectCategorias];
+            'category_id'=>$selectCategorias,
+            'id_stock'=>$stockValue,
+            'sku'=>$sku,
+            'precio'=>$precio,
+            'oferta'=>$oferta,
+            'visibilidad'=>$visibilidad,
+			//todo: cambiar samuel obtencion moneda
+			'id_moneda'=>1
+		];
 
-        $producto = ProductoRepository::create($input);
+		$producto = ProductoRepository::create($input);
 
-        return json_encode($producto);
-    }
+		Redirect::route('producto.index', ['producto'=>$producto->id])
+			->with('success', trans('messages.producto.store_success'));
+
+		return json_encode($producto);
+	}
 
 	/**
 	 * Store a newly created resource in storage.

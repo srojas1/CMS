@@ -205,18 +205,19 @@
 							<h4>Inventario del producto</h4>
 							<div class="container-fluid row align-items-center justify-content-start">
 								<div class="d-flex col-12 col-sm-12 col-md-12 col-lg-6">
-									<div class="form-group custom-control custom-radio custom-control-inline">
-										<input type="radio" id="customRadioInline1" name="customRadioInline" class="custom-control-input">
-										<label class="custom-control-label" for="customRadioInline1">Muy pronto</label>
-									</div>
-									<div class="form-group custom-control custom-radio custom-control-inline">
-										<input type="radio" id="customRadioInline2" name="customRadioInline" class="custom-control-input">
-										<label class="custom-control-label" for="customRadioInline2">En stock</label>
-									</div>
-									<div class="form-group custom-control custom-radio custom-control-inline">
-										<input type="radio" id="customRadioInline3" name="customRadioInline" class="custom-control-input">
-										<label class="custom-control-label" for="customRadioInline3">Agotado</label>
-									</div>
+									@foreach($stock as $nkey=>$st)
+										@if($st['value'] == $prod->id_stock)
+											<div class="form-group custom-control custom-radio custom-control-inline">
+												<input type="radio" id="customRadioInline_{{$nkey+1}}" name="customRadioInline" class="custom-control-input" value="{{$st['value']}}" checked>
+												<label class="custom-control-label" for="customRadioInline_{{$nkey+1}}">{{$st['nombre']}}</label>
+											</div>
+										@else
+											<div class="form-group custom-control custom-radio custom-control-inline">
+												<input type="radio" id="customRadioInline_{{$nkey+1}}" name="customRadioInline" class="custom-control-input" value="{{$st['value']}}">
+												<label class="custom-control-label" for="customRadioInline_{{$nkey+1}}">{{$st['nombre']}}</label>
+											</div>
+										@endif
+									@endforeach
 								</div>
 
 								<div class="d-flex col-12 col-sm-12 col-md-12 col-lg-6">
