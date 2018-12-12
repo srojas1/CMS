@@ -48,7 +48,7 @@ class ProductoController extends AbstractController
 	{
 		$producto  = ProductoRepository::paginate();
 		$categoria = CategoriaRepository::paginate();
-		$links     = ProductoRepository::links();
+//		$links     = ProductoRepository::links();
 		$atributos  = AtributoRepository::all();
 
 		$stockName = array(
@@ -60,7 +60,7 @@ class ProductoController extends AbstractController
 		return View::make('productos.index',
 			[
 			'producto' => $producto,
-			'links'=>$links,
+//			'links'=>$links,
 			'categoria'=>$categoria,
 			'stock' => $stockName,
 			'atributos'=>$atributos
@@ -119,6 +119,11 @@ class ProductoController extends AbstractController
         $oferta = $_POST["oferta"];
         $visibilidad = $_POST["visibilidad"];
 
+        $image = $_POST['image'];
+
+        var_dump(json_encode($_POST));
+        exit;
+
         $input = [
             'producto'=>$nombreProducto,
             'codigo'=>$codigoProducto,
@@ -135,8 +140,8 @@ class ProductoController extends AbstractController
 
 		$producto = ProductoRepository::create($input);
 
-		Redirect::route('producto.index', ['producto'=>$producto->id])
-			->with('success', trans('messages.producto.store_success'));
+//		Redirect::route('producto.index', ['producto'=>$producto->id])
+//			->with('success', trans('messages.producto.store_success'));
 
 		return json_encode($producto);
 	}

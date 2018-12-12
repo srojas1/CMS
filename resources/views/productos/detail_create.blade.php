@@ -161,11 +161,10 @@
 										</div>
 									</div>
 									<div class="d-flex pt-4 row ml-1">
-
 										<div class="agregar-imagen-galeria form-group mr-2">
 											<div class="input-group">
 												<div class="custom-file">
-													<input type="file" class="gallery_image custom-file-input justify-content-center" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+													<input type="file" name="filename[]" class="gallery_image custom-file-input justify-content-center" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
 													<label class="custom-file-label justify-content-center" for="inputGroupFile04">
 														<i class="material-icons">add_photo_alternate</i>
 													</label>
@@ -176,7 +175,7 @@
 										<div class="d-flex mr-2">
 											<div class="form-group">
 												<div class="inline-block position-relative">
-													<img src="{{ asset('assets/img/demoproducto.jpg') }}" class="imagen-galeria shadow-sm border-top border-bottom border-right border-left">
+													<img src="{{ asset('images/demoproducto.jpg') }}" class="imagen-galeria shadow-sm border-top border-bottom border-right border-left">
 													<a href="#" class="badge badge-light badge-pill eliminarImagen shadow-sm">
 														<i class="material-icons">clear</i>
 													</a>
@@ -372,7 +371,7 @@
 							<div class="pt-4 pb-3 pl-3 mr-0 ml-0 border-top">
 								<div class="container_vinculacion container-fluid row col-12 justify-content-start align-items-center">
 									<div class="form-group col-9">
-										<div class="d-inline-flex"><img src="{{ asset('assets/img/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">Cervezas Cusqueñas de 567ml.</div>
+										<div class="d-inline-flex"><img src="{{ asset('images/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">Cervezas Cusqueñas de 567ml.</div>
 									</div>
 									<div class="form-group col-3">
 										<a href="#" class="badge-pill eliminarRelacion shadow-sm">

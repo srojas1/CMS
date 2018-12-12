@@ -31,6 +31,11 @@ $(document).ready(function(){
         $oferta               = $('#oferta').val();
         $visibilidad          = $('.visibilidad').val();
 
+        //image gallery
+        var image = $('.gallery_image')[0].files[0];
+        var form = new FormData();
+        form.append('image', image);
+
         $.ajax({
             type: "POST",
             url: 'producto/storeProducto',
@@ -43,13 +48,15 @@ $(document).ready(function(){
                 sku:$sku,
                 precio:$precio,
                 oferta:$oferta,
-                visibilidad: $visibilidad
+                visibilidad: $visibilidad,
+                image:form.image
             }
         }).done(function(data) {
-            // alert(data.id);
+            alert('Se agregó el producto exitosamente');
             // $("#modalAgregarProducto").modal('hide');
             // $("#modalEditarProducto_"+data.id).modal('show');
         });
+
     });
 
     //images

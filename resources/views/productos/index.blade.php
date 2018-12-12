@@ -58,7 +58,7 @@
                                     <tbody>
                                     @foreach ($producto as $prod)
                                         <tr>
-                                            <th scope="row" class="align-middle"><div class="d-flex align-items-center"><img src="{{ asset('assets/img/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prod->producto}}</th>
+                                            <th scope="row" class="align-middle"><div class="d-flex align-items-center"><img src="{{ asset('images/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prod->producto}}</th>
 											<td class="align-middle"><div class="d-flex justify-content-center">{{$prod->getCategoryById->categoria}}</div></td>
 											<td class="align-middle"><div class="d-flex justify-content-center"> {{getStockName($prod->id_stock)}}</div></td>
                                             <td class="align-middle"><div class="d-flex justify-content-center">S/ {{$prod->precio}}</td>
@@ -139,7 +139,7 @@
 										</tr>
 										@foreach ($categoria as $key1=>$cat)
 										<tr>
-											<th scope="row" class="align-middle"><div class="d-flex align-items-center"><img src="{{ asset('assets/img/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left"><div>{{$cat->categoria}}</div></div></th>
+											<th scope="row" class="align-middle"><div class="d-flex align-items-center"><img src="{{ asset('images/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left"><div>{{$cat->categoria}}</div></div></th>
 											<?php $sumProductos = 0 ?>
 											@foreach($cat->products as $key=>$cat)
 												<?php $sumProductos++?>
@@ -174,13 +174,13 @@
     <!--- FOOTER DEL MODULO --->
     <div class="modulo-footer">
         <div class="container-fluid">
-            <div class="row justify-content-end">
-                <nav aria-label="...">
-                    <ul class="pagination">
-                        {!! $links !!}
-                    </ul>
-                </nav>
-            </div>
+            {{--<div class="row justify-content-end">--}}
+                {{--<nav aria-label="...">--}}
+                    {{--<ul class="pagination">--}}
+                        {{--{!! $links !!}--}}
+                    {{--</ul>--}}
+                {{--</nav>--}}
+            {{--</div>--}}
             <div class="row justify-content-end tools">
                 <a href="" class="">Exportar a excel</a>
             </div>
