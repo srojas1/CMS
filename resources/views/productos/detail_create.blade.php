@@ -297,8 +297,8 @@
 															<div class="form-group pl-2">
 																<input id="valores" type="text" class="form-control nombre-nueva-categoria" placeholder="Agrega valores separados por comas.">
 															</div>
-															<div class="crear_atributo form-group pl-2">
-																<button type="submit" class="btn btn-primary">+</button>
+															<div class="form-group pl-2">
+																<a class="crear_atributo btn btn-primary">+</a>
 															</div>
 															<div class="form-group">
 																<small class="help">
@@ -321,11 +321,10 @@
 												{{$atr->atributo}}:
 											</div>
 											<div class="form-group col-7">
-												<select class="custom-select" id="categoriaProducto" rows="3">
-													<option>Selecciona un valor</option>
+												<select class="custom-select" id="atributoProducto" name="atributoProductoVal[{{$atr->id}}]" rows="3">
 													<?php $values = json_decode($atr->valor) ?>
 													@foreach($values as $val)
-														<option>{{$val}}</option>
+														<option value="{{$val}}">{{$val}}</option>
 													@endforeach
 												</select>
 											</div>
@@ -341,7 +340,7 @@
 									{{--<a tabindex="0" class="btn" role="button" data-toggle="tooltip" title="Eliminar">--}}
 										{{--<i class="material-icons">delete</i>--}}
 									{{--</a>--}}
-									<a class="btn btn-primary" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">
+									<a class="crear_producto btn btn-primary" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">
 										Agregar producto
 									</a>
 								</div>
@@ -354,14 +353,14 @@
 								<div class="pt-4 pb-3 pl-3 mr-0 ml-0">
 									<div class="container-fluid row col-12 justify-content-start align-items-center">
 										<div class="form-group col-8">
-											<select id="producto_vincular" placeholder="Buscar producto a vincular">
+											<select id="producto_vincular" name="vinculacionProductoVal[]" placeholder="Buscar producto a vincular">
 												@foreach($producto as $nkey=>$prod)
 													<option value="{{$prod->id}}">{{$prod->producto}}</option>
 												@endforeach
 											</select>
 										</div>
 										<div class="form-group">
-											<button type="submit" class="crear_vinculacion btn btn-primary">Vincular</button>
+											<a class="crear_vinculacion btn btn-primary">Vincular</a>
 										</div>
 									</div>
 								</div>
@@ -382,7 +381,7 @@
 									<a tabindex="0" class="btn" role="button" data-toggle="tooltip" title="Cancelar / Descontinuar Producto">
 										<i class="material-icons">delete</i>
 									</a>
-									<a class="btn btn-primary" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">
+									<a class="crear_producto btn btn-primary" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">
 										Agregar producto
 									</a>
 								</div>

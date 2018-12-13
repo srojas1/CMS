@@ -110,6 +110,7 @@ class ProductoController extends AbstractController
 	 */
 public function storeProducto(Request $request) {
 
+		//Get Data
 		$input['producto']     = $request->input('nombreProducto');
 		$input['codigo']       = $request->input('codigoProducto');
 		$input['descripcion']  = $request->input('descripcionProducto');
@@ -155,6 +156,19 @@ public function storeProducto(Request $request) {
 		}
 
 		$producto = ProductoRepository::create($input);
+
+		$atributosList  = $request->input('atributoProductoVal');
+
+		//Multiple attributes
+		foreach($atributosList as $nkey=>$atr) {
+			$inputAttr['attribute_id']  = $nkey;
+			$inputAttr['valor'] = $atr;
+			$inputAttr['product_id'] = $producto->id;
+
+			AtributoProductoRepository::create($inputAttr);
+		}
+
+		$vinculacionList  = $request->input('vinculacionProductoVal');
 
 		return json_encode($producto);
 	}
