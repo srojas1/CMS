@@ -58,7 +58,7 @@
                                     <tbody>
                                     @foreach ($producto as $prod)
 											@if($prod->filename_main)
-                                            <th scope="row" class="align-middle"><div class="d-flex align-items-center"><img src="{{ asset('images/'.$prod->filename_main)}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prod->producto}}</th>
+                                            <th scope="row" class="align-middle"><div class="d-flex align-items-center"><img src="{{ asset('images/'.getJsonValue($prod->filename_main))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prod->producto}}</th>
 											@else
 												<th scope="row" class="align-middle"><div class="d-flex align-items-center"><img src="{{ asset('images/producto-icon.jpg')}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prod->producto}}</th>
 											@endif

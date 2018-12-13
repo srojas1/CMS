@@ -3,7 +3,7 @@
 use GrahamCampbell\BootstrapCMS\Http\Constants as Config;
 
 function getJsonValue($value) {
-	return json_decode($value, true);
+	return json_decode($value)[0];
 }
 
 function getCantidadElementos($arr) {

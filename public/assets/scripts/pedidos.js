@@ -18,6 +18,7 @@ $(document).ready(function(){
                         id_pedido: idPedido
                       }
                 }).done(function(msg) {
+                    alert('se modificó el estado');
                 });
             });
         });

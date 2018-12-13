@@ -113,9 +113,10 @@ public function storeProducto(Request $request) {
 		$input['producto']     = $request->input('nombreProducto');
 		$input['codigo']       = $request->input('codigoProducto');
 		$input['descripcion']  = $request->input('descripcionProducto');
-		$input['id_categoria'] = $request->input('selectCategorias');
+		$input['category_id']  = $request->input('selectCategorias');
 		$input['id_stock']     = $request->input('stockValue');
 		$input['sku']          = $request->input('sku');
+		$input['id_moneda']    = 1;
 		$input['precio']       = $request->input('precio');
 		$input['oferta']       = $request->input('oferta');
 		$input['visibilidad']  = $request->input('visibilidad');
