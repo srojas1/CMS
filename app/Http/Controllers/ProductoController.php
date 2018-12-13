@@ -93,55 +93,67 @@ class ProductoController extends AbstractController
     protected function getInput()
     {
         return [
-            'producto'   => Binput::get('producto'),
-            'codigo'     => Binput::get('codigo'),
-            'descripcion'=> Binput::get('descripcion'),
-            'id_categoria' => Binput::get('id_categoria'),
-            'id_stock' => Binput::get('id_stock'),
-            'precio' => Binput::get('precio'),
-            'oferta' => Binput::get('oferta'),
-            'filename' => ''
+            'producto'     => Binput::get('nombreProducto'),
+            'codigo'       => Binput::get('codigoProducto'),
+            'descripcion'  => Binput::get('descripcionProducto'),
+            'id_categoria' => Binput::get('selectCategorias'),
+            'id_stock'     => Binput::get('stockValue'),
+			'sku'          => Binput::get('sku'),
+            'precio'       => Binput::get('precio'),
+            'oferta'       => Binput::get('oferta'),
+            'visibilidad'  => Binput::get('visibilidad')
         ];
     }
 
-    /**
-     * Store a new product.
-     */
-    public function storeProducto() {
+	/**
+	 * Store a new product.
+	 */
+public function storeProducto(Request $request) {
 
-        $nombreProducto = $_POST["nombreProducto"];
-        $codigoProducto = $_POST["codigoProducto"];
-        $descripcionProducto = $_POST["descripcionProducto"];
-        $selectCategorias = $_POST["selectCategorias"];
-        $stockValue = $_POST["stockValue"];
-        $sku = $_POST["sku"];
-        $precio = $_POST["precio"];
-        $oferta = $_POST["oferta"];
-        $visibilidad = $_POST["visibilidad"];
+		$input['producto']     = $request->input('nombreProducto');
+		$input['codigo']       = $request->input('codigoProducto');
+		$input['descripcion']  = $request->input('descripcionProducto');
+		$input['id_categoria'] = $request->input('selectCategorias');
+		$input['id_stock']     = $request->input('stockValue');
+		$input['sku']          = $request->input('sku');
+		$input['precio']       = $request->input('precio');
+		$input['oferta']       = $request->input('oferta');
+		$input['visibilidad']  = $request->input('visibilidad');
 
-        $image = $_POST['image'];
+		//Multiple images
+		if ($request->hasfile('filename')) {
 
-        var_dump(json_encode($_POST));
-        exit;
+			$images = $request->file('filename');
 
-        $input = [
-            'producto'=>$nombreProducto,
-            'codigo'=>$codigoProducto,
-            'descripcion'=>$descripcionProducto,
-            'category_id'=>$selectCategorias,
-            'id_stock'=>$stockValue,
-            'sku'=>$sku,
-            'precio'=>$precio,
-            'oferta'=>$oferta,
-            'visibilidad'=>$visibilidad,
-			//todo: cambiar samuel obtencion moneda
-			'id_moneda'=>1
-		];
+			foreach ($images as $key => $image) {
+				if (!empty($image)) {
+					$name = $image->getClientOriginalName();
+					$image->move(public_path() . '/images/', $name);
+					$data[] = $name;
+				} else
+					continue;
+			}
+
+			if (!empty($data)) {
+				$input['filename'] = json_encode($data);
+			}
+		}
+
+		//Main image
+		if ($request->hasfile('filename_main')) {
+
+			$images_main = $request->file('filename_main');
+
+			$name_main = $images_main->getClientOriginalName();
+			$images_main->move(public_path() . '/images/', $name_main);
+			$data_main[] = $name_main;
+
+			if (!empty($data_main)) {
+				$input['filename_main'] = json_encode($data_main);
+			}
+		}
 
 		$producto = ProductoRepository::create($input);
-
-//		Redirect::route('producto.index', ['producto'=>$producto->id])
-//			->with('success', trans('messages.producto.store_success'));
 
 		return json_encode($producto);
 	}

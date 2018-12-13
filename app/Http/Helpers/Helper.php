@@ -2,6 +2,10 @@
 
 use GrahamCampbell\BootstrapCMS\Http\Constants as Config;
 
+function getJsonValue($value) {
+	return json_decode($value, true);
+}
+
 function getCantidadElementos($arr) {
     return count($arr);
 }

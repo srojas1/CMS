@@ -20,41 +20,17 @@ $(document).ready(function(){
     });
 
     $('.crear_producto').on('click',function () {
-
-        $nombreProducto       = $('#nombreProducto').val();
-        $codigoProducto       = $('#codigoProducto').val();
-        $descripcionProducto  = $('#descripcionProducto').val();
-        $selectCategorias     = $('#categoriaProducto').val();
-        $stockValue           = $('.stockValue').val();
-        $sku                  = $('#sku').val();
-        $precio               = $('#precio').val();
-        $oferta               = $('#oferta').val();
-        $visibilidad          = $('.visibilidad').val();
-
-        //image gallery
-        var image = $('.gallery_image')[0].files[0];
-        var form = new FormData();
-        form.append('image', image);
+        var postData = new FormData($("#create_product_form")[0]);
 
         $.ajax({
             type: "POST",
             url: 'producto/storeProducto',
-            data: {
-                nombreProducto: $nombreProducto,
-                codigoProducto: $codigoProducto,
-                descripcionProducto: $descripcionProducto,
-                selectCategorias: $selectCategorias,
-                stockValue: $stockValue,
-                sku:$sku,
-                precio:$precio,
-                oferta:$oferta,
-                visibilidad: $visibilidad,
-                image:form.image
-            }
+            contentType: false,
+            cache: false,
+            processData: false,
+            data: postData
         }).done(function(data) {
             alert('Se agregó el producto exitosamente');
-            // $("#modalAgregarProducto").modal('hide');
-            // $("#modalEditarProducto_"+data.id).modal('show');
         });
 
     });
