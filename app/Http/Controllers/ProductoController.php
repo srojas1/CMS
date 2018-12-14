@@ -121,6 +121,10 @@ public function storeProducto(Request $request) {
 		$input['precio']       = $request->input('precio');
 		$input['oferta']       = $request->input('oferta');
 		$input['visibilidad']  = $request->input('visibilidad');
+		$input['vinculacion']  = $request->input('productoVinculado');
+
+		var_dump($input);
+		exit;
 
 		//Multiple images
 		if ($request->hasfile('filename')) {
