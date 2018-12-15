@@ -126,9 +126,9 @@ public function storeProducto(Request $request) {
 		$input['precio']       = $request->input('precio');
 		$input['oferta']       = $request->input('oferta');
 		$input['visibilidad']  = $request->input('visibilidad');
-		$input['vinculacion']  = $request->input('productoVinculado');
+        $vinculacionList  = $request->input('productoVinculado');
 
-		//Multiple images
+        //Multiple images
 		if ($request->hasfile('filename')) {
 
 			$images = $request->file('filename');
@@ -161,6 +161,15 @@ public function storeProducto(Request $request) {
 			}
 		}
 
+        //Multiple vinculacion
+        foreach($vinculacionList as $nkey=>$vinc) {
+            $vincArr[]  = $vinc;
+        }
+
+        if (!empty($vincArr)) {
+            $input['vinculacion'] = json_encode($vincArr);
+        }
+
 		$producto = ProductoRepository::create($input);
 
 		$atributosList  = $request->input('atributoProductoVal');
@@ -173,8 +182,6 @@ public function storeProducto(Request $request) {
 
 			AtributoProductoRepository::create($inputAttr);
 		}
-
-		$vinculacionList  = $request->input('vinculacionProductoVal');
 
 		return json_encode($producto);
 	}

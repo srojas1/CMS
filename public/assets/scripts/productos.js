@@ -115,7 +115,7 @@ $(document).ready(function(){
         productoVinculadoText = $('#producto_vincular').text();
 
         $('.container_vinculacion').append('<div class="form-group col-9">' +
-            '<input name="productoVinculado" type="hidden" value="'+ productoVinculadoId +'">' +
+            '<input name="productoVinculado[]" type="hidden" value="'+ productoVinculadoId +'">' +
             '<div class="d-inline-flex"><img src="{{ asset(\'images/producto-icon.jpg\') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">' +
             productoVinculadoText +'</div>' +
             '</div>' +
