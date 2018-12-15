@@ -83,7 +83,7 @@
 													</div>
 													<div class="col-12 col-sm-12 col-md-5 col-lg-7 d-flex pl-0">
 														<div class="form-group">
-															<button type="submit" class="crear_categoria_inside btn btn-primary">Crear categoría</button>
+															<button type="button" class="crear_categoria_inside btn btn-primary">Crear categoría</button>
 														</div>
 														<div class="form-group">
 															<small class="help">
@@ -262,7 +262,7 @@
 						<div class="tab-pane fade show" id="editarProductoAtributos" role="tabpanel" aria-labelledby="editarProductoAtributos-tab">
 							<div class="board-body">
 								<h4>Atributos del producto</h4>
-								<div class="pt-4 pb-3 pl-3 mr-0 ml-0">
+								<div class="atributo_contenedor1 pt-4 pb-3 pl-3 mr-0 ml-0">
 									<div class="container-fluid row col-12 justify-content-start align-items-center">
 										<div class="form-group col-3">
 											Asignar un atributo:
@@ -314,7 +314,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="atributo_contenedor pt-4 pb-3 pl-3 mr-0 ml-0 border-top">
+								<div class="atributo_contenedor2 pt-4 pb-3 pl-3 mr-0 ml-0 border-top">
 									@foreach($atributos as $nkey=>$atr)
 										<div class="container-fluid row col-12 justify-content-start align-items-center">
 											<div class="form-group col-3">

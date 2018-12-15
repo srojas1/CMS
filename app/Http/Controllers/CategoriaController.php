@@ -90,8 +90,13 @@ class CategoriaController extends AbstractController {
 
 		$categoria = CategoriaRepository::create($input);
 
-		Redirect::route('categoria.index', ['categoria'=>$categoria->id])
-			->with('success', trans('messages.categoria.store_success'));
+//		$productActive = "";
+//		$categoryActive = "active";
+
+//        return View::make('productos.index', ['categoria' => $categoria,
+//                                       'productActive' => $productActive,
+//                                       'categoryActive' => $categoryActive])
+//			->with('success', trans('messages.categoria.store_success'));
 
         return json_encode($categoria);
     }

@@ -30,10 +30,10 @@
         <div class="tabpanel">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#productos">Productos ({{getCantidadElementos($producto)}})</a>
+                    <a class="nav-link {{$productActive}}" data-toggle="tab" href="#productos">Productos ({{getCantidadElementos($producto)}})</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#categorias">Categorías ({{getCantidadElementos($categoria)}})</a>
+                <li id="category_tab" class="nav-item">
+                    <a class="nav-link {{$categoryActive}}" data-toggle="tab" href="#categorias">Categorías ({{getCantidadElementos($categoria)}})</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -100,7 +100,7 @@
                     <div class="board-body shadow-sm border-left border-right border-bottom">
                         <div class="container-fluid">
                             <div class="table-responsive">
-                                <table class="table table-hover">
+                                <table class="category_table table table-hover">
                                     <thead class="thead-light">
                                     <tr>
 										<th scope="col"><div class="d-flex justify-content-center">CATEGORÍA</div></th>
@@ -127,7 +127,7 @@
 															<input type="text" class="form-control nombre-nueva-categoria nueva_categoria" placeholder="Nombre de categoría">
 														</div>
 														<div class="form-group">
-															<button type="submit" class="crear_categoria btn btn-primary">Crear categoría</button>
+															<button type="button" class="crear_categoria btn btn-primary">Crear categoría</button>
 														</div>
 														<div class="form-group">
 															<small class="help">

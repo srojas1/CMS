@@ -30,6 +30,7 @@ $(document).ready(function(){
             processData: false,
             data: postData
         }).done(function(data) {
+            location.reload();
             alert('Se agregó el producto exitosamente');
         });
 
@@ -73,7 +74,7 @@ $(document).ready(function(){
 
     //atributos
 
-    $('.crear_atributo').on('click',function () {
+    $(document).on('click','.crear_atributo',function () {
 
         $nombreAtributo  = $('.nuevo_atributo').val();
         $selectAtributos = $('#atributoProducto');
@@ -100,7 +101,7 @@ $(document).ready(function(){
                 text: $nombreAtributo
             }));
 
-            $('.atributo_contenedor').load(' .atributo_contenedor');
+            $('#editarProductoAtributos').load(' #editarProductoAtributos');
 
             alert('Se agregó el atributo exitosamente');
         });

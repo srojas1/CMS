@@ -5,7 +5,7 @@
     <div class="container">
         <div class="login-box card row align-items-center col-12 col-sm-10 col-md-8 col-lg-6">
             <div class="card-header col-12 row justify-content-center">
-                <div class="col-12 row justify-content-center"><h2>INICIAR SESIÓN 2</h2></div>
+                <div class="col-12 row justify-content-center"><h2>INICIAR SESIÓN</h2></div>
                 <div class="col-12 row justify-content-center"><span class="lead">Ingresa tu usuario y contraseña</span></div>
             </div>
             <div class="card-body col-12 row justify-content-center">

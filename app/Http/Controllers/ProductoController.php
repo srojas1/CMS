@@ -57,13 +57,18 @@ class ProductoController extends AbstractController
 			array('nombre'=>Config::PRONTO_LABEL,'value'=>Config::PRONTO)
 		);
 
+        $productActive = "active";
+        $categoryActive = "";
+
 		return View::make('productos.index',
 			[
 			'producto' => $producto,
 //			'links'=>$links,
 			'categoria'=>$categoria,
 			'stock' => $stockName,
-			'atributos'=>$atributos
+			'atributos'=>$atributos,
+            'productActive' => $productActive,
+            'categoryActive' => $categoryActive
 			]);
 	}
 
@@ -122,9 +127,6 @@ public function storeProducto(Request $request) {
 		$input['oferta']       = $request->input('oferta');
 		$input['visibilidad']  = $request->input('visibilidad');
 		$input['vinculacion']  = $request->input('productoVinculado');
-
-		var_dump($input);
-		exit;
 
 		//Multiple images
 		if ($request->hasfile('filename')) {

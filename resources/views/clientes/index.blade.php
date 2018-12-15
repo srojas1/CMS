@@ -112,7 +112,7 @@
         <!--- FOOTER DE CMS --->
         <div class="footer">
             <div class="container-fluid">
-                <span>Samuel Rojas P.</span>
+                <span>@Copyright</span>
             </div>
         </div>
 @stop

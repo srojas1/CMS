@@ -399,3 +399,8 @@ a:hover{
     width: 80px;
     height: 80px;
 }
+
+.atributo_contenedor2 {
+    height: 200px;
+    overflow: auto;
+}
