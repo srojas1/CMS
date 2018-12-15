@@ -194,8 +194,8 @@
 @section('bottom')
     @auth('edit')
         @include('productos.deletes')
-		@include('categorias.deletes')
     @endauth
+	@include('categorias.deletes')
     @include('productos.detail_create')
 	@include('productos.detail_edit')
 @stop

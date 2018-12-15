@@ -2,6 +2,7 @@
 
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 use GrahamCampbell\Binput\Facades\Binput;
+use GrahamCampbell\BootstrapCMS\Facades\ProductoRepository;
 use GrahamCampbell\BootstrapCMS\Facades\CategoriaRepository;
 use GrahamCampbell\Credentials\Facades\Credentials;
 use Illuminate\Http\Request;
@@ -165,12 +166,22 @@ class CategoriaController extends AbstractController {
     public function destroy($id)
     {
         $categoria = CategoriaRepository::find($id);
+        $producto  = ProductoRepository::paginate();
         $this->checkCategory($categoria);
 
         $categoria->delete();
 
-        return Redirect::route('producto.index')
-            ->with('success', trans('messages.categoria.delete_success'));
+//        $productActive = "active";
+//        $categoryActive = "";
+//
+//        $categoria = CategoriaRepository::paginate();
+
+//        return View::make('productos.index',[
+//            'producto' => $producto,
+//            'productActive' => $productActive,
+//            'categoryActive' => $categoryActive,
+//            'category'=>$categoria])
+//            ->with('success', trans('messages.categoria.delete_success'));
     }
 
     /**
