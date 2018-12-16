@@ -53,11 +53,11 @@
 											<select name="selectCategorias" class="custom-select" id="categoriaProducto" rows="3">
 												@if($categoria->count() > 0)
 													@foreach($categoria as $key => $cats)
-														{{--@if ($cats->id == $form['defaults']['id_categoria'])--}}
-															{{--<option value={{$cats->id}} selected>{{$cats->categoria}}</option>--}}
-														{{--@else--}}
+														@if ($cats->id)
+															<option value={{$cats->id}} selected>{{$cats->categoria}}</option>
+														@else
 															<option value="{{$cats->id}}">{{$cats->categoria}}</option>
-														{{--@endif--}}
+														@endif
 													@endforeach
 												@else
 													No se encontraron resultados
@@ -328,18 +328,18 @@
 													@endforeach
 												</select>
 											</div>
-											{{--<div class="form-group col-2">--}}
-												{{--<a href="#" class="badge-pill eliminarAtributo shadow-sm">--}}
-													{{--<i class="material-icons">clear</i>--}}
-												{{--</a>--}}
-											{{--</div>--}}
+											<div class="form-group col-2">
+												<a href="#" class="badge-pill eliminarAtributo shadow-sm">
+													<i class="material-icons">clear</i>
+												</a>
+											</div>
 										</div>
 									@endforeach
 								</div>
 								<div class="form-group d-flex justify-content-end pt-4 border-top">
-									{{--<a tabindex="0" class="btn" role="button" data-toggle="tooltip" title="Eliminar">--}}
-										{{--<i class="material-icons">delete</i>--}}
-									{{--</a>--}}
+									<a tabindex="0" class="btn" role="button" data-toggle="tooltip" title="Eliminar">
+										<i class="material-icons">delete</i>
+									</a>
 									<a class="crear_producto btn btn-primary" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">
 										Agregar producto
 									</a>

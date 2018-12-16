@@ -166,22 +166,12 @@ class CategoriaController extends AbstractController {
     public function destroy($id)
     {
         $categoria = CategoriaRepository::find($id);
-        $producto  = ProductoRepository::paginate();
         $this->checkCategory($categoria);
 
         $categoria->delete();
 
-//        $productActive = "active";
-//        $categoryActive = "";
-//
-//        $categoria = CategoriaRepository::paginate();
-
-//        return View::make('productos.index',[
-//            'producto' => $producto,
-//            'productActive' => $productActive,
-//            'categoryActive' => $categoryActive,
-//            'category'=>$categoria])
-//            ->with('success', trans('messages.categoria.delete_success'));
+        return Redirect::route('producto.index')
+            ->with('success', trans('messages.categoria.delete_success'));
     }
 
     /**

@@ -1,5 +1,22 @@
 $(document).ready(function(){
 
+    $('.crear_producto').on('click',function () {
+        var postData = new FormData($("#create_product_form")[0]);
+
+        $.ajax({
+            type: "POST",
+            url: 'producto/storeProducto',
+            contentType: false,
+            cache: false,
+            processData: false,
+            data: postData
+        }).done(function(data) {
+            location.reload();
+            alert('Se agregó el producto exitosamente');
+        });
+
+    });
+
     $('.crear_categoria_inside').on('click',function () {
 
         $nombreCategoria  = $('.nueva_categoria_inside').val();
@@ -17,23 +34,6 @@ $(document).ready(function(){
             }));
             alert('Se agregó la categoría exitosamente');
         });
-    });
-
-    $('.crear_producto').on('click',function () {
-        var postData = new FormData($("#create_product_form")[0]);
-
-        $.ajax({
-            type: "POST",
-            url: 'producto/storeProducto',
-            contentType: false,
-            cache: false,
-            processData: false,
-            data: postData
-        }).done(function(data) {
-            location.reload();
-            alert('Se agregó el producto exitosamente');
-        });
-
     });
 
     //images
