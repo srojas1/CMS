@@ -106,4 +106,8 @@ class Product extends AbstractModel implements HasPresenter {
 	public function getAttributesById() {
 		return $this->belongsToMany(Attribute::class,'attributes_products')->withPivot('valor');
 	}
+
+    public function getAttrProd() {
+        return $this->hasMany(AttributeProduct::class,'id','product_id');
+    }
 }

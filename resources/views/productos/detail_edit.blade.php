@@ -335,11 +335,16 @@
 											{{$atr->atributo}}:
 										</div>
 										<div class="form-group col-7">
+											<div>{{$prod->getAttrProd}}</div>
 											<select class="custom-select" id="categoriaProducto" rows="3">
 												<option>Selecciona un valor</option>
 												<?php $values = json_decode($atr->valor) ?>
 												@foreach($values as $val)
-													<option>{{$val}}</option>
+													{{--@if($val==)--}}
+														{{--<option value="{{$val}}" selected>{{$val}}</option>--}}
+													{{--@else--}}
+														{{--<option value="{{$val}}">{{$val}}</option>--}}
+													{{--@endif--}}
 												@endforeach
 											</select>
 										</div>
