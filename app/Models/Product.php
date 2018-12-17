@@ -44,7 +44,7 @@ class Product extends AbstractModel implements HasPresenter {
 	 *
 	 * @var array
 	 */
-	public static $index = ['id','producto','codigo','descripcion','category_id','id_stock','precio','oferta','filename','filename_main'];
+	public static $index = ['id','producto','codigo','descripcion','category_id','id_stock','precio','oferta','filename','filename_main','vinculacion','visibilidad'];
 
 	/**
 	 * The max events per page when displaying a paginated index.
@@ -86,28 +86,24 @@ class Product extends AbstractModel implements HasPresenter {
 		return 'GrahamCampbell\BootstrapCMS\Presenters\ProductPresenter';
 	}
 
-    /**
-     * Get Category by Product
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function getCategoryById() {
-        return $this->hasOne(Category::class,'id','category_id');
-    }
+	/**
+	 * Get Category by Product
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
+	 */
+	public function getCategoryById() {
+		return $this->hasOne(Category::class,'id','category_id');
+	}
 
-    public function orders() {
-        return $this->belongsToMany(Order::class,'orders_products')->withPivot('cantidad');
-    }
+	public function orders() {
+		return $this->belongsToMany(Order::class,'orders_products')->withPivot('cantidad');
+	}
 
-    public function getCurrencyById() {
-        return $this->hasOne(Currency::class,'id','id_moneda');
-    }
+	public function getCurrencyById() {
+		return $this->hasOne(Currency::class,'id','id_moneda');
+	}
 
 	public function getAttributesById() {
 		return $this->belongsToMany(Attribute::class,'attributes_products')->withPivot('valor');
 	}
-
-    public function getAttrProd() {
-        return $this->hasMany(AttributeProduct::class,'id','product_id');
-    }
 }

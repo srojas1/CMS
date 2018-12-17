@@ -200,8 +200,8 @@
 									<div class="d-flex col-12 col-sm-12 col-md-12 col-lg-6">
 										@foreach($stock as $nkey=>$st)
 											<div class="form-group custom-control custom-radio custom-control-inline">
-												<input name="stockValue" type="radio" id="customRadioInline_{{$nkey+1}}" name="customRadioInline" class="stockValue customRadioInline custom-control-input" value="{{$st['value']}}">
-												<label class="custom-control-label" for="customRadioInline_{{$nkey+1}}">{{$st['nombre']}}</label>
+												<input name="stockValue_add" type="radio" id="customRadioInline_add_{{$nkey+1}}" class="customRadioInline custom-control-input" value="{{$st['value']}}">
+												<label class="custom-control-label" for="customRadioInline_add_{{$nkey+1}}">{{$st['nombre']}}</label>
 											</div>
 										@endforeach
 									</div>
@@ -238,12 +238,12 @@
 								<div class="container-fluid row align-items-center justify-content-start">
 									<div class="d-flex col-12 col-sm-12 col-md-12 col-lg-6">
 										<div class="form-group custom-control custom-radio custom-control-inline">
-											<input name="visibilidad" type="radio" id="visibilidadShow" class="visibilidad custom-control-input">
-											<label class="custom-control-label" for="visibilidadShow">Mostrar</label>
+											<input type="radio" id="visibilidadShow_add" name="visibilidad_add" class="custom-control-input" checked>
+											<label class="custom-control-label" for="visibilidadShow_add">Mostrar</label>
 										</div>
 										<div class="form-group custom-control custom-radio custom-control-inline">
-											<input name="visibilidad" type="radio" id="visibilidadHide" class="visibilidad custom-control-input">
-											<label class="custom-control-label" for="visibilidadHide">Ocultar</label>
+											<input type="radio" id="visibilidadHide_add" name="visibilidad_add" class="custom-control-input">
+											<label class="custom-control-label" for="visibilidadHide_add">Ocultar</label>
 										</div>
 									</div>
 								</div>

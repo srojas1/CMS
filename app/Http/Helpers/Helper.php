@@ -1,6 +1,15 @@
 <?php
 
 use GrahamCampbell\BootstrapCMS\Http\Constants as Config;
+use GrahamCampbell\BootstrapCMS\Models\Product as ProductModel;
+
+//@todo: remove from helpers
+function getProductsNameByIds($id) {
+
+	$products = ProductModel::where('id', $id)->first();
+
+	return $products['producto'];
+}
 
 function getJsonValue($value) {
 	return json_decode($value)[0];

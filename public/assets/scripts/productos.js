@@ -1,5 +1,23 @@
 $(document).ready(function(){
 
+    $('.editar_producto').on('click',function () {
+
+        var postData = new FormData($("#edit_product_form_1")[0]);
+
+        $.ajax({
+            type: "POST",
+            url: 'producto/editProducto',
+            contentType: false,
+            cache: false,
+            processData: false,
+            data: postData
+        }).done(function(data) {
+            //location.reload();
+            alert('Se modificó el producto exitosamente');
+        });
+
+    });
+
     $('.crear_producto').on('click',function () {
         var postData = new FormData($("#create_product_form")[0]);
 
