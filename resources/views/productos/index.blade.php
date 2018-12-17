@@ -156,8 +156,8 @@
                                                     <?php $sumProductos++?>
                                                 @endforeach
                                                 <td class="align-middle"><div class="d-flex justify-content-center">{{$sumProductos}}</div></td>
-                                                <td class="align-middle"><div class="d-flex justify-content-center">29</div></td>
-                                                <td class="align-middle"><div class="d-flex justify-content-center">S/ 1970.00</div></td>
+                                                <td class="align-middle"><div class="d-flex justify-content-center">[ventas cat]</div></td>
+                                                <td class="align-middle"><div class="d-flex justify-content-center">S/ [ingresos]</div></td>
                                                 <td class="align-middle">
                                                     <div class="d-flex justify-content-center">
                                                         <a href="#
@@ -195,9 +195,9 @@
                     </ul>
                 </nav>
             </div>
-            <div class="row justify-content-end tools">
-                <a href="" class="">Exportar a excel</a>
-            </div>
+            {{--<div class="row justify-content-end tools">--}}
+                {{--<a href="" class="">Exportar a excel</a>--}}
+            {{--</div>--}}
         </div>
     </div>
 @stop
@@ -207,8 +207,8 @@
         @include('productos.deletes')
         @include('categorias.deletes')
     @endauth
-    @include('productos.detail_create')
 	@include('productos.detail_edit')
+    @include('productos.detail_create')
 @stop
 
 @section('css')

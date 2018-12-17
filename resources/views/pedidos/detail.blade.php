@@ -72,21 +72,20 @@
                                         <table class="table table-hover table-borderless">
                                             <tbody>
                                             <!--- LISTA DE PRODUCTOS --->
+                                            @foreach($ped->getProductsById as $prod)
                                             <tr>
                                                 <td>5</td>
-                                                <td><div class="d-inline-flex"><img src="./img/producto-icon.jpg" alt="..." class="producto-icon border-top border-bottom border-right border-left">Cervezas Cusqueñas de 567ml.</div></td>
-                                                <td class="d-flex justify-content-end">S/ 25.90</td>
+                                                <td><div class="d-inline-flex"><img class="pedido_imagen" src="{{ asset('images/'.getJsonValue($prod->filename_main))}}" alt="..." class="producto-icon border-top border-bottom border-right border-left">{{$prod->producto}}</div></td>
+                                                @if($prod->getCurrencyById->simbolo)
+                                                    <td class="d-flex justify-content-end">{{$prod->getCurrencyById->simbolo}} {{$prod->precio}}</td>
+                                                @endif
                                             </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td><div class="d-inline-flex"><img src="./img/producto-icon.jpg" alt="..." class="producto-icon border-top border-bottom border-right border-left">Cervezas Pilsen de 10ml.</div></td>
-                                                <td class="d-flex justify-content-end">S/ 25.90</td>
-                                            </tr>
+                                            @endforeach
                                             <!--- LISTA DE DESCUENTOS --->
                                             <tr class="border-bottom">
                                                 <td></td>
-                                                <td><div class="d-inline-flex"><i class="producto-icon material-icons">none</i>DESCUENTO: VAMOS PERÚ 10%</div></td>
-                                                <td class="d-flex justify-content-end">- S/ 25.90</td>
+                                                <td><div class="d-inline-flex"><i class="producto-icon material-icons">none</i>DESCUENTO: [Nombre descuento]</div></td>
+                                                <td class="d-flex justify-content-end">- S/ 0.00</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -97,11 +96,11 @@
                                             <tbody>
                                             <tr>
                                                 <td><div class="d-flex justify-content-end">SUBTOTAL: </div></td>
-                                                <td class="d-flex justify-content-end">S/ 50.90</td>
+                                                <td class="d-flex justify-content-end">S/ 100.00</td>
                                             </tr>
                                             <tr>
                                                 <td><div class="d-flex justify-content-end">COSTO DE ENVÍO: </div></td>
-                                                <td class="d-flex justify-content-end">S/ 10</td>
+                                                <td class="d-flex justify-content-end">S/ 0.00</td>
                                             </tr>
                                             <tr>
                                                 <td><div class="d-flex justify-content-end">IGV (18%):</div></td>
@@ -109,7 +108,8 @@
                                             </tr>
                                             <tr>
                                                 <td><div class="d-flex justify-content-end">TOTAL:</div></td>
-                                                <td class="d-flex justify-content-end">S/ 120.20</td>
+                                                <?php $total = 8.10 + $ped->total?>
+                                                <td class="d-flex justify-content-end">S/ {{$total}}</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -124,16 +124,17 @@
                                     <div class="row justify-content-start align-items-center">
                                         <div class="col-6">
                                             <div class="datos">
-                                                <div>Contacto: Filipio Tunepolo</div>
-                                                <div>Celular: 987551726</div>
-                                                <div>Dirección: Av. Marques de Guadalzacar 182, dpto. 102</div>
-                                                <div>Distrito: Santiago de Surco, Lima, Lima, Perú</div>
-                                                <div>Referencia: Alt de comandante espinar</div>
+                                                <div>Contacto: {{$ped->contacto_entrega}}</div>
+                                                <div>Celular: {{$ped->movil_contacto_entrega}}</div>
+                                                @if($ped->getAddressById)
+                                                    <div>{{$ped->getAddressById->direccion}}</div>
+                                                    <div>Referencia: {{$ped->getAddressById->detalles}}</div>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="col-6 justify-content-center">
                                             <div class="mapa">
-                                                <img src="./img/mapa.jpg" alt="..." class="img-fluid rounded mx-auto d-block">
+                                                <img src="{{ asset('images/mapa.jpg') }}" alt="..." class="img-fluid rounded mx-auto d-block">
                                             </div>
                                         </div>
                                     </div>
@@ -143,8 +144,8 @@
                                     <div class="row justify-content-start align-items-center">
                                         <div class="col-12">
                                             <div class="datos">
-                                                <div>En efectivo</div>
-                                                <div>Paga con S/ 100</div>
+                                                <div>{{$ped->getPaymentCardByIdClient->marca}}</div>
+                                                <div>{{$ped->getPaymentCardByIdClient->nro_tarjeta}}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -154,7 +155,7 @@
                                     <div class="row justify-content-start align-items-center">
                                         <div class="col-12">
                                             <div class="datos">
-                                                <div>Por favor mucho ají</div>
+                                                <div>comentarios de prueba</div>
                                             </div>
                                         </div>
                                     </div>

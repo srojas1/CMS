@@ -104,9 +104,9 @@
                         </ul>
                     </nav>
                 </div>
-                <div class="row justify-content-end tools">
-                    <a href="" class="">Exportar a excel</a>
-                </div>
+                {{--<div class="row justify-content-end tools">--}}
+                    {{--<a href="" class="">Exportar a excel</a>--}}
+                {{--</div>--}}
             </div>
         </div>
         <!--- FOOTER DE CMS --->

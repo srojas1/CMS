@@ -15,24 +15,24 @@
 				<div class="board-tabs">
 					<ul class="nav nav-tabs" id="editarProductoTAB" role="tablist">
 						<li class="nav-item">
-							<a class="nav-link active" id="agregarProductoDescripcion-tab" data-toggle="tab" href="#agregarProductoDescripcion" role="tab" aria-controls="agregarProductoDescripcion" aria-selected="true">1. Descripción</a>
+							<a class="nav-link active" id="agregarProductoDescripcion-tab" data-toggle="tab" href="#agregarProductoDescripcion_{!! $prod->id !!}" role="tab" aria-controls="agregarProductoDescripcion" aria-selected="true">1. Descripción</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">2. Imágenes</a>
+							<a class="nav-link" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes_{!! $prod->id !!}" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">2. Imágenes</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id="agregarProductoInventario-tab" data-toggle="tab" href="#agregarProductoInventario" role="tab" aria-controls="agregarProductoInventario" aria-selected="false">3. Inventario</a>
+							<a class="nav-link" id="agregarProductoInventario-tab" data-toggle="tab" href="#agregarProductoInventario_{!! $prod->id !!}" role="tab" aria-controls="agregarProductoInventario" aria-selected="false">3. Inventario</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id="agregarProductoAtributos-tab" data-toggle="tab" href="#agregarProductoAtributos" role="tab" aria-controls="agregarProductoAtributos" aria-selected="false">4. Atributos</a>
+							<a class="nav-link" id="agregarProductoAtributos-tab" data-toggle="tab" href="#agregarProductoAtributos_{!! $prod->id !!}" role="tab" aria-controls="agregarProductoAtributos" aria-selected="false">4. Atributos</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id="agregarProductoVinculacion-tab" data-toggle="tab" href="#agregarProductoVinculacion" role="tab" aria-controls="agregarProductoVinculacion" aria-selected="false">5. Vinculación</a>
+							<a class="nav-link" id="agregarProductoVinculacion-tab" data-toggle="tab" href="#agregarProductoVinculacion_{!! $prod->id !!}" role="tab" aria-controls="agregarProductoVinculacion" aria-selected="false">5. Vinculación</a>
 						</li>
 					</ul>
 				</div>
 				<div class="tab-content" id="agregarProdcutoTABcontent">
-					<div class="tab-pane fade show active" id="agregarProductoDescripcion" role="tabpanel" aria-labelledby="agregarProductoDescripcion-tab">
+					<div class="tab-pane fade show active" id="agregarProductoDescripcion_{!! $prod->id !!}" role="tabpanel" aria-labelledby="agregarProductoDescripcion-tab">
 						<div class="board-body">
 							<h4>Descripción del producto</h4>
 							<div class="container-fluid">
@@ -105,14 +105,14 @@
 										<i class="material-icons">delete</i>
 									</a>
 									<a class="crear_producto btn btn-primary" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">
-										Agregar producto
+										Guardar Cambios
 									</a>
 								</div>
 							</div>
 						</div>
 					</div>
 
-					<div class="tab-pane fade show" id="agregarProductoImagenes" role="tabpanel" aria-labelledby="agregarProductoImagenes-tab">
+					<div class="tab-pane fade show" id="agregarProductoImagenes_{!! $prod->id !!}" role="tabpanel" aria-labelledby="agregarProductoImagenes-tab">
 						<div class="board-body">
 							<h4>Imágenes del producto</h4>
 							<div class="d-flex">
@@ -143,7 +143,7 @@
 									<div class="d-flex">
 										<div class="form-group">
 											<div class="inline-block position-relative">
-												<img class="imagen-featured shadow-sm border-top border-bottom border-right border-left">
+												<img src="{{ asset('images/'.getJsonValue($prod->filename_main))}}" class="imagen-featured shadow-sm border-top border-bottom border-right border-left">
 												<a href="#" class="badge badge-light badge-pill eliminarImagen shadow-sm">
 													<i class="material-icons">clear</i>
 												</a>
@@ -194,13 +194,13 @@
 									<i class="material-icons">delete</i>
 								</a>
 								<a class="btn btn-primary" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">
-									Agregar producto
+									Guardar Cambios
 								</a>
 							</div>
 						</div>
 					</div>
 
-					<div class="tab-pane fade show" id="agregarProductoInventario" role="tabpanel" aria-labelledby="agregarProductoInventario-tab">
+					<div class="tab-pane fade show" id="agregarProductoInventario_{!! $prod->id !!}" role="tabpanel" aria-labelledby="agregarProductoInventario-tab">
 						<div class="board-body">
 							<h4>Inventario del producto</h4>
 							<div class="container-fluid row align-items-center justify-content-start">
@@ -222,7 +222,7 @@
 
 								<div class="d-flex col-12 col-sm-12 col-md-12 col-lg-6">
 									<div class="form-group col-10 col-md-9 pl-0">
-										<input type="text" class="form-control" placeholder="SKU">
+										<input type="text" class="form-control" value="{{$prod->codigo}}" placeholder="SKU">
 									</div>
 									<div class="form-group col-2 col-md-3 pl-0">
 										<small class="help">
@@ -237,13 +237,13 @@
 							<div class="container-fluid row align-items-center justify-content-start">
 								<div class="d-flex col-12 col-sm-12 col-md-12 col-lg-4">
 									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Precio de lista">
+										<input type="text" class="form-control" value="{{$prod->precio}}" placeholder="Precio de lista">
 									</div>
 								</div>
 
 								<div class="d-flex col-12 col-sm-12 col-md-12 col-lg-4">
 									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Precio oferta">
+										<input type="text" class="form-control" value="{{$prod->oferta}}" placeholder="Precio oferta">
 									</div>
 								</div>
 							</div>
@@ -252,7 +252,7 @@
 							<div class="container-fluid row align-items-center justify-content-start">
 								<div class="d-flex col-12 col-sm-12 col-md-12 col-lg-6">
 									<div class="form-group custom-control custom-radio custom-control-inline">
-										<input type="radio" id="visibilidadShow" name="visibilidad" class="custom-control-input">
+										<input type="radio" id="visibilidadShow" name="visibilidad" class="custom-control-input" checked>
 										<label class="custom-control-label" for="visibilidadShow">Mostrar</label>
 									</div>
 									<div class="form-group custom-control custom-radio custom-control-inline">
@@ -267,13 +267,13 @@
 									<i class="material-icons">delete</i>
 								</a>
 								<a class="btn btn-primary" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">
-									Agregar producto
+									Guardar Cambios
 								</a>
 							</div>
 						</div>
 					</div>
 
-					<div class="tab-pane fade show" id="agregarProductoAtributos" role="tabpanel" aria-labelledby="agregarProductoAtributos-tab">
+					<div class="tab-pane fade show" id="agregarProductoAtributos_{!! $prod->id !!}" role="tabpanel" aria-labelledby="agregarProductoAtributos-tab">
 						<div class="board-body">
 							<h4>Atributos del producto</h4>
 							<div class="pt-4 pb-3 pl-3 mr-0 ml-0">
@@ -329,7 +329,7 @@
 								</div>
 							</div>
 							<div class="atributo_contenedor pt-4 pb-3 pl-3 mr-0 ml-0 border-top">
-								@foreach($atributos as $nkey=>$atr)
+								@foreach($prod->getAttributesById as $nkey=>$atr)
 									<div class="container-fluid row col-12 justify-content-start align-items-center">
 										<div class="form-group col-3">
 											{{$atr->atributo}}:
@@ -343,11 +343,11 @@
 												@endforeach
 											</select>
 										</div>
-										{{--<div class="form-group col-2">--}}
-											{{--<a href="#" class="badge-pill eliminarAtributo shadow-sm">--}}
-												{{--<i class="material-icons">clear</i>--}}
-											{{--</a>--}}
-										{{--</div>--}}
+											{{--<div class="form-group col-2">--}}
+												{{--<a href="#" class="badge-pill eliminarAtributo shadow-sm">--}}
+													{{--<i class="material-icons">clear</i>--}}
+												{{--</a>--}}
+											{{--</div>--}}
 									</div>
 								@endforeach
 							</div>
@@ -356,13 +356,13 @@
 									{{--<i class="material-icons">delete</i>--}}
 								{{--</a>--}}
 								<a class="btn btn-primary" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">
-									Agregar producto
+									Guardar Cambios
 								</a>
 							</div>
 						</div>
 					</div>
 
-					<div class="tab-pane fade show" id="agregarProductoVinculacion" role="tabpanel" aria-labelledby="agregarProductoVinculacion-tab">
+					<div class="tab-pane fade show" id="agregarProductoVinculacion_{!! $prod->id !!}" role="tabpanel" aria-labelledby="agregarProductoVinculacion-tab">
 						<div class="board-body">
 							<h4>Vincular con otros productos (OPCIONAL)</h4>
 							<div class="pt-4 pb-3 pl-3 mr-0 ml-0">
@@ -397,7 +397,7 @@
 									<i class="material-icons">delete</i>
 								</a>
 								<a class="btn btn-primary" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">
-									Agregar producto
+									Guardar Cambios
 								</a>
 							</div>
 						</div>
