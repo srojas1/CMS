@@ -2,7 +2,6 @@
 <div class="modal fade" id="modalEditarProducto_{!! $prod->id !!}" tabindex="-1" role="dialog" aria-labelledby="modalEditarProducto_{!! $prod->id !!}" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<form id="edit_product_form_{!! $prod->id !!}" enctype="multipart/form-data" method="post">
-			<input type="hidden" name="id_producto" value="{{$prod->id}}"/>
 			<div class="modal-content">
 				<!--- MODAL HEADER --->
 				<div class="modal-header">
@@ -39,20 +38,20 @@
 								<h4>Descripción del producto</h4>
 								<div class="container-fluid">
 									<div class="form-group">
-										<input value="{{$prod->producto}}" type="text" class="form-control" id="nombreProducto" aria-describedby="nombreProductoHelp" placeholder="Nombre de producto">
+										<input name="nombreProducto" value="{{$prod->producto}}" type="text" class="form-control" id="nombreProducto" aria-describedby="nombreProductoHelp" placeholder="Nombre de producto">
 									</div>
 									<div class="form-group">
-										<input value="{{$prod->codigo}}" type="text" class="form-control" id="codigoProducto" aria-describedby="codigoProductoHelp" placeholder="Código de producto">
+										<input name="codigoProducto" value="{{$prod->codigo}}" type="text" class="form-control" id="codigoProducto" aria-describedby="codigoProductoHelp" placeholder="Código de producto">
 									</div>
 									<div class="form-group">
-										<textarea class="form-control" id="descripcionProducto" rows="3" aria-describedby="descripcionProductoHelp" placeholder="Añade una pequeña descripción">{{$prod->descripcion}}</textarea>
+										<textarea name="descripcionProducto" class="form-control" id="descripcionProducto" rows="3" aria-describedby="descripcionProductoHelp" placeholder="Añade una pequeña descripción">{{$prod->descripcion}}</textarea>
 									</div>
 									<div class="form-group">
 										<h4>
 											Categoría del producto
 										</h4>
 										<div class="form-group">
-											<select class="custom-select" id="categoriaProducto" rows="3">
+											<select name="selectCategorias" class="custom-select" id="categoriaProducto" rows="3">
 												@if($categoria->count() > 0)
 													@foreach($categoria as $key => $cats)
 														@if ($cats->id == $prod->category_id)
@@ -85,7 +84,7 @@
 													</div>
 													<div class="col-12 col-sm-12 col-md-5 col-lg-7 d-flex pl-0">
 														<div class="form-group">
-															<button type="submit" class="crear_categoria_inside btn btn-primary">Crear categoría</button>
+															<button type="button" class="crear_categoria_inside btn btn-primary">Crear categoría</button>
 														</div>
 														<div class="form-group">
 															<small class="help">
@@ -104,6 +103,7 @@
 										<a tabindex="0" class="btn" role="button" data-toggle="tooltip" title="Eliminar">
 											<i class="material-icons">delete</i>
 										</a>
+										<input type="hidden" name="id_producto" class="id_producto" value="{{$prod->id}}"/>
 										<a class="editar_producto btn btn-primary" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">
 											Guardar Cambios
 										</a>
@@ -132,7 +132,7 @@
 											<div class="agregar-imagen-featured form-group">
 												<div class="input-group">
 													<div class="custom-file">
-														<input type="file" class="main_image custom-file-input justify-content-center" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+														<input type="file" name="filename_main" class="main_image custom-file-input justify-content-center" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
 														<label class="custom-file-label justify-content-center" for="inputGroupFile04">
 															<i class="material-icons">add_photo_alternate</i>
 														</label>
@@ -168,7 +168,7 @@
 											<div class="agregar-imagen-galeria form-group mr-2">
 												<div class="input-group">
 													<div class="custom-file">
-														<input type="file" class="gallery_image custom-file-input justify-content-center" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+														<input type="file" name="filename[]" multiple="multiple" class="gallery_image custom-file-input justify-content-center" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
 														<label class="custom-file-label justify-content-center" for="inputGroupFile04">
 															<i class="material-icons">add_photo_alternate</i>
 														</label>
@@ -208,12 +208,12 @@
 										@foreach($stock as $nkey=>$st)
 											@if($st['value'] == $prod->id_stock)
 												<div class="form-group custom-control custom-radio custom-control-inline">
-													<input name="stockValue" type="radio" id="customRadioInline_{{$nkey+1}}" class="custom-control-input" value="{{$st['value']}}" checked="checked">
+													<input name="stockValue_edit" type="radio" id="customRadioInline_{{$nkey+1}}" class="custom-control-input" value="{{$st['value']}}" checked="checked">
 													<label class="custom-control-label" for="customRadioInline_{{$nkey+1}}">{{$st['nombre']}}</label>
 												</div>
 											@else
 												<div class="form-group custom-control custom-radio custom-control-inline">
-													<input name="stockValue" type="radio" id="customRadioInline_{{$nkey+1}}" class="custom-control-input" value="{{$st['value']}}">
+													<input name="stockValue_edit" type="radio" id="customRadioInline_{{$nkey+1}}" class="custom-control-input" value="{{$st['value']}}">
 													<label class="custom-control-label" for="customRadioInline_{{$nkey+1}}">{{$st['nombre']}}</label>
 												</div>
 											@endif
@@ -222,7 +222,7 @@
 
 									<div class="d-flex col-12 col-sm-12 col-md-12 col-lg-6">
 										<div class="form-group col-10 col-md-9 pl-0">
-											<input type="text" class="form-control" value="{{$prod->codigo}}" placeholder="SKU">
+											<input name="sku" id="sku" type="text" class="form-control" value="{{$prod->SKU}}" placeholder="SKU">
 										</div>
 										<div class="form-group col-2 col-md-3 pl-0">
 											<small class="help">
@@ -237,13 +237,13 @@
 								<div class="container-fluid row align-items-center justify-content-start">
 									<div class="d-flex col-12 col-sm-12 col-md-12 col-lg-4">
 										<div class="form-group">
-											<input type="text" class="form-control" value="{{$prod->precio}}" placeholder="Precio de lista">
+											<input name="precio" type="text" class="form-control" value="{{$prod->precio}}" placeholder="Precio de lista">
 										</div>
 									</div>
 
 									<div class="d-flex col-12 col-sm-12 col-md-12 col-lg-4">
 										<div class="form-group">
-											<input type="text" class="form-control" value="{{$prod->oferta}}" placeholder="Precio oferta">
+											<input name="oferta" type="text" class="form-control" value="{{$prod->oferta}}" placeholder="Precio oferta">
 										</div>
 									</div>
 								</div>
@@ -253,19 +253,19 @@
 									<div class="d-flex col-12 col-sm-12 col-md-12 col-lg-6">
 										<div class="form-group custom-control custom-radio custom-control-inline">
 											@if($prod->visibilidad == 1)
-												<input type="radio" id="visibilidadShow" name="visibilidad" class="custom-control-input" checked>
+												<input type="radio" id="visibilidadShow_edit" name="visibilidad_edit" class="custom-control-input" value="1" checked>
 											@else
-												<input type="radio" id="visibilidadShow" name="visibilidad" class="custom-control-input">
+												<input type="radio" id="visibilidadShow_edit" name="visibilidad_edit" class="custom-control-input" value="1">
 											@endif
-											<label class="custom-control-label" for="visibilidadShow">Mostrar</label>
+											<label class="custom-control-label" for="visibilidadShow_edit">Mostrar</label>
 										</div>
 										<div class="form-group custom-control custom-radio custom-control-inline">
 											@if($prod->visibilidad !=1)
-												<input type="radio" id="visibilidadHide" name="visibilidad" class="custom-control-input" checked>
+												<input type="radio" id="visibilidadHide_edit" name="visibilidad_edit" class="custom-control-input" value="0" checked>
 											@else
-												<input type="radio" id="visibilidadHide" name="visibilidad" class="custom-control-input">
+												<input type="radio" id="visibilidadHide_edit" name="visibilidad_edit" class="custom-control-input" value="0">
 											@endif
-											<label class="custom-control-label" for="visibilidadHide">Ocultar</label>
+											<label class="custom-control-label" for="visibilidadHide_edit">Ocultar</label>
 										</div>
 									</div>
 								</div>
@@ -343,7 +343,7 @@
 												{{$atr->atributo}}:
 											</div>
 											<div class="form-group col-7">
-												<select class="custom-select" id="categoriaProducto" rows="3">
+												<select class="custom-select" id="categoriaProducto" name="atributoProductoVal[{{$atr->pivot->id}}]" rows="3">
 													<option>Selecciona un valor</option>
 													<?php $values = json_decode($atr->valor) ?>
 													@foreach($values as $val)
@@ -364,9 +364,9 @@
 									@endforeach
 								</div>
 								<div class="form-group d-flex justify-content-end pt-4 border-top">
-									{{--<a tabindex="0" class="btn" role="button" data-toggle="tooltip" title="Eliminar">--}}
-										{{--<i class="material-icons">delete</i>--}}
-									{{--</a>--}}
+									<a tabindex="0" class="btn" role="button" data-toggle="tooltip" title="Eliminar">
+										<i class="material-icons">delete</i>
+									</a>
 									<a class="editar_producto btn btn-primary" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">
 										Guardar Cambios
 									</a>
@@ -380,14 +380,14 @@
 								<div class="pt-4 pb-3 pl-3 mr-0 ml-0">
 									<div class="container-fluid row col-12 justify-content-start align-items-center">
 										<div class="form-group col-8">
-											<select id="producto_vincular" placeholder="Buscar producto a vincular">
+											<select id="producto_vincular" name="vinculacionProductoVal[]" placeholder="Buscar producto a vincular">
 												@foreach($producto as $nkey=>$prodVinc)
 													<option value="{{$prodVinc->id}}">{{$prodVinc->producto}}</option>
 												@endforeach
 											</select>
 										</div>
 										<div class="form-group">
-											<button type="submit" class="crear_vinculacion btn btn-primary">Vincular</button>
+											<button type="button" class="crear_vinculacion btn btn-primary">Vincular</button>
 										</div>
 									</div>
 								</div>
@@ -396,6 +396,7 @@
 										<?php $productosVinculados = json_decode($prod->vinculacion) ?>
 										@foreach($productosVinculados as $pv)
 											<div class="form-group col-9">
+												<input name="productoVinculado[]" type="hidden" value="{{$pv}}"/>
 												<div class="d-inline-flex"><img src="{{ asset('images/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{getProductsNameByIds($pv)}}</div>
 											</div>
 											<div class="form-group col-3">

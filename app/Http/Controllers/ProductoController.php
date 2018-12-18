@@ -117,20 +117,17 @@ class ProductoController extends AbstractController
 
 		$id                    = $request->input('id_producto');
 
-		var_dump($id);
-		exit;
-
 		//Get Data
 		$input['producto']     = $request->input('nombreProducto');
 		$input['codigo']       = $request->input('codigoProducto');
 		$input['descripcion']  = $request->input('descripcionProducto');
 		$input['category_id']  = $request->input('selectCategorias');
-		$input['id_stock']     = $request->input('stockValue');
+		$input['id_stock']     = $request->input('stockValue_edit');
 		$input['sku']          = $request->input('sku');
 		$input['id_moneda']    = 1;
 		$input['precio']       = $request->input('precio');
 		$input['oferta']       = $request->input('oferta');
-		$input['visibilidad']  = $request->input('visibilidad');
+		$input['visibilidad']  = $request->input('visibilidad_edit');
 		$vinculacionList       = $request->input('productoVinculado');
 
 		//Multiple images
@@ -185,16 +182,18 @@ class ProductoController extends AbstractController
 		if(!empty($atributosList))
 		{
 			//Multiple attributes
-			foreach($atributosList as $nkey=>$atr) {
-				$inputAttr['attribute_id']  = $nkey;
-				$inputAttr['valor'] = $atr;
-				$inputAttr['product_id'] = $id;
+			foreach($atributosList as $nkey=>$atrProdID) {
 
-				AtributoProductoRepository::create($inputAttr);
+				$atrProd = AtributoProductoRepository::find($nkey);
+
+				$inputAtr['valor'] = $atrProdID;
+
+				$atrProd->update($inputAtr);
 			}
 		}
 
 		$producto = ProductoRepository::find($id);
+
 		$producto->update($input);
 
 		return json_encode($producto);

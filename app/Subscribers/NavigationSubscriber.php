@@ -188,7 +188,7 @@ class NavigationSubscriber
 
 		// add clientes
         $this->navigation->addToMain(
-                ['title' => 'Clientes', 'slug' => 'cliente', 'icon' => 'group']
+                ['title' => 'Usuarios', 'slug' => 'cliente', 'icon' => 'group']
         );
     }
 

@@ -347,7 +347,7 @@
 							</div>
 						</div>
 
-						<div class="tab-pane fade show" id="editarProductoVinculacion" role="tabpanel" aria-labelledby="editarProductoVinculacion-tab">
+						<div class="tab-pane fade show" id="editarProductoVinculacion_{!! $prod->id !!}" role="tabpanel" aria-labelledby="editarProductoVinculacion-tab">
 							<div class="board-body">
 								<h4>Vincular con otros productos (OPCIONAL)</h4>
 								<div class="pt-4 pb-3 pl-3 mr-0 ml-0">
@@ -366,14 +366,17 @@
 								</div>
 								<div class="pt-4 pb-3 pl-3 mr-0 ml-0 border-top">
 									<div class="container_vinculacion container-fluid row col-12 justify-content-start align-items-center">
-										<div class="form-group col-9">
-											<div class="d-inline-flex"><img src="{{ asset('images/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">Cervezas Cusqueñas de 567ml.</div>
-										</div>
-										<div class="form-group col-3">
-											<a href="#" class="badge-pill eliminarRelacion shadow-sm">
-												<i class="material-icons">clear</i>
-											</a>
-										</div>
+										<?php $productosVinculados = json_decode($prod->vinculacion) ?>
+										@foreach($productosVinculados as $pv)
+											<div class="form-group col-9">
+												<div class="d-inline-flex"><img src="{{ asset('images/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{getProductsNameByIds($pv)}}</div>
+											</div>
+											<div class="form-group col-3">
+												<a href="#" class="badge-pill eliminarRelacion shadow-sm">
+													<i class="material-icons">clear</i>
+												</a>
+											</div>
+										@endforeach
 									</div>
 								</div>
 
