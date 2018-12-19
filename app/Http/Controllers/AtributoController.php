@@ -50,7 +50,7 @@ class AtributoController extends AbstractController {
     }
 
 	/**
-	 * Store a new category.
+	 * Store a new attribute.
 	 */
 	public function storeAtributo() {
 
@@ -64,6 +64,19 @@ class AtributoController extends AbstractController {
 		$atributo = AtributoRepository::create($input);
 
 		return json_encode($atributo);
+	}
+
+	/**
+	 * Destroy Attribute.
+	 */
+	public function destroyAtributo() {
+
+		$idAtributo = $_POST['id'];
+
+		$atributo = AtributoRepository::find($idAtributo);
+		$this->checkAttribute($atributo);
+
+		$atributo->delete();
 	}
 
     /**

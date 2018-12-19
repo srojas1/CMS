@@ -1,16 +1,10 @@
 $(document).ready(function(){
 
-    $('.eliminarAtributo').on('click',function(){
-
-        $(this).parent().parent().remove();
-
-    });
-
-    $('.eliminarRelacion').on('click',function(){
-
-        $(this).parent().parent().remove();
-
-    });
+    // $('.eliminarRelacion').on('click',function(){
+    //
+    //     $(this).parent().parent().remove();
+    //
+    // });
 
     $('.modal').on('show.bs.modal', function (e) {
 
@@ -71,6 +65,26 @@ $(document).ready(function(){
                 '<i class="material-icons">clear</i>' +
                 '</a>' +
                 '</div></div>');
+        });
+
+        $('.eliminarAtributo').on('click',function(){
+
+            var postData = $('.idAtributoProducto').val();
+
+            alert(postData);
+
+            // $.ajax({
+            //    type:"POST",
+            //    url: 'producto/destroyAtributo',
+            //    contentType: false,
+            //    processData: false,
+            //    data: postData
+            // }).done(function(data){
+            //     alert('Se eliminó el atributo');
+            // });
+            //
+            // $(this).parent().parent().remove();
+
         });
     });
 

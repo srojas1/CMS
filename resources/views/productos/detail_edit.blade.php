@@ -356,6 +356,7 @@
 												</select>
 											</div>
 												<div class="form-group col-2">
+													<input type="hidden" id="idAtributoProducto_{!! $prod->id !!}" class="idAtributoProducto" value="{{$atr->pivot->id}}"/>
 													<a href="#" class="badge-pill eliminarAtributo shadow-sm">
 														<i class="material-icons">clear</i>
 													</a>

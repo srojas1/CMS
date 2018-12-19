@@ -77,3 +77,4 @@ Route::post('categoria/storeCategory', 'CategoriaController@storeCategory');
 Route::post('producto/storeProducto', 'ProductoController@storeProducto');
 Route::post('atributo/storeAtributo', 'AtributoController@storeAtributo');
 Route::post('producto/editProducto', 'ProductoController@editProducto');
+Route::post('atributo/destroyAtributo', 'AtributoController@destroyAtributo');
