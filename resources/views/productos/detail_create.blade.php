@@ -368,14 +368,16 @@
 									<div class="container_vinculacion container-fluid row col-12 justify-content-start align-items-center">
 										<?php $productosVinculados = json_decode($prod->vinculacion) ?>
 										@foreach($productosVinculados as $pv)
-											<div class="form-group col-9">
-												<div class="d-inline-flex"><img src="{{ asset('images/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{getProductsNameByIds($pv)}}</div>
-											</div>
-											<div class="form-group col-3">
-												<a href="#" class="badge-pill eliminarRelacion shadow-sm">
-													<i class="material-icons">clear</i>
-												</a>
-											</div>
+                                            <div class="container-fluid row col-12 justify-content-start align-items-center">
+                                                <div class="form-group col-9">
+                                                    <div class="d-inline-flex"><img src="{{ asset('images/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{getProductsNameByIds($pv)}}</div>
+                                                </div>
+                                                <div class="form-group col-3">
+                                                    <a href="#" class="badge-pill eliminarRelacion shadow-sm">
+                                                        <i class="material-icons">clear</i>
+                                                    </a>
+                                                </div>
+                                            </div>
 										@endforeach
 									</div>
 								</div>

@@ -250,27 +250,34 @@ class ProductoController extends AbstractController
 			}
 		}
 
-        //Multiple vinculacion
-        foreach($vinculacionList as $nkey=>$vinc) {
-            $vincArr[]  = $vinc;
+		if(!empty($vinculacionList)) {
+
+            //Multiple vinculacion
+            foreach($vinculacionList as $nkey=>$vinc) {
+                $vincArr[]  = $vinc;
+            }
+
+            if (!empty($vincArr)) {
+                $input['vinculacion'] = json_encode($vincArr);
+            }
         }
 
-        if (!empty($vincArr)) {
-            $input['vinculacion'] = json_encode($vincArr);
-        }
 
 		$producto = ProductoRepository::create($input);
 
 		$atributosList  = $request->input('atributoProductoVal');
 
-		//Multiple attributes
-		foreach($atributosList as $nkey=>$atr) {
-			$inputAttr['attribute_id']  = $nkey;
-			$inputAttr['valor'] = $atr;
-			$inputAttr['product_id'] = $producto->id;
+		if(!empty($atributosList)) {
 
-			AtributoProductoRepository::create($inputAttr);
-		}
+		    //Multiple attributes
+            foreach($atributosList as $nkey=>$atr) {
+                $inputAttr['attribute_id']  = $nkey;
+                $inputAttr['valor'] = $atr;
+                $inputAttr['product_id'] = $producto->id;
+
+                AtributoProductoRepository::create($inputAttr);
+            }
+        }
 
 		return json_encode($producto);
 	}

@@ -380,14 +380,14 @@
 								<div class="pt-4 pb-3 pl-3 mr-0 ml-0">
 									<div class="container-fluid row col-12 justify-content-start align-items-center">
 										<div class="form-group col-8">
-											<select id="producto_vincular" name="vinculacionProductoVal[]" class="custom-select" placeholder="Buscar producto a vincular">
+											<select id="producto_vincular_{!! $prod->id !!}" class="custom-select" name="vinculacionProductoVal[]" placeholder="Buscar producto a vincular">
 												@foreach($producto as $nkey=>$prodVinc)
 													<option value="{{$prodVinc->id}}">{{$prodVinc->producto}}</option>
 												@endforeach
 											</select>
 										</div>
 										<div class="form-group">
-											<button type="button" class="crear_vinculacion btn btn-primary">Vincular</button>
+											<button type="button" class="crear_vinculacion_edit btn btn-primary">Vincular</button>
 										</div>
 									</div>
 								</div>

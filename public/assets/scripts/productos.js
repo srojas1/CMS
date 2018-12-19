@@ -6,7 +6,7 @@ $(document).ready(function(){
 
     });
 
-    $('.eliminarVinculacion').on('click',function(){
+    $('.eliminarRelacion').on('click',function(){
 
         $(this).parent().parent().remove();
 
@@ -31,6 +31,46 @@ $(document).ready(function(){
                 location.reload();
                 alert('Se modificó el producto exitosamente');
             });
+        });
+
+        $('document').on('click','eliminarRelacion',function(){
+            alert('test');
+            $(this).parent().parent().remove();
+
+        });
+
+        $('.crear_vinculacion').on('click', function(){
+
+            productoVinculadoId = $('#producto_vincular').val();
+            productoVinculadoText = $('#producto_vincular option:selected').text();
+
+            $('.container_vinculacion').append('<div class="container-fluid row col-12 justify-content-start align-items-center"><div class="form-group col-9">' +
+                '<input name="productoVinculado[]" type="hidden" value="'+ productoVinculadoId +'">' +
+                '<div class="d-inline-flex"><img src="{{ asset(\'images/producto-icon.jpg\') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">' +
+                productoVinculadoText +'</div>' +
+                '</div>' +
+                '<div class="form-group col-3">' +
+                '<a href="#" class="badge-pill eliminarRelacion shadow-sm">' +
+                '<i class="material-icons">clear</i>' +
+                '</a>' +
+                '</div></div>');
+        });
+
+        $('.crear_vinculacion_edit').on('click', function(){
+
+            productoVinculadoId = $('#producto_vincular_'+$idProducto).val();
+            productoVinculadoText = $('#producto_vincular_'+$idProducto+' option:selected').text();
+
+            $('.container_vinculacion').append('<div class="container-fluid row col-12 justify-content-start align-items-center"><div class="form-group col-9">' +
+                '<input name="productoVinculado[]" type="hidden" value="'+ productoVinculadoId +'">' +
+                '<div class="d-inline-flex"><img src="{{ asset(\'images/producto-icon.jpg\') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">' +
+                productoVinculadoText +'</div>' +
+                '</div>' +
+                '<div class="form-group col-3">' +
+                '<a href="#" class="badge-pill eliminarRelacion shadow-sm">' +
+                '<i class="material-icons">clear</i>' +
+                '</a>' +
+                '</div></div>');
         });
     });
 
@@ -142,25 +182,7 @@ $(document).ready(function(){
         });
     });
 
-    $('.crear_vinculacion').on('click', function(){
 
-        productoVinculadoId = $('#producto_vincular').val();
-        productoVinculadoText = $('#producto_vincular').text();
-
-        alert(productoVinculadoId);
-        alert(productoVinculadoText);
-
-        $('.container_vinculacion').append('<div class="form-group col-9">' +
-            '<input name="productoVinculado" type="hidden" value="'+ productoVinculadoId +'">' +
-            '<div class="d-inline-flex"><img src="{{ asset(\'images/producto-icon.jpg\') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">' +
-            productoVinculadoText +'</div>' +
-            '</div>' +
-            '<div class="form-group col-3">' +
-            '<a href="#" class="badge-pill eliminarRelacion eliminarVinculacion shadow-sm">' +
-            '<i class="material-icons">clear</i>' +
-            '</a>' +
-            '</div>');
-    });
 
     $(".buscador").on("keyup", function() {
         var value = $(this).val();
