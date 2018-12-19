@@ -347,13 +347,13 @@
 							</div>
 						</div>
 
-						<div class="tab-pane fade show" id="editarProductoVinculacion_{!! $prod->id !!}" role="tabpanel" aria-labelledby="editarProductoVinculacion-tab">
+						<div class="tab-pane fade show" id="editarProductoVinculacion" role="tabpanel" aria-labelledby="editarProductoVinculacion-tab">
 							<div class="board-body">
 								<h4>Vincular con otros productos (OPCIONAL)</h4>
 								<div class="pt-4 pb-3 pl-3 mr-0 ml-0">
 									<div class="container-fluid row col-12 justify-content-start align-items-center">
 										<div class="form-group col-8">
-											<select id="producto_vincular" name="vinculacionProductoVal[]" placeholder="Buscar producto a vincular">
+											<select id="producto_vincular" name="vinculacionProductoVal[]" class="custom-select" placeholder="Buscar producto a vincular">
 												@foreach($producto as $nkey=>$prod)
 													<option value="{{$prod->id}}">{{$prod->producto}}</option>
 												@endforeach

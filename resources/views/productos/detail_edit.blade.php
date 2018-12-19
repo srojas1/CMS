@@ -355,11 +355,11 @@
 													@endforeach
 												</select>
 											</div>
-												{{--<div class="form-group col-2">--}}
-													{{--<a href="#" class="badge-pill eliminarAtributo shadow-sm">--}}
-														{{--<i class="material-icons">clear</i>--}}
-													{{--</a>--}}
-												{{--</div>--}}
+												<div class="form-group col-2">
+													<a href="#" class="badge-pill eliminarAtributo shadow-sm">
+														<i class="material-icons">clear</i>
+													</a>
+												</div>
 										</div>
 									@endforeach
 								</div>
@@ -380,7 +380,7 @@
 								<div class="pt-4 pb-3 pl-3 mr-0 ml-0">
 									<div class="container-fluid row col-12 justify-content-start align-items-center">
 										<div class="form-group col-8">
-											<select id="producto_vincular" name="vinculacionProductoVal[]" placeholder="Buscar producto a vincular">
+											<select id="producto_vincular" name="vinculacionProductoVal[]" class="custom-select" placeholder="Buscar producto a vincular">
 												@foreach($producto as $nkey=>$prodVinc)
 													<option value="{{$prodVinc->id}}">{{$prodVinc->producto}}</option>
 												@endforeach
@@ -395,14 +395,16 @@
 									<div class="container_vinculacion container-fluid row col-12 justify-content-start align-items-center">
 										<?php $productosVinculados = json_decode($prod->vinculacion) ?>
 										@foreach($productosVinculados as $pv)
-											<div class="form-group col-9">
-												<input name="productoVinculado[]" type="hidden" value="{{$pv}}"/>
-												<div class="d-inline-flex"><img src="{{ asset('images/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{getProductsNameByIds($pv)}}</div>
-											</div>
-											<div class="form-group col-3">
-												<a href="#" class="badge-pill eliminarRelacion shadow-sm">
-													<i class="material-icons">clear</i>
-												</a>
+											<div class="container-fluid row col-12 justify-content-start align-items-center">
+												<div class="form-group col-9">
+													<input name="productoVinculado[]" type="hidden" value="{{$pv}}"/>
+													<div class="d-inline-flex"><img src="{{ asset('images/'.getJsonValue(getProductMainImageById($pv)))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{getProductsNameByIds($pv)}}</div>
+												</div>
+												<div class="form-group col-3">
+													<a href="#" class="badge-pill eliminarRelacion eliminarVinculacion shadow-sm">
+														<i class="material-icons">clear</i>
+													</a>
+												</div>
 											</div>
 										@endforeach
 									</div>

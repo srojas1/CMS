@@ -1,5 +1,17 @@
 $(document).ready(function(){
 
+    $('.eliminarAtributo').on('click',function(){
+
+        $(this).parent().parent().remove();
+
+    });
+
+    $('.eliminarVinculacion').on('click',function(){
+
+        $(this).parent().parent().remove();
+
+    });
+
     $('.modal').on('show.bs.modal', function (e) {
 
         $idProducto = $(this).find('.id_producto').val();
@@ -130,20 +142,21 @@ $(document).ready(function(){
         });
     });
 
-    $('#producto_vincular').selectize();
-
     $('.crear_vinculacion').on('click', function(){
 
         productoVinculadoId = $('#producto_vincular').val();
         productoVinculadoText = $('#producto_vincular').text();
 
+        alert(productoVinculadoId);
+        alert(productoVinculadoText);
+
         $('.container_vinculacion').append('<div class="form-group col-9">' +
-            '<input name="productoVinculado[]" type="hidden" value="'+ productoVinculadoId +'">' +
+            '<input name="productoVinculado" type="hidden" value="'+ productoVinculadoId +'">' +
             '<div class="d-inline-flex"><img src="{{ asset(\'images/producto-icon.jpg\') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">' +
             productoVinculadoText +'</div>' +
             '</div>' +
             '<div class="form-group col-3">' +
-            '<a href="#" class="badge-pill eliminarRelacion shadow-sm">' +
+            '<a href="#" class="badge-pill eliminarRelacion eliminarVinculacion shadow-sm">' +
             '<i class="material-icons">clear</i>' +
             '</a>' +
             '</div>');
