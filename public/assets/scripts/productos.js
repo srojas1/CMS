@@ -1,23 +1,144 @@
 $(document).ready(function(){
 
-    $('.crear_categoria_inside').on('click',function () {
+    // $('.eliminarRelacion').on('click',function(){
+    //
+    //     $(this).parent().parent().remove();
+    //
+    // });
 
-        $nombreCategoria  = $('.nueva_categoria_inside').val();
-        $selectCategorias = $('#categoriaProducto');
+    $('.modal').on('show.bs.modal', function (e) {
 
-        $.ajax({
-            type: "POST",
-            url: 'categoria/storeCategory',
-            data: {categoria: $nombreCategoria}
-        }).done(function(data) {
-            postsjson = $.parseJSON(data);
-            $selectCategorias.append($('<option>', {
-                value: postsjson.id,
-                text: $nombreCategoria
-            }));
-            alert('Se agregó la categoría exitosamente');
+        $idProducto = $(this).find('.id_producto').val();
+
+        $('.editar_producto').on('click',function () {
+
+            var postData = new FormData($("#edit_product_form_"+$idProducto)[0]);
+
+            $.ajax({
+                type: "POST",
+                url: 'producto/editProducto',
+                contentType: false,
+                cache: false,
+                processData: false,
+                data: postData
+            }).done(function(data) {
+                location.reload();
+                alert('Se modificó el producto exitosamente');
+            });
+        });
+
+        $('document').on('click','eliminarRelacion',function(){
+            alert('test');
+            $(this).parent().parent().remove();
+
+        });
+
+        $('.crear_vinculacion').on('click', function(){
+
+            productoVinculadoId = $('#producto_vincular').val();
+            productoVinculadoText = $('#producto_vincular option:selected').text();
+
+            $('.container_vinculacion').append('<div class="container-fluid row col-12 justify-content-start align-items-center"><div class="form-group col-9">' +
+                '<input name="productoVinculado[]" type="hidden" value="'+ productoVinculadoId +'">' +
+                '<div class="d-inline-flex"><img src="{{ asset(\'images/producto-icon.jpg\') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">' +
+                productoVinculadoText +'</div>' +
+                '</div>' +
+                '<div class="form-group col-3">' +
+                '<a href="#" class="badge-pill eliminarRelacion shadow-sm">' +
+                '<i class="material-icons">clear</i>' +
+                '</a>' +
+                '</div></div>');
+        });
+
+        $('.crear_vinculacion_edit').on('click', function(){
+
+            productoVinculadoId = $('#producto_vincular_'+$idProducto).val();
+            productoVinculadoText = $('#producto_vincular_'+$idProducto+' option:selected').text();
+
+            $('.container_vinculacion').append('<div class="container-fluid row col-12 justify-content-start align-items-center"><div class="form-group col-9">' +
+                '<input name="productoVinculado[]" type="hidden" value="'+ productoVinculadoId +'">' +
+                '<div class="d-inline-flex"><img src="{{ asset(\'images/producto-icon.jpg\') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">' +
+                productoVinculadoText +'</div>' +
+                '</div>' +
+                '<div class="form-group col-3">' +
+                '<a href="#" class="badge-pill eliminarRelacion shadow-sm">' +
+                '<i class="material-icons">clear</i>' +
+                '</a>' +
+                '</div></div>');
+        });
+
+        $('.eliminarAtributo').on('click',function(){
+
+            $idAtributo = $(this).prev('.idAtributoProducto').val();
+
+            $.ajax({
+               type:"POST",
+               url: 'producto/destroyAtributo',
+               data: {id:$idAtributo}
+            }).done(function(data){
+                alert('Se eliminó el atributo');
+            });
+
+            $(this).parent().parent().remove();
+
+        });
+
+        $('.crear_categoria_inside').on('click',function () {
+
+            $nombreCategoria  = $('#nueva_categoria_inside_'+$idProducto).val();
+            $selectCategorias = $('#categoriaProducto_'+$idProducto);
+
+            $.ajax({
+                type: "POST",
+                url: 'categoria/storeCategory',
+                data: {categoria: $nombreCategoria}
+            }).done(function(data) {
+                postsjson = $.parseJSON(data);
+                $selectCategorias.append($('<option>', {
+                    value: postsjson.id,
+                    text: $nombreCategoria
+                }));
+                alert('Se agregó la categoría exitosamente');
+            });
+        });
+
+
+        //atributos
+
+        $('.crear_atributo_edit').on('click',function () {
+
+            $nombreAtributo  = $('.nuevo_atributo_'+$idProducto).val();
+            $selectAtributos = $('#atributoProducto_'+$idProducto);
+            $valores = $('#valores_'+$idProducto).val();
+
+            $values = $valores.split(",");
+            $arr=[];
+
+            for(var i=0; i < $values.length; i++) {
+                $arr.push($values[i]);
+            }
+
+            $.ajax({
+                type: "POST",
+                url: 'atributo/storeAtributo',
+                data: {
+                    atributo: $nombreAtributo,
+                    valores:$arr
+                }
+            }).done(function(data) {
+                postsjson = $.parseJSON(data);
+                $selectAtributos.append($('<option>', {
+                    value: postsjson.id,
+                    text: $nombreAtributo
+                }));
+
+                $('#agregarProductoAtributos_'+$idProducto).load(' #agregarProductoAtributos_'+$idProducto);
+
+                alert('Se agregó el atributo exitosamente');
+            });
         });
     });
+
 
     $('.crear_producto').on('click',function () {
         var postData = new FormData($("#create_product_form")[0]);
@@ -107,24 +228,7 @@ $(document).ready(function(){
         });
     });
 
-    $('#producto_vincular').selectize();
 
-    $('.crear_vinculacion').on('click', function(){
-
-        productoVinculadoId = $('#producto_vincular').val();
-        productoVinculadoText = $('#producto_vincular').text();
-
-        $('.container_vinculacion').append('<div class="form-group col-9">' +
-            '<input name="productoVinculado" type="hidden" value="'+ productoVinculadoId +'">' +
-            '<div class="d-inline-flex"><img src="{{ asset(\'images/producto-icon.jpg\') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">' +
-            productoVinculadoText +'</div>' +
-            '</div>' +
-            '<div class="form-group col-3">' +
-            '<a href="#" class="badge-pill eliminarRelacion shadow-sm">' +
-            '<i class="material-icons">clear</i>' +
-            '</a>' +
-            '</div>');
-    });
 
     $(".buscador").on("keyup", function() {
         var value = $(this).val();

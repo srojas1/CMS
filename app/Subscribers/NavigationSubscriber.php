@@ -156,9 +156,9 @@ class NavigationSubscriber
     public function onNavigationMainFirst()
     {
 		//if ($this->blogging) {
-			$this->navigation->addToMain(
-				['title' => 'Dashboard', 'slug' => 'dashboard', 'icon' => 'dashboard']
-			);
+//			$this->navigation->addToMain(
+//				['title' => 'Dashboard', 'slug' => 'dashboard', 'icon' => 'dashboard']
+//			);
 		//}
 
         //if ($this->blogging) {
@@ -181,16 +181,14 @@ class NavigationSubscriber
 //            );
 //        }
 
-		// add extras
-		//if ($this->events) {
-			$this->navigation->addToMain(
-				['title' => 'Promociones y Recompensas', 'slug' => 'promocion', 'icon' => 'card_giftcard']
-			);
-		//}
+        // add promociones
+//			$this->navigation->addToMain(
+//				['title' => 'Promociones y Recompensas', 'slug' => 'promocion', 'icon' => 'card_giftcard']
+//			);
 
 		// add clientes
         $this->navigation->addToMain(
-                ['title' => 'Clientes', 'slug' => 'cliente', 'icon' => 'group']
+                ['title' => 'Usuarios', 'slug' => 'cliente', 'icon' => 'group']
         );
     }
 

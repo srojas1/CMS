@@ -111,22 +111,24 @@ class ProductoController extends AbstractController
     }
 
 	/**
-	 * Store a new product.
+	 * Edit a new product.
 	 */
-public function storeProducto(Request $request) {
+	public function editProducto(Request $request) {
+
+		$id                    = $request->input('id_producto');
 
 		//Get Data
 		$input['producto']     = $request->input('nombreProducto');
 		$input['codigo']       = $request->input('codigoProducto');
 		$input['descripcion']  = $request->input('descripcionProducto');
 		$input['category_id']  = $request->input('selectCategorias');
-		$input['id_stock']     = $request->input('stockValue');
+		$input['id_stock']     = $request->input('stockValue_edit');
 		$input['sku']          = $request->input('sku');
 		$input['id_moneda']    = 1;
 		$input['precio']       = $request->input('precio');
 		$input['oferta']       = $request->input('oferta');
-		$input['visibilidad']  = $request->input('visibilidad');
-		$input['vinculacion']  = $request->input('productoVinculado');
+		$input['visibilidad']  = $request->input('visibilidad_edit');
+		$vinculacionList       = $request->input('productoVinculado');
 
 		//Multiple images
 		if ($request->hasfile('filename')) {
@@ -161,20 +163,121 @@ public function storeProducto(Request $request) {
 			}
 		}
 
+		if(!empty($vinculacionList)) {
+
+			//Multiple vinculacion
+			foreach($vinculacionList as $nkey=>$vinc) {
+				$vincArr[]  = $vinc;
+			}
+
+			if (!empty($vincArr)) {
+				$input['vinculacion'] = json_encode($vincArr);
+			}
+		}
+
+		$id = $request->input('id_producto');
+
+		$atributosList  = $request->input('atributoProductoVal');
+
+		if(!empty($atributosList))
+		{
+			//Multiple attributes
+			foreach($atributosList as $nkey=>$atrProdID) {
+
+				$atrProd = AtributoProductoRepository::find($nkey);
+
+				$inputAtr['valor'] = $atrProdID;
+
+				$atrProd->update($inputAtr);
+			}
+		}
+
+		$producto = ProductoRepository::find($id);
+
+		$producto->update($input);
+
+		return json_encode($producto);
+	}
+
+	/**
+	 * Store a new product.
+	 */
+	public function storeProducto(Request $request) {
+
+		//Get Data
+		$input['producto']     = $request->input('nombreProducto');
+		$input['codigo']       = $request->input('codigoProducto');
+		$input['descripcion']  = $request->input('descripcionProducto');
+		$input['category_id']  = $request->input('selectCategorias');
+		$input['id_stock']     = $request->input('stockValue_add');
+		$input['sku']          = $request->input('sku');
+		$input['id_moneda']    = 1;
+		$input['precio']       = $request->input('precio');
+		$input['oferta']       = $request->input('oferta');
+		$input['visibilidad']  = $request->input('visibilidad_add');
+        $vinculacionList       = $request->input('productoVinculado');
+
+        //Multiple images
+		if ($request->hasfile('filename')) {
+
+			$images = $request->file('filename');
+
+			foreach ($images as $key => $image) {
+				if (!empty($image)) {
+					$name = $image->getClientOriginalName();
+					$image->move(public_path() . '/images/', $name);
+					$data[] = $name;
+				} else
+					continue;
+			}
+
+			if (!empty($data)) {
+				$input['filename'] = json_encode($data);
+			}
+		}
+
+		//Main image
+		if ($request->hasfile('filename_main')) {
+
+			$images_main = $request->file('filename_main');
+
+			$name_main = $images_main->getClientOriginalName();
+			$images_main->move(public_path() . '/images/', $name_main);
+			$data_main[] = $name_main;
+
+			if (!empty($data_main)) {
+				$input['filename_main'] = json_encode($data_main);
+			}
+		}
+
+		if(!empty($vinculacionList)) {
+
+            //Multiple vinculacion
+            foreach($vinculacionList as $nkey=>$vinc) {
+                $vincArr[]  = $vinc;
+            }
+
+            if (!empty($vincArr)) {
+                $input['vinculacion'] = json_encode($vincArr);
+            }
+        }
+
+
 		$producto = ProductoRepository::create($input);
 
 		$atributosList  = $request->input('atributoProductoVal');
 
-		//Multiple attributes
-		foreach($atributosList as $nkey=>$atr) {
-			$inputAttr['attribute_id']  = $nkey;
-			$inputAttr['valor'] = $atr;
-			$inputAttr['product_id'] = $producto->id;
+		if(!empty($atributosList)) {
 
-			AtributoProductoRepository::create($inputAttr);
-		}
+		    //Multiple attributes
+            foreach($atributosList as $nkey=>$atr) {
+                $inputAttr['attribute_id']  = $nkey;
+                $inputAttr['valor'] = $atr;
+                $inputAttr['product_id'] = $producto->id;
 
-		$vinculacionList  = $request->input('vinculacionProductoVal');
+                AtributoProductoRepository::create($inputAttr);
+            }
+        }
 
 		return json_encode($producto);
 	}

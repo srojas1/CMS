@@ -4,6 +4,7 @@ namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\BootstrapCMS\Facades\AtributoRepository;
+use GrahamCampbell\BootstrapCMS\Facades\AtributoProductoRepository;
 use GrahamCampbell\Credentials\Facades\Credentials;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -50,7 +51,7 @@ class AtributoController extends AbstractController {
     }
 
 	/**
-	 * Store a new category.
+	 * Store a new attribute.
 	 */
 	public function storeAtributo() {
 
@@ -64,6 +65,19 @@ class AtributoController extends AbstractController {
 		$atributo = AtributoRepository::create($input);
 
 		return json_encode($atributo);
+	}
+
+	/**
+	 * Destroy Attribute.
+	 */
+	public function destroyAtributo() {
+
+		$idAtributo = $_POST['id'];
+
+		$atributoProducto = AtributoProductoRepository::find($idAtributo);
+		$this->checkAttribute($atributoProducto);
+
+        $atributoProducto->delete();
 	}
 
     /**

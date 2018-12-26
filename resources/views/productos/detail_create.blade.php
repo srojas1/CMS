@@ -53,11 +53,11 @@
 											<select name="selectCategorias" class="custom-select" id="categoriaProducto" rows="3">
 												@if($categoria->count() > 0)
 													@foreach($categoria as $key => $cats)
-														{{--@if ($cats->id == $form['defaults']['id_categoria'])--}}
-															{{--<option value={{$cats->id}} selected>{{$cats->categoria}}</option>--}}
-														{{--@else--}}
+														@if ($cats->id)
+															<option value={{$cats->id}} selected>{{$cats->categoria}}</option>
+														@else
 															<option value="{{$cats->id}}">{{$cats->categoria}}</option>
-														{{--@endif--}}
+														@endif
 													@endforeach
 												@else
 													No se encontraron resultados
@@ -200,8 +200,8 @@
 									<div class="d-flex col-12 col-sm-12 col-md-12 col-lg-6">
 										@foreach($stock as $nkey=>$st)
 											<div class="form-group custom-control custom-radio custom-control-inline">
-												<input name="stockValue" type="radio" id="customRadioInline_{{$nkey+1}}" name="customRadioInline" class="stockValue customRadioInline custom-control-input" value="{{$st['value']}}">
-												<label class="custom-control-label" for="customRadioInline_{{$nkey+1}}">{{$st['nombre']}}</label>
+												<input name="stockValue_add" type="radio" id="customRadioInline_add_{{$nkey+1}}" class="customRadioInline custom-control-input" value="{{$st['value']}}">
+												<label class="custom-control-label" for="customRadioInline_add_{{$nkey+1}}">{{$st['nombre']}}</label>
 											</div>
 										@endforeach
 									</div>
@@ -238,12 +238,12 @@
 								<div class="container-fluid row align-items-center justify-content-start">
 									<div class="d-flex col-12 col-sm-12 col-md-12 col-lg-6">
 										<div class="form-group custom-control custom-radio custom-control-inline">
-											<input name="visibilidad" type="radio" id="visibilidadShow" class="visibilidad custom-control-input">
-											<label class="custom-control-label" for="visibilidadShow">Mostrar</label>
+											<input type="radio" id="visibilidadShow_add" name="visibilidad_add" class="custom-control-input" checked>
+											<label class="custom-control-label" for="visibilidadShow_add">Mostrar</label>
 										</div>
 										<div class="form-group custom-control custom-radio custom-control-inline">
-											<input name="visibilidad" type="radio" id="visibilidadHide" class="visibilidad custom-control-input">
-											<label class="custom-control-label" for="visibilidadHide">Ocultar</label>
+											<input type="radio" id="visibilidadHide_add" name="visibilidad_add" class="custom-control-input">
+											<label class="custom-control-label" for="visibilidadHide_add">Ocultar</label>
 										</div>
 									</div>
 								</div>
@@ -328,18 +328,18 @@
 													@endforeach
 												</select>
 											</div>
-											{{--<div class="form-group col-2">--}}
-												{{--<a href="#" class="badge-pill eliminarAtributo shadow-sm">--}}
-													{{--<i class="material-icons">clear</i>--}}
-												{{--</a>--}}
-											{{--</div>--}}
+											<div class="form-group col-2">
+												<a href="#" class="badge-pill eliminarAtributo shadow-sm">
+													<i class="material-icons">clear</i>
+												</a>
+											</div>
 										</div>
 									@endforeach
 								</div>
 								<div class="form-group d-flex justify-content-end pt-4 border-top">
-									{{--<a tabindex="0" class="btn" role="button" data-toggle="tooltip" title="Eliminar">--}}
-										{{--<i class="material-icons">delete</i>--}}
-									{{--</a>--}}
+									<a tabindex="0" class="btn" role="button" data-toggle="tooltip" title="Eliminar">
+										<i class="material-icons">delete</i>
+									</a>
 									<a class="crear_producto btn btn-primary" id="agregarProductoImagenes-tab" data-toggle="tab" href="#agregarProductoImagenes" role="tab" aria-controls="agregarProductoImagenes" aria-selected="false">
 										Agregar producto
 									</a>
@@ -353,7 +353,7 @@
 								<div class="pt-4 pb-3 pl-3 mr-0 ml-0">
 									<div class="container-fluid row col-12 justify-content-start align-items-center">
 										<div class="form-group col-8">
-											<select id="producto_vincular" name="vinculacionProductoVal[]" placeholder="Buscar producto a vincular">
+											<select id="producto_vincular" name="vinculacionProductoVal[]" class="custom-select" placeholder="Buscar producto a vincular">
 												@foreach($producto as $nkey=>$prod)
 													<option value="{{$prod->id}}">{{$prod->producto}}</option>
 												@endforeach
@@ -366,14 +366,21 @@
 								</div>
 								<div class="pt-4 pb-3 pl-3 mr-0 ml-0 border-top">
 									<div class="container_vinculacion container-fluid row col-12 justify-content-start align-items-center">
-										<div class="form-group col-9">
-											<div class="d-inline-flex"><img src="{{ asset('images/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">Cervezas Cusqueñas de 567ml.</div>
-										</div>
-										<div class="form-group col-3">
-											<a href="#" class="badge-pill eliminarRelacion shadow-sm">
-												<i class="material-icons">clear</i>
-											</a>
-										</div>
+										<?php $productosVinculados = json_decode($prod->vinculacion) ?>
+                                        @if($productosVinculados)
+                                            @foreach($productosVinculados as $pv)
+                                                <div class="container-fluid row col-12 justify-content-start align-items-center">
+                                                    <div class="form-group col-9">
+                                                        <div class="d-inline-flex"><img src="{{ asset('images/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{getProductsNameByIds($pv)}}</div>
+                                                    </div>
+                                                    <div class="form-group col-3">
+                                                        <a href="#" class="badge-pill eliminarRelacion shadow-sm">
+                                                            <i class="material-icons">clear</i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endif
 									</div>
 								</div>
 

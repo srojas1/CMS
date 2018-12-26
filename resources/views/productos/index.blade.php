@@ -62,14 +62,21 @@
 											@else
 												<th scope="row" class="align-middle"><div class="d-flex align-items-center"><img src="{{ asset('images/producto-icon.jpg')}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prod->producto}}</th>
 											@endif
-											<td class="align-middle"><div class="d-flex justify-content-center">{{$prod->getCategoryById->categoria}}</div></td>
-											<td class="align-middle"><div class="d-flex justify-content-center"> {{getStockName($prod->id_stock)}}</div></td>
+                                            @if($prod->getCategoryById)
+											    <td class="align-middle"><div class="d-flex justify-content-center">{{$prod->getCategoryById->categoria}}</div></td>
+											@else
+                                                <td class="align-middle"><div class="d-flex justify-content-center">Sin categoria existente</div></td>
+                                            @endif
+                                            <td class="align-middle"><div class="d-flex justify-content-center"> {{getStockName($prod->id_stock)}}</div></td>
                                             <td class="align-middle"><div class="d-flex justify-content-center">S/ {{$prod->precio}}</td>
                                             <td class="align-middle"><div class="d-flex justify-content-center">S/ {{$prod->oferta}}</td>
                                             <?php $sumVentas= 0 ?>
-                                            @foreach($prod->orders as $key=>$ord_prod)
-                                                <?php $sumVentas+=$ord_prod->pivot->cantidad?>
-                                            @endforeach
+                                            <?php $ord_prod= array();?>
+                                            @if($prod->orders)
+                                                @foreach($prod->orders as $key=>$ord_prod)
+                                                    <?php $sumVentas+=$ord_prod->pivot->cantidad?>
+                                                @endforeach
+                                            @endif
                                             <td class="align-middle"><div class="d-flex justify-content-center">{{$sumVentas}}</td>
                                             <?php $ingreso=$sumVentas*$prod->precio?>
                                             <td class="align-middle"><div class="d-flex justify-content-center">S/ {{number_format($ingreso,2)}}</td>
@@ -140,31 +147,35 @@
 												</form>
 											</td>
 										</tr>
-										@foreach ($categoria as $key1=>$cat)
-										<tr>
-											<th scope="row" class="align-middle"><div class="d-flex align-items-center"><img src="{{ asset('images/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left"><div>{{$cat->categoria}}</div></div></th>
-											<?php $sumProductos = 0 ?>
-											@foreach($cat->products as $key=>$cat)
-												<?php $sumProductos++?>
-											@endforeach
-											<td class="align-middle"><div class="d-flex justify-content-center">{{$sumProductos}}</div></td>
-											<td class="align-middle"><div class="d-flex justify-content-center">29</div></td>
-											<td class="align-middle"><div class="d-flex justify-content-center">S/ 1970.00</div></td>
-											<td class="align-middle">
-												<div class="d-flex justify-content-center">
-													<a href="" class="accion">
-														<i class="material-icons">remove_red_eye</i>
-													</a>
-													<a href="{!! URL::route('categoria.edit', array('categoria' => $cat->id)) !!}" class="accion">
-														<i class="material-icons">edit</i>
-													</a>
-													<a href="#delete_categoria_{!! $cat->id !!}" data-toggle="modal" data-target="#delete_categoria_{!! $cat->id !!}" class="accion">
-														<i class="material-icons">close</i>
-													</a>
-												</div>
-											</td>
-										</tr>
-										@endforeach
+                                        @if($categoria)
+                                            @foreach ($categoria as $key1=>$cat)
+                                            <tr>
+                                                <th scope="row" class="align-middle"><div class="d-flex align-items-center"><img src="{{ asset('images/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left"><div>{{$cat->categoria}}</div></div></th>
+                                                <?php $sumProductos = 0 ?>
+                                                @foreach($cat->products as $key=>$cat)
+                                                    <?php $sumProductos++?>
+                                                @endforeach
+                                                <td class="align-middle"><div class="d-flex justify-content-center">{{$sumProductos}}</div></td>
+                                                <td class="align-middle"><div class="d-flex justify-content-center">[ventas cat]</div></td>
+                                                <td class="align-middle"><div class="d-flex justify-content-center">S/ [ingresos]</div></td>
+                                                <td class="align-middle">
+                                                    <div class="d-flex justify-content-center">
+                                                        <a href="#
+" class="accion">
+                                                            <i class="material-icons">remove_red_eye</i>
+                                                        </a>
+                                                        <a href="#" class="accion">
+                                                            <i class="material-icons">edit</i>
+                                                        </a>
+                                                        <input type="hidden" class="cat_id" value="{{$cat->id}}"/>
+                                                        <a href="#delete_categoria_{!! $cat->id !!}" data-toggle="modal" data-target="#delete_categoria_{!! $cat->id !!}" class="accion">
+                                                            <i class="material-icons">close</i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -177,16 +188,16 @@
     <!--- FOOTER DEL MODULO --->
     <div class="modulo-footer">
         <div class="container-fluid">
-            {{--<div class="row justify-content-end">--}}
-                {{--<nav aria-label="...">--}}
-                    {{--<ul class="pagination">--}}
+            <div class="row justify-content-end">
+                <nav aria-label="...">
+                    <ul class="pagination">
                         {{--{!! $links !!}--}}
-                    {{--</ul>--}}
-                {{--</nav>--}}
-            {{--</div>--}}
-            <div class="row justify-content-end tools">
-                <a href="" class="">Exportar a excel</a>
+                    </ul>
+                </nav>
             </div>
+            {{--<div class="row justify-content-end tools">--}}
+                {{--<a href="" class="">Exportar a excel</a>--}}
+            {{--</div>--}}
         </div>
     </div>
 @stop
@@ -194,17 +205,17 @@
 @section('bottom')
     @auth('edit')
         @include('productos.deletes')
-		@include('categorias.deletes')
+        @include('categorias.deletes')
     @endauth
-    @include('productos.detail_create')
 	@include('productos.detail_edit')
+    @include('productos.detail_create')
 @stop
 
 @section('css')
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/styles/selectize.default.css')}}">
 @stop
 @section('js')
-	<script type="text/javascript" src="{{ asset('assets/scripts/selectize.min.js')}}"></script>
+	{{--<script type="text/javascript" src="{{ asset('assets/scripts/selectize.min.js')}}"></script>--}}
 	<script type="text/javascript" src="{{ asset('assets/scripts/categorias.js')}}"></script>
 	<script type="text/javascript" src="{{ asset('assets/scripts/productos.js')}}"></script>
 @endsection
