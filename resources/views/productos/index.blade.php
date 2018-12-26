@@ -56,46 +56,48 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ($producto as $prod)
-											@if($prod->filename_main)
-                                            <th scope="row" class="align-middle"><div class="d-flex align-items-center"><img src="{{ asset('images/'.getJsonValue($prod->filename_main))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prod->producto}}</th>
-											@else
-												<th scope="row" class="align-middle"><div class="d-flex align-items-center"><img src="{{ asset('images/producto-icon.jpg')}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prod->producto}}</th>
-											@endif
-                                            @if($prod->getCategoryById)
-											    <td class="align-middle"><div class="d-flex justify-content-center">{{$prod->getCategoryById->categoria}}</div></td>
-											@else
-                                                <td class="align-middle"><div class="d-flex justify-content-center">Sin categoria existente</div></td>
-                                            @endif
-                                            <td class="align-middle"><div class="d-flex justify-content-center"> {{getStockName($prod->id_stock)}}</div></td>
-                                            <td class="align-middle"><div class="d-flex justify-content-center">S/ {{$prod->precio}}</td>
-                                            <td class="align-middle"><div class="d-flex justify-content-center">S/ {{$prod->oferta}}</td>
-                                            <?php $sumVentas= 0 ?>
-                                            <?php $ord_prod= array();?>
-                                            @if($prod->orders)
-                                                @foreach($prod->orders as $key=>$ord_prod)
-                                                    <?php $sumVentas+=$ord_prod->pivot->cantidad?>
-                                                @endforeach
-                                            @endif
-                                            <td class="align-middle"><div class="d-flex justify-content-center">{{$sumVentas}}</td>
-                                            <?php $ingreso=$sumVentas*$prod->precio?>
-                                            <td class="align-middle"><div class="d-flex justify-content-center">S/ {{number_format($ingreso,2)}}</td>
-											<td class="align-middle"><div class="d-flex justify-content-center">
-													<a href="" class="accion">
-														<i class="material-icons">remove_red_eye</i>
-													</a>
-													<a href="#modalEditarProducto_{!! $prod->id !!}" class="accion"
-													   data-toggle="modal"
-													   data-target="#modalEditarProducto_{!! $prod->id !!}">
-														<i class="material-icons">edit</i>
-													</a>
-													<a href="#delete_producto_{!! $prod->id !!}" data-toggle="modal" data-target="#delete_producto_{!! $prod->id !!}" class="accion">
-														<i class="material-icons">close</i>
-													</a>
-												</div>
-											</td>
-                                        </tr>
-                                    @endforeach
+									@if($producto)
+										@foreach ($producto as $prod)
+												@if($prod->filename_main)
+												<th scope="row" class="align-middle"><div class="d-flex align-items-center"><img src="{{ asset('images/'.getJsonValue($prod->filename_main))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prod->producto}}</th>
+												@else
+													<th scope="row" class="align-middle"><div class="d-flex align-items-center"><img src="{{ asset('images/producto-icon.jpg')}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prod->producto}}</th>
+												@endif
+												@if($prod->getCategoryById)
+													<td class="align-middle"><div class="d-flex justify-content-center">{{$prod->getCategoryById->categoria}}</div></td>
+												@else
+													<td class="align-middle"><div class="d-flex justify-content-center">Sin categoria existente</div></td>
+												@endif
+												<td class="align-middle"><div class="d-flex justify-content-center"> {{getStockName($prod->id_stock)}}</div></td>
+												<td class="align-middle"><div class="d-flex justify-content-center">S/ {{$prod->precio}}</td>
+												<td class="align-middle"><div class="d-flex justify-content-center">S/ {{$prod->oferta}}</td>
+												<?php $sumVentas= 0 ?>
+												<?php $ord_prod= array();?>
+												@if($prod->orders)
+													@foreach($prod->orders as $key=>$ord_prod)
+														<?php $sumVentas+=$ord_prod->pivot->cantidad?>
+													@endforeach
+												@endif
+												<td class="align-middle"><div class="d-flex justify-content-center">{{$sumVentas}}</td>
+												<?php $ingreso=$sumVentas*$prod->precio?>
+												<td class="align-middle"><div class="d-flex justify-content-center">S/ {{number_format($ingreso,2)}}</td>
+												<td class="align-middle"><div class="d-flex justify-content-center">
+														<a href="" class="accion">
+															<i class="material-icons">remove_red_eye</i>
+														</a>
+														<a href="#modalEditarProducto_{!! $prod->id !!}" class="accion"
+														   data-toggle="modal"
+														   data-target="#modalEditarProducto_{!! $prod->id !!}">
+															<i class="material-icons">edit</i>
+														</a>
+														<a href="#delete_producto_{!! $prod->id !!}" data-toggle="modal" data-target="#delete_producto_{!! $prod->id !!}" class="accion">
+															<i class="material-icons">close</i>
+														</a>
+													</div>
+												</td>
+											</tr>
+										@endforeach
+									@endif
                                     </tbody>
                                 </table>
                             </div>
@@ -203,19 +205,20 @@
 @stop
 
 @section('bottom')
-    @auth('edit')
-        @include('productos.deletes')
-        @include('categorias.deletes')
-    @endauth
-	@include('productos.detail_edit')
-    @include('productos.detail_create')
+	@auth('edit')
+		@include('productos.deletes')
+		@include('categorias.deletes')
+	@endauth
+	@if(count($producto)>0)
+		@include('productos.detail_edit')
+	@endif
+		@include('productos.detail_create')
 @stop
 
 @section('css')
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/styles/selectize.default.css')}}">
 @stop
 @section('js')
-	{{--<script type="text/javascript" src="{{ asset('assets/scripts/selectize.min.js')}}"></script>--}}
 	<script type="text/javascript" src="{{ asset('assets/scripts/categorias.js')}}"></script>
 	<script type="text/javascript" src="{{ asset('assets/scripts/productos.js')}}"></script>
 @endsection

@@ -85,7 +85,7 @@
 													</div>
 													<div class="col-12 col-sm-12 col-md-5 col-lg-7 d-flex pl-0">
 														<div class="form-group">
-															<button type="button" class="crear_categoria_inside btn btn-primary">Crear categoría</button>
+															<button type="button" class="crear_categoria_inside_edit btn btn-primary">Crear categoría</button>
 														</div>
 														<div class="form-group">
 															<small class="help">
@@ -298,11 +298,12 @@
 												<option>Selecciona un atributo</option>
 												@if($atributos)
 													@foreach($atributos as $nkey=>$atr)
-														<option value={{$atr->id}}>{{$atr->atributo}}</option>
+														<option name={!! $atr->atributo !!} class="nombre_atributo" value={{$atr->id}}>{{$atr->atributo}}</option>
 													@endforeach
 												@endif
 											</select>
 										</div>
+										<button type="button" class="btn btn-primary agregar_atributo">+</button>
 									</div>
 									<div class="container-fluid row col-12 justify-content-start align-items-center pr-0">
 										<div class="col-3"></div>
@@ -342,7 +343,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="atributo_contenedor pt-4 pb-3 pl-3 mr-0 ml-0 border-top">
+								<div class="atributo_contenedor_{!! $prod->id !!} pt-4 pb-3 pl-3 mr-0 ml-0 border-top">
 
 									@if($prod->getAttributesById)
 										@foreach($prod->getAttributesById as $nkey=>$atr)
@@ -366,7 +367,7 @@
 													</div>
 														<div class="form-group col-2">
 															<input type="hidden" id="idAtributoProducto_{!! $prod->id !!}" class="idAtributoProducto" value="{{$atr->pivot->id}}"/>
-															<a href="#" class="badge-pill eliminarAtributo shadow-sm">
+															<a href="#" class="badge-pill eliminarAtributoEdit shadow-sm">
 																<i class="material-icons">clear</i>
 															</a>
 														</div>
@@ -404,14 +405,14 @@
 									</div>
 								</div>
 								<div class="pt-4 pb-3 pl-3 mr-0 ml-0 border-top">
-									<div class="container_vinculacion container-fluid row col-12 justify-content-start align-items-center">
+									<div class="container_vinculacion_{!! $prod->id !!} container-fluid row col-12 justify-content-start align-items-center">
 										<?php $productosVinculados = json_decode($prod->vinculacion) ?>
 
 										@if($productosVinculados)
 											@foreach($productosVinculados as $pv)
 												<div class="container-fluid row col-12 justify-content-start align-items-center">
 													<div class="form-group col-9">
-														<input name="productoVinculado[]" type="hidden" value="{{$pv}}"/>
+														<input name="productoVinculadoEdit[]" type="hidden" value="{{$pv}}"/>
 														<div class="d-inline-flex"><img src="{{ asset('images/'.getJsonValue(getProductMainImageById($pv)))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{getProductsNameByIds($pv)}}</div>
 													</div>
 													<div class="form-group col-3">

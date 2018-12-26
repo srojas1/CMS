@@ -128,7 +128,7 @@ class ProductoController extends AbstractController
 		$input['precio']       = $request->input('precio');
 		$input['oferta']       = $request->input('oferta');
 		$input['visibilidad']  = $request->input('visibilidad_edit');
-		$vinculacionList       = $request->input('productoVinculado');
+		$vinculacionList       = $request->input('productoVinculadoEdit');
 
 		//Multiple images
 		if ($request->hasfile('filename')) {
@@ -173,6 +173,10 @@ class ProductoController extends AbstractController
 			if (!empty($vincArr)) {
 				$input['vinculacion'] = json_encode($vincArr);
 			}
+		}
+		else {
+			$vincArr = array();
+			$input['vinculacion'] = json_encode($vincArr);
 		}
 
 		$id = $request->input('id_producto');

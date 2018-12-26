@@ -79,6 +79,23 @@ class AtributoController extends AbstractController {
         $atributoProducto->delete();
 	}
 
+	/**
+	 * Add Attribute
+	 */
+	public function addAtributoProductoFromEdit() {
+
+		$attribute_id = $_POST['attribute_id'];
+		$product_id   = $_POST['product_id'];
+		$valor        = $_POST['valor'];
+
+		$input = ['attribute_id'=>$attribute_id,'product_id'=>$product_id,'valor'=>$valor];
+
+		$atributoProducto = AtributoProductoRepository::create($input);
+
+		return json_encode($atributoProducto);
+
+	}
+
     /**
      * Store a newly created resource in storage.
      *
