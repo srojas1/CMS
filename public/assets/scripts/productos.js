@@ -30,6 +30,7 @@ $(document).ready(function(){
         $('document').on('click','eliminarRelacion',function(){
             alert('test');
             $(this).parent().parent().remove();
+
         });
 
         $('.crear_vinculacion').on('click', function(){
@@ -68,21 +69,73 @@ $(document).ready(function(){
 
         $('.eliminarAtributo').on('click',function(){
 
-            var postData = $('.idAtributoProducto').val();
+            $idAtributo = $(this).prev('.idAtributoProducto').val();
 
-            alert(postData);
+            $.ajax({
+                type:"POST",
+                url: 'producto/destroyAtributo',
+                data: {id:$idAtributo}
+            }).done(function(data){
+                alert('Se eliminó el atributo');
+            });
 
-            // $.ajax({
-            //    type:"POST",
-            //    url: 'producto/destroyAtributo',
-            //    contentType: false,
-            //    processData: false,
-            //    data: postData
-            // }).done(function(data){
-            //     alert('Se eliminó el atributo');
-            // });
-            //
-            // $(this).parent().parent().remove();
+            $(this).parent().parent().remove();
+
+        });
+
+        $('.crear_categoria_inside').on('click',function () {
+
+            $nombreCategoria  = $('#nueva_categoria_inside_'+$idProducto).val();
+            $selectCategorias = $('#categoriaProducto_'+$idProducto);
+
+            $.ajax({
+                type: "POST",
+                url: 'categoria/storeCategory',
+                data: {categoria: $nombreCategoria}
+            }).done(function(data) {
+                postsjson = $.parseJSON(data);
+                $selectCategorias.append($('<option>', {
+                    value: postsjson.id,
+                    text: $nombreCategoria
+                }));
+                alert('Se agregó la categoría exitosamente');
+            });
+        });
+
+
+        //atributos
+
+        $('.crear_atributo_edit').on('click',function () {
+
+            $nombreAtributo  = $('.nuevo_atributo_'+$idProducto).val();
+            $selectAtributos = $('#atributoProducto_'+$idProducto);
+            $valores = $('#valores_'+$idProducto).val();
+
+            $values = $valores.split(",");
+            $arr=[];
+
+            for(var i=0; i < $values.length; i++) {
+                $arr.push($values[i]);
+            }
+
+            $.ajax({
+                type: "POST",
+                url: 'atributo/storeAtributo',
+                data: {
+                    atributo: $nombreAtributo,
+                    valores:$arr
+                }
+            }).done(function(data) {
+                postsjson = $.parseJSON(data);
+                $selectAtributos.append($('<option>', {
+                    value: postsjson.id,
+                    text: $nombreAtributo
+                }));
+
+                $('#agregarProductoAtributos_'+$idProducto).load(' #agregarProductoAtributos_'+$idProducto);
+
+                alert('Se agregó el atributo exitosamente');
+            });
         });
     });
 
@@ -102,25 +155,6 @@ $(document).ready(function(){
             alert('Se agregó el producto exitosamente');
         });
 
-    });
-
-    $('.crear_categoria_inside').on('click',function () {
-
-        $nombreCategoria  = $('.nueva_categoria_inside').val();
-        $selectCategorias = $('#categoriaProducto');
-
-        $.ajax({
-            type: "POST",
-            url: 'categoria/storeCategory',
-            data: {categoria: $nombreCategoria}
-        }).done(function(data) {
-            postsjson = $.parseJSON(data);
-            $selectCategorias.append($('<option>', {
-                value: postsjson.id,
-                text: $nombreCategoria
-            }));
-            alert('Se agregó la categoría exitosamente');
-        });
     });
 
     //images
@@ -178,9 +212,9 @@ $(document).ready(function(){
             type: "POST",
             url: 'atributo/storeAtributo',
             data: {
-                    atributo: $nombreAtributo,
-                    valores:$arr
-                  }
+                atributo: $nombreAtributo,
+                valores:$arr
+            }
         }).done(function(data) {
             postsjson = $.parseJSON(data);
             $selectAtributos.append($('<option>', {
