@@ -380,8 +380,7 @@
                                                     </div>
                                                 </div>
                                             @endforeach
-                                        @endif
-									</div>
+                                        @endif									</div>
 								</div>
 
 								<div class="form-group d-flex justify-content-end pt-4 border-top">

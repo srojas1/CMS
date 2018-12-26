@@ -73,7 +73,6 @@ class AtributoController extends AbstractController {
 	public function destroyAtributo() {
 
 		$idAtributo = $_POST['id'];
-
 		$atributoProducto = AtributoProductoRepository::find($idAtributo);
 		$this->checkAttribute($atributoProducto);
 

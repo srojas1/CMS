@@ -1,3 +1,4 @@
+
 @foreach ($producto as $nkey=>$prod)
 <div class="modal fade" id="modalEditarProducto_{!! $prod->id !!}" tabindex="-1" role="dialog" aria-labelledby="modalEditarProducto_{!! $prod->id !!}" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -205,6 +206,7 @@
 								<h4>Inventario del producto</h4>
 								<div class="container-fluid row align-items-center justify-content-start">
 									<div class="d-flex col-12 col-sm-12 col-md-12 col-lg-6">
+
 											@foreach($stock as $nkey=>$st)
 												@if($st['value'] == $prod->id_stock)
 													<div class="form-group custom-control custom-radio custom-control-inline">
@@ -266,6 +268,7 @@
 												<input type="radio" id="visibilidadHide_edit_{!! $prod->id !!}" name="visibilidad_edit" class="custom-control-input" value="0">
 											@endif
 											<label class="custom-control-label" for="visibilidadHide_edit_{!! $prod->id !!}">Ocultar</label>
+
 										</div>
 									</div>
 								</div>
@@ -290,6 +293,7 @@
 											Asignar un atributo:
 										</div>
 										<div class="form-group col-7">
+
 											<select class="custom-select" id="atributoProducto_{!! $prod->id !!}" rows="3">
 												<option>Selecciona un atributo</option>
 												@if($atributos)
@@ -339,6 +343,7 @@
 									</div>
 								</div>
 								<div class="atributo_contenedor pt-4 pb-3 pl-3 mr-0 ml-0 border-top">
+
 									@if($prod->getAttributesById)
 										@foreach($prod->getAttributesById as $nkey=>$atr)
 											@if(!$atr->pivot->deleted_at)
@@ -401,6 +406,7 @@
 								<div class="pt-4 pb-3 pl-3 mr-0 ml-0 border-top">
 									<div class="container_vinculacion container-fluid row col-12 justify-content-start align-items-center">
 										<?php $productosVinculados = json_decode($prod->vinculacion) ?>
+
 										@if($productosVinculados)
 											@foreach($productosVinculados as $pv)
 												<div class="container-fluid row col-12 justify-content-start align-items-center">
