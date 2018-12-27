@@ -131,16 +131,19 @@ public function subscribe(Dispatcher $events)
 		'GrahamCampbell\BootstrapCMS\Subscribers\NavigationSubscriber@onNavigationMainThird',
 		2
 	);
+
 	$events->listen(
 		'navigation.bar',
 		'GrahamCampbell\BootstrapCMS\Subscribers\NavigationSubscriber@onNavigationBarFirst',
 		8
 	);
+
 	$events->listen(
 		'navigation.bar',
 		'GrahamCampbell\BootstrapCMS\Subscribers\NavigationSubscriber@onNavigationBarSecond',
 		5
-	);
+	)
+	;
 	$events->listen(
 		'navigation.bar',
 		'GrahamCampbell\BootstrapCMS\Subscribers\NavigationSubscriber@onNavigationBarThird',
@@ -163,21 +166,23 @@ public function onNavigationMainFirst()
 			['title' => 'Pedidos', 'slug' => 'pedido', 'icon' => 'assignment']
 		);
 
-	// add productos
+
 	//if ($this->producto) {
 		$this->navigation->addToMain(
 			['title' => 'Productos', 'slug' => 'producto', 'icon' => 'store']
 		);
 	//}
 
-	// add promociones
-//		$this->navigation->addToMain(
-//			['title' => 'Promociones y Recompensas', 'slug' => 'promocion', 'icon' => 'card_giftcard']
-//		);
+		$this->navigation->addToMain(
+			['title' => 'Promociones', 'slug' => 'promocion', 'icon' => 'card_giftcard']
+		);
 
-	// add clientes
 		$this->navigation->addToMain(
 				['title' => 'Usuarios', 'slug' => 'cliente', 'icon' => 'group']
+		);
+
+		$this->navigation->addToMain(
+			['title' => 'Personaliza tu app', 'slug' => 'personaliza_app', 'icon' => 'phonelink_setup']
 		);
 }
 
@@ -223,23 +228,23 @@ public function onNavigationMainSecond()
  */
 public function onNavigationMainThird()
 {
-//        // get the pages
-//        $pages = $this->pagerepository->navigation();
+//		// get the pages
+//		$pages = $this->pagerepository->navigation();
 //
-//        // select the home page
-//        $page = $pages[0];
+//		// select the home page
+//		$page = $pages[0];
 //
-//        // add the page to the start of the main nav bars
-//        $this->navigation->addToMain($page, 'default', true);
-//        $this->navigation->addToMain($page, 'admin', true);
+//		// add the page to the start of the main nav bars
+//		$this->navigation->addToMain($page, 'default', true);
+//		$this->navigation->addToMain($page, 'admin', true);
 //
-//        // add the view users link
-//        if ($this->credentials->check() && $this->credentials->hasAccess('mod')) {
-//            $this->navigation->addToMain(
-//                ['title' => 'Users', 'slug' => 'users', 'icon' => 'user'],
-//                'admin'
-//            );
-//        }
+//		// add the view users link
+//		if ($this->credentials->check() && $this->credentials->hasAccess('mod')) {
+//			$this->navigation->addToMain(
+//				['title' => 'Users', 'slug' => 'users', 'icon' => 'user'],
+//				'admin'
+//			);
+//		}
 }
 
 /**
