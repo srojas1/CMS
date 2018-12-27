@@ -15,7 +15,7 @@
 
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 d-flex align-items-center justify-content-end pb-4">
-                <div class="row input-group">
+                <div class="row input-group searchbox-position">
                     <div class="input-group-prepend">
                         <div class="input-group-text"><i class="material-icons">search</i></div>
                     </div>
@@ -94,19 +94,15 @@
         <div class="modulo-footer">
             <div class="container-fluid">
                 <div class="row justify-content-end">
-                    <nav aria-label="...">
+                    <nav aria-label="..." class="pagination-position">
                         <ul class="pagination">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1">1</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            {!! $links !!}
                         </ul>
                     </nav>
                 </div>
-                {{--<div class="row justify-content-end tools">--}}
+                <div class="row justify-content-end tools">
                     {{--<a href="" class="">Exportar a excel</a>--}}
-                {{--</div>--}}
+                </div>
             </div>
         </div>
         <!--- FOOTER DE CMS --->

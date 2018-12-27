@@ -34,9 +34,17 @@ class ClienteController extends AbstractController {
      */
     public function index()
     {
-        $cliente = ClienteRepository::paginate();
+        $cliente   = ClienteRepository::paginate();
+		$links     = ClienteRepository::links();
 
-        return View::make('clientes.index', ['cliente' => $cliente]);
+		$links = formatPagination($links);
+
+        return View::make('clientes.index',
+			[
+        	'cliente' => $cliente,
+			'links'=>$links,
+			]
+		);
     }
 
     /**

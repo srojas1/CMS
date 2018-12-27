@@ -201,7 +201,12 @@
 										@if (count($stock) > 0)
 											@foreach($stock as $nkey=>$st)
 												<div class="form-group custom-control custom-radio custom-control-inline">
-													<input name="stockValue_add" type="radio" id="customRadioInline_add_{{$nkey+1}}" class="customRadioInline custom-control-input" value="{{$st['value']}}">
+													@if($nkey== 0)
+														<input name="stockValue_add" type="radio" id="customRadioInline_add_{{$nkey+1}}" class="customRadioInline custom-control-input" value="{{$st['value']}}" checked>
+														@else
+														<input name="stockValue_add" type="radio" id="customRadioInline_add_{{$nkey+1}}" class="customRadioInline custom-control-input" value="{{$st['value']}}">
+													@endif
+
 													<label class="custom-control-label" for="customRadioInline_add_{{$nkey+1}}">{{$st['nombre']}}</label>
 												</div>
 											@endforeach

@@ -3,6 +3,17 @@
 use GrahamCampbell\BootstrapCMS\Http\Constants as Config;
 use GrahamCampbell\BootstrapCMS\Models\Product as ProductModel;
 
+
+function formatPagination($links) {
+
+	$links = str_replace("<li><a href=", "<li class=\"page-item\"><a class=\"page-link\" href=", $links);
+	$links = str_replace("<li class=\"disabled\"><span>", "<li class=\"disabled page-item\"><span class=\"page-link\">", $links);
+	$links = str_replace("<li class=\"active\"><span>", "<li class=\"active page-item\"><span class=\"page-link\">", $links);
+
+	return $links;
+
+}
+
 //@todo: remove from helpers
 
 function getProductMainImageById($id) {

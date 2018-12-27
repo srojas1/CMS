@@ -19,6 +19,7 @@ $(document).ready(function(){
                       }
                 }).done(function(msg) {
                     alert('se modificó el estado');
+                    location.reload();
                 });
             });
         });

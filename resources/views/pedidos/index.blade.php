@@ -10,7 +10,7 @@
             <div class="modulo-head row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-7"><h2>Pedidos</h2></div>
                 <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-5">
-                    <div class="input-group">
+                    <div class="input-group searchbox-position">
                         <div class="input-group-prepend">
                             <div class="input-group-text"><i class="material-icons">search</i></div>
                         </div>

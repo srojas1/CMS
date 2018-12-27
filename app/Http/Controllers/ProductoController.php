@@ -48,7 +48,7 @@ class ProductoController extends AbstractController
 	{
 		$producto  = ProductoRepository::paginate();
 		$categoria = CategoriaRepository::paginate();
-//		$links     = ProductoRepository::links();
+		$links     = ProductoRepository::links();
 		$atributos  = AtributoRepository::all();
 
 		$stockName = array(
@@ -57,13 +57,15 @@ class ProductoController extends AbstractController
 			array('nombre'=>Config::PRONTO_LABEL,'value'=>Config::PRONTO)
 		);
 
-        $productActive = "active";
-        $categoryActive = "";
+		$productActive = "active";
+		$categoryActive = "";
+
+		$links = formatPagination($links);
 
 		return View::make('productos.index',
 			[
 			'producto' => $producto,
-//			'links'=>$links,
+			'links'=>$links,
 			'categoria'=>$categoria,
 			'stock' => $stockName,
 			'atributos'=>$atributos,

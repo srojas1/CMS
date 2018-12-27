@@ -12,7 +12,7 @@
             </div>
         </div>
         <div>
-            <iframe src="https://colorlib.com/polygon/adminator/index.html" width="1000" height="400">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-7">Módulo en construcción</div>
         </div>
     </div>
     <!--- FOOTER DE CMS --->

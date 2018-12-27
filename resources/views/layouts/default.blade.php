@@ -70,7 +70,7 @@
         </div>
     </div>
 </nav>
-<div class="main_container">
+<div class="container-fluid">
     <div class="page-contenedor row">
         @navigation
         <!--- CONTENIDO DEL MÓDULO SELECCIONADO --->
