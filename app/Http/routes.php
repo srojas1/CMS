@@ -71,6 +71,8 @@ $router->resource('cupon', 'CuponController');
 $router->resource('atributo', 'AtributoController');
 $router->resource('recompensa', 'RecompensaController');
 
+$router->resource('personaliza_app', 'PersonalizaAppController');
+
 //Ajax Contollers
 Route::post('pedido/changeStatus', 'PedidoController@ChangeStatus');
 Route::post('categoria/storeCategory', 'CategoriaController@storeCategory');

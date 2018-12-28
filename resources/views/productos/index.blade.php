@@ -13,7 +13,6 @@
 					<div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-4 pb-4">
 						<h2>Productos</h2>
 					</div>
-
 					<div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-2 d-flex align-items-center justify-content-end pb-4">
 						<div>
 							<a href="#modalAgregarProducto" class="" data-toggle="modal" data-target="#modalAgregarProducto">Agregar producto (+)</a>
@@ -61,9 +60,9 @@
 											@if($producto)
 												@foreach ($producto as $prod)
 														@if($prod->filename_main)
-														<th scope="row" class="align-middle"><div class="d-flex align-items-center"><img src="{{ asset('images/'.getJsonValue($prod->filename_main))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prod->producto}}</th>
+															<th scope="row" class="align-middle"><div class="d-flex align-items-center"></div><img src="{{ asset('images/'.getJsonValue($prod->filename_main))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prod->producto}}</th>
 														@else
-															<th scope="row" class="align-middle"><div class="d-flex align-items-center"><img src="{{ asset('images/producto-icon.jpg')}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prod->producto}}</th>
+															<th scope="row" class="align-middle"><div class="d-flex align-items-center"></div><img src="{{ asset('images/producto-icon.jpg')}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prod->producto}}</th>
 														@endif
 														@if($prod->getCategoryById)
 															<td class="align-middle"><div class="d-flex justify-content-center">{{$prod->getCategoryById->categoria}}</div></td>
@@ -144,7 +143,6 @@
 
 @section('css')
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/styles/selectize.default.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{ asset('assets/styles/style.css') }}">
 @stop
 @section('js')
 	<script type="text/javascript" src="{{ asset('assets/scripts/categorias.js')}}"></script>

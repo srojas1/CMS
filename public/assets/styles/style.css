@@ -267,6 +267,10 @@ a:hover{
     font-size: 1rem;
 }
 
+.promociones .material-icons {
+    font-size: 1rem;
+}
+
 .custom-file-label{
     border: 2px dotted #ced4da;
 }

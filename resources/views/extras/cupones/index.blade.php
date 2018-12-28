@@ -1,11 +1,3 @@
-<!--- CABECERA DE MÓDULO --->
-<div class="modulo-head row">
-	<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-5">
-		<div class="input-group">
-			<a class="btn btn-primary" href="{!! URL::route('cupon.create') !!}">Agregar Cupón</a>
-		</div>
-	</div>
-</div>
 <!--- CONTENIDO DE MÓDULO--->
 <div class="modulo-body shadow-sm border-left border-right border-button">
 	<div class="container-fluid">
@@ -13,27 +5,50 @@
 			<table class="table">
 				<thead class="thead-light">
 				<tr>
-					<th scope="col">CUPÓN</th>
-					<th scope="col">CONDICIONAL</th>
-					<th scope="col">DESCUENTO</th>
-					<th scope="col">VENCIMIENTO</th>
-					<th scope="col">STOCK</th>
-					<th scope="col">RECLAMADOS</th>
-					<th scope="col">ACCIONES</th>
+					<th scope="col"><div class="d-flex justify-content-center">CUPÓN</div></th>
+					<th scope="col"><div class="d-flex justify-content-center">CONDICIONAL</div></th>
+					<th scope="col"><div class="d-flex justify-content-center">DESCUENTO</div></th>
+					<th scope="col"><div class="d-flex justify-content-center">VENCIMIENTO</div></th>
+					<th scope="col"><div class="d-flex justify-content-center">STOCK</div></th>
+					<th scope="col"><div class="d-flex justify-content-center">RECLAMADOS</div></th>
+					<th scope="col"><div class="d-flex justify-content-center">ACCIONES</div></th>
 				</tr>
 				</thead>
 				<tbody>
 				@foreach ($cupon as $cup)
 					<tr>
-						<th scope="row">{{$cup->cupon}}</th>
-						<td>{{$cup->condicion}}</td>
-						<td>{{$cup->descuento}}</td>
-						<td>{{$cup->vencimiento}}</td>
-						<td>{{$cup->stock_maximo}}</td>
-						<td>[nro. reclamados]</td>
-						<td>
-							<a class="btn btn-info" href="{!! URL::route('cupon.edit', array('cupon' => $cup->id)) !!}"><i class="fa fa-pencil-square-o"></i></a>
-							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_cupon_{!! $cup->id !!}"><i class="fa fa-times"></i></button>&nbsp
+						<th scope="row" class="align-middle">
+							<div class="d-flex align-items-center">{{$cup->cupon}}</div>
+						</th>
+						<td class="align-middle">
+							<div class="d-flex justify-content-center">{{$cup->condicion}}</div>
+						</td>
+						<td class="align-middle">
+							<div class="d-flex justify-content-center">{{$cup->descuento}}</div>
+						</td>
+						<td class="align-middle">
+							<div class="d-flex justify-content-center">{{$cup->vencimiento}}</div>
+						</td>
+						<td class="align-middle">
+							<div class="d-flex justify-content-center">{{$cup->stock_maximo}}</div>
+						</td>
+						<td class="align-middle">
+							<div class="d-flex justify-content-center">[nro. reclamados]</div>
+						</td>
+						<td class="align-middle">
+							<div class="d-flex justify-content-center">
+								<a href="" class="accion">
+									<i class="material-icons">remove_red_eye</i>
+								</a>
+								<a href="#modalEditarCupon_{!! $cup->id !!}" class="accion"
+								   data-toggle="modal"
+								   data-target="#modalEditarCupon_{!! $cup->id !!}">
+									<i class="material-icons">edit</i>
+								</a>
+								<a href="#delete_cupon_{!! $cup->id !!}" data-toggle="modal" data-target="#delete_cupon_{!! $cup->id !!}" class="accion">
+									<i class="material-icons">close</i>
+								</a>
+							</div>
 						</td>
 					</tr>
 				@endforeach

@@ -50,7 +50,9 @@ class PromocionController extends AbstractController {
 			'cupon'=>$cupon,
 			'recompensa'=>$recompensa,
 			'links'=>$links,
-			'arrStatus'=>$arrStatus
+			'arrStatus'=>$arrStatus,
+			'extra_type'=>'Promocion',
+			'extra_type_lbl'=>'promocion',
 		]);
 	}
 
