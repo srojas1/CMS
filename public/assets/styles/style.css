@@ -421,3 +421,16 @@ a:hover{
 .searchbox-position {
     padding-right: 2%;
 }
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link{
+    background-color: #17A2B8;
+}
+
+.notifications_lbl {
+    color: #f8f9fa!important;
+}
+div .notifications_lbl {
+    padding: 13px 16px;
+}
+.notification-box {
+    padding: 10px 0px;
+}

@@ -72,6 +72,8 @@ $router->resource('atributo', 'AtributoController');
 $router->resource('recompensa', 'RecompensaController');
 
 $router->resource('personaliza_app', 'PersonalizaAppController');
+$router->resource('chat', 'ChatController');
+$router->resource('configuracion', 'ConfiguracionController');
 
 //Ajax Contollers
 Route::post('pedido/changeStatus', 'PedidoController@ChangeStatus');

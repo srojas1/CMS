@@ -15,7 +15,13 @@
 
 				<div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-2 d-flex align-items-center justify-content-end pb-4">
 					<div>
-						<a href="#modalAgregar"+{!! $extra_type !!} class="" data-toggle="modal" data-target="#modalAgregarProducto">Agregar {!! $extra_type_lbl !!} (+)</a>
+						<a href="#modalAgregarPromocion" class="" data-toggle="modal" data-target="#modalAgregarProducto">Agregar promoción (+)</a>
+					</div>
+					<div>
+						<a href="#modalAgregarCupon" class="" data-toggle="modal" data-target="#modalAgregarProducto">Agregar cupón (+)</a>
+					</div>
+					<div>
+						<a href="#modalAgregarRecompensa" class="" data-toggle="modal" data-target="#modalAgregarProducto">Agregar recompensa (+)</a>
 					</div>
 				</div>
 				<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 d-flex align-items-center justify-content-end pb-4">
@@ -23,7 +29,7 @@
 						<div class="input-group-prepend">
 							<div class="input-group-text"><i class="material-icons">search</i></div>
 						</div>
-						<input type="text" class="form-control buscador" placeholder="Buscar promocion">
+						<input type="text" class="form-control buscador" placeholder="Buscar">
 					</div>
 				</div>
 			</div>

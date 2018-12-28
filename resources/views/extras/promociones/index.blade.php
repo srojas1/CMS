@@ -87,5 +87,7 @@
 @section('bottom')
 	@auth('edit')
 		@include('extras.promociones.deletes')
+		@include('extras.cupones.deletes')
+		@include('extras.recompensas.deletes')
 	@endauth
 @stop
