@@ -78,6 +78,7 @@ $router->resource('configuracion', 'ConfiguracionController');
 //Ajax Contollers
 Route::post('pedido/changeStatus', 'PedidoController@ChangeStatus');
 Route::post('categoria/storeCategory', 'CategoriaController@storeCategory');
+Route::post('categoria/editCategoria', 'CategoriaController@editCategoria');
 Route::post('producto/storeProducto', 'ProductoController@storeProducto');
 Route::post('atributo/storeAtributo', 'AtributoController@storeAtributo');
 Route::post('producto/editProducto', 'ProductoController@editProducto');

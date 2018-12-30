@@ -91,13 +91,22 @@ class CategoriaController extends AbstractController {
 
 		$categoria = CategoriaRepository::create($input);
 
-//		$productActive = "";
-//		$categoryActive = "active";
+        return json_encode($categoria);
+    }
 
-//        return View::make('productos.index', ['categoria' => $categoria,
-//                                       'productActive' => $productActive,
-//                                       'categoryActive' => $categoryActive])
-//			->with('success', trans('messages.categoria.store_success'));
+    /**
+     * Edit a category.
+     */
+    public function editCategoria(Request $request) {
+
+        //Get Data
+        $input['categoria']     = $request->input('nombreCategoria');
+
+        $id = $request->input('id_categoria');
+
+        $categoria = CategoriaRepository::find($id);
+
+        $categoria->update($input);
 
         return json_encode($categoria);
     }

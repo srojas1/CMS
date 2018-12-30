@@ -43,7 +43,7 @@
 							</form>
 						</td>
 					</tr>
-					@if($categoria)
+					@if(count($categoria)>0)
 						@foreach ($categoria as $key1=>$cat)
 							<tr>
 								<th scope="row" class="align-middle"><div class="d-flex align-items-center"><img src="{{ asset('images/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left"><div>{{$cat->categoria}}</div></div></th>
@@ -51,12 +51,12 @@
 								$sumVentas = 0;
 								$sumIngresos=0;
 								?>
-								@foreach($cat->products as $key=>$cat)
+								@foreach($cat->products as $key=>$catp)
 									<?php $sumProductos++;?>
-									@foreach($cat->orders as $nkey2=>$ord)
+									@foreach($catp->orders as $nkey2=>$ord)
 										<?php
 										$sumVentas+=$ord->pivot->cantidad;
-										$sumIngresos += $ord->pivot->cantidad*$cat->precio;
+										$sumIngresos += $ord->pivot->cantidad*$catp->precio;
 										?>
 									@endforeach
 								@endforeach
@@ -68,7 +68,9 @@
 										<a href="#" class="accion">
 											<i class="material-icons">remove_red_eye</i>
 										</a>
-										<a href="#" class="accion">
+										<a href="#modalEditarCategoria_{!! $cat->id !!}" class="accion"
+										   data-toggle="modal"
+										   data-target="#modalEditarCategoria_{!! $cat->id !!}">
 											<i class="material-icons">edit</i>
 										</a>
 										<input type="hidden" class="cat_id" value="{{$cat->id}}"/>

@@ -139,6 +139,7 @@
 		@include('productos.detail_edit')
 	@endif
 		@include('productos.detail_create')
+		@include('categorias.detail_edit')
 @stop
 
 @section('css')
