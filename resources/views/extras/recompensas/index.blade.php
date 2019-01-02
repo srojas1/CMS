@@ -3,6 +3,10 @@
 	<div class="container-fluid">
 		<div class="table-responsive">
 			<table class="table">
+				<div class="inside_add_div">
+					<a href="#modalAgregarRecompensa" class="" data-toggle="modal" data-target="#modalAgregarRecompensa">Agregar recompensa (+)</a>
+				</div>
+				<br>
 				<thead class="thead-light">
 				<tr>
 					<th scope="col"><div class="d-flex justify-content-center">RECOMPENSA</div></th>

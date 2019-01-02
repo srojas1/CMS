@@ -434,3 +434,6 @@ div .notifications_lbl {
 .notification-box {
     padding: 10px 0px;
 }
+.inside_add_div {
+    text-align: right;
+}
