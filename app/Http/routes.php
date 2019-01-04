@@ -84,3 +84,4 @@ Route::post('atributo/storeAtributo', 'AtributoController@storeAtributo');
 Route::post('producto/editProducto', 'ProductoController@editProducto');
 Route::post('atributo/destroyAtributo', 'AtributoController@destroyAtributo');
 Route::post('atributo/addAtributoProductoFromEdit', 'AtributoController@addAtributoProductoFromEdit');
+Route::post('promocion/storePromocion', 'PromocionController@storePromocion');

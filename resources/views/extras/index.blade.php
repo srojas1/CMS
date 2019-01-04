@@ -69,3 +69,9 @@
 @section('bottom')
 	@include('extras.promociones.detail_create')
 @stop
+
+@section('js')
+	<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script type="text/javascript" src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script type="text/javascript" src="{{ asset('assets/scripts/promociones.js')}}"></script>
+@stop

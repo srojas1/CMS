@@ -55,6 +55,12 @@ function getColorByStatus($idEstado) {
     return $color;
 }
 
+function formatStringToDateTime($string) {
+	$time = strtotime($string);
+	$newformat = date('Y-m-d H:i:s',$time);
+
+	return $newformat;
+}
 
 function formatTimeText($date) {
     setlocale(LC_TIME, 'es_CO.UTF-8');

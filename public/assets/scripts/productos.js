@@ -1,11 +1,5 @@
 $(document).ready(function(){
 
-    // $('.eliminarRelacion').on('click',function(){
-    //
-    //     $(this).parent().parent().remove();
-    //
-    // });
-
     $('.modal').on('show.bs.modal', function (e) {
 
         $idProducto = $(this).find('.id_producto').val();

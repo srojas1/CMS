@@ -67,6 +67,22 @@ class PromocionController extends AbstractController {
 	}
 
 	/**
+	 * Store a new product.
+	 */
+	public function storePromocion(Request $request) {
+
+		$input['promocion']    = $request->input('nombrePromocion');
+		$input['precio']       = $request->input('precioPromocion');
+		$input['stock_maximo'] = $request->input('stockMaximoPromocion');
+		$input['fecha_inicio'] = formatStringToDateTime($request->input('lanzamientoPromocion'));
+		$input['fecha_fin']    = formatStringToDateTime($request->input('fechaFinPromocion'));
+
+		$promocion = PromocionRepository::create($input);
+
+		return json_encode($promocion);
+	}
+
+	/**
 	 * Store a newly created resource in storage.
 	 *
 	 * @param  Request  $request
