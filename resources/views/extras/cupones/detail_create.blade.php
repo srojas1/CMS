@@ -28,6 +28,11 @@
 						<div class="form-group">
 							<input name="condicionPromocion" type="text" class="form-control" id="condicionPromocion" aria-describedby="condicionPromocionHelp" placeholder="Condición">
 						</div>
+						<div class="form-group d-flex justify-content-end pt-4 border-top">
+							<a class="crear_cupon btn btn-primary" id="agregarCupon-tab" data-toggle="tab" href="#agregarCupon" role="tab" aria-controls="agregarCupon" aria-selected="false">
+								Agregar cupón
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>
