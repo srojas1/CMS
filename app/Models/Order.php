@@ -62,7 +62,7 @@ class Order extends AbstractModel implements HasPresenter {
      *
      * @var int
      */
-    public static $paginate = 2;
+    public static $paginate = 10;
 
     /**
      * The columns to order by when displaying an index.

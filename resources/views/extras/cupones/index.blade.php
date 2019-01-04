@@ -61,7 +61,7 @@
 		</div>
 	</div>
 </div>
-{!! $links !!}
+{{--{!! $links !!}--}}
 <!--- FOOTER DEL MODULO --->
 <div class="modulo-footer">
 	<div class="container-fluid">

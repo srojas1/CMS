@@ -59,6 +59,21 @@ class RecompensaController extends AbstractController {
 	}
 
 	/**
+	 * Guarda nueva recompensa
+	 */
+	public function storeRecompensa(Request $request) {
+
+		$input['recompensa']    = $request->input('nombreRecompensa');
+		$input['evento']        = $request->input('eventoRecompensa');
+		$input['puntos']        = $request->input('puntosRecompensa');
+		$input['descripcion']   = $request->input('descripcionRecompensa');
+
+		$recompensa = RecompensaRepository::create($input);
+
+		return json_encode($recompensa);
+	}
+
+	/**
 	 * Store a newly created resource in storage.
 	 *
 	 * @param  Request  $request

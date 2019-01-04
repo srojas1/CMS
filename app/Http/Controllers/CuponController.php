@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Http\Request;
 
 class CuponController extends AbstractController {
 
@@ -66,6 +67,22 @@ class CuponController extends AbstractController {
 	public function create()
 	{
 		return View::make('extras.cupones.create');
+	}
+
+	/**
+	 * Guarda nueva promocion
+	 */
+	public function storeCupon(Request $request) {
+
+		$input['cupon']    = $request->input('nombreCupon');
+		$input['descuento']       = $request->input('descuentoCupon');
+		$input['vencimiento'] = formatStringToDateTime($request->input('vencimientoCupon'));
+		$input['stock_maximo'] = $request->input('stockMaximoCupon');
+		$input['condicion']    = $request->input('condicionPromocion');
+
+		$promocion = CuponRepository::create($input);
+
+		return json_encode($promocion);
 	}
 
 	/**

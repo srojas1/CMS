@@ -67,7 +67,7 @@ class PromocionController extends AbstractController {
 	}
 
 	/**
-	 * Store a new product.
+	 * Guarda nueva promocion
 	 */
 	public function storePromocion(Request $request) {
 
