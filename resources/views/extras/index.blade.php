@@ -50,26 +50,25 @@
 						 class="tab-pane {{$arrStatus['promoStatus']}}" id="promociones">
 						@include('extras.promociones.index')
 						@include('extras.promociones.detail_create')
+						@include('extras.promociones.deletes')
 					</div>
 					<div role="tabpanel"
 						 class="tab-pane {{$arrStatus['cuponStatus']}}" id="cupones">
 						@include('extras.cupones.index')
 						@include('extras.cupones.detail_create')
+						@include('extras.cupones.deletes')
 					</div>
 					<div role="tabpanel"
 						 class="tab-pane {{$arrStatus['recompensaStatus']}}" id="recompensas">
 						@include('extras.recompensas.index')
 						@include('extras.recompensas.detail_create')
+						@include('extras.recompensas.deletes')
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 @stop
-@section('bottom')
-	@include('extras.promociones.detail_create')
-@stop
-
 @section('js')
 	<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script type="text/javascript" src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

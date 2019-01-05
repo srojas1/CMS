@@ -181,7 +181,7 @@ class RecompensaController extends AbstractController {
 
 		$recompensa->delete();
 
-		return Redirect::route('recompensa.index')
+		return Redirect::route('promocion.index')
 			->with('success', trans('messages.recompensa.delete_success'));
 	}
 

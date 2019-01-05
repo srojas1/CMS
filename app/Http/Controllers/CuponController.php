@@ -191,8 +191,8 @@ class CuponController extends AbstractController {
 		$this->checkCupon($cupon);
 
 		$cupon->delete();
-
-		return Redirect::route('cupon.index')
+		
+		return Redirect::route('promocion.index')
 			->with('success', trans('messages.cupon.delete_success'));
 	}
 

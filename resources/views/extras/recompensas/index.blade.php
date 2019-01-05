@@ -69,9 +69,3 @@
 		</div>
 	</div>
 </div>
-
-@section('bottom')
-	@auth('edit')
-		@include('extras.recompensas.deletes')
-	@endauth
-@stop

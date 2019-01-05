@@ -7,6 +7,8 @@ use GrahamCampbell\BootstrapCMS\Facades\PromocionRepository;
 use GrahamCampbell\BootstrapCMS\Facades\RecompensaRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PromocionController extends AbstractController {
 
@@ -125,7 +127,7 @@ class PromocionController extends AbstractController {
 	{
 		//
 	}
-
+	
 	/**
 	 * Remove the specified resource from storage.
 	 *
@@ -134,6 +136,28 @@ class PromocionController extends AbstractController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$promocion = PromocionRepository::find($id);
+		$this->checkPromocion($promocion);
+		
+		$promocion->delete();
+		
+		return Redirect::route('promocion.index')
+			->with('success', trans('messages.promocion.delete_success'));
+	}
+	
+	/**
+	 * Check the promocion model.
+	 *
+	 * @param mixed $promocion
+	 *
+	 * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+	 *
+	 * @return void
+	 */
+	protected function checkPromocion($promocion)
+	{
+		if (!$promocion) {
+			throw new NotFoundHttpException('Promoción No Encontrada');
+		}
 	}
 }
