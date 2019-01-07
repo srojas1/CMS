@@ -85,6 +85,27 @@ class PromocionController extends AbstractController {
 	}
 
 	/**
+	 * Editar promocion.
+	 */
+	public function editPromocion(Request $request) {
+
+		//Get Data
+		$input['promocion']     = $request->input('nombrePromocion');
+		$input['precio']        = $request->input('precioPromocion');
+		$input['stock_maximo']  = $request->input('stockMaximoPromocion');
+		$input['fecha_inicio']  = $request->input('lanzamientoPromocion');
+		$input['fecha_fin']     = $request->input('fechaFinPromocion');
+
+		$id = $request->input('id_promocion');
+
+		$promocion = PromocionRepository::find($id);
+
+		$promocion->update($input);
+
+		return json_encode($promocion);
+	}
+
+	/**
 	 * Store a newly created resource in storage.
 	 *
 	 * @param  Request  $request

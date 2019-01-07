@@ -50,18 +50,21 @@
 						 class="tab-pane {{$arrStatus['promoStatus']}}" id="promociones">
 						@include('extras.promociones.index')
 						@include('extras.promociones.detail_create')
+						@include('extras.promociones.detail_edit')
 						@include('extras.promociones.deletes')
 					</div>
 					<div role="tabpanel"
 						 class="tab-pane {{$arrStatus['cuponStatus']}}" id="cupones">
 						@include('extras.cupones.index')
 						@include('extras.cupones.detail_create')
+						@include('extras.cupones.detail_edit')
 						@include('extras.cupones.deletes')
 					</div>
 					<div role="tabpanel"
 						 class="tab-pane {{$arrStatus['recompensaStatus']}}" id="recompensas">
 						@include('extras.recompensas.index')
 						@include('extras.recompensas.detail_create')
+						@include('extras.recompensas.detail_edit')
 						@include('extras.recompensas.deletes')
 					</div>
 				</div>

@@ -21,49 +21,51 @@
 				</tr>
 				</thead>
 				<tbody>
-				@foreach ($promocion as $prom)
-					<tr>
-						<th scope="row" class="align-middle">
-							<div class="d-flex align-items-center">{{$prom->promocion}}</div>
-						</th>
-						<td class="align-middle">
-							<div class="d-flex justify-content-center">[imagen]</div>
-						</td>
-						<td class="align-middle">
-							<div class="d-flex justify-content-center">{{$prom->precio}}</div>
-						</td>
-						<td class="align-middle">
-							<div class="d-flex justify-content-center">{{$prom->fecha_inicio}}</div>
-						</td>
-						<td class="align-middle">
-							<div class="d-flex justify-content-center">{{$prom->fecha_fin}}</div>
-						</td>
-						<td class="align-middle">
-							<div class="d-flex justify-content-center">{{$prom->stock_maximo}}</div>
-						</td>
-						<td class="align-middle">
-							<div class="d-flex justify-content-center">[ventas]</div>
-						</td>
-						<td class="align-middle">
-							<div class="d-flex justify-content-center">[ingresos]</div>
-						</td>
-						<td class="align-middle">
-							<div class="d-flex justify-content-center">
-								<a href="" class="accion">
-									<i class="material-icons">remove_red_eye</i>
-								</a>
-								<a href="#modalEditarPromocion_{!! $prom->id !!}" class="accion"
-								   data-toggle="modal"
-								   data-target="#modalEditarPromocion_{!! $prom->id !!}">
-									<i class="material-icons">edit</i>
-								</a>
-								<a href="#delete_promocion_{!! $prom->id !!}" data-toggle="modal" data-target="#delete_promocion_{!! $prom->id !!}" class="accion">
-									<i class="material-icons">close</i>
-								</a>
-							</div>
-						</td>
-					</tr>
-				@endforeach
+				@if(count($promocion)>0)
+					@foreach ($promocion as $prom)
+						<tr>
+							<th scope="row" class="align-middle">
+								<div class="d-flex align-items-center">{{$prom->promocion}}</div>
+							</th>
+							<td class="align-middle">
+								<div class="d-flex justify-content-center">[imagen]</div>
+							</td>
+							<td class="align-middle">
+								<div class="d-flex justify-content-center">{{$prom->precio}}</div>
+							</td>
+							<td class="align-middle">
+								<div class="d-flex justify-content-center">{{$prom->fecha_inicio}}</div>
+							</td>
+							<td class="align-middle">
+								<div class="d-flex justify-content-center">{{$prom->fecha_fin}}</div>
+							</td>
+							<td class="align-middle">
+								<div class="d-flex justify-content-center">{{$prom->stock_maximo}}</div>
+							</td>
+							<td class="align-middle">
+								<div class="d-flex justify-content-center">[ventas]</div>
+							</td>
+							<td class="align-middle">
+								<div class="d-flex justify-content-center">[ingresos]</div>
+							</td>
+							<td class="align-middle">
+								<div class="d-flex justify-content-center">
+									<a href="" class="accion">
+										<i class="material-icons">remove_red_eye</i>
+									</a>
+									<a href="#modalEditarPromocion_{!! $prom->id !!}" class="accion"
+									   data-toggle="modal"
+									   data-target="#modalEditarPromocion_{!! $prom->id !!}">
+										<i class="material-icons">edit</i>
+									</a>
+									<a href="#delete_promocion_{!! $prom->id !!}" data-toggle="modal" data-target="#delete_promocion_{!! $prom->id !!}" class="accion">
+										<i class="material-icons">close</i>
+									</a>
+								</div>
+							</td>
+						</tr>
+					@endforeach
+				@endif
 				</tbody>
 			</table>
 		</div>

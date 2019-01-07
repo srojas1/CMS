@@ -57,7 +57,7 @@
 											</tr>
 											</thead>
 											<tbody>
-											@if($producto)
+											@if(count($producto)>0)
 												@foreach ($producto as $prod)
 														@if($prod->filename_main)
 															<th scope="row" class="align-middle"><div class="d-flex align-items-center"></div><img src="{{ asset('images/'.getJsonValue($prod->filename_main))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prod->producto}}</th>

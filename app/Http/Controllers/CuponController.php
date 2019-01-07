@@ -86,6 +86,27 @@ class CuponController extends AbstractController {
 	}
 
 	/**
+	 * Editar cupon
+	 */
+	public function editCupon(Request $request) {
+
+		//Get Data
+		$input['cupon']         = $request->input('nombreCupon');
+		$input['descuento']     = $request->input('descuentoCupon');
+		$input['vencimiento']   = $request->input('vencimientoCupon');
+		$input['stock_maximo']  = $request->input('stockMaximoCupon');
+		$input['condicion']     = $request->input('condicionPromocion');
+
+		$id = $request->input('id_cupon');
+
+		$cupon = CuponRepository::find($id);
+
+		$cupon->update($input);
+
+		return json_encode($cupon);
+	}
+
+	/**
 	 * Store a newly created resource in storage.
 	 *
 	 * @return Response

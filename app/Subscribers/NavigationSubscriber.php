@@ -99,6 +99,9 @@ public function __construct(
 	$events = false,
 	$categoria = false,
 	$producto = false,
+	$pedido = false,
+	$promocion = false,
+	$cliente = false,
 	$cloudflare = false
 ) {
 	$this->navigation = $navigation;
@@ -107,6 +110,9 @@ public function __construct(
 	$this->blogging = $blogging;
 	$this->categoria = $categoria;
 	$this->producto = $producto;
+	$this->pedido = $pedido;
+	$this->promocion = $promocion;
+	$this->cliente = $cliente;
 	$this->events = $events;
 	$this->cloudflare = $cloudflare;
 }
@@ -158,32 +164,49 @@ public function subscribe(Dispatcher $events)
  */
 public function onNavigationMainFirst()
 {
+	if ($this->credentials->hasAccess('dashboard')) {
 		$this->navigation->addToMain(
 			['title' => 'Dashboard', 'slug' => 'dashboard', 'icon' => 'dashboard']
 		);
+	}
 
-		$this->navigation->addToMain(
-			['title' => 'Pedidos', 'slug' => 'pedido', 'icon' => 'assignment']
-		);
+	if ($this->pedido) {
+		if ($this->credentials->hasAccess('pedido')) {
+			$this->navigation->addToMain(
+				['title' => 'Pedidos', 'slug' => 'pedido', 'icon' => 'assignment']
+			);
+		}
+	}
 
+	if ($this->producto) {
+		if ($this->credentials->hasAccess('producto')) {
+			$this->navigation->addToMain(
+				['title' => 'Productos', 'slug' => 'producto', 'icon' => 'store']
+			);
+		}
+	}
 
-	//if ($this->producto) {
-		$this->navigation->addToMain(
-			['title' => 'Productos', 'slug' => 'producto', 'icon' => 'store']
-		);
-	//}
+	if ($this->promocion) {
+		if ($this->credentials->hasAccess('promocion')) {
+			$this->navigation->addToMain(
+				['title' => 'Promociones', 'slug' => 'promocion', 'icon' => 'card_giftcard']
+			);
+		}
+	}
 
-		$this->navigation->addToMain(
-			['title' => 'Promociones', 'slug' => 'promocion', 'icon' => 'card_giftcard']
-		);
-
-		$this->navigation->addToMain(
+	if ($this->cliente) {
+		if ($this->credentials->hasAccess('cliente')) {
+			$this->navigation->addToMain(
 				['title' => 'Usuarios', 'slug' => 'cliente', 'icon' => 'group']
-		);
+			);
+		}
+	}
 
+	if ($this->credentials->hasAccess('personaliza_app')) {
 		$this->navigation->addToMain(
 			['title' => 'Personaliza tu app', 'slug' => 'personaliza_app', 'icon' => 'phonelink_setup']
 		);
+	}
 }
 
 /**

@@ -74,6 +74,27 @@ class RecompensaController extends AbstractController {
 	}
 
 	/**
+	 * Editar recompensa
+	 */
+	public function editRecompensa(Request $request) {
+
+		//Get Data
+		$input['recompensa']    = $request->input('nombreRecompensa');
+		$input['evento']        = $request->input('eventoRecompensa');
+		$input['puntos']        = $request->input('puntosRecompensa');
+		$input['descripcion']   = $request->input('descripcionRecompensa');
+
+		$id = $request->input('id_recompensa');
+
+		$recompensa = RecompensaRepository::find($id);
+
+		$recompensa->update($input);
+
+		return json_encode($recompensa);
+	}
+
+
+	/**
 	 * Store a newly created resource in storage.
 	 *
 	 * @param  Request  $request

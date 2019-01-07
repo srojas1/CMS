@@ -19,43 +19,45 @@
 				</tr>
 				</thead>
 				<tbody>
-				@foreach ($cupon as $cup)
-					<tr>
-						<th scope="row" class="align-middle">
-							<div class="d-flex align-items-center">{{$cup->cupon}}</div>
-						</th>
-						<td class="align-middle">
-							<div class="d-flex justify-content-center">{{$cup->condicion}}</div>
-						</td>
-						<td class="align-middle">
-							<div class="d-flex justify-content-center">{{$cup->descuento}}</div>
-						</td>
-						<td class="align-middle">
-							<div class="d-flex justify-content-center">{{$cup->vencimiento}}</div>
-						</td>
-						<td class="align-middle">
-							<div class="d-flex justify-content-center">{{$cup->stock_maximo}}</div>
-						</td>
-						<td class="align-middle">
-							<div class="d-flex justify-content-center">[nro. reclamados]</div>
-						</td>
-						<td class="align-middle">
-							<div class="d-flex justify-content-center">
-								<a href="" class="accion">
-									<i class="material-icons">remove_red_eye</i>
-								</a>
-								<a href="#modalEditarCupon_{!! $cup->id !!}" class="accion"
-								   data-toggle="modal"
-								   data-target="#modalEditarCupon_{!! $cup->id !!}">
-									<i class="material-icons">edit</i>
-								</a>
-								<a href="#delete_cupon_{!! $cup->id !!}" data-toggle="modal" data-target="#delete_cupon_{!! $cup->id !!}" class="accion">
-									<i class="material-icons">close</i>
-								</a>
-							</div>
-						</td>
-					</tr>
-				@endforeach
+				@if(count($cupon)>0)
+					@foreach ($cupon as $cup)
+							<tr>
+								<th scope="row" class="align-middle">
+									<div class="d-flex align-items-center">{{$cup->cupon}}</div>
+								</th>
+								<td class="align-middle">
+									<div class="d-flex justify-content-center">{{$cup->condicion}}</div>
+								</td>
+								<td class="align-middle">
+									<div class="d-flex justify-content-center">{{$cup->descuento}}</div>
+								</td>
+								<td class="align-middle">
+									<div class="d-flex justify-content-center">{{$cup->vencimiento}}</div>
+								</td>
+								<td class="align-middle">
+									<div class="d-flex justify-content-center">{{$cup->stock_maximo}}</div>
+								</td>
+								<td class="align-middle">
+									<div class="d-flex justify-content-center">[nro. reclamados]</div>
+								</td>
+								<td class="align-middle">
+									<div class="d-flex justify-content-center">
+										<a href="" class="accion">
+											<i class="material-icons">remove_red_eye</i>
+										</a>
+										<a href="#modalEditarCupon_{!! $cup->id !!}" class="accion"
+										   data-toggle="modal"
+										   data-target="#modalEditarCupon_{!! $cup->id !!}">
+											<i class="material-icons">edit</i>
+										</a>
+										<a href="#delete_cupon_{!! $cup->id !!}" data-toggle="modal" data-target="#delete_cupon_{!! $cup->id !!}" class="accion">
+											<i class="material-icons">close</i>
+										</a>
+									</div>
+								</td>
+							</tr>
+						@endforeach
+					@endif
 				</tbody>
 			</table>
 		</div>
