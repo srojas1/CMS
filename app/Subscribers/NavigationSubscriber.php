@@ -207,6 +207,12 @@ public function onNavigationMainFirst()
 			['title' => 'Personaliza tu app', 'slug' => 'personaliza_app', 'icon' => 'phonelink_setup']
 		);
 	}
+
+	if ($this->credentials->hasAccess('configuracion')) {
+		$this->navigation->addToMain(
+			['title' => 'Configuracion', 'slug' => 'configuracion', 'icon' => '']
+		);
+	}
 }
 
 /**

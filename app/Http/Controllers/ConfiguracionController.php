@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use GrahamCampbell\Credentials\Facades\UserRepository;
 
 class ConfiguracionController extends AbstractController
 {
@@ -19,7 +20,9 @@ class ConfiguracionController extends AbstractController
      */
     public function index()
     {
-		return View::make('configuracion.index', ['']);
+		$users = UserRepository::paginate();
+
+		return View::make('configuracion.index', ['users'=>$users]);
     }
 
     /**
@@ -27,9 +30,11 @@ class ConfiguracionController extends AbstractController
      *
      * @return Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+		$user = UserRepository::find($id);
+
+		return View::make('configuracion.privileges', ['user'=>$user]);
     }
 
     /**
