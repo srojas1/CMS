@@ -62,7 +62,7 @@
                         <i class="material-icons">account_circle</i>&nbsp;&nbsp;Usuario Administrador
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{!! URL::route('configuracion.index') !!}">Cuenta</a>
+                        <a class="dropdown-item" href="#">Configuración</a>
                         <a class="dropdown-item" href="{!! URL::route('account.logout') !!}">Cerrar sesión</a>
                     </div>
                 </li>

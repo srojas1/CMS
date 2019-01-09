@@ -210,7 +210,7 @@ public function onNavigationMainFirst()
 
 	if ($this->credentials->hasAccess('configuracion')) {
 		$this->navigation->addToMain(
-			['title' => 'Configuracion', 'slug' => 'configuracion', 'icon' => '']
+			['title' => 'Usuarios/Configuracion', 'slug' => 'users', 'icon' => '']
 		);
 	}
 }

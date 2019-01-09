@@ -2,24 +2,21 @@
 
 @section('title')
 <?php $__navtype = 'admin'; ?>
-Users
+Usuarios
 @stop
 
 @section('top')
 <div class="page-header">
-<h1>Users</h1>
+<h1>Usuarios</h1>
 </div>
 @stop
 
 @section('content')
 <div class="row">
-    <div class="col-xs-8">
-        <p class="lead">Here is a list of all the current users:</p>
-    </div>
-    @auth('admin')
+       @auth('admin')
         <div class="col-xs-4">
             <div class="pull-right">
-                <a class="btn btn-primary" href="{!! URL::route('users.create') !!}"><i class="fa fa-user"></i> New User</a>
+                <a class="btn btn-primary" href="{!! URL::route('users.create') !!}"><i class="fa fa-user"></i> Nuevo Usuario</a>
             </div>
         </div>
     @endauth
@@ -38,7 +35,7 @@ Users
                     <td>{!! $user->name !!}</td>
                     <td>{!! $user->email !!}</td>
                     <td>
-                        &nbsp;<a class="btn btn-success" href="{!! URL::route('users.show', array('users' => $user->id)) !!}"><i class="fa fa-file-text"></i> Show</a>
+                        {{--&nbsp;<a class="btn btn-success" href="{!! URL::route('users.show', array('users' => $user->id)) !!}"><i class="fa fa-file-text"></i> Show</a>--}}
                         @auth('admin')
                             &nbsp;<a class="btn btn-info" href="{!! URL::route('users.edit', array('users' => $user->id)) !!}"><i class="fa fa-pencil-square-o"></i> Edit</a>
                         @endauth

@@ -10,21 +10,6 @@
                     <a class="nav-link" href="{!! $item['url'] !!}"><i class="material-icons">  {!! ((!$item['icon'] == '') ? $item['icon'] : '') !!}</i> {{ $item['title'] }}</a>
                 </li>
             @endforeach
-            {{--<li class="nav-item">--}}
-                {{--<a class="nav-link" href="#"><i class="material-icons">assignment</i> Pedidos</a>--}}
-            {{--</li>--}}
-            {{--<li class="nav-item">--}}
-                {{--<a class="nav-link" href="#"><i class="material-icons">store</i> Productos</a>--}}
-            {{--</li>--}}
-            {{--<li class="nav-item">--}}
-                {{--<a class="nav-link" href="#"><i class="material-icons">card_giftcard</i> Promociones</a>--}}
-            {{--</li>--}}
-            {{--<li class="nav-item">--}}
-                {{--<a class="nav-link" href="#"><i class="material-icons">group</i> Clientes</a>--}}
-            {{--</li>--}}
-            {{--<li class="nav-item">--}}
-                {{--<a class="nav-link disabled" href="#"><i class="material-icons">phonelink_setup</i> Personaliza tu app</a>--}}
-            {{--</li>--}}
         </ul>
     </div>
 </div>
