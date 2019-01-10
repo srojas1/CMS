@@ -56,6 +56,8 @@ if (Config::get('cms.events')) {
  *   CMS Developing
  */
 
+$router->resource('bienvenido', 'BienvenidoController');
+
 $router->resource('dashboard', 'DashboardController');
 
 // categorias routes

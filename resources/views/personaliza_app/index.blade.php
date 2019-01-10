@@ -5,6 +5,7 @@
 @stop
 
 @section('content')
+@auth('personaliza_app')
 	<div class="modulo container-fluid">
 		<!--- CABECERA DE MÓDULO --->
 		<div class="modulo-head row">
@@ -20,4 +21,5 @@
 	{{--<span>@Copyright</span>--}}
 	{{--</div>--}}
 	{{--</div>--}}
+@endauth
 @stop

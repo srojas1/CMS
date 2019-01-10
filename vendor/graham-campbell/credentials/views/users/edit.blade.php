@@ -5,39 +5,44 @@
 Edit {{ $user->name }}
 @stop
 
-@section('top')
-<div class="page-header">
-<h1>Edit {{ $user->name }}</h1>
-</div>
-@stop
+{{--@section('top')--}}
+{{--<div class="page-header">--}}
+{{--<h1>Editar Usuario</h1>--}}
+{{--</div>--}}
+{{--@stop--}}
 
 @section('content')
-<div class="row">
-    <div class="col-xs-6">
-        <p class="lead">
-            @if($user->id == Credentials::getUser()->id)
-                Currently editing your profile:
-            @else
-                Currently editing {!! $user->name !!}'s profile:
-            @endif
-        </p>
-    </div>
-    <div class="col-xs-6">
-        <div class="pull-right">
-            &nbsp;<a class="btn btn-success" href="{!! URL::route('users.show', array('users' => $user->id)) !!}"><i class="fa fa-file-text"></i> Show User</a>
-            &nbsp;<a class="btn btn-warning" href="#suspend_user" data-toggle="modal" data-target="#suspend_user"><i class="fa fa-ban"></i> Suspend User</a>
-            @auth('admin')
-                &nbsp;<a class="btn btn-default" href="#reset_user" data-toggle="modal" data-target="#reset_user"><i class="fa fa-lock"></i> Reset Password</a>
-                &nbsp;<a class="btn btn-danger" href="#delete_user" data-toggle="modal" data-target="#delete_user"><i class="fa fa-times"></i> Delete</a>
-            @endauth
+    {{--<div class="col-xs-6">--}}
+        {{--<p class="lead">--}}
+            {{--@if($user->id == Credentials::getUser()->id)--}}
+                {{--Editando tu perfil:--}}
+            {{--@else--}}
+                {{--Editando el perfil de {!! $user->name !!}:--}}
+            {{--@endif--}}
+        {{--</p>--}}
+    {{--</div>--}}
+    <div class="modulo container-fluid">
+        <div class="board-head row pb-4">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-4 pb-4">
+                <h2>Editar usuario: {!! $user->name !!}</h2>
+            </div>
         </div>
     </div>
-</div>
-<hr>
+    {{--<div class="col-xs-6">--}}
+        {{--<div class="pull-right">--}}
+            {{--&nbsp;<a class="btn btn-success" href="{!! URL::route('users.show', array('users' => $user->id)) !!}"><i class="fa fa-file-text"></i> Show User</a>--}}
+            {{--&nbsp;<a class="btn btn-warning" href="#suspend_user" data-toggle="modal" data-target="#suspend_user"><i class="fa fa-ban"></i> Suspend User</a>--}}
+            {{--@auth('admin')--}}
+                {{--&nbsp;<a class="btn btn-default" href="#reset_user" data-toggle="modal" data-target="#reset_user"><i class="fa fa-lock"></i> Reset Password</a>--}}
+                {{--&nbsp;<a class="btn btn-danger" href="#delete_user" data-toggle="modal" data-target="#delete_user"><i class="fa fa-times"></i> Delete</a>--}}
+            {{--@endauth--}}
+        {{--</div>--}}
+    {{--</div>--}}
 <div class="well">
     <?php
     $form = ['url' => URL::route('users.update', ['users' => $user->id]),
-        'method' => 'PATCH',
+		'_method'   => 'PATCH',
+		'method' => 'POST',
         'button' => 'Save User',
         'defaults' => [
             'first_name' => $user->first_name,

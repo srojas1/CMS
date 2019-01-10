@@ -5,6 +5,7 @@
 @stop
 
 @section('content')
+@auth('promocion')
 	<div class="modulo container-fluid">
 		<div class="modulo promociones container-fluid">
 			<!--- CABECERA DE MÓDULO --->
@@ -71,6 +72,7 @@
 			</div>
 		</div>
 	</div>
+@endauth
 @stop
 @section('js')
 	<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">

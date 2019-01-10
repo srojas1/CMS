@@ -68,6 +68,8 @@ class UserController extends AbstractController
         $users = UserRepository::paginate();
         $links = UserRepository::links();
 
+		$links = formatPagination($links);
+
         return View::make('credentials::users.index', compact('users', 'links'));
     }
 
@@ -127,11 +129,12 @@ class UserController extends AbstractController
                 $message->to($mail['email'])->subject($mail['subject']);
             });
 
-            return Redirect::route('users.show', ['users' => $user->id])
-                ->with('success', 'The user has been created successfully. Their password has been emailed to them.');
+			return Redirect::route('users.index')
+				->with('success', 'Se ha creado el usuario exitosamente, se ha enviado un email a su correo electrónico');
+
         } catch (UserExistsException $e) {
             return Redirect::route('users.create')->withInput()->withErrors($val->errors())
-                ->with('error', 'That email address is taken.');
+                ->with('error', 'El correo electrónico ya existe.');
         }
     }
 
@@ -236,37 +239,37 @@ class UserController extends AbstractController
             }
         }
 
-        if ($email !== $input['email']) {
-            $mail = [
-                'old'     => $email,
-                'new'     => $input['email'],
-                'url'     => URL::to(Config::get('credentials.home', '/')),
-                'subject' => Config::get('app.name').' - New Email Information',
-            ];
+//        if ($email !== $input['email']) {
+//            $mail = [
+//                'old'     => $email,
+//                'new'     => $input['email'],
+//                'url'     => URL::to(Config::get('credentials.home', '/')),
+//                'subject' => Config::get('app.name').' - New Email Information',
+//            ];
+//
+//            Mail::queue('credentials::emails.newemail', $mail, function ($message) use ($mail) {
+//                $message->to($mail['old'])->subject($mail['subject']);
+//            });
+//
+//            Mail::queue('credentials::emails.newemail', $mail, function ($message) use ($mail) {
+//                $message->to($mail['new'])->subject($mail['subject']);
+//            });
+//        }
+//
+//        if ($changed) {
+//            $mail = [
+//                'url'     => URL::to(Config::get('credentials.home', '/')),
+//                'email'   => $input['email'],
+//                'subject' => Config::get('app.name').' - Group Membership Changes',
+//            ];
+//
+//            Mail::queue('credentials::emails.groups', $mail, function ($message) use ($mail) {
+//                $message->to($mail['email'])->subject($mail['subject']);
+//            });
+//        }
 
-            Mail::queue('credentials::emails.newemail', $mail, function ($message) use ($mail) {
-                $message->to($mail['old'])->subject($mail['subject']);
-            });
-
-            Mail::queue('credentials::emails.newemail', $mail, function ($message) use ($mail) {
-                $message->to($mail['new'])->subject($mail['subject']);
-            });
-        }
-
-        if ($changed) {
-            $mail = [
-                'url'     => URL::to(Config::get('credentials.home', '/')),
-                'email'   => $input['email'],
-                'subject' => Config::get('app.name').' - Group Membership Changes',
-            ];
-
-            Mail::queue('credentials::emails.groups', $mail, function ($message) use ($mail) {
-                $message->to($mail['email'])->subject($mail['subject']);
-            });
-        }
-
-        return Redirect::route('users.show', ['users' => $user->id])
-            ->with('success', 'The user has been updated successfully.');
+        return Redirect::route('users.index')
+            ->with('success', 'El usuario fue modificado exitosamente');
     }
 
     /**
@@ -295,8 +298,8 @@ class UserController extends AbstractController
                 ->with('error', 'This user has already been banned.');
         }
 
-        return Redirect::route('users.show', ['users' => $id])
-            ->with('success', 'The user has been suspended successfully.');
+		return Redirect::route('users.index')
+			->with('success', 'El usuario fue suspendido exitosamente');
     }
 
     /**
@@ -338,8 +341,8 @@ class UserController extends AbstractController
             $message->to($mail['email'])->subject($mail['subject']);
         });
 
-        return Redirect::route('users.show', ['users' => $id])
-            ->with('success', 'The user\'s password has been reset successfully, and has been emailed to them.');
+		return Redirect::route('users.index')
+			->with('success', 'Se reinició la contraseña del usuario, se ha enviado un email a su correo electrónico');
     }
 
     /**
@@ -372,8 +375,8 @@ class UserController extends AbstractController
             $message->to($mail['email'])->subject($mail['subject']);
         });
 
-        return Redirect::route('users.show', ['users' => $id])
-            ->with('success', 'The user\'s activation email has been sent successfully.');
+		return Redirect::route('users.index')
+			->with('success', 'Se envió el correo de activación exitosamente');
     }
 
     /**
@@ -406,9 +409,9 @@ class UserController extends AbstractController
         Mail::queue('credentials::emails.admindeleted', $mail, function ($message) use ($mail) {
             $message->to($mail['email'])->subject($mail['subject']);
         });
-
-        return Redirect::route('users.index')
-            ->with('success', 'The user has been deleted successfully.');
+        
+		return Redirect::route('users.index')
+			->with('success', 'El usuario fue eliminado exitosamente');
     }
 
     /**
@@ -423,7 +426,7 @@ class UserController extends AbstractController
     protected function checkUser($user)
     {
         if (!$user) {
-            throw new NotFoundHttpException('User Not Found');
+            throw new NotFoundHttpException('Usuario no encontrado');
         }
     }
 }

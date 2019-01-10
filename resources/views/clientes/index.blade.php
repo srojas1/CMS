@@ -5,6 +5,7 @@
 @stop
 
 @section('content')
+@auth('cllientes')
     <div class="modulo container-fluid">
         <div class="modulo clientes container-fluid">
             <!--- CABECERA DE MÓDULO --->
@@ -113,6 +114,7 @@
                 </div>
             </div>
         </div>
+@endauth
 @stop
 
 @section('bottom')

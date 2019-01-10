@@ -164,6 +164,11 @@ public function subscribe(Dispatcher $events)
  */
 public function onNavigationMainFirst()
 {
+
+	$this->navigation->addToMain(
+		['title' => 'Bienvenido', 'slug' => 'bienvenido', 'icon' => 'home']
+	);
+
 	if ($this->credentials->hasAccess('dashboard')) {
 		$this->navigation->addToMain(
 			['title' => 'Dashboard', 'slug' => 'dashboard', 'icon' => 'dashboard']
@@ -210,7 +215,7 @@ public function onNavigationMainFirst()
 
 	if ($this->credentials->hasAccess('configuracion')) {
 		$this->navigation->addToMain(
-			['title' => 'Usuarios/Configuracion', 'slug' => 'users', 'icon' => '']
+			['title' => 'Configuracion', 'slug' => 'users', 'icon' => 'lock']
 		);
 	}
 }
