@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 class CuponController extends AbstractController {
 
 	/**
-	 * Create a new instance.
+	 * Crear nueva instancia
 	 */
 	public function __construct()
 	{
@@ -32,7 +32,7 @@ class CuponController extends AbstractController {
 		}
 
 	/**
-	 * Display a listing of the resource.
+	 * Mostrar lista del recurso
 	 *
 	 * @return Response
 	 */
@@ -60,7 +60,7 @@ class CuponController extends AbstractController {
 	}
 
 	/**
-	 * Show the form for creating a new resource.
+	 * Muestra el formulario para crear un nuevo recurso
 	 *
 	 * @return Response
 	 */
@@ -70,7 +70,7 @@ class CuponController extends AbstractController {
 	}
 
 	/**
-	 * Guarda nueva promocion
+	 * Guarda nuevo cupon
 	 */
 	public function storeCupon(Request $request) {
 
@@ -86,7 +86,7 @@ class CuponController extends AbstractController {
 	}
 
 	/**
-	 * Editar cupon
+	 * Edita cupon
 	 */
 	public function editCupon(Request $request) {
 
@@ -107,12 +107,11 @@ class CuponController extends AbstractController {
 	}
 
 	/**
-	 * Store a newly created resource in storage.
+	 * Graba un nuevo recurso
 	 *
 	 * @return Response
 	 */
-	public function store()
-	{
+	public function store() {
 		$input = array_merge(Binput::only(['cupon', 'descuento', 'vencimiento', 'stock_maximo', 'condicion',
 		]));
 
@@ -131,12 +130,11 @@ class CuponController extends AbstractController {
 	}
 
 	/**
-	 * Display the specified resource.
+	 * Muestra el recurso específico
 	 *
 	 * @return Response
 	 */
-	public function show($id)
-	{
+	public function show($id) {
 		$cupon         = CuponRepository::paginate();
 		$promocion     = PromocionRepository::paginate();
 		$recompensa    = RecompensaRepository::paginate();
@@ -161,13 +159,12 @@ class CuponController extends AbstractController {
 	}
 
 	/**
-	 * Show the form for editing the specified resource.
+	 * Muestra el formulario de edición del recurso
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
-	{
+	public function edit($id) {
 		$cupon = CuponRepository::find($id);
 		$this->checkCupon($cupon);
 
@@ -175,13 +172,12 @@ class CuponController extends AbstractController {
 	}
 
 	/**
-	 * Update the specified resource in storage.
+	 * Actualiza el recurso específico
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
-	{
+	public function update($id) {
 		$input = Binput::only(['cupon', 'descuento', 'vencimiento', 'stock_maximo', 'condicion']);
 
 		$val = $val = CuponRepository::validate($input, array_keys($input));
@@ -201,13 +197,12 @@ class CuponController extends AbstractController {
 	}
 
 	/**
-	 * Remove the specified resource from storage.
+	 * Remueve el recurso
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
-	{
+	public function destroy($id) {
 		$cupon = CuponRepository::find($id);
 		$this->checkCupon($cupon);
 
@@ -218,16 +213,13 @@ class CuponController extends AbstractController {
 	}
 
 	/**
-	 * Check the cupon model.
+	 * Revisa el modelo del cupón
 	 *
 	 * @param mixed $cupon
-	 *
 	 * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-	 *
 	 * @return void
 	 */
-	protected function checkCupon($cupon)
-	{
+	protected function checkCupon($cupon) {
 		if (!$cupon) {
 			throw new NotFoundHttpException('Cupon No Encontrado');
 		}

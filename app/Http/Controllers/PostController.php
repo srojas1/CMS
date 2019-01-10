@@ -26,7 +26,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class PostController extends AbstractController
 {
     /**
-     * Create a new instance.
+     * Crear nueva instancia
      *
      * @return void
      */

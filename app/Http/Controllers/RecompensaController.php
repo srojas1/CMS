@@ -14,10 +14,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class RecompensaController extends AbstractController {
 
 	/**
-	 * Create a new instance.
+	 * Crear nueva instancia
 	 */
-	public function __construct()
-	{
+	public function __construct() {
 		$this->setPermissions([
 			'create'  => 'edit',
 			'store'   => 'edit',
@@ -30,12 +29,11 @@ class RecompensaController extends AbstractController {
 	}
 
 	/**
-	 * Display a listing of the resource.
+	 * Mostrar lista del recurso
 	 *
 	 * @return Response
 	 */
-	public function index()
-	{
+	public function index() {
 		$recompensa = RecompensaRepository::paginate();
 		$links = RecompensaRepository::links();
 
@@ -49,12 +47,11 @@ class RecompensaController extends AbstractController {
 	}
 
 	/**
-	 * Show the form for creating a new resource.
+	 * Muestra el formulario para crear un nuevo recurso
 	 *
 	 * @return Response
 	 */
-	public function create()
-	{
+	public function create() {
 		return View::make('extras.recompensas.create');
 	}
 
@@ -95,13 +92,12 @@ class RecompensaController extends AbstractController {
 
 
 	/**
-	 * Store a newly created resource in storage.
+	 * Graba un nuevo recurso
 	 *
 	 * @param  Request  $request
 	 * @return Response
 	 */
-	public function store()
-	{
+	public function store() {
 		$input = array_merge(Binput::only([
 			'recompensa',
 			'puntos',
@@ -121,12 +117,11 @@ class RecompensaController extends AbstractController {
 	}
 
 	/**
-	 * Display the specified resource.
+	 * Muestra el recurso específico
 	 *
 	 * @return Response
 	 */
-	public function show()
-	{
+	public function show() {
 		$cupon         = CuponRepository::paginate();
 		$promocion     = PromocionRepository::paginate();
 		$recompensa    = RecompensaRepository::paginate();
@@ -151,13 +146,12 @@ class RecompensaController extends AbstractController {
 	}
 
 	/**
-	 * Show the form for editing the specified resource.
+	 * Muestra el formulario para editar el recurso
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
-	{
+	public function edit($id) {
 		$recompensa = RecompensaRepository::find($id);
 		$this->checkRecompensa($recompensa);
 
@@ -165,14 +159,13 @@ class RecompensaController extends AbstractController {
 	}
 
 	/**
-	 * Update the specified resource in storage.
+	 * Actualiza el recurso específico
 	 *
 	 * @param  Request  $request
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
-	{
+	public function update($id) {
 		$input = Binput::only(['recompensa','puntos','descripcion']);
 
 		$val = $val = RecompensaRepository::validate($input, array_keys($input));
@@ -190,13 +183,12 @@ class RecompensaController extends AbstractController {
 	}
 
 	/**
-	 * Remove the specified resource from storage.
+	 * Remueve el recurso específico
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
-	{
+	public function destroy($id) {
 		$recompensa = RecompensaRepository::find($id);
 		$this->checkRecompensa($recompensa);
 
@@ -207,16 +199,13 @@ class RecompensaController extends AbstractController {
 	}
 
 	/**
-	 * Check the Recompensa model.
+	 * Revisa el modelo de recompensa
 	 *
 	 * @param mixed $recompensa
-	 *
 	 * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-	 *
 	 * @return void
 	 */
-	protected function checkRecompensa($recompensa)
-	{
+	protected function checkRecompensa($recompensa) {
 		if (!$recompensa) {
 			throw new NotFoundHttpException('Recompensa No Encontrada');
 		}

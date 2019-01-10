@@ -37,7 +37,7 @@ abstract class AbstractController extends Controller
     protected $blogs = [];
 
     /**
-     * Create a new instance.
+     * Crear nueva instancia
      *
      * @return void
      */

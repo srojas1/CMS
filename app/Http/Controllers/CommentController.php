@@ -39,7 +39,7 @@ class CommentController extends AbstractController
     protected $throttler;
 
     /**
-     * Create a new instance.
+     * Crear nueva instancia
      *
      * @param \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface $throttler
      *

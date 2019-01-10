@@ -3,56 +3,65 @@
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 use GrahamCampbell\BootstrapCMS\Facades\PedidoRepository;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PedidoController extends AbstractController {
 
-    /**
-     * Create a new instance.
-     */
-    public function __construct()
-    {
-//        $this->setPermissions([
-//            'create'  => 'edit',
-//            'store'   => 'edit',
-//            'edit'    => 'edit',
-//            'update'  => 'edit',
-//            'destroy' => 'edit',
-//        ]);
-//
-//        parent::__construct();
-    }
+	/**
+	 * Crear nueva instancia
+	 */
+	public function __construct()
+	{
+		$this->setPermissions([
+			'create'  => 'edit',
+			'store'   => 'edit',
+			'edit'    => 'edit',
+			'update'  => 'edit',
+			'destroy' => 'edit',
+		]);
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-        $pedido = PedidoRepository::paginate();
+		parent::__construct();
+	}
 
-        return View::make('pedidos.index', ['pedido' => $pedido]);
-    }
+	/**
+	 * Mostrar lista del recurso
+	 *
+	 * @return Response
+	 */
+	public function index() {
+		$pedido = PedidoRepository::paginate();
 
-    public function changeStatus() {
+		return View::make('pedidos.index', ['pedido' => $pedido]);
+	}
 
-        $id = $_POST['id_pedido'];
-        $idEstado = $_POST['id_estado'];
+	/**
+	 * Cambia el estado del pedido
+	 *
+	 * @return Response
+	 */
+	public function changeStatus() {
 
-        $pedido = PedidoRepository::find($id);
-        $this->checkPedido($pedido);
+		$id = $_POST['id_pedido'];
+		$idEstado = $_POST['id_estado'];
 
-        $input = ['id_estado'=>$idEstado];
+		$pedido = PedidoRepository::find($id);
+		$this->checkPedido($pedido);
 
-        $pedido->update($input);
-    }
+		$input = ['id_estado'=>$idEstado];
 
-    protected function checkPedido($pedido)
-    {
-        if (!$pedido) {
-            throw new NotFoundHttpException('Pedido No Encontrado');
-        }
-    }
+		$pedido->update($input);
+	}
+
+	/**
+	 * Revisa el modelo del pedido
+	 *
+	 * @param $pedido
+	 */
+	protected function checkPedido($pedido) {
+		if (!$pedido) {
+			throw new NotFoundHttpException('Pedido No Encontrado');
+		}
+	}
 }

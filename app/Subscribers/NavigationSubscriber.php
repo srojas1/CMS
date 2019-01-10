@@ -80,7 +80,7 @@ protected $producto;
 protected $cloudflare;
 
 /**
- * Create a new instance.
+ * Crear nueva instancia
  *
  * @param \GrahamCampbell\Navigation\Navigation                    $navigation
  * @param \GrahamCampbell\Credentials\Credentials                  $credentials
