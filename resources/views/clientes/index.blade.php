@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-@auth('cllientes')
+@auth('cliente')
     <div class="modulo container-fluid">
         <div class="modulo clientes container-fluid">
             <!--- CABECERA DE MÓDULO --->
