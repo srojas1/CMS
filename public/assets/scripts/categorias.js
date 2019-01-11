@@ -1,15 +1,17 @@
 $(document).ready(function(){
 
-    $('.crear_categoria').on('click',function () {
+    $(document).on('click','.crear_categoria',function () {
+        var postData = new FormData($("#create_category_form")[0]);
 
-        $nombreCategoria =$('.nueva_categoria').val();
-
-               $.ajax({
+            $.ajax({
                 type: "POST",
                 url: 'categoria/storeCategory',
-                data: {categoria: $nombreCategoria}
+                contentType: false,
+                cache: false,
+                processData: false,
+                data: postData
             }).done(function() {
-                location.reload();
+                //location.reload();
                 alert('Se agregó la categoría exitosamente');
                });
     });

@@ -78,11 +78,23 @@ class CategoriaController extends AbstractController {
 	/**
 	* Guarda nueva categoría (nuevo)
 	*/
-	public function storeCategory() {
+	public function storeCategory(Request $request) {
 
-		$categoria = $_POST['categoria'];
+		$input['categoria'] = $request->input('categoria');
 
-		$input = ['categoria'=>$categoria];
+		//Main image
+		if ($request->hasfile('filename_main')) {
+
+			$images_main = $request->file('filename_main');
+			$name_main = $images_main->getClientOriginalName();
+
+			$images_main->move(public_path() . '/images/', $name_main);
+			$data_main[] = $name_main;
+
+			if (!empty($data_main)) {
+				$input['filename_main'] = json_encode($data_main);
+			}
+		}
 
 		$categoria = CategoriaRepository::create($input);
 
@@ -96,8 +108,21 @@ class CategoriaController extends AbstractController {
 
 		//Get Data
 		$input['categoria']     = $request->input('nombreCategoria');
-
 		$id = $request->input('id_categoria');
+
+		//Main image
+		if ($request->hasfile('filename_main')) {
+
+			$images_main = $request->file('filename_main');
+			$name_main = $images_main->getClientOriginalName();
+
+			$images_main->move(public_path() . '/images/', $name_main);
+			$data_main[] = $name_main;
+
+			if (!empty($data_main)) {
+				$input['filename_main'] = json_encode($data_main);
+			}
+		}
 
 		$categoria = CategoriaRepository::find($id);
 

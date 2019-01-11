@@ -1,6 +1,10 @@
 $(document).ready(function(){
 
-    $('.modal').on('show.bs.modal', function (e) {
+    $('.modal').on('hidden.bs.modal', function () {
+        location.reload();
+    });
+
+    $('.modal').on('show.bs.modal', function () {
 
         $idProducto = $(this).find('.id_producto').val();
 
