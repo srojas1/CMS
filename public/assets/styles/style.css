@@ -387,6 +387,10 @@ a:hover{
     height: 80px;
 }
 
+.agregar-imagen-featured .custom-file-label-promo{
+    width: 115px;
+}
+
 .agregar-imagen-galeria .material-icons {
     font-size: 42px;
     color: #7B7B8C;

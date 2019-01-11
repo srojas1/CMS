@@ -2,6 +2,7 @@
 
 use GrahamCampbell\BootstrapCMS\Http\Constants as Config;
 use GrahamCampbell\BootstrapCMS\Models\Product as ProductModel;
+use GrahamCampbell\BootstrapCMS\Http\Constants as Constants;
 
 /**
  * Formatea paginacion a nuevo diseño
@@ -192,3 +193,11 @@ function timeSince($original) {
 	}
 	return $res;
 }
+
+/**
+ *
+ */
+function getTotalPrice($precio) {
+	return $precio + Constants::COSTO_ENVIO + Constants::IGV;
+}
+

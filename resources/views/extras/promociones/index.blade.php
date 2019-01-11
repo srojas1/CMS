@@ -24,9 +24,11 @@
 				@if(count($promocion)>0)
 					@foreach ($promocion as $prom)
 						<tr>
-							<th scope="row" class="align-middle">
-								<div class="d-flex align-items-center">{{$prom->promocion}}</div>
-							</th>
+							@if($prom->filename_main)
+								<th scope="row" class="align-middle"><div class="d-flex align-items-center"></div><img src="{{ asset('images/'.getJsonValue($prom->filename_main))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prom->promocion}}</th>
+							@else
+								<th scope="row" class="align-middle"><div class="d-flex align-items-center"></div><img src="{{ asset('images/producto-icon.jpg')}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prom->promocion}}</th>
+							@endif
 							<td class="align-middle">
 								<div class="d-flex justify-content-center">[imagen]</div>
 							</td>

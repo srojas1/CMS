@@ -10,5 +10,7 @@ class Constants {
     const PRONTO = 3;
     const PRONTO_LABEL = 'Muy Pronto';
     const STATUS_EMPTY = 'Sin estado asignado';
-    const NUMBER_FORMAT_ZEROS=5;
+    const NUMBER_FORMAT_ZEROS = 5;
+    const COSTO_ENVIO = 5;
+    const IGV = 0.18;
 }

@@ -52,8 +52,8 @@
                                         {{$ped->getClientById->apaterno}}
                                         {{$ped->getClientById->amaterno}}</th>
                                     <td>Hace {{timeSince($ped->fecha_pedido)}}</td>
-                                    <td>S/ {{$ped->total}}</td>
-                                    <td>Direccion Test</td>
+                                    <td>S/ [cambiar total]</td>
+                                    <td>{{$ped->getAddressById->direccion}}</td>
                                     @if ($ped->getStatusById->estado)
                                         <td>
                                             <button type="button" class="btn_modal btn {{getColorByStatus($ped->id_estado)}}" href="#detail_pedido_{!! $ped->id !!}"

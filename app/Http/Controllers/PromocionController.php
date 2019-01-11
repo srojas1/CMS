@@ -76,6 +76,20 @@ class PromocionController extends AbstractController {
 		$input['fecha_inicio'] = formatStringToDateTime($request->input('lanzamientoPromocion'));
 		$input['fecha_fin']    = formatStringToDateTime($request->input('fechaFinPromocion'));
 
+		//Main image
+		if ($request->hasfile('filename_main')) {
+
+			$images_main = $request->file('filename_main');
+			$name_main = $images_main->getClientOriginalName();
+
+			$images_main->move(public_path() . '/images/', $name_main);
+			$data_main[] = $name_main;
+
+			if (!empty($data_main)) {
+				$input['filename_main'] = json_encode($data_main);
+			}
+		}
+
 		$promocion = PromocionRepository::create($input);
 
 		return json_encode($promocion);
@@ -94,6 +108,20 @@ class PromocionController extends AbstractController {
 		$input['fecha_fin']     = $request->input('fechaFinPromocion');
 
 		$id = $request->input('id_promocion');
+
+		//Main image
+		if ($request->hasfile('filename_main')) {
+
+			$images_main = $request->file('filename_main');
+			$name_main = $images_main->getClientOriginalName();
+
+			$images_main->move(public_path() . '/images/', $name_main);
+			$data_main[] = $name_main;
+
+			if (!empty($data_main)) {
+				$input['filename_main'] = json_encode($data_main);
+			}
+		}
 
 		$promocion = PromocionRepository::find($id);
 

@@ -47,4 +47,22 @@ $(document).ready(function(){
     $('#lanzamientoPromocion').datepicker();
     $('#fechaFinPromocion').datepicker();
 
+    //images
+    function readURLMain(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('.imagen-featured')
+                    .attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $(".main_image").change(function() {
+        readURLMain(this);
+    });
+
 });
