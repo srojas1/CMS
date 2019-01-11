@@ -32,6 +32,7 @@ Usuarios
                             <thead class="thead-light">
                             <tr>
                                 <th scope="col"><div class="d-flex justify-content-center">Nombre</div></th>
+                                <th scope="col"><div class="d-flex justify-content-center">Empresa</div></th>
                                 <th scope="col"><div class="d-flex justify-content-center">Correo</div></th>
                                 <th scope="col"><div class="d-flex justify-content-center">Opciones</div></th>
                             </tr>
@@ -40,6 +41,7 @@ Usuarios
                                 @foreach ($users as $user)
                                 <tr>
                                     <th scope="row" class="align-middle"><div class="d-flex align-items-center"></div>{!! $user->name !!}</th>
+                                    <td class="align-middle"><div class="d-flex justify-content-center">{!! $user->user_company_id !!}</td>
                                     <td class="align-middle"><div class="d-flex justify-content-center">{!! $user->email !!}</td>
                                     <td class="align-middle">
                                     {{--&nbsp;<a class="btn btn-success" href="{!! URL::route('users.show', array('users' => $user->id)) !!}"><i class="fa fa-file-text"></i> Show</a>--}}
