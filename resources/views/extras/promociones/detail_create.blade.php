@@ -51,6 +51,26 @@
 								</div>
 							</div>
 						</div>
+						<div>
+							<div class="container-fluid row col-12 justify-content-start align-items-center">
+								<div class="form-group col-6">
+									<select id="producto_vincular_promo" name="vinculacionProductoValPromo[]" class="custom-select" placeholder="Buscar producto a vincular">
+										@if(count($producto)>0)
+											@foreach($producto as $nkey=>$prod)
+												<option value="{{$prod->id}}">{{$prod->producto}}</option>
+											@endforeach
+										@endif
+									</select>
+								</div>
+								<div class="form-group">
+									<a class="crear_vinculacion_promo btn btn-primary">Vincular</a>
+								</div>
+							</div>
+						</div>
+						<div class="pt-4 pb-3 pl-3 mr-0 ml-0 border-top">
+							<div class="container_vinculacion_promo container-fluid row col-12 justify-content-start align-items-center">
+							</div>
+						</div>
 						<div class="form-group">
 							<input name="precioPromocion" type="text" class="form-control" id="precioPromocion" aria-describedby="precioPromocionHelp" placeholder="Precio">
 						</div>

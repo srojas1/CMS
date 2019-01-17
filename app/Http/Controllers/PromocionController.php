@@ -3,6 +3,7 @@
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 use GrahamCampbell\BootstrapCMS\Facades\CuponRepository;
+use GrahamCampbell\BootstrapCMS\Facades\ProductoRepository;
 use GrahamCampbell\BootstrapCMS\Facades\PromocionRepository;
 use GrahamCampbell\BootstrapCMS\Facades\RecompensaRepository;
 use Illuminate\Http\Request;
@@ -36,6 +37,7 @@ class PromocionController extends AbstractController {
 		$promocion  = PromocionRepository::paginate();
 		$cupon      = CuponRepository::paginate();
 		$recompensa = RecompensaRepository::paginate();
+		$producto   = ProductoRepository::paginate();
 
 		$links = PromocionRepository::links();
 
@@ -53,6 +55,7 @@ class PromocionController extends AbstractController {
 			'arrStatus'=>$arrStatus,
 			'extra_type'=>'Promocion',
 			'extra_type_lbl'=>'promocion',
+			'producto' => $producto
 		]);
 	}
 
@@ -75,6 +78,7 @@ class PromocionController extends AbstractController {
 		$input['stock_maximo'] = $request->input('stockMaximoPromocion');
 		$input['fecha_inicio'] = formatStringToDateTime($request->input('lanzamientoPromocion'));
 		$input['fecha_fin']    = formatStringToDateTime($request->input('fechaFinPromocion'));
+		$vinculacionList       = $request->input('productoVinculadoPromo');
 
 		//Main image
 		if ($request->hasfile('filename_main')) {
@@ -87,6 +91,19 @@ class PromocionController extends AbstractController {
 
 			if (!empty($data_main)) {
 				$input['filename_main'] = json_encode($data_main);
+			}
+		}
+
+		//vinculacion
+		if(!empty($vinculacionList)) {
+
+			//Multiple vinculacion
+			foreach($vinculacionList as $nkey=>$vinc) {
+				$vincArr[]  = $vinc;
+			}
+
+			if (!empty($vincArr)) {
+				$input['vinculacion_producto'] = json_encode($vincArr);
 			}
 		}
 

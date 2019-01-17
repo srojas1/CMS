@@ -22,6 +22,28 @@ $(document).ready(function(){
             });
         });
 
+        $(document).on('click','.crear_vinculacion_promo',function (event) {
+            event.stopImmediatePropagation();
+
+            productoVinculadoIdCreate = $('#producto_vincular_promo').val();
+            productoVinculadoTextCreate = $('#producto_vincular_promo option:selected').text();
+
+            $('.container_vinculacion_promo').append('<div class="container-fluid row col-12 justify-content-start align-items-center"><div class="form-group col-9">' +
+                '<input name="productoVinculadoPromo[]" type="hidden" value="'+ productoVinculadoIdCreate +'">' +
+                '<div class="d-inline-flex"><img src="/images/producto-icon.jpg" alt="..." class="thumbnail border-top border-bottom border-right border-left">' +
+                productoVinculadoTextCreate +'</div>' +
+                '</div>' +
+                '<div class="form-group col-3">' +
+                '<a href="#" class="badge-pill eliminarRelacionPromo shadow-sm">' +
+                '<i class="material-icons">clear</i>' +
+                '</a>' +
+                '</div></div>');
+        });
+
+        $(document).on('click','.eliminarRelacionPromo',function () {
+            $(this).parent().parent().remove();
+        });
+
         $(this).find('#lanzamientoPromocion').datepicker();
         $(this).find('#fechaFinPromocion').datepicker();
     });

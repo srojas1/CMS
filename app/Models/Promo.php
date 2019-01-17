@@ -44,7 +44,7 @@ class Promo extends AbstractModel implements HasPresenter {
      *
      * @var array
      */
-    public static $index = ['id','promocion','precio','stock_maximo','fecha_inicio','fecha_fin','filename_main'];
+    public static $index = ['id','promocion','precio','stock_maximo','fecha_inicio','fecha_fin','filename_main','vinculacion_producto'];
 
     /**
      * The max events per page when displaying a paginated index.
