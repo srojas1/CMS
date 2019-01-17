@@ -191,7 +191,6 @@
 									</a>
 								</div>
 							</div>
-						</div>
 
 						<div class="tab-pane fade show" id="editarProductoInventario" role="tabpanel" aria-labelledby="editarProductoInventario-tab">
 							<div class="board-body">
