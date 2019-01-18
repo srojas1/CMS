@@ -50,6 +50,44 @@
 								</div>
 							</div>
 						</div>
+
+						<div class="pt-4 pb-3 pl-3 mr-0 ml-0">
+							<div class="container-fluid row col-12 justify-content-start align-items-center">
+								<div class="form-group col-8">
+									<select id="producto_vincular_promo_{!! $prom->id !!}" class="custom-select" name="vinculacionProductoVal[]">
+										@foreach($producto as $nkey=>$prodVinc)
+											<option value="{{$prodVinc->id}}">{{$prodVinc->producto}}</option>
+										@endforeach
+									</select>
+								</div>
+								<div class="form-group">
+									<button type="button" class="crear_vinculacion_promo_edit btn btn-primary">Vincular</button>
+								</div>
+							</div>
+						</div>
+						<div class="pt-4 pb-3 pl-3 mr-0 ml-0 border-top">
+							<div class="container_vinculacion_{!! $prom->id !!} container-fluid row col-12 justify-content-start align-items-center">
+								<?php $productosVinculados = json_decode($prom->vinculacion_producto) ?>
+								@if($productosVinculados)
+									@foreach($productosVinculados as $pv)
+										<div class="container-fluid row col-12 justify-content-start align-items-center">
+											<div class="form-group col-9">
+												<input name="productoVinculadoPromoEdit[]" type="hidden" value="{{$pv}}"/>
+												<div class="d-inline-flex">
+													<img src="{{ asset('images/'.getJsonValue(getProductMainImageById($pv)))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{getProductsNameByIds($pv)}}</div>
+											</div>
+											<div class="form-group col-3">
+												<a href="#" class="badge-pill eliminarRelacionPromo shadow-sm">
+													<i class="material-icons">clear</i>
+												</a>
+											</div>
+										</div>
+									@endforeach
+								@endif
+							</div>
+						</div>
+
+
 						<div class="form-group">
 							<input name="precioPromocion" value="{{$prom->precio}}" type="text" class="form-control" id="precioPromocion" aria-describedby="precioPromocionHelp" placeholder="Precio">
 						</div>

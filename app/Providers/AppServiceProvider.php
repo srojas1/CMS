@@ -16,6 +16,7 @@ use GrahamCampbell\BootstrapCMS\Navigation\Factory;
 use GrahamCampbell\BootstrapCMS\Observers\PageObserver;
 use GrahamCampbell\BootstrapCMS\Repositories\AtributoRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\AtributoProductoRepository;
+use GrahamCampbell\BootstrapCMS\Repositories\CuponClienteRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\ClienteRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\CommentRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\EventRepository;
@@ -106,6 +107,7 @@ class AppServiceProvider extends ServiceProvider
 		$this->registerAtributoRepository();
 		$this->registerRecompensaRepository();
 		$this->registerAtributoProductoRepository();
+		$this->registerCuponClienteRepository();
 
 		$this->registerCommandSubscriber();
 		$this->registerNavigationSubscriber();
@@ -229,6 +231,26 @@ class AppServiceProvider extends ServiceProvider
 
 		$this->app->alias('atributoproductorepository',
 			'GrahamCampbell\BootstrapCMS\Repositories\AtributoProductoRepository');
+	}
+
+	/**
+	 * Register the cupon cliente repository class.
+	 *
+	 * @return void
+	 */
+	protected function registerCuponClienteRepository()
+	{
+		$this->app->singleton('cuponclienterepository', function ($app) {
+			$model = $app['config']['cms.cuponcliente'];
+			$cuponcliente = new $model();
+
+			$validator = $app['validator'];
+
+			return new CuponClienteRepository($cuponcliente, $validator);
+		});
+
+		$this->app->alias('cuponclienterepository',
+			'GrahamCampbell\BootstrapCMS\Repositories\CuponClienteRepository');
 	}
 
 	/**

@@ -29,7 +29,7 @@
 									<div class="d-flex justify-content-center">{{$cup->condicion}}</div>
 								</td>
 								<td class="align-middle">
-									<div class="d-flex justify-content-center">{{$cup->descuento}}</div>
+									<div class="d-flex justify-content-center">S/ {{$cup->descuento}}</div>
 								</td>
 								<td class="align-middle">
 									<div class="d-flex justify-content-center">{{$cup->vencimiento}}</div>

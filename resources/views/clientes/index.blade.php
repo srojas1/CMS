@@ -55,7 +55,7 @@
                                     <tbody>
                                         @foreach ($cliente as $cli)
                                             <tr>
-                                                <th scope="row" class="align-middle"><div class="d-flex align-items-center"><img src="{{ asset('images/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left"><div>{{$cli->nombres}} {{$cli->apaterno}} {{$cli->amaterno}} (30)<small class="d-flex justify-content-start">{{$cli->email}} / {{$cli->movil}}</small></div></div></th>
+                                                <th scope="row" class="align-middle"><div class="d-flex align-items-center"><img src="{{ asset('images/'.getJsonValue($cli->filename_main)) }}" alt="..." class="thumbnail border-top border-bottom border-right border-left"><div>{{$cli->nombres}} {{$cli->apaterno}} {{$cli->amaterno}} (30)<small class="d-flex justify-content-start">{{$cli->email}} / {{$cli->movil}}</small></div></div></th>
                                                 <td class="align-middle"><div class="d-flex justify-content-center">{{$cli->address[0]->getDistrict->distrito}}</div></td>
                                                 <td class="align-middle"><div class="d-flex justify-content-center">#{{$cli->ranking}}</div></td>
                                                 <td class="align-middle"><div class="d-flex justify-content-center">{{$cli->puntos}}</div></td>

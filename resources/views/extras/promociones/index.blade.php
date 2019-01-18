@@ -27,13 +27,22 @@
 							@if($prom->filename_main)
 								<th scope="row" class="align-middle"><div class="d-flex align-items-center"></div><img src="{{ asset('images/'.getJsonValue($prom->filename_main))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prom->promocion}}</th>
 							@else
-								<th scope="row" class="align-middle"><div class="d-flex align-items-center"></div><img src="{{ asset('images/producto-icon.jpg')}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prom->promocion}}</th>
+								<th scope="row" class="align-middle"><div class="d-flex align-items-center"></div><img src="{{ asset('images/'.\GrahamCampbell\BootstrapCMS\Http\Constants::DEFAULT_IMAGE_NAME)}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prom->promocion}}</th>
 							@endif
 							<td class="align-middle">
-								<div class="d-flex justify-content-center">[imagen]</div>
+								<div class="d-flex justify-content-center">
+								<?php $productosVinculados = json_decode($prom->vinculacion_producto) ?>
+									@if($productosVinculados)
+										@foreach($productosVinculados as $pv)
+											<img src="{{ asset('images/'.getJsonValue(getProductMainImageById($pv)))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">
+										@endforeach
+									@else
+										<img src="{{ asset('images/'.\GrahamCampbell\BootstrapCMS\Http\Constants::DEFAULT_IMAGE_NAME)}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">
+									@endif
+								</div>
 							</td>
 							<td class="align-middle">
-								<div class="d-flex justify-content-center">{{$prom->precio}}</div>
+								<div class="d-flex justify-content-center">S/ {{$prom->precio}}</div>
 							</td>
 							<td class="align-middle">
 								<div class="d-flex justify-content-center">{{$prom->fecha_inicio}}</div>
@@ -48,7 +57,7 @@
 								<div class="d-flex justify-content-center">[ventas]</div>
 							</td>
 							<td class="align-middle">
-								<div class="d-flex justify-content-center">[ingresos]</div>
+								<div class="d-flex justify-content-center">S/ [ingresos]</div>
 							</td>
 							<td class="align-middle">
 								<div class="d-flex justify-content-center">

@@ -6,10 +6,9 @@ use GrahamCampbell\Credentials\Models\AbstractModel;
 use GrahamCampbell\Credentials\Models\Relations\BelongsToUserTrait;
 use GrahamCampbell\Credentials\Models\Relations\RevisionableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\DB;
 use McCool\LaravelAutoPresenter\HasPresenter;
 
-class Client extends AbstractModel implements HasPresenter {
+class CuponClient extends AbstractModel implements HasPresenter {
 
 	use BelongsToUserTrait, RevisionableTrait, SoftDeletes;
 	/**
@@ -17,14 +16,14 @@ class Client extends AbstractModel implements HasPresenter {
 	 *
 	 * @var string
 	 */
-	protected $table = 'clients';
+	protected $table = 'cupon_client';
 
 	/**
 	 * The model name.
 	 *
 	 * @var string
 	 */
-	public static $name = 'client';
+	public static $name = 'CuponClient';
 
 	/**
 	 * The properties on the model that are dates.
@@ -38,14 +37,14 @@ class Client extends AbstractModel implements HasPresenter {
 	 *
 	 * @var array
 	 */
-	protected $keepRevisionOf = ['nombres'];
+	protected $keepRevisionOf = ['id'];
 
 	/**
 	 * The columns to select when displaying an index.
 	 *
 	 * @var array
 	 */
-	public static $index = ['id','nombres','apaterno','amaterno','puntos','last_login','movil','fecha_nacimiento','puntos','email','documento','ranking','filename_main','created_at'];
+	public static $index = ['id'];
 
 	/**
 	 * The max events per page when displaying a paginated index.
@@ -62,19 +61,11 @@ class Client extends AbstractModel implements HasPresenter {
 	public static $order = 'id';
 
 	/**
-	 * The direction to order by when displaying an index.*
+	 * The direction to order by when displaying an index.
+	 *
 	 * @var string
 	 */
 	public static $sort = 'asc';
-
-	/**
-	 * The event validation rules.
-	 *
-	 * @var array
-	 */
-	public static $rules = [
-		'nombres'    => 'required'
-	];
 
 	/**
 	 * Get the presenter class.
@@ -83,26 +74,7 @@ class Client extends AbstractModel implements HasPresenter {
 	 */
 	public function getPresenterClass()
 	{
-		return 'GrahamCampbell\BootstrapCMS\Presenters\ClientPresenter';
+		return 'GrahamCampbell\BootstrapCMS\Presenters\CuponClientPresenter';
 	}
 
-	public function address(){
-		return $this->hasMany(Address::class);
-	}
-
-	public function orders(){
-		return $this->hasMany(Order::class);
-	}
-
-	public function lastOrder() {
-		return $this->hasOne(Order::class)->orderBy('fecha_compra', 'desc');
-	}
-
-	public function getPaymentCard() {
-		return $this->hasMany(ClientPaymentCard::class);
-	}
-
-	public function getCuponById() {
-		return $this->belongsToMany(Cupon::class,'cupon_client')->withPivot('id','deleted_at');
-	}
 }

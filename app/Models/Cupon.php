@@ -85,4 +85,8 @@ class Cupon extends AbstractModel implements HasPresenter {
     {
         return 'GrahamCampbell\BootstrapCMS\Presenters\CuponPresenter';
     }
+
+	public function getClientsById() {
+		return $this->belongsToMany(Client::class,'cupon_client')->withPivot('id','deleted_at');
+	}
 }

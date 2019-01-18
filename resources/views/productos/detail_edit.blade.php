@@ -342,7 +342,6 @@
 									</div>
 								</div>
 								<div class="atributo_contenedor_{!! $prod->id !!} pt-4 pb-3 pl-3 mr-0 ml-0 border-top">
-
 									@if($prod->getAttributesById)
 										@foreach($prod->getAttributesById as $nkey=>$atr)
 											@if(!$atr->pivot->deleted_at)
@@ -414,7 +413,7 @@
 														<div class="d-inline-flex"><img src="{{ asset('images/'.getJsonValue(getProductMainImageById($pv)))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{getProductsNameByIds($pv)}}</div>
 													</div>
 													<div class="form-group col-3">
-														<a href="#" class="badge-pill eliminarRelacion eliminarVinculacion shadow-sm">
+														<a href="#" class="badge-pill eliminarRelacion shadow-sm">
 															<i class="material-icons">clear</i>
 														</a>
 													</div>

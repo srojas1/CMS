@@ -7,6 +7,7 @@ use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\BootstrapCMS\Facades\CuponRepository;
 use GrahamCampbell\BootstrapCMS\Facades\PromocionRepository;
 use GrahamCampbell\BootstrapCMS\Facades\RecompensaRepository;
+use GrahamCampbell\BootstrapCMS\Facades\CuponClienteRepository;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
@@ -80,9 +81,22 @@ class CuponController extends AbstractController {
 		$input['stock_maximo'] = $request->input('stockMaximoCupon');
 		$input['condicion']    = $request->input('condicionPromocion');
 
-		$promocion = CuponRepository::create($input);
+		$cupon = CuponRepository::create($input);
 
-		return json_encode($promocion);
+		$vinculacionCliente  = $request->input('clienteVinculadoCupon');
+
+		if(!empty($vinculacionCliente)) {
+
+			//Multiple clients
+			foreach($vinculacionCliente as $nkey=>$vinCli) {
+				$inputCli['client_id']   = $vinCli;
+				$inputCli['cupon_id']    = $cupon->id;
+
+				CuponClienteRepository::create($inputCli);
+			}
+		}
+
+		return json_encode($cupon);
 	}
 
 	/**

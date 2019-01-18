@@ -44,6 +44,24 @@ $(document).ready(function(){
             $(this).parent().parent().remove();
         });
 
+        $(document).on('click','.crear_vinculacion_promo_edit',function (event) {
+            event.stopImmediatePropagation();
+
+            productoVinculadoIdEdit = $('#producto_vincular_promo_'+$idPromocion).val();
+            productoVinculadoTextEdit = $('#producto_vincular_promo_'+$idPromocion+' option:selected').text();
+
+            $('.container_vinculacion_'+$idPromocion).append('<div class="container-fluid row col-12 justify-content-start align-items-center"><div class="form-group col-9">' +
+                '<input name="productoVinculadoPromoEdit[]" type="hidden" value="'+ productoVinculadoIdEdit +'">' +
+                '<div class="d-inline-flex"><img src="/images/producto-icon.jpg" alt="..." class="thumbnail border-top border-bottom border-right border-left">' +
+                productoVinculadoTextEdit +'</div>' +
+                '</div>' +
+                '<div class="form-group col-3">' +
+                '<a href="#" class="badge-pill eliminarRelacion shadow-sm">' +
+                '<i class="material-icons">clear</i>' +
+                '</a>' +
+                '</div></div>');
+        });
+
         $(this).find('#lanzamientoPromocion').datepicker();
         $(this).find('#fechaFinPromocion').datepicker();
     });
