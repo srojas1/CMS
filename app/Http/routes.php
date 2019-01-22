@@ -57,8 +57,8 @@ if (Config::get('cms.events')) {
  */
 
 $router->resource('bienvenido', 'BienvenidoController');
-
 $router->resource('dashboard', 'DashboardController');
+$router->resource('conf_empresa', 'ConfiguracionEmpresaController');
 
 // categorias routes
 if (Config::get('cms.categoria')) {
