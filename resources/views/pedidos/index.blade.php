@@ -22,52 +22,97 @@
                     </div>
                 </div>
                 <!--- CONTENIDO DE MÓDULO--->
-                <div class="modulo-tabs">
-                    <ul class="nav nav-tabs">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Recibidos ({{getCantidadElementos($pedido)}})</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Histórico ({{getCantidadElementos($pedido)}})</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="modulo-body shadow-sm border-left border-right border-button">
-                    <div class="container-fluid">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">PEDIDO</th>
-                                    <th scope="col">RECIBIDO</th>
-                                    <th scope="col">MONTO</th>
-                                    <th scope="col">DESTINO</th>
-                                    <th scope="col">ESTADO</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach ($pedido as $ped)
-                                <tr>
-                                    <th scope="row">#{{formatNumber($ped->id)}} {{$ped->getClientById->nombres}}
-                                        {{$ped->getClientById->apaterno}}
-                                        {{$ped->getClientById->amaterno}}</th>
-                                    <td>Hace {{timeSince($ped->fecha_pedido)}}</td>
-                                    <td>S/ [cambiar total]</td>
-                                    <td>{{$ped->getAddressById->direccion}}</td>
-                                    @if ($ped->getStatusById->estado)
-                                        <td>
-                                            <button type="button" class="btn_modal btn {{getColorByStatus($ped->id_estado)}}" href="#detail_pedido_{!! $ped->id !!}"
-                                               data-toggle="modal"
-                                               data-target="#detail_pedido_{!! $ped->id !!}">{{$ped->getStatusById->estado}}</button>
-                                        </td>
-                                    @else
-                                        <td>{{\GrahamCampbell\BootstrapCMS\Http\Constants::STATUS_EMPTY}}</td>
-                                    @endif
-                                    <input type="hidden" class="id_pedido" value="{{$ped->id}}"/>
-                                </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
+                <div class="tabpanel">
+                    <div class="modulo-tabs">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="pedidos nav-link active" data-toggle="tab" href="#pedidos">Recibidos ({{getCantidadElementos($pedido)}})</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="historico nav-link" data-toggle="tab" href="#historico">Histórico ({{getCantidadElementos($pedido)}})</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <div role="tabpanel"
+                             class="tab-pane active" id="pedidos">
+                            <div class="modulo-body shadow-sm border-left border-right border-button">
+                                <div class="container-fluid">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table_pedido">
+                                            <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col">PEDIDO</th>
+                                                <th scope="col">RECIBIDO</th>
+                                                <th scope="col">MONTO</th>
+                                                <th scope="col">DESTINO</th>
+                                                <th scope="col">ESTADO</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach ($pedido as $ped)
+                                            <tr>
+                                                <th scope="row" href="#detail_pedido_{!! $ped->id !!}"
+                                                    data-toggle="modal"
+                                                    data-target="#detail_pedido_{!! $ped->id !!}">#{{formatNumber($ped->id)}} {{$ped->getClientById->nombres}} {{$ped->getClientById->apaterno}} {{$ped->getClientById->amaterno}}</th>
+                                                <td>Hace {{timeSince($ped->fecha_pedido)}}</td>
+                                                <td>S/ [cambiar total]</td>
+                                                <td>{{$ped->getAddressById->direccion}}</td>
+                                                @if ($ped->getStatusById->estado)
+                                                    <td>
+                                                        <button type="button" class="btn_modal btn {{getColorByStatus($ped->id_estado)}}" href="#detail_pedido_{!! $ped->id !!}"
+                                                           data-toggle="modal"
+                                                           data-target="#detail_pedido_{!! $ped->id !!}">{{$ped->getStatusById->estado}}</button>
+                                                    </td>
+                                                @else
+                                                    <td>{{\GrahamCampbell\BootstrapCMS\Http\Constants::STATUS_EMPTY}}</td>
+                                                @endif
+                                                <input type="hidden" class="id_pedido" value="{{$ped->id}}"/>
+                                            </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel"
+                             class="tab-pane" id="historico">
+                            <div class="modulo-body shadow-sm border-left border-right border-button">
+                                <div class="container-fluid">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table_historico">
+                                            <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col">PEDIDO HISTÓRICO</th>
+                                                <th scope="col">RECIBIDO</th>
+                                                <th scope="col">MONTO</th>
+                                                <th scope="col">DESTINO</th>
+                                                <th scope="col">ESTADO</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach ($pedido as $ped)
+                                                <tr>
+                                                    <th scope="row"> #{{formatNumber($ped->id)}} {{$ped->getClientById->nombres}} {{$ped->getClientById->apaterno}} {{$ped->getClientById->amaterno}}</th>
+                                                    <td>Hace {{timeSince($ped->fecha_pedido)}}</td>
+                                                    <td>S/ [cambiar total]</td>
+                                                    <td>{{$ped->getAddressById->direccion}}</td>
+                                                    @if ($ped->getStatusById->estado)
+                                                        <td>
+                                                            <button type="button" class="btn_modal btn {{getColorByStatus($ped->id_estado)}}">{{$ped->getStatusById->estado}}</button>
+                                                        </td>
+                                                    @else
+                                                        <td>{{\GrahamCampbell\BootstrapCMS\Http\Constants::STATUS_EMPTY}}</td>
+                                                    @endif
+                                                    <input type="hidden" class="id_pedido" value="{{$ped->id}}"/>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

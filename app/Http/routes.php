@@ -92,3 +92,4 @@ Route::post('recompensa/storeRecompensa', 'RecompensaController@storeRecompensa'
 Route::post('promocion/editPromocion', 'PromocionController@editPromocion');
 Route::post('cupon/editCupon', 'CuponController@editCupon');
 Route::post('recompensa/editRecompensa', 'RecompensaController@editRecompensa');
+Route::post('confEmpresa/editEmpresa', 'ConfiguracionEmpresaController@editEmpresa');

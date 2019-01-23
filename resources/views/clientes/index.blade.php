@@ -38,7 +38,7 @@
                     <div class="board-body shadow-sm border-left border-right border-bottom">
                         <div class="container-fluid">
                             <div class="table-responsive">
-                                <table class="table">
+                                <table class="table table-hover">
                                     <thead class="thead-light">
                                     <tr>
                                         <th scope="col"><div class="d-flex justify-content-center">USUARIO</div></th>

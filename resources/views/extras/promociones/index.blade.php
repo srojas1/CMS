@@ -2,7 +2,7 @@
 <div class="modulo-body shadow-sm border-left border-right border-button">
 	<div class="container-fluid">
 		<div class="table-responsive">
-			<table class="table">
+			<table class="table table-hover">
 				<div class="inside_add_div">
 					<a href="#modalAgregarPromocion" class="" data-toggle="modal" data-target="#modalAgregarPromocion">Agregar promoción (+)</a>
 				</div>

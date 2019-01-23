@@ -19,6 +19,7 @@ use GrahamCampbell\BootstrapCMS\Repositories\AtributoProductoRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\CuponClienteRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\ClienteRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\CommentRepository;
+use GrahamCampbell\BootstrapCMS\Repositories\EmpresaRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\EventRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\CategoriaRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\PageRepository;
@@ -108,6 +109,7 @@ class AppServiceProvider extends ServiceProvider
 		$this->registerRecompensaRepository();
 		$this->registerAtributoProductoRepository();
 		$this->registerCuponClienteRepository();
+		$this->registerEmpresaRepository();
 
 		$this->registerCommandSubscriber();
 		$this->registerNavigationSubscriber();
@@ -374,6 +376,26 @@ class AppServiceProvider extends ServiceProvider
 	}
 
 	/**
+	 * Register the atributo repository class.
+	 *
+	 * @return void
+	 */
+	protected function registerEmpresaRepository()
+	{
+		$this->app->singleton('empresarepository', function ($app) {
+			$model = $app['config']['cms.empresa'];
+			$pedido = new $model();
+
+			$validator = $app['validator'];
+
+			return new EmpresaRepository($pedido, $validator);
+		});
+
+		$this->app->alias('empresarepository',
+			'GrahamCampbell\BootstrapCMS\Repositories\EmpresaRepository');
+	}
+
+	/**
 	 * Register the page repository class.
 	 *
 	 * @return void
@@ -494,7 +516,8 @@ class AppServiceProvider extends ServiceProvider
 			'productorepository',
 			'pedidorepository',
 			'promocionrepository',
-			'clienterepository'
+			'clienterepository',
+			'empresarepository'
 		];
 	}
 }

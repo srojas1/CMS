@@ -365,4 +365,17 @@
 	*/
 
 		'addresstype' => 'GrahamCampbell\BootstrapCMS\Models\AddressType',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Empresa Model
+	|--------------------------------------------------------------------------
+	|
+	| This defines the model to be used.
+	|
+	| Default: 'GrahamCampbell\BootstrapCMS\Models\Empresa'
+	|
+	*/
+
+		'empresa' => 'GrahamCampbell\BootstrapCMS\Models\Empresa',
 ];
