@@ -85,5 +85,4 @@ class Empresa extends AbstractModel implements HasPresenter {
     {
         return 'GrahamCampbell\BootstrapCMS\Presenters\EmpresaPresenter';
     }
-
 }

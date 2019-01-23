@@ -2,6 +2,7 @@
 
 use GrahamCampbell\BootstrapCMS\Http\Constants as Config;
 use GrahamCampbell\BootstrapCMS\Models\Product as ProductModel;
+use GrahamCampbell\BootstrapCMS\Models\Empresa as EmpresaModel;
 use GrahamCampbell\BootstrapCMS\Http\Constants as Constants;
 
 /**
@@ -21,6 +22,20 @@ function formatPagination($links) {
 }
 
 //@todo: remove from helpers
+
+/**
+ * Obtiene imagen principal de la empresa
+ *
+ * @param $id
+ * @return mixed
+ */
+function getCompanyModel() {
+
+	$userModel    = \GrahamCampbell\BootstrapCMS\Models\User::first();
+	$companyModel = EmpresaModel::where('id', $userModel->user_company_id)->first();;
+
+	return $companyModel;
+}
 
 /**
  * Obtiene imagen principal de producto ID
