@@ -441,3 +441,9 @@ div .notifications_lbl {
 .inside_add_div {
     text-align: right;
 }
+@media (min-width:992px)
+{
+    .modal-lg {
+        width:900px;top:12%;
+    }
+}

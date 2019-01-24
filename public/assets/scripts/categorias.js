@@ -11,7 +11,7 @@ $(document).ready(function(){
                 processData: false,
                 data: postData
             }).done(function() {
-                //location.reload();
+                $('.table_categoria').reload();
                 alert('Se agregó la categoría exitosamente');
                });
     });

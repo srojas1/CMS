@@ -1,5 +1,5 @@
 @foreach ($producto as $nkey=>$prod)
-<div class="modal fade" id="modalEditarProducto_{!! $prod->id !!}" tabindex="-1" role="dialog" aria-labelledby="modalEditarProducto_{!! $prod->id !!}" aria-hidden="true">
+<div class="modal_editar_producto modal fade" id="modalEditarProducto_{!! $prod->id !!}" tabindex="-1" role="dialog" aria-labelledby="modalEditarProducto_{!! $prod->id !!}" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<form id="edit_product_form_{!! $prod->id !!}" enctype="multipart/form-data" method="post">
 			<div class="modal-content">

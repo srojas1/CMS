@@ -3,7 +3,7 @@
 	<div class="board-body shadow-sm border-left border-right border-bottom">
 			<div class="container-fluid">
 				<div class="table-responsive">
-					<table class="category_table table table-hover">
+					<table class="table table-hover table_categoria">
 						<thead class="thead-light">
 						<tr>
 							<th scope="col"><div class="d-flex justify-content-center">CATEGORÍA</div></th>
@@ -46,7 +46,9 @@
 						@if(count($categoria)>0)
 							@foreach ($categoria as $key1=>$cat)
 								<tr>
-									<th scope="row" class="align-middle"><div class="d-flex align-items-center"><img src="{{ asset('images/'.getJsonValue($cat->filename_main))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left"><div>{{$cat->categoria}}</div></div></th>
+									<th scope="row" class="align-middle" href="#modalEditarCategoria_{!! $cat->id !!}" class="accion"
+										data-toggle="modal"
+										data-target="#modalEditarCategoria_{!! $cat->id !!}"><div class="d-flex align-items-center"><img src="{{ asset('images/'.getJsonValue($cat->filename_main))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left"><div>{{$cat->categoria}}</div></div></th>
 									<?php $sumProductos = 0;
 									$sumVentas = 0;
 									$sumIngresos=0;

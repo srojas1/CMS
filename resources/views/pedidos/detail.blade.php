@@ -24,8 +24,8 @@
                                         </button>
                                         <select id="id_estado_change" class="dropdown-menu">
                                             {{--todo: poner estados desde la bd--}}
-                                            @foreach(array('1'=>'NO ATENDIDO',
-                                            '2'=>'PROCESADO',
+                                            @foreach(array('1'=>'EN ESPERA',
+                                            '2'=>'ATENTIENDO',
                                             '3'=>'ENTREGADO',
                                             '4'=>'FALLIDO',
                                             '5'=>'RECHAZADO') as $key => $est)
@@ -46,8 +46,8 @@
                                 </div>
                             </div>
                             <div class="col-8 justify-content-center">
-                                <a href="" class="accion"><i class="material-icons">print</i></a>
-                                <a href="" class="accion"><i class="material-icons">get_app</i></a>
+                                <a href="" class="accion"><i class="material-icons print">print</i></a>
+                                <a href="" class="accion"><hidden id="editor"></hidden><i class="material-icons download">get_app</i></a>
                             </div>
                         </div>
                     </div>

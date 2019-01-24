@@ -1,6 +1,10 @@
 $(document).ready(function(){
 
-    $('.modal').on('hidden.bs.modal', function () {
+    $('#modalAgregarProducto').on('hidden.bs.modal', function () {
+        location.reload();
+    });
+
+    $('.modal_editar_producto').on('hidden.bs.modal', function () {
         location.reload();
     });
 
@@ -267,25 +271,30 @@ $(document).ready(function(){
         });
     });
 
+    $('.nav-tabs > li > a.categorias').on("click",function(e){
+        e.preventDefault();
+        $(document).find(".buscador").addClass("buscadorCategorias");
+        $(document).find(".buscador").removeClass("buscador");
 
+    });
 
-    $(".buscador").on("keyup", function() {
-        var value = $(this).val();
+    $('.nav-tabs > li > a.productos').on("click",function(e){
+        e.preventDefault();
+        $(document).find(".buscadorCategorias").addClass("buscador");
+        $(document).find(".buscadorCategorias").removeClass("buscadorCategorias");
+    });
 
-        $("table tr").each(function(index) {
-            if (index !== 0) {
+    $(document).on('keyup', '.buscador', function () {
+        var value = $(this).val().toLowerCase();
+        $(".table_producto").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
 
-                $row = $(this);
-
-                var id = $row.find("div:first").text();
-
-                if (id.indexOf(value) !== 0) {
-                    $row.hide();
-                }
-                else {
-                    $row.show();
-                }
-            }
+    $(document).on('keyup', '.buscadorCategorias', function () {
+        var value = $(this).val().toLowerCase();
+        $(".table_categoria").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
 

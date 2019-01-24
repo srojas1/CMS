@@ -32,10 +32,10 @@
 				<div class="tabpanel">
 					<ul class="nav nav-tabs" role="tablist">
 						<li class="nav-item">
-							<a class="nav-link {{$productActive}}" data-toggle="tab" href="#productos">Productos ({{getCantidadElementos($producto)}})</a>
+							<a class="productos nav-link {{$productActive}}" data-toggle="tab" href="#productos">Productos ({{getCantidadElementos($producto)}})</a>
 						</li>
 						<li id="category_tab" class="nav-item">
-							<a class="nav-link {{$categoryActive}}" data-toggle="tab" href="#categorias">Categorías ({{getCantidadElementos($categoria)}})</a>
+							<a class="categorias nav-link {{$categoryActive}}" data-toggle="tab" href="#categorias">Categorías ({{getCantidadElementos($categoria)}})</a>
 						</li>
 					</ul>
 					<div class="tab-content">
@@ -44,7 +44,7 @@
 							<div class="modulo-body shadow-sm border-left border-right border-button">
 								<div class="container-fluid">
 									<div class="table-responsive">
-										<table class="table table-hover">
+										<table class="table table-hover table_producto">
 											<thead class="thead-light">
 											<tr>
 												<th scope="col"><div class="d-flex justify-content-center">PRODUCTO</div></th>
@@ -61,7 +61,10 @@
 											@if(count($producto)>0)
 												@foreach ($producto as $prod)
 														@if($prod->filename_main)
-															<th scope="row" class="align-middle"><div class="d-flex align-items-center"></div><img src="{{ asset('images/'.getJsonValue($prod->filename_main))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prod->producto}}</th>
+															<th scope="row" class="align-middle" href="#modalEditarProducto_{!! $prod->id !!}" class="accion"
+																data-toggle="modal"
+																data-target="#modalEditarProducto_{!! $prod->id !!}">
+															<div class="d-flex align-items-center"></div><img src="{{ asset('images/'.getJsonValue($prod->filename_main))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prod->producto}}</th>
 														@else
 															<th scope="row" class="align-middle"><div class="d-flex align-items-center"></div><img src="{{ asset('images/'.\GrahamCampbell\BootstrapCMS\Http\Constants::DEFAULT_IMAGE_NAME)}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prod->producto}}</th>
 														@endif
