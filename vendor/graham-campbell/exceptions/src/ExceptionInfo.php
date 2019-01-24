@@ -24,18 +24,18 @@ class ExceptionInfo
     /**
      * The error info path.
      *
-     * @var string|null
+     * @var string
      */
     protected $path;
 
     /**
      * Create a exception info instance.
      *
-     * @param string|null $path
+     * @param string $path
      *
      * @return void
      */
-    public function __construct($path = null)
+    public function __construct($path)
     {
         $this->path = $path;
     }
@@ -51,7 +51,7 @@ class ExceptionInfo
      */
     public function generate(Exception $exception, $id, $code)
     {
-        $errors = $this->path ? json_decode(file_get_contents($this->path), true) : [500 => ['name' => 'Internal Server Error', 'message' => 'An error has occurred and this resource cannot be displayed.']];
+        $errors = json_decode(file_get_contents($this->path), true);
 
         if (isset($errors[$code])) {
             $info = array_merge(['id' => $id, 'code' => $code], $errors[$code]);
@@ -69,8 +69,6 @@ class ExceptionInfo
         }
 
         unset($info['message']);
-
-        var_dump($exception->getMessage());
 
         return $info;
     }

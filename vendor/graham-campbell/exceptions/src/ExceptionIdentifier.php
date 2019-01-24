@@ -12,6 +12,7 @@
 namespace GrahamCampbell\Exceptions;
 
 use Exception;
+use Illuminate\Support\Str;
 
 /**
  * This is the exception identifier class.
@@ -29,7 +30,7 @@ class ExceptionIdentifier
      *
      * @var string[]
      */
-    protected $identification = [];
+    protected $indentification;
 
     /**
      * Identify the given exception.
@@ -43,17 +44,17 @@ class ExceptionIdentifier
         $hash = spl_object_hash($exception);
 
         // if we know about the exception, return it's id
-        if (isset($this->identification[$hash])) {
-            return $this->identification[$hash];
+        if (isset($this->indentification[$hash])) {
+            return $this->indentification[$hash];
         }
 
         // cleanup in preparation for the identification
-        if (count($this->identification) >= 16) {
-            array_shift($this->identification);
+        if (count($this->indentification) >= 16) {
+            array_shift($this->indentification);
         }
 
         // generate, store, and return the id
-        return $this->identification[$hash] = $this->generate();
+        return $this->indentification[$hash] = $this->generate();
     }
 
     /**
@@ -65,7 +66,7 @@ class ExceptionIdentifier
      */
     protected function generate()
     {
-        $hash = bin2hex(random_bytes(16));
+        $hash = bin2hex(Str::randomBytes(16));
 
         $timeHi = hexdec(substr($hash, 12, 4)) & 0x0fff;
         $timeHi &= ~(0xf000);

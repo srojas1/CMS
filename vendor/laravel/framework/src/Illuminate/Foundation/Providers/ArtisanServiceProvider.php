@@ -7,13 +7,15 @@ use Illuminate\Foundation\Console\UpCommand;
 use Illuminate\Foundation\Console\DownCommand;
 use Illuminate\Foundation\Console\ServeCommand;
 use Illuminate\Foundation\Console\TinkerCommand;
-use Illuminate\Foundation\Console\JobMakeCommand;
 use Illuminate\Foundation\Console\AppNameCommand;
+use Illuminate\Foundation\Console\JobMakeCommand;
 use Illuminate\Foundation\Console\OptimizeCommand;
-use Illuminate\Foundation\Console\RouteListCommand;
+use Illuminate\Foundation\Console\TestMakeCommand;
 use Illuminate\Foundation\Console\EventMakeCommand;
 use Illuminate\Foundation\Console\ModelMakeCommand;
+use Illuminate\Foundation\Console\RouteListCommand;
 use Illuminate\Foundation\Console\ViewClearCommand;
+use Illuminate\Foundation\Console\PolicyMakeCommand;
 use Illuminate\Foundation\Console\RouteCacheCommand;
 use Illuminate\Foundation\Console\RouteClearCommand;
 use Illuminate\Foundation\Console\CommandMakeCommand;
@@ -23,9 +25,9 @@ use Illuminate\Foundation\Console\ConsoleMakeCommand;
 use Illuminate\Foundation\Console\EnvironmentCommand;
 use Illuminate\Foundation\Console\KeyGenerateCommand;
 use Illuminate\Foundation\Console\RequestMakeCommand;
+use Illuminate\Foundation\Console\HandlerEventCommand;
 use Illuminate\Foundation\Console\ListenerMakeCommand;
 use Illuminate\Foundation\Console\ProviderMakeCommand;
-use Illuminate\Foundation\Console\HandlerEventCommand;
 use Illuminate\Foundation\Console\ClearCompiledCommand;
 use Illuminate\Foundation\Console\EventGenerateCommand;
 use Illuminate\Foundation\Console\VendorPublishCommand;
@@ -63,12 +65,14 @@ class ArtisanServiceProvider extends ServiceProvider
         'ListenerMake' => 'command.listener.make',
         'ModelMake' => 'command.model.make',
         'Optimize' => 'command.optimize',
+        'PolicyMake' => 'command.policy.make',
         'ProviderMake' => 'command.provider.make',
         'RequestMake' => 'command.request.make',
         'RouteCache' => 'command.route.cache',
         'RouteClear' => 'command.route.clear',
         'RouteList' => 'command.route.list',
         'Serve' => 'command.serve',
+        'TestMake' => 'command.test.make',
         'Tinker' => 'command.tinker',
         'Up' => 'command.up',
         'VendorPublish' => 'command.vendor.publish',
@@ -372,6 +376,18 @@ class ArtisanServiceProvider extends ServiceProvider
      *
      * @return void
      */
+    protected function registerTestMakeCommand()
+    {
+        $this->app->singleton('command.test.make', function ($app) {
+            return new TestMakeCommand($app['files']);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @return void
+     */
     protected function registerTinkerCommand()
     {
         $this->app->singleton('command.tinker', function () {
@@ -412,6 +428,18 @@ class ArtisanServiceProvider extends ServiceProvider
     {
         $this->app->singleton('command.view.clear', function ($app) {
             return new ViewClearCommand($app['files']);
+        });
+    }
+
+    /**
+     * Register the command.
+     *
+     * @return void
+     */
+    protected function registerPolicyMakeCommand()
+    {
+        $this->app->singleton('command.policy.make', function ($app) {
+            return new PolicyMakeCommand($app['files']);
         });
     }
 
