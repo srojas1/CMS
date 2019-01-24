@@ -11,8 +11,9 @@ $(document).ready(function(){
                 processData: false,
                 data: postData
             }).done(function() {
-                $('.table_categoria').reload();
                 alert('Se agregó la categoría exitosamente');
+                $('.modal').modal('hide');
+                $(".table_categoria").load(window.location + " .table_categoria");
                });
     });
 
@@ -34,7 +35,8 @@ $(document).ready(function(){
                 data: postData
             }).done(function (data) {
                 alert('Se modificó la categoría exitosamente');
-                location.reload();
+                $('.modal').modal('hide');
+                $(".table_categoria").load(window.location + " .table_categoria");
             });
         });
     });
