@@ -43,14 +43,14 @@ $(document).ready(function(){
 
     $(document).on('keyup', '.buscador', function () {
         var value = $(this).val().toLowerCase();
-        $(".table_pedido").filter(function() {
+        $(".table_pedido tr").filter(function() {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
 
     $(document).on('keyup', '.buscadorHistorico', function () {
         var value = $(this).val().toLowerCase();
-        $(".table_historico").filter(function() {
+        $(".table_historico tr").filter(function() {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });

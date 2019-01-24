@@ -286,14 +286,14 @@ $(document).ready(function(){
 
     $(document).on('keyup', '.buscador', function () {
         var value = $(this).val().toLowerCase();
-        $(".table_producto").filter(function() {
+        $(".table_producto tr").filter(function() {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
 
     $(document).on('keyup', '.buscadorCategorias', function () {
         var value = $(this).val().toLowerCase();
-        $(".table_categoria").filter(function() {
+        $(".table_categoria tr").filter(function() {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });

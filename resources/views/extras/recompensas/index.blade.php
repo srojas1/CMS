@@ -2,7 +2,7 @@
 <div class="modulo-body shadow-sm border-left border-right border-button">
 	<div class="container-fluid">
 		<div class="table-responsive">
-			<table class="table table-hover">
+			<table class="table_recompensa table table-hover">
 				<div class="inside_add_div">
 					<a href="#modalAgregarRecompensa" class="" data-toggle="modal" data-target="#modalAgregarRecompensa">Agregar recompensa (+)</a>
 				</div>

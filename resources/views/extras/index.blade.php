@@ -28,13 +28,13 @@
 			<div class="tabpanel">
 				<ul class="nav nav-tabs" role="tablist">
 					<li class="nav-item">
-						<a class="nav-link active" data-toggle="tab" href="#promociones">Promociones</a>
+						<a class="promocion nav-link active" data-toggle="tab" href="#promociones">Promociones</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" data-toggle="tab" href="#cupones">Cupones</a>
+						<a class="cupon nav-link" data-toggle="tab" href="#cupones">Cupones</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" data-toggle="tab" href="#recompensas">Recompensas</a>
+						<a class="recompensa nav-link" data-toggle="tab" href="#recompensas">Recompensas</a>
 					</li>
 				</ul>
 				<div class="tab-content">

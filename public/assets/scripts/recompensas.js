@@ -40,4 +40,19 @@ $(document).ready(function(){
         });
 
     });
+
+    $('.nav-tabs > li > a.recompensa').on("click",function(e){
+        e.preventDefault();
+        $(document).find(".buscador").addClass("buscadorRecompensa");
+        $(document).find(".buscadorCupon").addClass("buscadorRecompensa");
+        $(document).find(".buscador").removeClass("buscador");
+        $(document).find(".buscadorCupon").removeClass("buscadorCupon");
+    });
+
+    $(document).on('keyup', '.buscadorRecompensa', function () {
+        var value = $(this).val().toLowerCase();
+        $(".table_recompensa tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
 });

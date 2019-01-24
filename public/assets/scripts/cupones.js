@@ -85,4 +85,19 @@ $(document).ready(function(){
 
     $('#vencimientoCupon').datepicker();
 
+    $('.nav-tabs > li > a.cupon').on("click",function(e){
+        e.preventDefault();
+        $(document).find(".buscador").addClass("buscadorCupon");
+        $(document).find(".buscadorRecompensa").addClass("buscadorCupon");
+        $(document).find(".buscador").removeClass("buscador");
+        $(document).find(".buscadorRecompensa").removeClass("buscadorRecompensa");
+    });
+
+    $(document).on('keyup', '.buscadorCupon', function () {
+        var value = $(this).val().toLowerCase();
+        $(".table_cupon tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+
 });

@@ -90,7 +90,9 @@
 																S/ {{number_format($ingreso,2)}}</td>
 														<td class="align-middle">
 															<div class="d-flex justify-content-center">
-																<a href="" class="accion">
+																<a href="#detail_disableprod_{!! $prod->id !!}"
+																   data-toggle="modal"
+																   data-target="#detail_disableprod_{!! $prod->id !!}" class="accion">
 																	<i class="material-icons">remove_red_eye</i>
 																</a>
 																<a href="#modalEditarProducto_{!! $prod->id !!}" class="accion"
@@ -145,6 +147,7 @@
 	@endif
 		@include('productos.detail_create')
 		@include('categorias.detail_edit')
+		@include('productos.disable_view')
 @stop
 
 @section('css')

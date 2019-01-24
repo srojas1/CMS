@@ -105,4 +105,18 @@ $(document).ready(function(){
         readURLMain(this);
     });
 
+    $('.nav-tabs > li > a.promocion').on("click",function(e){
+        e.preventDefault();
+        $(document).find(".buscadorRecompensa").addClass("buscador");
+        $(document).find(".buscadorCupon").addClass("buscador");
+        $(document).find(".buscadorRecompensa").removeClass("buscadorRecompensa");
+        $(document).find(".buscadorCupon").removeClass("buscadorCupon");
+    });
+    
+    $(document).on('keyup', '.buscador', function () {
+        var value = $(this).val().toLowerCase();
+        $(".table_promocion tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
 });
