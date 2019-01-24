@@ -298,4 +298,22 @@ $(document).ready(function(){
         });
     });
 
+    $(document).on('click','#disable_product', function(){
+
+        $visibilidad = $('#hid_visibilidad').val();
+        $id_producto = $('#id_producto').val();
+
+        $.ajax({
+            type: "POST",
+            url: 'producto/disable',
+            cache: false,
+            data: {
+                visibilidad: $visibilidad,
+                id_producto: $id_producto
+            }
+        }).done(function(data) {
+            location.reload();
+        });
+    });
+
 });

@@ -15,10 +15,10 @@ use Illuminate\Support\Facades\Session;
 
 // send users to the profile page
 $router->get('account', ['as' => 'account', function () {
-    Session::flash('', ''); // work around laravel bug if there is no session yet
-    Session::reflash();
+	Session::flash('', ''); // work around laravel bug if there is no session yet
+	Session::reflash();
 
-    return Redirect::route('account.profile');
+	return Redirect::route('account.profile');
 }]);
 
 // account routes
@@ -30,15 +30,15 @@ $router->patch('account/password', ['as' => 'account.password.patch', 'uses' => 
 
 // registration routes
 if (Config::get('credentials.regallowed')) {
-    $router->get('account/register', ['as' => 'account.register', 'uses' => 'RegistrationController@getRegister']);
-    $router->post('account/register', ['as' => 'account.register.post', 'uses' => 'RegistrationController@postRegister']);
+	$router->get('account/register', ['as' => 'account.register', 'uses' => 'RegistrationController@getRegister']);
+	$router->post('account/register', ['as' => 'account.register.post', 'uses' => 'RegistrationController@postRegister']);
 }
 
 // activation routes
 if (Config::get('credentials.activation')) {
-    $router->get('account/activate/{id}/{code}', ['as' => 'account.activate', 'uses' => 'ActivationController@getActivate']);
-    $router->get('account/resend', ['as' => 'account.resend', 'uses' => 'ActivationController@getResend']);
-    $router->post('account/resend', ['as' => 'account.resend.post', 'uses' => 'ActivationController@postResend']);
+	$router->get('account/activate/{id}/{code}', ['as' => 'account.activate', 'uses' => 'ActivationController@getActivate']);
+	$router->get('account/resend', ['as' => 'account.resend', 'uses' => 'ActivationController@getResend']);
+	$router->post('account/resend', ['as' => 'account.resend.post', 'uses' => 'ActivationController@postResend']);
 }
 
 // reset routes
@@ -51,10 +51,14 @@ $router->get('account/login', ['as' => 'account.login', 'uses' => 'LoginControll
 $router->post('account/login', ['as' => 'account.login.post', 'uses' => 'LoginController@postLogin']);
 $router->get('account/logout', ['as' => 'account.logout', 'uses' => 'LoginController@getLogout']);
 
+//error routes
+$router->get('account/error', ['as' => 'account.error', 'uses' => 'LoginController@getError']);
+$router->post('account/error', ['as' => 'account.error.post', 'uses' => 'LoginController@postLogin']);
+
 // user routes
 $router->resource('users', 'UserController');
 $router->post('users/{users}/suspend', ['as' => 'users.suspend', 'uses' => 'UserController@suspend']);
 $router->post('users/{users}/reset', ['as' => 'users.reset', 'uses' => 'UserController@reset']);
 if (Config::get('credentials.activation')) {
-    $router->post('users/{users}/resend', ['as' => 'users.resend', 'uses' => 'UserController@resend']);
+	$router->post('users/{users}/resend', ['as' => 'users.resend', 'uses' => 'UserController@resend']);
 }

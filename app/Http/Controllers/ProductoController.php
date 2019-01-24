@@ -408,6 +408,30 @@ class ProductoController extends AbstractController
 			->with('success', trans('messages.producto.update_success'));
 	}
 
+
+	/**
+	 * Deshabilita visualizacion de un producto
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function disable() {
+		$id = $_POST['id_producto'];
+		$producto = ProductoRepository::find($id);
+		$this->checkProduct($producto);
+
+		if($_POST['visibilidad']==1)
+			$input['visibilidad'] = 0;
+		else if($_POST['visibilidad']==0)
+			$input['visibilidad'] = 1;
+
+		$producto->update($input);
+
+		return Redirect::route('producto.index')
+			->with('success', trans('messages.producto.update_success'));
+	}
+
+
 	/**
 	 * Elimina un producto
 	 *

@@ -46,8 +46,8 @@
                                 </div>
                             </div>
                             <div class="col-8 justify-content-center">
-                                <a href="" class="accion"><i class="material-icons print">print</i></a>
-                                <a href="" class="accion"><hidden id="editor"></hidden><i class="material-icons download">get_app</i></a>
+                                <a href="{!! URL::route('pdf_pedido.index') !!}" class="accion"><i class="material-icons print">print</i></a>
+                                <a href="{!! URL::route('pdf_pedido.create') !!}" class="accion"><hidden id="editor"></hidden><i class="material-icons download">get_app</i></a>
                             </div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                             <div class="board-body">
                                 <h4>Detalles de pedido</h4>
                                 <div class="container-fluid">
-                                    <div class="table-responsive">
+                                    <div class="table-responsive">download_pdf
                                         <table class="table table-hover table-borderless">
                                             <tbody>
                                             <!--- LISTA DE PRODUCTOS --->

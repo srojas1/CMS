@@ -62,9 +62,11 @@ class ExceptionInfo
         if ($exception instanceof HttpExceptionInterface) {
             $msg = (string) $exception->getMessage();
             $info['detail'] = (strlen($msg) > 4) ? $msg : $info['message'];
+            var_dump($msg);
             $info['summary'] = (strlen($msg) < 36 && strlen($msg) > 4) ? $msg : 'Houston, We Have A Problem.';
         } else {
             $info['detail'] = $info['message'];
+			var_dump($exception->getMessage());
             $info['summary'] = 'Houston, We Have A Problem.';
         }
 

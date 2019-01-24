@@ -90,11 +90,19 @@
 																S/ {{number_format($ingreso,2)}}</td>
 														<td class="align-middle">
 															<div class="d-flex justify-content-center">
-																<a href="#detail_disableprod_{!! $prod->id !!}"
-																   data-toggle="modal"
-																   data-target="#detail_disableprod_{!! $prod->id !!}" class="accion">
-																	<i class="material-icons">remove_red_eye</i>
-																</a>
+																@if($prod->visibilidad==1)
+																	<a href="#detail_disableprod_{!! $prod->id !!}"
+																	   data-toggle="modal"
+																	   data-target="#detail_disableprod_{!! $prod->id !!}" class="accion">
+																		<i class="material-icons">remove_red_eye</i>
+																	</a>
+																@else
+																	<a href="#detail_disableprod_{!! $prod->id !!}"
+																	   data-toggle="modal"
+																	   data-target="#detail_disableprod_{!! $prod->id !!}" class="accion">
+																		<i class="material-icons">remove_circle_outline</i>
+																	</a>
+																@endif
 																<a href="#modalEditarProducto_{!! $prod->id !!}" class="accion"
 																   data-toggle="modal"
 																   data-target="#modalEditarProducto_{!! $prod->id !!}">

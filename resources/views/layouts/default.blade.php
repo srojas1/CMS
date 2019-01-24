@@ -108,5 +108,7 @@
             @section('bottom')
             @show
         </div>
+    </div>
+</div>
 </body>
 </html>

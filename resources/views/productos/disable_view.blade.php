@@ -7,11 +7,13 @@
                     <h4 class="modal-title">¿Estás seguro?</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Está a punto de deshabilitar la visibilidad de este producto. Este proceso no puede ser desecho</p>
+                    <p>Está a punto de cambiar la visibilidad de este producto. Este proceso no puede ser desecho</p>
                     <p>Está seguro que desea continuar?</p>
                 </div>
                 <div class="modal-footer">
-                    <a class="btn btn-success">Sí</a>
+                    <input type="hidden" id="hid_visibilidad" value="{{$prod->visibilidad}}"/>
+                    <input type="hidden" id="id_producto" value="{{$prod->id}}"/>
+                    <a class="btn btn-success" id="disable_product">Sí</a>
                     <button class="btn btn-danger" data-dismiss="modal">No</button>
                 </div>
             </div>

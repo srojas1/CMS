@@ -35,395 +35,398 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class UserController extends AbstractController
 {
-    /**
-     * Create a new instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->setPermissions([
-            'index'   => 'mod',
-            'create'  => 'admin',
-            'store'   => 'admin',
-            'show'    => 'mod',
-            'edit'    => 'admin',
-            'update'  => 'admin',
-            'suspend' => 'mod',
-            'reset'   => 'admin',
-            'resend'  => 'admin',
-            'destroy' => 'admin',
-        ]);
+	/**
+	 * Create a new instance.
+	 *
+	 * @return void
+	 */
+	public function __construct()
+	{
+		$this->setPermissions([
+			'index'   => 'mod',
+			'create'  => 'admin',
+			'store'   => 'admin',
+			'show'    => 'mod',
+			'edit'    => 'admin',
+			'update'  => 'admin',
+			'suspend' => 'mod',
+			'reset'   => 'admin',
+			'resend'  => 'admin',
+			'destroy' => 'admin',
+		]);
 
-        parent::__construct();
-    }
+		parent::__construct();
+	}
 
-    /**
-     * Display a listing of the users.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function index()
-    {
-        $users = UserRepository::paginate();
-        $links = UserRepository::links();
+	/**
+	 * Display a listing of the users.
+	 *
+	 * @return \Illuminate\View\View
+	 */
+	public function index()
+	{
+		$users = UserRepository::paginate();
+		$links = UserRepository::links();
 
-        return View::make('credentials::users.index', compact('users', 'links'));
-    }
+		$links = formatPagination($links);
 
-    /**
-     * Show the form for creating a new user.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function create()
-    {
-        $groups = GroupRepository::index();
+		return View::make('credentials::users.index', compact('users', 'links'));
+	}
 
-        return View::make('credentials::users.create', compact('groups'));
-    }
+	/**
+	 * Show the form for creating a new user.
+	 *
+	 * @return \Illuminate\View\View
+	 */
+	public function create()
+	{
+		$groups = GroupRepository::index();
 
-    /**
-     * Store a new user.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store()
-    {
-        $password = Str::random();
+		return View::make('credentials::users.create', compact('groups'));
+	}
 
-        $input = array_merge(Binput::only(['first_name', 'last_name', 'email']), [
-            'password'     => $password,
-            'activated'    => true,
-            'activated_at' => new DateTime(),
-        ]);
+	/**
+	 * Store a new user.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function store()
+	{
+		$password = Str::random();
 
-        $rules = UserRepository::rules(array_keys($input));
-        $rules['password'] = 'required|min:6';
+		$input = array_merge(Binput::only(['first_name', 'last_name', 'email']), [
+			'password'     => $password,
+			'activated'    => true,
+			'activated_at' => new DateTime(),
+		]);
 
-        $val = UserRepository::validate($input, $rules, true);
-        if ($val->fails()) {
-            return Redirect::route('users.create')->withInput()->withErrors($val->errors());
-        }
+		$rules = UserRepository::rules(array_keys($input));
+		$rules['password'] = 'required|min:6';
 
-        try {
-            $user = UserRepository::create($input);
+		$val = UserRepository::validate($input, $rules, true);
+		if ($val->fails()) {
+			return Redirect::route('users.create')->withInput()->withErrors($val->errors());
+		}
 
-            $groups = GroupRepository::index();
-            foreach ($groups as $group) {
-                if (Binput::get('group_'.$group->id) === 'on') {
-                    $user->addGroup($group);
-                }
-            }
+		try {
+			$user = UserRepository::create($input);
 
-            $mail = [
-                'url'      => URL::to(Config::get('credentials.home', '/')),
-                'password' => $password,
-                'email'    => $user->getLogin(),
-                'subject'  => Config::get('app.name').' - New Account Information',
-            ];
+			$groups = GroupRepository::index();
+			foreach ($groups as $group) {
+				if (Binput::get('group_'.$group->id) === 'on') {
+					$user->addGroup($group);
+				}
+			}
 
-            Mail::queue('credentials::emails.newuser', $mail, function ($message) use ($mail) {
-                $message->to($mail['email'])->subject($mail['subject']);
-            });
+			$mail = [
+				'url'      => URL::to(Config::get('credentials.home', '/')),
+				'password' => $password,
+				'email'    => $user->getLogin(),
+				'subject'  => Config::get('app.name').' - New Account Information',
+			];
 
-            return Redirect::route('users.show', ['users' => $user->id])
-                ->with('success', 'The user has been created successfully. Their password has been emailed to them.');
-        } catch (UserExistsException $e) {
-            return Redirect::route('users.create')->withInput()->withErrors($val->errors())
-                ->with('error', 'That email address is taken.');
-        }
-    }
+			Mail::queue('credentials::emails.newuser', $mail, function ($message) use ($mail) {
+				$message->to($mail['email'])->subject($mail['subject']);
+			});
 
-    /**
-     * Show the specified user.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\View\View
-     */
-    public function show($id)
-    {
-        $user = UserRepository::find($id);
-        $this->checkUser($user);
+			return Redirect::route('users.index')
+				->with('success', 'Se ha creado el usuario exitosamente, se ha enviado un email a su correo electrónico');
 
-        if ($user->activated_at) {
-            $activated = html_ago($user->activated_at);
-        } else {
-            if (Credentials::hasAccess('admin') && Config::get('credentials.activation')) {
-                $activated = 'No - <a href="#resend_user" data-toggle="modal" data-target="#resend_user">Resend Email</a>';
-            } else {
-                $activated = 'Not Activated';
-            }
-        }
+		} catch (UserExistsException $e) {
+			return Redirect::route('users.create')->withInput()->withErrors($val->errors())
+				->with('error', 'El correo electrónico ya existe.');
+		}
+	}
 
-        if (Credentials::getThrottleProvider()->findByUserId($id)->isSuspended()) {
-            $suspended = 'Currently Suspended';
-        } else {
-            $suspended = 'Not Suspended';
-        }
+	/**
+	 * Show the specified user.
+	 *
+	 * @param int $id
+	 *
+	 * @return \Illuminate\View\View
+	 */
+	public function show($id)
+	{
+		$user = UserRepository::find($id);
+		$this->checkUser($user);
 
-        $groups = $user->getGroups();
-        if (count($groups) >= 1) {
-            $data = [];
-            foreach ($groups as $group) {
-                $data[] = $group->name;
-            }
-            $groups = implode(', ', $data);
-        } else {
-            $groups = 'No Group Memberships';
-        }
+		if ($user->activated_at) {
+			$activated = html_ago($user->activated_at);
+		} else {
+			if (Credentials::hasAccess('admin') && Config::get('credentials.activation')) {
+				$activated = 'No - <a href="#resend_user" data-toggle="modal" data-target="#resend_user">Resend Email</a>';
+			} else {
+				$activated = 'Not Activated';
+			}
+		}
 
-        return View::make('credentials::users.show', compact('user', 'groups', 'activated', 'suspended'));
-    }
+		if (Credentials::getThrottleProvider()->findByUserId($id)->isSuspended()) {
+			$suspended = 'Currently Suspended';
+		} else {
+			$suspended = 'Not Suspended';
+		}
 
-    /**
-     * Show the form for editing the specified user.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\View\View
-     */
-    public function edit($id)
-    {
-        $user = UserRepository::find($id);
-        $this->checkUser($user);
+		$groups = $user->getGroups();
+		if (count($groups) >= 1) {
+			$data = [];
+			foreach ($groups as $group) {
+				$data[] = $group->name;
+			}
+			$groups = implode(', ', $data);
+		} else {
+			$groups = 'No Group Memberships';
+		}
 
-        $groups = GroupRepository::index();
+		return View::make('credentials::users.show', compact('user', 'groups', 'activated', 'suspended'));
+	}
 
-        return View::make('credentials::users.edit', compact('user', 'groups'));
-    }
+	/**
+	 * Show the form for editing the specified user.
+	 *
+	 * @param int $id
+	 *
+	 * @return \Illuminate\View\View
+	 */
+	public function edit($id)
+	{
+		$user = UserRepository::find($id);
+		$this->checkUser($user);
 
-    /**
-     * Update an existing user.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update($id)
-    {
-        $input = Binput::only(['first_name', 'last_name', 'email']);
+		$groups = GroupRepository::index();
 
-        $val = UserRepository::validate($input, array_keys($input));
-        if ($val->fails()) {
-            return Redirect::route('users.edit', ['users' => $id])
-                ->withInput()->withErrors($val->errors());
-        }
+		return View::make('credentials::users.edit', compact('user', 'groups'));
+	}
 
-        $user = UserRepository::find($id);
-        $this->checkUser($user);
+	/**
+	 * Update an existing user.
+	 *
+	 * @param int $id
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function update($id)
+	{
+		$input = Binput::only(['first_name', 'last_name', 'email']);
 
-        $email = $user['email'];
+		$val = UserRepository::validate($input, array_keys($input));
+		if ($val->fails()) {
+			return Redirect::route('users.edit', ['users' => $id])
+				->withInput()->withErrors($val->errors());
+		}
 
-        $user->update($input);
+		$user = UserRepository::find($id);
+		$this->checkUser($user);
 
-        $groups = GroupRepository::index();
+		$email = $user['email'];
 
-        $changed = false;
+		$user->update($input);
 
-        foreach ($groups as $group) {
-            if ($user->inGroup($group)) {
-                if (Binput::get('group_'.$group->id) !== 'on') {
-                    $user->removeGroup($group);
-                    $changed = true;
-                }
-            } else {
-                if (Binput::get('group_'.$group->id) === 'on') {
-                    $user->addGroup($group);
-                    $changed = true;
-                }
-            }
-        }
+		$groups = GroupRepository::index();
 
-        if ($email !== $input['email']) {
-            $mail = [
-                'old'     => $email,
-                'new'     => $input['email'],
-                'url'     => URL::to(Config::get('credentials.home', '/')),
-                'subject' => Config::get('app.name').' - New Email Information',
-            ];
+		$changed = false;
 
-            Mail::queue('credentials::emails.newemail', $mail, function ($message) use ($mail) {
-                $message->to($mail['old'])->subject($mail['subject']);
-            });
+		foreach ($groups as $group) {
+			if ($user->inGroup($group)) {
+				if (Binput::get('group_'.$group->id) !== 'on') {
+					$user->removeGroup($group);
+					$changed = true;
+				}
+			} else {
+				if (Binput::get('group_'.$group->id) === 'on') {
+					$user->addGroup($group);
+					$changed = true;
+				}
+			}
+		}
 
-            Mail::queue('credentials::emails.newemail', $mail, function ($message) use ($mail) {
-                $message->to($mail['new'])->subject($mail['subject']);
-            });
-        }
+//        if ($email !== $input['email']) {
+//            $mail = [
+//                'old'     => $email,
+//                'new'     => $input['email'],
+//                'url'     => URL::to(Config::get('credentials.home', '/')),
+//                'subject' => Config::get('app.name').' - New Email Information',
+//            ];
+//
+//            Mail::queue('credentials::emails.newemail', $mail, function ($message) use ($mail) {
+//                $message->to($mail['old'])->subject($mail['subject']);
+//            });
+//
+//            Mail::queue('credentials::emails.newemail', $mail, function ($message) use ($mail) {
+//                $message->to($mail['new'])->subject($mail['subject']);
+//            });
+//        }
+//
+//        if ($changed) {
+//            $mail = [
+//                'url'     => URL::to(Config::get('credentials.home', '/')),
+//                'email'   => $input['email'],
+//                'subject' => Config::get('app.name').' - Group Membership Changes',
+//            ];
+//
+//            Mail::queue('credentials::emails.groups', $mail, function ($message) use ($mail) {
+//                $message->to($mail['email'])->subject($mail['subject']);
+//            });
+//        }
 
-        if ($changed) {
-            $mail = [
-                'url'     => URL::to(Config::get('credentials.home', '/')),
-                'email'   => $input['email'],
-                'subject' => Config::get('app.name').' - Group Membership Changes',
-            ];
+		return Redirect::route('users.index')
+			->with('success', 'El usuario fue modificado exitosamente');
+	}
 
-            Mail::queue('credentials::emails.groups', $mail, function ($message) use ($mail) {
-                $message->to($mail['email'])->subject($mail['subject']);
-            });
-        }
+	/**
+	 * Suspend an existing user.
+	 *
+	 * @param int $id
+	 *
+	 * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function suspend($id)
+	{
+		try {
+			$throttle = Credentials::getThrottleProvider()->findByUserId($id);
+			$throttle->suspend();
+		} catch (UserNotFoundException $e) {
+			throw new NotFoundHttpException('User Not Found', $e);
+		} catch (UserSuspendedException $e) {
+			$time = $throttle->getSuspensionTime();
 
-        return Redirect::route('users.show', ['users' => $user->id])
-            ->with('success', 'The user has been updated successfully.');
-    }
+			return Redirect::route('users.suspend', ['users' => $id])->withInput()
+				->with('error', "This user is already suspended for $time minutes.");
+		} catch (UserBannedException $e) {
+			return Redirect::route('users.suspend', ['users' => $id])->withInput()
+				->with('error', 'This user has already been banned.');
+		}
 
-    /**
-     * Suspend an existing user.
-     *
-     * @param int $id
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function suspend($id)
-    {
-        try {
-            $throttle = Credentials::getThrottleProvider()->findByUserId($id);
-            $throttle->suspend();
-        } catch (UserNotFoundException $e) {
-            throw new NotFoundHttpException('User Not Found', $e);
-        } catch (UserSuspendedException $e) {
-            $time = $throttle->getSuspensionTime();
+		return Redirect::route('users.index')
+			->with('success', 'El usuario fue suspendido exitosamente');
+	}
 
-            return Redirect::route('users.suspend', ['users' => $id])->withInput()
-                ->with('error', "This user is already suspended for $time minutes.");
-        } catch (UserBannedException $e) {
-            return Redirect::route('users.suspend', ['users' => $id])->withInput()
-                ->with('error', 'This user has already been banned.');
-        }
+	/**
+	 * Reset the password of an existing user.
+	 *
+	 * @param int $id
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function reset($id)
+	{
+		$password = Str::random();
 
-        return Redirect::route('users.show', ['users' => $id])
-            ->with('success', 'The user has been suspended successfully.');
-    }
+		$input = [
+			'password' => $password,
+		];
 
-    /**
-     * Reset the password of an existing user.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function reset($id)
-    {
-        $password = Str::random();
+		$rules = [
+			'password' => 'required|min:6',
+		];
 
-        $input = [
-            'password' => $password,
-        ];
+		$val = UserRepository::validate($input, $rules, true);
+		if ($val->fails()) {
+			return Redirect::route('users.show', ['users' => $id])->withErrors($val->errors());
+		}
 
-        $rules = [
-            'password' => 'required|min:6',
-        ];
+		$user = UserRepository::find($id);
+		$this->checkUser($user);
 
-        $val = UserRepository::validate($input, $rules, true);
-        if ($val->fails()) {
-            return Redirect::route('users.show', ['users' => $id])->withErrors($val->errors());
-        }
+		$user->update($input);
 
-        $user = UserRepository::find($id);
-        $this->checkUser($user);
+		$mail = [
+			'password' => $password,
+			'email'    => $user->getLogin(),
+			'subject'  => Config::get('app.name').' - New Password Information',
+		];
 
-        $user->update($input);
+		Mail::queue('credentials::emails.password', $mail, function ($message) use ($mail) {
+			$message->to($mail['email'])->subject($mail['subject']);
+		});
 
-        $mail = [
-            'password' => $password,
-            'email'    => $user->getLogin(),
-            'subject'  => Config::get('app.name').' - New Password Information',
-        ];
+		return Redirect::route('users.index')
+			->with('success', 'Se reinició la contraseña del usuario, se ha enviado un email a su correo electrónico');
+	}
 
-        Mail::queue('credentials::emails.password', $mail, function ($message) use ($mail) {
-            $message->to($mail['email'])->subject($mail['subject']);
-        });
+	/**
+	 * Resend the activation email of an existing user.
+	 *
+	 * @param int $id
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function resend($id)
+	{
+		$user = UserRepository::find($id);
+		$this->checkUser($user);
 
-        return Redirect::route('users.show', ['users' => $id])
-            ->with('success', 'The user\'s password has been reset successfully, and has been emailed to them.');
-    }
+		if ($user->activated) {
+			return Redirect::route('account.resend')->withInput()
+				->with('error', 'That user is already activated.');
+		}
 
-    /**
-     * Resend the activation email of an existing user.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function resend($id)
-    {
-        $user = UserRepository::find($id);
-        $this->checkUser($user);
+		$code = $user->getActivationCode();
 
-        if ($user->activated) {
-            return Redirect::route('account.resend')->withInput()
-                ->with('error', 'That user is already activated.');
-        }
+		$mail = [
+			'url'     => URL::to(Config::get('credentials.home', '/')),
+			'link'    => URL::route('account.activate', ['id' => $user->id, 'code' => $code]),
+			'email'   => $user->getLogin(),
+			'subject' => Config::get('app.name').' - Activation',
+		];
 
-        $code = $user->getActivationCode();
+		Mail::queue('credentials::emails.resend', $mail, function ($message) use ($mail) {
+			$message->to($mail['email'])->subject($mail['subject']);
+		});
 
-        $mail = [
-            'url'     => URL::to(Config::get('credentials.home', '/')),
-            'link'    => URL::route('account.activate', ['id' => $user->id, 'code' => $code]),
-            'email'   => $user->getLogin(),
-            'subject' => Config::get('app.name').' - Activation',
-        ];
+		return Redirect::route('users.index')
+			->with('success', 'Se envió el correo de activación exitosamente');
+	}
 
-        Mail::queue('credentials::emails.resend', $mail, function ($message) use ($mail) {
-            $message->to($mail['email'])->subject($mail['subject']);
-        });
+	/**
+	 * Delete an existing user.
+	 *
+	 * @param int $id
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function destroy($id)
+	{
+		$user = UserRepository::find($id);
+		$this->checkUser($user);
 
-        return Redirect::route('users.show', ['users' => $id])
-            ->with('success', 'The user\'s activation email has been sent successfully.');
-    }
+		$email = $user->getLogin();
 
-    /**
-     * Delete an existing user.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $user = UserRepository::find($id);
-        $this->checkUser($user);
+		try {
+			$user->delete();
+		} catch (\Exception $e) {
+			return Redirect::route('users.show', ['users' => $id])
+				->with('error', 'We were unable to delete the account.');
+		}
 
-        $email = $user->getLogin();
+		$mail = [
+			'url'     => URL::to(Config::get('credentials.home', '/')),
+			'email'   => $email,
+			'subject' => Config::get('app.name').' - Account Deleted Notification',
+		];
 
-        try {
-            $user->delete();
-        } catch (\Exception $e) {
-            return Redirect::route('users.show', ['users' => $id])
-                ->with('error', 'We were unable to delete the account.');
-        }
+		Mail::queue('credentials::emails.admindeleted', $mail, function ($message) use ($mail) {
+			$message->to($mail['email'])->subject($mail['subject']);
+		});
 
-        $mail = [
-            'url'     => URL::to(Config::get('credentials.home', '/')),
-            'email'   => $email,
-            'subject' => Config::get('app.name').' - Account Deleted Notification',
-        ];
+		return Redirect::route('users.index')
+			->with('success', 'El usuario fue eliminado exitosamente');
+	}
 
-        Mail::queue('credentials::emails.admindeleted', $mail, function ($message) use ($mail) {
-            $message->to($mail['email'])->subject($mail['subject']);
-        });
-
-        return Redirect::route('users.index')
-            ->with('success', 'The user has been deleted successfully.');
-    }
-
-    /**
-     * Check the user model.
-     *
-     * @param mixed $user
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return void
-     */
-    protected function checkUser($user)
-    {
-        if (!$user) {
-            throw new NotFoundHttpException('User Not Found');
-        }
-    }
+	/**
+	 * Check the user model.
+	 *
+	 * @param mixed $user
+	 *
+	 * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+	 *
+	 * @return void
+	 */
+	protected function checkUser($user)
+	{
+		if (!$user) {
+			throw new NotFoundHttpException('Usuario no encontrado');
+		}
+	}
 }

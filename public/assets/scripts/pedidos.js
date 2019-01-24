@@ -55,23 +55,23 @@ $(document).ready(function(){
         });
     });
 
-    $(document).on('click','.print',function(){
-        window.print();
-    });
-
-    var doc = new jsPDF();
-    var specialElementHandlers = {
-        '#editor': function (element, renderer) {
-            return true;
-        }
-    };
-
-    $(document).on('click','.download',function(){
-        doc.fromHTML($('.modal-content').html(), 15, 15, {
-            'width': 170,
-            'elementHandlers': specialElementHandlers
-        });
-        doc.save('pedidos.pdf');
-    });
+    // $(document).on('click','.print',function(){
+    //     window.print();
+    // });
+    //
+    // var doc = new jsPDF();
+    // var specialElementHandlers = {
+    //     '#editor': function (element, renderer) {
+    //         return true;
+    //     }
+    // };
+    //
+    // $(document).on('click','.download',function(){
+    //     doc.fromHTML($('.modal-content').html(), 15, 15, {
+    //         'width': 170,
+    //         'elementHandlers': specialElementHandlers
+    //     });
+    //     doc.save('pedidos.pdf_pedido');
+    // });
 
 });

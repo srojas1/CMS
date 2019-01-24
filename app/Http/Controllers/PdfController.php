@@ -2,6 +2,7 @@
 
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
+use GrahamCampbell\BootstrapCMS\Facades\PedidoRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\App;
@@ -9,51 +10,25 @@ use Illuminate\Support\Facades\App;
 class PdfController extends AbstractController
 {
 
-	public function invoice()
+	public function index()
 	{
-		var_dump('aa');
-		exit;
+		$pedido = PedidoRepository::paginate();
 
-//		$data = $this->getData();
-//		$date = date('Y-m-d');
-//		$invoice = "2222";
-//
-//		$view =  View::make('pdf.invoice', compact('data', 'date', 'invoice'))->render();
-//		$pdf = App::make('dompdf.wrapper');
-//		$pdf->loadHTML($view);
-//		return $pdf->stream('invoice');
+		$view =  View::make('pdf_pedido.index', ['pedido'=>$pedido])->render();
+		$pdf = App::make('dompdf.wrapper');
+		$pdf->loadHTML($view);
+		return $pdf->stream('print');
 	}
 
-	public function getData()
+	public function create()
 	{
-		$data =  [
-			'quantity'      => '1' ,
-			'description'   => 'some ramdom text',
-			'price'   => '500',
-			'total'     => '500'
-		];
-		return $data;
+		$pedido = PedidoRepository::paginate();
+
+		$view =  View::make('pdf_pedido.index', ['pedido'=>$pedido])->render();
+		$pdf = App::make('dompdf.wrapper');
+		$pdf->loadHTML($view);
+		return $pdf->download('download');
 	}
-
-	/**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
