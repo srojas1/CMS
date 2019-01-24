@@ -12,13 +12,7 @@
 namespace GrahamCampbell\Exceptions;
 
 use GrahamCampbell\Exceptions\Displayers\HtmlDisplayer;
-use GrahamCampbell\Exceptions\Filters\VerboseFilter;
-use Illuminate\Contracts\Container\Container;
-use Illuminate\Contracts\Routing\UrlGenerator as LaravelGenerator;
-use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Lumen\Application as LumenApplication;
-use Laravel\Lumen\Routing\UrlGenerator as LumenGenerator;
 
 /**
  * This is the exceptions service provider class.
@@ -46,10 +40,8 @@ class ExceptionsServiceProvider extends ServiceProvider
     {
         $source = realpath(__DIR__.'/../config/exceptions.php');
 
-        if ($this->app instanceof LaravelApplication && $this->app->runningInConsole()) {
+        if (class_exists('Illuminate\Foundation\Application', false)) {
             $this->publishes([$source => config_path('exceptions.php')]);
-        } elseif ($this->app instanceof LumenApplication) {
-            $this->app->configure('exceptions');
         }
 
         $this->mergeConfigFrom($source, 'exceptions');
@@ -67,26 +59,11 @@ class ExceptionsServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(ExceptionInfo::class, function () {
-            $path = __DIR__.'/../resources/errors.json';
-
-            return new ExceptionInfo(realpath($path));
+            return new ExceptionInfo(__DIR__.'/../resources/errors.json');
         });
 
-        $this->app->bind(HtmlDisplayer::class, function (Container $app) {
-            $info = $app->make(ExceptionInfo::class);
-            $generator = $app->make($this->app instanceof LumenApplication ? LumenGenerator::class : LaravelGenerator::class);
-            $assets = function ($path) use ($generator) {
-                return $generator->asset($path);
-            };
-            $path = __DIR__.'/../resources/error.html';
-
-            return new HtmlDisplayer($info, $assets, realpath($path));
-        });
-
-        $this->app->bind(VerboseFilter::class, function (Container $app) {
-            $debug = $app->config->get('app.debug', false);
-
-            return new VerboseFilter($debug);
+        $this->app->bind(HtmlDisplayer::class, function ($app) {
+            return new HtmlDisplayer($app->make(ExceptionInfo::class), __DIR__.'/../resources/error.html');
         });
     }
 

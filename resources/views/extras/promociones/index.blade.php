@@ -1,46 +1,82 @@
-<!--- CABECERA DE MÓDULO --->
-<div class="modulo-head row">
-	<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-5">
-		<div class="input-group">
-			<a class="btn btn-primary" href="{!! URL::route('promocion.create') !!}">Agregar Promoción</a>
-		</div>
-	</div>
-</div>
 <!--- CONTENIDO DE MÓDULO--->
 <div class="modulo-body shadow-sm border-left border-right border-button">
 	<div class="container-fluid">
 		<div class="table-responsive">
-			<table class="table">
+			<table class="table_promocion table table-hover">
+				<div class="inside_add_div">
+					<a href="#modalAgregarPromocion" class="" data-toggle="modal" data-target="#modalAgregarPromocion">Agregar promoción (+)</a>
+				</div>
+				<br>
 				<thead class="thead-light">
 				<tr>
-					<th scope="col">PROMOCIÓN</th>
-					<th scope="col">PRODUCTOS RELACIONADOS</th>
-					<th scope="col">PRECIO</th>
-					<th scope="col">FECHA INICIO</th>
-					<th scope="col">FECHA FIN</th>
-					<th scope="col">STOCK MAXIMO</th>
-					<th scope="col">VENTAS</th>
-					<th scope="col">INGRESOS</th>
-					<th scope="col">ACCIONES</th>
+					<th scope="col"><div class="d-flex justify-content-center">PROMOCIÓN</div></th>
+					<th scope="col"><div class="d-flex justify-content-center">PRODUCTOS RELACIONADOS</div></th>
+					<th scope="col"><div class="d-flex justify-content-center">PRECIO</div></th>
+					<th scope="col"><div class="d-flex justify-content-center">FECHA INICIO</div></th>
+					<th scope="col"><div class="d-flex justify-content-center">FECHA FIN</div></th>
+					<th scope="col"><div class="d-flex justify-content-center">STOCK MAXIMO</div></th>
+					<th scope="col"><div class="d-flex justify-content-center">VENTAS</div></th>
+					<th scope="col"><div class="d-flex justify-content-center">INGRESOS</div></th>
+					<th scope="col"><div class="d-flex justify-content-center">ACCIONES</div></th>
 				</tr>
 				</thead>
 				<tbody>
-				@foreach ($promocion as $prom)
-					<tr>
-						<th scope="row">{{$prom->promocion}}</th>
-						<td>[imagen]</td>
-						<td>{{$prom->precio}}</td>
-						<td>{{$prom->fecha_inicio}}</td>
-						<td>{{$prom->fecha_fin}}</td>
-						<td>{{$prom->stock_maximo}}</td>
-						<td>[ventas]</td>
-						<td>[ingresos]</td>
-						<td>
-							<a class="btn btn-info" href=""><i class="fa fa-pencil-square-o"></i></a>
-							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_promocion_{!! $prom->id !!}"><i class="fa fa-times"></i></button>&nbsp
-						</td>
-					</tr>
-				@endforeach
+				@if(count($promocion)>0)
+					@foreach ($promocion as $prom)
+						<tr>
+							@if($prom->filename_main)
+								<th scope="row" class="align-middle"><div class="d-flex align-items-center"></div><img src="{{ asset('images/'.getJsonValue($prom->filename_main))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prom->promocion}}</th>
+							@else
+								<th scope="row" class="align-middle"><div class="d-flex align-items-center"></div><img src="{{ asset('images/'.\GrahamCampbell\BootstrapCMS\Http\Constants::DEFAULT_IMAGE_NAME)}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prom->promocion}}</th>
+							@endif
+							<td class="align-middle">
+								<div class="d-flex justify-content-center">
+								<?php $productosVinculados = json_decode($prom->vinculacion_producto) ?>
+									@if($productosVinculados)
+										@foreach($productosVinculados as $pv)
+											<img src="{{ asset('images/'.getJsonValue(getProductMainImageById($pv)))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">
+										@endforeach
+									@else
+										<img src="{{ asset('images/'.\GrahamCampbell\BootstrapCMS\Http\Constants::DEFAULT_IMAGE_NAME)}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">
+									@endif
+								</div>
+							</td>
+							<td class="align-middle">
+								<div class="d-flex justify-content-center">S/ {{$prom->precio}}</div>
+							</td>
+							<td class="align-middle">
+								<div class="d-flex justify-content-center">{{$prom->fecha_inicio}}</div>
+							</td>
+							<td class="align-middle">
+								<div class="d-flex justify-content-center">{{$prom->fecha_fin}}</div>
+							</td>
+							<td class="align-middle">
+								<div class="d-flex justify-content-center">{{$prom->stock_maximo}}</div>
+							</td>
+							<td class="align-middle">
+								<div class="d-flex justify-content-center">[ventas]</div>
+							</td>
+							<td class="align-middle">
+								<div class="d-flex justify-content-center">S/ [ingresos]</div>
+							</td>
+							<td class="align-middle">
+								<div class="d-flex justify-content-center">
+									<a href="" class="accion">
+										<i class="material-icons">remove_red_eye</i>
+									</a>
+									<a href="#modalEditarPromocion_{!! $prom->id !!}" class="accion"
+									   data-toggle="modal"
+									   data-target="#modalEditarPromocion_{!! $prom->id !!}">
+										<i class="material-icons">edit</i>
+									</a>
+									<a href="#delete_promocion_{!! $prom->id !!}" data-toggle="modal" data-target="#delete_promocion_{!! $prom->id !!}" class="accion">
+										<i class="material-icons">close</i>
+									</a>
+								</div>
+							</td>
+						</tr>
+					@endforeach
+				@endif
 				</tbody>
 			</table>
 		</div>
@@ -68,5 +104,7 @@
 @section('bottom')
 	@auth('edit')
 		@include('extras.promociones.deletes')
+		@include('extras.cupones.deletes')
+		@include('extras.recompensas.deletes')
 	@endauth
 @stop

@@ -12,48 +12,46 @@
 namespace GrahamCampbell\Exceptions\Filters;
 
 use Exception;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\Config\Repository as Config;
 
 /**
  * This is the verbose filter class.
  *
  * @author Graham Campbell <graham@alt-three.com>
  */
-class VerboseFilter implements FilterInterface
+class VerboseFilter
 {
     /**
-     * Is debug mode enabled?
+     * The config instance.
      *
-     * @var bool
+     * @var \Illuminate\Contracts\Config\Repository
      */
-    protected $debug;
+    protected $config;
 
     /**
      * Create a new verbose filter instance.
      *
-     * @param bool $debug
+     * @param \Illuminate\Contracts\Config\Repository $config
      *
      * @return void
      */
-    public function __construct($debug)
+    public function __construct(Config $config)
     {
-        $this->debug = $debug;
+        $this->config = $config;
     }
 
     /**
      * Filter and return the displayers.
      *
      * @param \GrahamCampbell\Exceptions\Displayers\DisplayerInterface[] $displayers
-     * @param \Illuminate\Http\Request                                   $request
      * @param \Exception                                                 $original
      * @param \Exception                                                 $transformed
-     * @param int                                                        $code
      *
      * @return \GrahamCampbell\Exceptions\Displayers\DisplayerInterface[]
      */
-    public function filter(array $displayers, Request $request, Exception $original, Exception $transformed, $code)
+    public function filter(array $displayers, Exception $original, Exception $transformed)
     {
-        if ($this->debug !== true) {
+        if ($this->config->get('app.debug', false) !== true) {
             foreach ($displayers as $index => $displayer) {
                 if ($displayer->isVerbose()) {
                     unset($displayers[$index]);

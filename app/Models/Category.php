@@ -44,7 +44,7 @@ class Category extends AbstractModel implements HasPresenter {
      *
      * @var array
      */
-    public static $index = ['id','categoria'];
+    public static $index = ['id','categoria','filename_main'];
 
     /**
      * The max events per page when displaying a paginated index.

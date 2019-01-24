@@ -51,7 +51,7 @@ class Product extends AbstractModel implements HasPresenter {
 	 *
 	 * @var int
 	 */
-	public static $paginate = 7;
+	public static $paginate = 5;
 
 	/**
 	 * The columns to order by when displaying an index.
@@ -107,7 +107,4 @@ class Product extends AbstractModel implements HasPresenter {
 		return $this->belongsToMany(Attribute::class,'attributes_products')->withPivot('valor','id','deleted_at');
 	}
 
-//	public function getAttributesProductsById() {
-//		return $this->belongsToMany(Attribute::class,'attributes_products')->withPivot('id');
-//	}
 }

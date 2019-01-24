@@ -19,23 +19,40 @@ use Illuminate\Http\Request;
  *
  * @author Graham Campbell <graham@alt-three.com>
  */
-class ContentTypeFilter implements FilterInterface
+class ContentTypeFilter
 {
+    /**
+     * The request instance.
+     *
+     * @var \Illuminate\Http\Request
+     */
+    protected $request;
+
+    /**
+     * Create a new content type filter instance.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
+     */
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
     /**
      * Filter and return the displayers.
      *
      * @param \GrahamCampbell\Exceptions\Displayers\DisplayerInterface[] $displayers
-     * @param \Illuminate\Http\Request                                   $request
      * @param \Exception                                                 $original
      * @param \Exception                                                 $transformed
-     * @param int                                                        $code
      *
      * @return \GrahamCampbell\Exceptions\Displayers\DisplayerInterface[]
      */
-    public function filter(array $displayers, Request $request, Exception $original, Exception $transformed, $code)
+    public function filter(array $displayers, Exception $original, Exception $transformed)
     {
         foreach ($displayers as $index => $displayer) {
-            if (!$request->accepts($displayer->contentType())) {
+            if (!$this->request->accepts($displayer->contentType())) {
                 unset($displayers[$index]);
             }
         }

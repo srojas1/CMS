@@ -329,6 +329,19 @@
 
 	/*
 	|--------------------------------------------------------------------------
+	| Cupon Cliente Model
+	|--------------------------------------------------------------------------
+	|
+	| This defines the cupon cliente model to be used.
+	|
+	| Default: 'GrahamCampbell\BootstrapCMS\Models\CuponClient'
+	|
+	*/
+
+		'cuponcliente' => 'GrahamCampbell\BootstrapCMS\Models\CuponClient',
+
+	/*
+	|--------------------------------------------------------------------------
 	| Distrito Model
 	|--------------------------------------------------------------------------
 	|
@@ -352,4 +365,17 @@
 	*/
 
 		'addresstype' => 'GrahamCampbell\BootstrapCMS\Models\AddressType',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Empresa Model
+	|--------------------------------------------------------------------------
+	|
+	| This defines the model to be used.
+	|
+	| Default: 'GrahamCampbell\BootstrapCMS\Models\Empresa'
+	|
+	*/
+
+		'empresa' => 'GrahamCampbell\BootstrapCMS\Models\Empresa',
 ];

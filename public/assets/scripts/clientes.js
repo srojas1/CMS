@@ -1,22 +1,9 @@
 $(document).ready(function(){
 
-    $(".buscador").on("keyup", function() {
-        var value = $(this).val();
-
-        $("table tr").each(function(index) {
-            if (index !== 0) {
-
-                $row = $(this);
-
-                var id = $row.find("div:first").text();
-
-                if (id.indexOf(value) !== 0) {
-                    $row.hide();
-                }
-                else {
-                    $row.show();
-                }
-            }
+    $(document).on('keyup', '.buscador', function () {
+        var value = $(this).val().toLowerCase();
+        $(".table_cliente tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
 

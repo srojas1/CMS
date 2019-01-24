@@ -12,7 +12,7 @@
 					<div class="container-fluid row col-12 align-items-center">
 						<div class="container-fluid row col-12 justify-content-start align-items-center pb-3">
 							<div class="col-12 col-md-3 col-lg-2">
-								<img src="{{ asset('images/producto-icon.jpg') }}" alt="..." class="fotoPerfil img-fluid border-top border-bottom border-right border-left">
+								<img src="{{ asset('images/'.getJsonValue($cli->filename_main)) }}" alt="..." class="fotoPerfil img-fluid border-top border-bottom border-right border-left">
 							</div>
 							<div class="col-12 col-md-9 col-lg-10">
 								<h3 class="modal-title">{{$cli->nombres}} {{$cli->apaterno}} {{$cli->amaterno}}</h3>
@@ -117,26 +117,13 @@
 									</tr>
 									</thead>
 									<tbody>
-									<tr>
-										<th scope="row" class="align-middle"><div class="d-flex justify-content-center">ArribaPeru2018</div></th>
-										<td class="align-middle"><div class="d-flex justify-content-center">S/ 50</div></td>
-										<td class="align-middle"><div class="d-flex justify-content-center">15-feb-2021</div></td>
-									</tr>
-									<tr>
-										<th scope="row" class="align-middle"><div class="d-flex justify-content-center">ArribaPeru2018</div></th>
-										<td class="align-middle"><div class="d-flex justify-content-center">S/ 50</div></td>
-										<td class="align-middle"><div class="d-flex justify-content-center">15-feb-2021</div></td>
-									</tr>
-									<tr>
-										<th scope="row" class="align-middle"><div class="d-flex justify-content-center">ArribaPeru2018</div></th>
-										<td class="align-middle"><div class="d-flex justify-content-center">S/ 50</div></td>
-										<td class="align-middle"><div class="d-flex justify-content-center">15-feb-2021</div></td>
-									</tr>
-									<tr>
-										<th scope="row" class="align-middle"><div class="d-flex justify-content-center">ArribaPeru2018</div></th>
-										<td class="align-middle"><div class="d-flex justify-content-center">S/ 50</div></td>
-										<td class="align-middle"><div class="d-flex justify-content-center">15-feb-2021</div></td>
-									</tr>
+									@foreach($cli->getCuponById as $cupCli)
+										<tr>
+											<th scope="row" class="align-middle"><div class="d-flex justify-content-center">{{$cupCli->cupon}}</div></th>
+											<td class="align-middle"><div class="d-flex justify-content-center">S/ {{$cupCli->descuento}}</div></td>
+											<td class="align-middle"><div class="d-flex justify-content-center">{{$cupCli->vencimiento}}</div></td>
+										</tr>
+									@endforeach
 									</tbody>
 								</table>
 							</div>

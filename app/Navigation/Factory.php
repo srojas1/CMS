@@ -57,7 +57,7 @@ class Factory
     protected $inverse;
 
     /**
-     * Create a new instance.
+     * Crear nueva instancia
      *
      * @param \GrahamCampbell\Credentials\Credentials $credentials
      * @param \GrahamCampbell\Navigation\Navigation   $navigation

@@ -71,16 +71,6 @@ class LoginController extends AbstractController
     }
 
     /**
-     * Display the login form.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function getError()
-    {
-        return View::make('credentials::account.error');
-    }
-
-    /**
      * Attempt to login the specified user.
      *
      * @return \Illuminate\Http\Response
@@ -96,11 +86,10 @@ class LoginController extends AbstractController
 
         $val = UserRepository::validate($input, $rules, true);
         if ($val->fails()) {
-            return Redirect::route('account.error')->withInput()->withErrors($val->errors());
+            return Redirect::route('account.login')->withInput()->withErrors($val->errors());
         }
 
-        //samuel (remove validation of throttle)
-        //$this->throttler->hit();
+        $this->throttler->hit();
 
         try {
             $throttle = Credentials::getThrottleProvider()->findByUserLogin($input['email']);
@@ -108,14 +97,14 @@ class LoginController extends AbstractController
 
             Credentials::authenticate($input, $remember);
         } catch (WrongPasswordException $e) {
-            return Redirect::route('account.error')->withInput()->withErrors($val->errors())
-                ->with('error', 'Contraseña Incorrecta');
+            return Redirect::route('account.login')->withInput()->withErrors($val->errors())
+                ->with('error', 'Your password was incorrect.');
         } catch (UserNotFoundException $e) {
-            return Redirect::route('account.error')->withInput()->withErrors($val->errors())
-                ->with('error', 'Usuario incorrecto');
+            return Redirect::route('account.login')->withInput()->withErrors($val->errors())
+                ->with('error', 'That user does not exist.');
         } catch (UserNotActivatedException $e) {
             if (Config::get('credentials::activation')) {
-                return Redirect::route('accoundashboardt.error')->withInput()->withErrors($val->errors())
+                return Redirect::route('account.login')->withInput()->withErrors($val->errors())
                 ->with('error', 'You have not yet activated this account.');
             } else {
                 $throttle->user->attemptActivation($throttle->user->getActivationCode());
@@ -126,14 +115,14 @@ class LoginController extends AbstractController
         } catch (UserSuspendedException $e) {
             $time = $throttle->getSuspensionTime();
 
-            return Redirect::route('account.error')->withInput()->withErrors($val->errors())
+            return Redirect::route('account.login')->withInput()->withErrors($val->errors())
                 ->with('error', "Your account has been suspended for $time minutes.");
         } catch (UserBannedException $e) {
-            return Redirect::route('account.error')->withInput()->withErrors($val->errors())
+            return Redirect::route('account.login')->withInput()->withErrors($val->errors())
                 ->with('error', 'You have been banned. Please contact support.');
         }
 
-        return Redirect::intended(Config::get('credentials.main_page', '/'));
+        return Redirect::intended(Config::get('credentials.home', '/'));
     }
 
     /**

@@ -28,7 +28,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class EventController extends AbstractController
 {
     /**
-     * Create a new instance.
+     * Crear nueva instancia
      *
      * @return void
      */

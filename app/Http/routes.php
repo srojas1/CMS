@@ -56,7 +56,9 @@ if (Config::get('cms.events')) {
  *   CMS Developing
  */
 
+$router->resource('bienvenido', 'BienvenidoController');
 $router->resource('dashboard', 'DashboardController');
+$router->resource('conf_empresa', 'ConfiguracionEmpresaController');
 
 // categorias routes
 if (Config::get('cms.categoria')) {
@@ -71,10 +73,24 @@ $router->resource('cupon', 'CuponController');
 $router->resource('atributo', 'AtributoController');
 $router->resource('recompensa', 'RecompensaController');
 
+$router->resource('personaliza_app', 'PersonalizaAppController');
+$router->resource('chat', 'ChatController');
+$router->resource('configuracion', 'ConfiguracionControllerOld');
+
 //Ajax Contollers
 Route::post('pedido/changeStatus', 'PedidoController@ChangeStatus');
 Route::post('categoria/storeCategory', 'CategoriaController@storeCategory');
+Route::post('categoria/editCategoria', 'CategoriaController@editCategoria');
 Route::post('producto/storeProducto', 'ProductoController@storeProducto');
 Route::post('atributo/storeAtributo', 'AtributoController@storeAtributo');
 Route::post('producto/editProducto', 'ProductoController@editProducto');
 Route::post('atributo/destroyAtributo', 'AtributoController@destroyAtributo');
+Route::post('atributo/addAtributoProductoFromEdit', 'AtributoController@addAtributoProductoFromEdit');
+Route::post('promocion/storePromocion', 'PromocionController@storePromocion');
+Route::post('cupon/storeCupon', 'CuponController@storeCupon');
+Route::post('recompensa/storeRecompensa', 'RecompensaController@storeRecompensa');
+Route::post('promocion/editPromocion', 'PromocionController@editPromocion');
+Route::post('cupon/editCupon', 'CuponController@editCupon');
+Route::post('recompensa/editRecompensa', 'RecompensaController@editRecompensa');
+Route::post('confEmpresa/editEmpresa', 'ConfiguracionEmpresaController@editEmpresa');
+Route::get('pdf', 'PdfController@invoice');

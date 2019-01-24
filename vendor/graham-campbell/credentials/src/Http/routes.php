@@ -51,10 +51,6 @@ $router->get('account/login', ['as' => 'account.login', 'uses' => 'LoginControll
 $router->post('account/login', ['as' => 'account.login.post', 'uses' => 'LoginController@postLogin']);
 $router->get('account/logout', ['as' => 'account.logout', 'uses' => 'LoginController@getLogout']);
 
-//error routes
-$router->get('account/error', ['as' => 'account.error', 'uses' => 'LoginController@getError']);
-$router->post('account/error', ['as' => 'account.error.post', 'uses' => 'LoginController@postLogin']);
-
 // user routes
 $router->resource('users', 'UserController');
 $router->post('users/{users}/suspend', ['as' => 'users.suspend', 'uses' => 'UserController@suspend']);

@@ -2,188 +2,106 @@
 
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
-use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\BootstrapCMS\Facades\AtributoRepository;
 use GrahamCampbell\BootstrapCMS\Facades\AtributoProductoRepository;
-use GrahamCampbell\Credentials\Facades\Credentials;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AtributoController extends AbstractController {
 
-    /**
-     * Create a new instance.
-     */
-    public function __construct()
-    {
-        $this->setPermissions([
-            'create'  => 'edit',
-            'store'   => 'edit',
-            'edit'    => 'edit',
-            'update'  => 'edit',
-            'destroy' => 'edit',
-        ]);
+	/**
+	 * Crear nueva instancia
+	 */
+	public function __construct()
+	{
+		$this->setPermissions([
+			'create'  => 'edit',
+			'store'   => 'edit',
+			'edit'    => 'edit',
+			'update'  => 'edit',
+			'destroy' => 'edit',
+		]);
 
-        parent::__construct();
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-        $atributo = AtributoRepository::paginate();
-
-        return View::make('atributos.index', ['atributo'=>$atributo]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create() {
-        return View::make('atributos.create');
-    }
+		parent::__construct();
+	}
 
 	/**
-	 * Store a new attribute.
+	 * Mostrar lista del recurso
+	 *
+	 * @return \Illuminate\View\View
+	 */
+	public function index()
+	{
+		$atributo = AtributoRepository::paginate();
+
+		return View::make('atributos.index', ['atributo'=>$atributo]);
+	}
+
+	/**
+	 * Muestra el formulario para crear un nuevo recurso
+	 *
+	 * @return \Illuminate\View\View
+	 */
+	public function create() {
+		return View::make('atributos.create');
+	}
+
+	/**
+	 * Guarda un nuevo atributo
 	 */
 	public function storeAtributo() {
 
-		$atributo = $_POST['atributo'];
-		$valores  = $_POST['valores'];
+		$atributo    = $_POST['atributo'];
+		$valores     = $_POST['valores'];
 
 		$jsonValores = json_encode($valores);
-
 		$input = ['atributo'=>$atributo,'valor'=>$jsonValores];
-
 		$atributo = AtributoRepository::create($input);
 
 		return json_encode($atributo);
 	}
 
 	/**
-	 * Destroy Attribute.
+	 * Elimina atributo
 	 */
 	public function destroyAtributo() {
 
-		$idAtributo = $_POST['id'];
+		$idAtributo       = $_POST['id'];
 		$atributoProducto = AtributoProductoRepository::find($idAtributo);
-		$this->checkAttribute($atributoProducto);
+		$this->checkAtributo($atributoProducto);
 
-        $atributoProducto->delete();
+		$atributoProducto->delete();
 	}
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  Request  $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        $input = array_merge(['user_id' => Credentials::getuser()->id], Binput::only([
-            'atributo'
-        ]));
+	/**
+	 * Añade Atributo
+	 */
+	public function addAtributoProductoFromEdit() {
 
-        $val = AtributoRepository::validate($input, array_keys($input));
+		$attribute_id = $_POST['attribute_id'];
+		$product_id   = $_POST['product_id'];
+		$valor        = $_POST['valor'];
 
-        if ($val->fails()) {
-            return Redirect::route('atributo.create')->withInput()->withErrors($val->errors());
-        }
+		$input = ['attribute_id'=>$attribute_id,'product_id'=>$product_id,'valor'=>$valor];
 
-        $atributo = AtributoRepository::create($request->all());
+		$atributoProducto = AtributoProductoRepository::create($input);
 
-        return Redirect::route('atributo.show', ['atributo'=>$atributo->id])
-            ->with('success', trans('messages.atributo.store_success'));
-    }
+		return json_encode($atributoProducto);
 
-    /**
-     * Display the specified resource.
-     *
-     * @return Response
-     */
-    public function show()
-    {
-        $atributo = AtributoRepository::paginate();
+	}
 
-        return View::make('atributos.show', ['atributo' => $atributo]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        $atributo = AtributoRepository::find($id);
-        $this->checkAttribute($atributo);
-
-        return View::make('atributos.edit', ['atributo' => $atributo]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  int  $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        $input = Binput::only(['atributo']);
-
-        $val = $val = AtributoRepository::validate($input, array_keys($input));
-        if ($val->fails()) {
-            return Redirect::route('atributo.edit', ['atributo' => $id])->withInput()->withErrors($val->errors());
-        }
-
-        $atributo = AtributoRepository::find($id);
-        $this->checkAttribute($atributo);
-
-        $atributo->update($input);
-
-        return Redirect::route('atributo.show', ['atributo' => $atributo->id])
-            ->with('success', trans('messages.atributo.update_success'));
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        $atributo = AtributoRepository::find($id);
-        $this->checkAttribute($atributo);
-
-        $atributo->delete();
-
-        return Redirect::route('atributo.index')
-            ->with('success', trans('messages.atributo.delete_success'));
-    }
-
-    /**
-     * Check the client model.
-     *
-     * @param mixed $atributo
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return void
-     */
-    protected function checkAttribute($atributo)
-    {
-        if (!$atributo) {
-            throw new NotFoundHttpException('Atributo No Encontrado');
-        }
-    }
+	/**
+	 * Check the client model.
+	 *
+	 * @param mixed $atributo
+	 *
+	 * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+	 *
+	 * @return void
+	 */
+	protected function checkAtributo($atributo) {
+		if (!$atributo) {
+			throw new NotFoundHttpException('Atributo No Encontrado');
+		}
+	}
 }

@@ -267,6 +267,10 @@ a:hover{
     font-size: 1rem;
 }
 
+.promociones .material-icons {
+    font-size: 1rem;
+}
+
 .custom-file-label{
     border: 2px dotted #ced4da;
 }
@@ -383,6 +387,10 @@ a:hover{
     height: 80px;
 }
 
+.agregar-imagen-featured .custom-file-label-promo{
+    width: 115px;
+}
+
 .agregar-imagen-galeria .material-icons {
     font-size: 42px;
     color: #7B7B8C;
@@ -408,4 +416,34 @@ a:hover{
 .pedido_imagen {
     width: 50px;
     height: 50px;
+}
+
+.pagination-position {
+    padding-right: 1.1%;
+}
+
+.searchbox-position {
+    padding-right: 2%;
+}
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link{
+    background-color: #17A2B8;
+}
+
+.notifications_lbl {
+    color: #f8f9fa!important;
+}
+div .notifications_lbl {
+    padding: 13px 16px;
+}
+.notification-box {
+    padding: 10px 0px;
+}
+.inside_add_div {
+    text-align: right;
+}
+@media (min-width:992px)
+{
+    .modal-lg {
+        width:900px;top:12%;
+    }
 }

@@ -51,7 +51,7 @@ class Cupon extends AbstractModel implements HasPresenter {
      *
      * @var int
      */
-    public static $paginate = 2;
+    public static $paginate = 10;
 
     /**
      * The columns to order by when displaying an index.
@@ -85,4 +85,8 @@ class Cupon extends AbstractModel implements HasPresenter {
     {
         return 'GrahamCampbell\BootstrapCMS\Presenters\CuponPresenter';
     }
+
+	public function getClientsById() {
+		return $this->belongsToMany(Client::class,'cupon_client')->withPivot('id','deleted_at');
+	}
 }

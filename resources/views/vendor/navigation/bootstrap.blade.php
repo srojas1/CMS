@@ -1,7 +1,7 @@
 <!--- PANEL LATERAL IZQUIERDA --->
 <div class="panel-modulos col-12 col-sm-12 col-md-3 col-lg-3 col-xl-2">
     <div class="logo-tienda">
-        <h1 class="text-hide" style="background-image: url('https://getbootstrap.com/docs/4.1/assets/brand/bootstrap-solid.svg'); max-width: 320px; height: 50px; background-repeat: no-repeat;">Logo tienda</h1>
+        <h1 class="text-hide" style="background-image: url('/images/{{ getJsonValue(getCompanyModel()->logo) }}'); background-size: contain; width: 320px; height: 50px; background-repeat: no-repeat;">Logo tienda</h1>
     </div>
     <div class="modulos">
         <ul class="nav flex-column">
@@ -10,21 +10,6 @@
                     <a class="nav-link" href="{!! $item['url'] !!}"><i class="material-icons">  {!! ((!$item['icon'] == '') ? $item['icon'] : '') !!}</i> {{ $item['title'] }}</a>
                 </li>
             @endforeach
-            {{--<li class="nav-item">--}}
-                {{--<a class="nav-link" href="#"><i class="material-icons">assignment</i> Pedidos</a>--}}
-            {{--</li>--}}
-            {{--<li class="nav-item">--}}
-                {{--<a class="nav-link" href="#"><i class="material-icons">store</i> Productos</a>--}}
-            {{--</li>--}}
-            {{--<li class="nav-item">--}}
-                {{--<a class="nav-link" href="#"><i class="material-icons">card_giftcard</i> Promociones</a>--}}
-            {{--</li>--}}
-            {{--<li class="nav-item">--}}
-                {{--<a class="nav-link" href="#"><i class="material-icons">group</i> Clientes</a>--}}
-            {{--</li>--}}
-            {{--<li class="nav-item">--}}
-                {{--<a class="nav-link disabled" href="#"><i class="material-icons">phonelink_setup</i> Personaliza tu app</a>--}}
-            {{--</li>--}}
         </ul>
     </div>
 </div>

@@ -24,8 +24,8 @@
                                         </button>
                                         <select id="id_estado_change" class="dropdown-menu">
                                             {{--todo: poner estados desde la bd--}}
-                                            @foreach(array('1'=>'NO ATENDIDO',
-                                            '2'=>'PROCESADO',
+                                            @foreach(array('1'=>'EN ESPERA',
+                                            '2'=>'ATENTIENDO',
                                             '3'=>'ENTREGADO',
                                             '4'=>'FALLIDO',
                                             '5'=>'RECHAZADO') as $key => $est)
@@ -46,8 +46,8 @@
                                 </div>
                             </div>
                             <div class="col-8 justify-content-center">
-                                <a href="" class="accion"><i class="material-icons">print</i></a>
-                                <a href="" class="accion"><i class="material-icons">get_app</i></a>
+                                <a href="" class="accion"><i class="material-icons print">print</i></a>
+                                <a href="" class="accion"><hidden id="editor"></hidden><i class="material-icons download">get_app</i></a>
                             </div>
                         </div>
                     </div>
@@ -72,13 +72,17 @@
                                         <table class="table table-hover table-borderless">
                                             <tbody>
                                             <!--- LISTA DE PRODUCTOS --->
+                                            <?php $subtotal1=0.00?>
+											<?php $subtotal=0.00?>
                                             @foreach($ped->getProductsById as $prod)
                                             <tr>
-                                                <td>5</td>
+										        <td>{{$prod->orders[0]->pivot->cantidad}}</td>
                                                 <td><div class="d-inline-flex"><img class="pedido_imagen" src="{{ asset('images/'.getJsonValue($prod->filename_main))}}" alt="..." class="producto-icon border-top border-bottom border-right border-left">{{$prod->producto}}</div></td>
                                                 @if($prod->getCurrencyById->simbolo)
                                                     <td class="d-flex justify-content-end">{{$prod->getCurrencyById->simbolo}} {{$prod->precio}}</td>
                                                 @endif
+                                                <?php $subtotal1 = $prod->orders[0]->pivot->cantidad*$prod->precio?>
+                                                <?php $subtotal += $subtotal1 ?>
                                             </tr>
                                             @endforeach
                                             <!--- LISTA DE DESCUENTOS --->
@@ -96,20 +100,22 @@
                                             <tbody>
                                             <tr>
                                                 <td><div class="d-flex justify-content-end">SUBTOTAL: </div></td>
-                                                <td class="d-flex justify-content-end">S/ 100.00</td>
+                                                <td class="d-flex justify-content-end">S/ {{number_format($subtotal,2)}}</td>
                                             </tr>
                                             <tr>
                                                 <td><div class="d-flex justify-content-end">COSTO DE ENVÍO: </div></td>
-                                                <td class="d-flex justify-content-end">S/ 0.00</td>
+                                                <?php $costoEnvio = \GrahamCampbell\BootstrapCMS\Http\Constants::COSTO_ENVIO;?>
+                                                <td class="d-flex justify-content-end">S/ {{number_format($costoEnvio,2)}}</td>
                                             </tr>
                                             <tr>
                                                 <td><div class="d-flex justify-content-end">IGV (18%):</div></td>
-                                                <td class="d-flex justify-content-end">S/ 8.10</td>
+                                                <?php  $igv = \GrahamCampbell\BootstrapCMS\Http\Constants::IGV*number_format($subtotal,2);?>
+                                                <td class="d-flex justify-content-end">S/ {{number_format($igv,2)}}</td>
                                             </tr>
                                             <tr>
                                                 <td><div class="d-flex justify-content-end">TOTAL:</div></td>
-                                                <?php $total = 8.10 + $ped->total?>
-                                                <td class="d-flex justify-content-end">S/ {{$total}}</td>
+                                                <?php $extras = $igv + $costoEnvio?>
+                                                <td class="d-flex justify-content-end">S/ {{number_format($subtotal+$extras,2)}}</td>
                                             </tr>
                                             </tbody>
                                         </table>

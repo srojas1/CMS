@@ -70,7 +70,7 @@ class User extends SentryUser implements HasPresenter
      *
      * @var int
      */
-    public static $paginate = 2;
+    public static $paginate = 20;
 
     /**
      * The columns to order by when displaying an index.

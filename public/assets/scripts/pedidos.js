@@ -19,6 +19,7 @@ $(document).ready(function(){
                       }
                 }).done(function(msg) {
                     alert('se modificó el estado');
+                    location.reload();
                 });
             });
         });
@@ -27,24 +28,50 @@ $(document).ready(function(){
             window.location.reload();
         });
 
-    $(".buscador").on("keyup", function() {
-        var value = $(this).val();
+    $('.nav-tabs > li > a.historico').on("click",function(e){
+        e.preventDefault();
+        $(document).find(".buscador").addClass("buscadorHistorico");
+        $(document).find(".buscador").removeClass("buscador");
 
-        $("table tr").each(function(index) {
-            if (index !== 0) {
+    });
 
-                $row = $(this);
+    $('.nav-tabs > li > a.pedidos').on("click",function(e){
+        e.preventDefault();
+        $(document).find(".buscadorHistorico").addClass("buscador");
+        $(document).find(".buscadorHistorico").removeClass("buscadorHistorico");
+    });
 
-                var id = $row.find("th:first").text();
-
-                if (id.indexOf(value) !== 0) {
-                    $row.hide();
-                }
-                else {
-                    $row.show();
-                }
-            }
+    $(document).on('keyup', '.buscador', function () {
+        var value = $(this).val().toLowerCase();
+        $(".table_pedido tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
+    });
+
+    $(document).on('keyup', '.buscadorHistorico', function () {
+        var value = $(this).val().toLowerCase();
+        $(".table_historico tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+
+    $(document).on('click','.print',function(){
+        window.print();
+    });
+
+    var doc = new jsPDF();
+    var specialElementHandlers = {
+        '#editor': function (element, renderer) {
+            return true;
+        }
+    };
+
+    $(document).on('click','.download',function(){
+        doc.fromHTML($('.modal-content').html(), 15, 15, {
+            'width': 170,
+            'elementHandlers': specialElementHandlers
+        });
+        doc.save('pedidos.pdf');
     });
 
 });

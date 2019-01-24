@@ -51,7 +51,7 @@
 										</h4>
 										<div class="form-group">
 											<select name="selectCategorias" class="custom-select" id="categoriaProducto" rows="3">
-												@if($categoria->count() > 0)
+												@if($categoria)
 													@foreach($categoria as $key => $cats)
 														@if ($cats->id)
 															<option value={{$cats->id}} selected>{{$cats->categoria}}</option>
@@ -78,7 +78,7 @@
 															</div>
 														</div>
 														<div class="form-group">
-															<input type="text" class="form-control nombre-nueva-categoria nueva_categoria_inside" placeholder="Nombre de categoría">
+															<input  id="nueva_categoria_inside" type="text" class="form-control nombre-nueva-categoria nueva_categoria_inside" placeholder="Nombre de categoría">
 														</div>
 													</div>
 													<div class="col-12 col-sm-12 col-md-5 col-lg-7 d-flex pl-0">
@@ -151,34 +151,34 @@
 									</div>
 									<div class="col-12 col-sm-6 col-md-6 col-lg-8">
 										<div class="d-flex align-items-center row ml-1">
-											Galería de producto
-											<span class="help pl-3">
-													<a tabindex="0" class="btn badge badge-pill badge-secondary badge-light" role="button" data-toggle="tooltip" title="Agrega una imagen 600px x 600px">
-														<i class="material-icons">help</i>
-													</a>
-												</span>
-											<div class="imagen-medidas row col-12">
-												<small>.jpg .png | 350px x 140px</small>
+											{{--Galería de producto--}}
+											{{--<span class="help pl-3">--}}
+													{{--<a tabindex="0" class="btn badge badge-pill badge-secondary badge-light" role="button" data-toggle="tooltip" title="Agrega una imagen 600px x 600px">--}}
+														{{--<i class="material-icons">help</i>--}}
+													{{--</a>--}}
+												{{--</span>--}}
+											{{--<div class="imagen-medidas row col-12">--}}
+												{{--<small>.jpg .png | 350px x 140px</small>--}}
 											</div>
 										</div>
 										<div class="d-flex pt-4 row ml-1">
-											<div class="agregar-imagen-galeria form-group mr-2">
-												<div class="input-group">
-													<div class="custom-file">
-														<input type="file" name="filename[]" multiple="multiple" class="gallery_image custom-file-input justify-content-center" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
-														<label class="custom-file-label justify-content-center" for="inputGroupFile04">
-															<i class="material-icons">add_photo_alternate</i>
-														</label>
-													</div>
-												</div>
-											</div>
+											{{--<div class="agregar-imagen-galeria form-group mr-2">--}}
+												{{--<div class="input-group">--}}
+													{{--<div class="custom-file">--}}
+														{{--<input type="file" name="filename[]" multiple="multiple" class="gallery_image custom-file-input justify-content-center" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">--}}
+														{{--<label class="custom-file-label justify-content-center" for="inputGroupFile04">--}}
+															{{--<i class="material-icons">add_photo_alternate</i>--}}
+														{{--</label>--}}
+													{{--</div>--}}
+												{{--</div>--}}
+											{{--</div>--}}
 
-											<div class="d-flex mr-2">
-												<div class="form-group">
-													<div class="contenedor_galeria inline-block position-relative">
-													</div>
-												</div>
-											</div>
+											{{--<div class="d-flex mr-2">--}}
+												{{--<div class="form-group">--}}
+													{{--<div class="contenedor_galeria inline-block position-relative">--}}
+													{{--</div>--}}
+												{{--</div>--}}
+											{{--</div>--}}
 										</div>
 									</div>
 								</div>
@@ -191,19 +191,25 @@
 									</a>
 								</div>
 							</div>
-						</div>
 
 						<div class="tab-pane fade show" id="editarProductoInventario" role="tabpanel" aria-labelledby="editarProductoInventario-tab">
 							<div class="board-body">
 								<h4>Inventario del producto</h4>
 								<div class="container-fluid row align-items-center justify-content-start">
 									<div class="d-flex col-12 col-sm-12 col-md-12 col-lg-6">
-										@foreach($stock as $nkey=>$st)
-											<div class="form-group custom-control custom-radio custom-control-inline">
-												<input name="stockValue_add" type="radio" id="customRadioInline_add_{{$nkey+1}}" class="customRadioInline custom-control-input" value="{{$st['value']}}">
-												<label class="custom-control-label" for="customRadioInline_add_{{$nkey+1}}">{{$st['nombre']}}</label>
-											</div>
-										@endforeach
+										@if (count($stock) > 0)
+											@foreach($stock as $nkey=>$st)
+												<div class="form-group custom-control custom-radio custom-control-inline">
+													@if($nkey== 0)
+														<input name="stockValue_add" type="radio" id="customRadioInline_add_{{$nkey+1}}" class="customRadioInline custom-control-input" value="{{$st['value']}}" checked>
+														@else
+														<input name="stockValue_add" type="radio" id="customRadioInline_add_{{$nkey+1}}" class="customRadioInline custom-control-input" value="{{$st['value']}}">
+													@endif
+
+													<label class="custom-control-label" for="customRadioInline_add_{{$nkey+1}}">{{$st['nombre']}}</label>
+												</div>
+											@endforeach
+										@endif
 									</div>
 
 									<div class="d-flex col-12 col-sm-12 col-md-12 col-lg-6">
@@ -270,9 +276,11 @@
 										<div class="form-group col-7">
 											<select class="custom-select" id="atributoProducto" rows="3">
 												<option>Selecciona un atributo</option>
-												@foreach($atributos as $nkey=>$atr)
-													<option value={{$atr->id}}>{{$atr->atributo}}</option>
-												@endforeach
+												@if(count($atributos)>0)
+													@foreach($atributos as $nkey=>$atr)
+														<option value={{$atr->id}}>{{$atr->atributo}}</option>
+													@endforeach
+												@endif
 											</select>
 										</div>
 									</div>
@@ -315,26 +323,28 @@
 									</div>
 								</div>
 								<div class="atributo_contenedor2 pt-4 pb-3 pl-3 mr-0 ml-0 border-top">
-									@foreach($atributos as $nkey=>$atr)
-										<div class="container-fluid row col-12 justify-content-start align-items-center">
-											<div class="form-group col-3">
-												{{$atr->atributo}}:
+									@if(count($atributos)>0)
+										@foreach($atributos as $nkey=>$atr)
+											<div class="container-fluid row col-12 justify-content-start align-items-center">
+												<div class="form-group col-3">
+													{{$atr->atributo}}:
+												</div>
+												<div class="form-group col-7">
+													<select class="custom-select" id="atributoProducto" name="atributoProductoVal[{{$atr->id}}]" rows="3">
+														<?php $values = json_decode($atr->valor) ?>
+														@foreach($values as $val)
+															<option value="{{$val}}">{{$val}}</option>
+														@endforeach
+													</select>
+												</div>
+												<div class="form-group col-2">
+													<a href="#" class="badge-pill eliminarAtributo shadow-sm">
+														<i class="material-icons">clear</i>
+													</a>
+												</div>
 											</div>
-											<div class="form-group col-7">
-												<select class="custom-select" id="atributoProducto" name="atributoProductoVal[{{$atr->id}}]" rows="3">
-													<?php $values = json_decode($atr->valor) ?>
-													@foreach($values as $val)
-														<option value="{{$val}}">{{$val}}</option>
-													@endforeach
-												</select>
-											</div>
-											<div class="form-group col-2">
-												<a href="#" class="badge-pill eliminarAtributo shadow-sm">
-													<i class="material-icons">clear</i>
-												</a>
-											</div>
-										</div>
-									@endforeach
+										@endforeach
+									@endif
 								</div>
 								<div class="form-group d-flex justify-content-end pt-4 border-top">
 									<a tabindex="0" class="btn" role="button" data-toggle="tooltip" title="Eliminar">
@@ -354,9 +364,11 @@
 									<div class="container-fluid row col-12 justify-content-start align-items-center">
 										<div class="form-group col-8">
 											<select id="producto_vincular" name="vinculacionProductoVal[]" class="custom-select" placeholder="Buscar producto a vincular">
-												@foreach($producto as $nkey=>$prod)
-													<option value="{{$prod->id}}">{{$prod->producto}}</option>
-												@endforeach
+												@if(count($producto)>0)
+													@foreach($producto as $nkey=>$prod)
+														<option value="{{$prod->id}}">{{$prod->producto}}</option>
+													@endforeach
+												@endif
 											</select>
 										</div>
 										<div class="form-group">
@@ -366,23 +378,8 @@
 								</div>
 								<div class="pt-4 pb-3 pl-3 mr-0 ml-0 border-top">
 									<div class="container_vinculacion container-fluid row col-12 justify-content-start align-items-center">
-										<?php $productosVinculados = json_decode($prod->vinculacion) ?>
-                                        @if($productosVinculados)
-                                            @foreach($productosVinculados as $pv)
-                                                <div class="container-fluid row col-12 justify-content-start align-items-center">
-                                                    <div class="form-group col-9">
-                                                        <div class="d-inline-flex"><img src="{{ asset('images/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{getProductsNameByIds($pv)}}</div>
-                                                    </div>
-                                                    <div class="form-group col-3">
-                                                        <a href="#" class="badge-pill eliminarRelacion shadow-sm">
-                                                            <i class="material-icons">clear</i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                        @endif									</div>
+									</div>
 								</div>
-
 								<div class="form-group d-flex justify-content-end pt-4 border-top">
 									<a tabindex="0" class="btn" role="button" data-toggle="tooltip" title="Cancelar / Descontinuar Producto">
 										<i class="material-icons">delete</i>

@@ -1,6 +1,5 @@
-
 @foreach ($producto as $nkey=>$prod)
-<div class="modal fade" id="modalEditarProducto_{!! $prod->id !!}" tabindex="-1" role="dialog" aria-labelledby="modalEditarProducto_{!! $prod->id !!}" aria-hidden="true">
+<div class="modal_editar_producto modal fade" id="modalEditarProducto_{!! $prod->id !!}" tabindex="-1" role="dialog" aria-labelledby="modalEditarProducto_{!! $prod->id !!}" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<form id="edit_product_form_{!! $prod->id !!}" enctype="multipart/form-data" method="post">
 			<div class="modal-content">
@@ -85,7 +84,7 @@
 													</div>
 													<div class="col-12 col-sm-12 col-md-5 col-lg-7 d-flex pl-0">
 														<div class="form-group">
-															<button type="button" class="crear_categoria_inside btn btn-primary">Crear categoría</button>
+															<button type="button" class="crear_categoria_inside_edit btn btn-primary">Crear categoría</button>
 														</div>
 														<div class="form-group">
 															<small class="help">
@@ -154,39 +153,38 @@
 									</div>
 									<div class="col-12 col-sm-6 col-md-6 col-lg-8">
 										<div class="d-flex align-items-center row ml-1">
-											Galería de producto
-											<span class="help pl-3">
-													<a tabindex="0" class="btn badge badge-pill badge-secondary badge-light" role="button" data-toggle="tooltip" title="Agrega una imagen 600px x 600px">
-														<i class="material-icons">help</i>
-													</a>
-												</span>
-											<div class="imagen-medidas row col-12">
-												<small>.jpg .png | 350px x 140px</small>
-											</div>
+											{{--Galería de producto--}}
+											{{--<span class="help pl-3">--}}
+													{{--<a tabindex="0" class="btn badge badge-pill badge-secondary badge-light" role="button" data-toggle="tooltip" title="Agrega una imagen 600px x 600px">--}}
+														{{--<i class="material-icons">help</i>--}}
+													{{--</a>--}}
+												{{--</span>--}}
+											{{--<div class="imagen-medidas row col-12">--}}
+												{{--<small>.jpg .png | 350px x 140px</small>--}}
+											{{--</div>--}}
 										</div>
 										<div class="d-flex pt-4 row ml-1">
+											{{--<div class="agregar-imagen-galeria form-group mr-2">--}}
+												{{--<div class="input-group">--}}
+													{{--<div class="custom-file">--}}
+														{{--<input type="file" name="filename[]" multiple="multiple" class="gallery_image custom-file-input justify-content-center" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">--}}
+														{{--<label class="custom-file-label justify-content-center" for="inputGroupFile04">--}}
+															{{--<i class="material-icons">add_photo_alternate</i>--}}
+														{{--</label>--}}
+													{{--</div>--}}
+												{{--</div>--}}
+											{{--</div>--}}
 
-											<div class="agregar-imagen-galeria form-group mr-2">
-												<div class="input-group">
-													<div class="custom-file">
-														<input type="file" name="filename[]" multiple="multiple" class="gallery_image custom-file-input justify-content-center" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
-														<label class="custom-file-label justify-content-center" for="inputGroupFile04">
-															<i class="material-icons">add_photo_alternate</i>
-														</label>
-													</div>
-												</div>
-											</div>
-
-											<div class="d-flex mr-2">
-												<div class="form-group">
-													<div class="inline-block position-relative">
-														<img src="{{ asset('images/demoproducto.jpg') }}" class="imagen-galeria shadow-sm border-top border-bottom border-right border-left">
-														<a href="#" class="badge badge-light badge-pill eliminarImagen shadow-sm">
-															<i class="material-icons">clear</i>
-														</a>
-													</div>
-												</div>
-											</div>
+											{{--<div class="d-flex mr-2">--}}
+												{{--<div class="form-group">--}}
+													{{--<div class="inline-block position-relative">--}}
+														{{--<img src="{{ asset('images/demoproducto.jpg') }}" class="imagen-galeria shadow-sm border-top border-bottom border-right border-left">--}}
+														{{--<a href="#" class="badge badge-light badge-pill eliminarImagen shadow-sm">--}}
+															{{--<i class="material-icons">clear</i>--}}
+														{{--</a>--}}
+													{{--</div>--}}
+												{{--</div>--}}
+											{{--</div>--}}
 										</div>
 									</div>
 								</div>
@@ -298,11 +296,12 @@
 												<option>Selecciona un atributo</option>
 												@if($atributos)
 													@foreach($atributos as $nkey=>$atr)
-														<option value={{$atr->id}}>{{$atr->atributo}}</option>
+														<option name={!! $atr->atributo !!} class="nombre_atributo" value={{$atr->id}}>{{$atr->atributo}}</option>
 													@endforeach
 												@endif
 											</select>
 										</div>
+										<button type="button" class="btn btn-primary agregar_atributo">+</button>
 									</div>
 									<div class="container-fluid row col-12 justify-content-start align-items-center pr-0">
 										<div class="col-3"></div>
@@ -342,8 +341,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="atributo_contenedor pt-4 pb-3 pl-3 mr-0 ml-0 border-top">
-
+								<div class="atributo_contenedor_{!! $prod->id !!} pt-4 pb-3 pl-3 mr-0 ml-0 border-top">
 									@if($prod->getAttributesById)
 										@foreach($prod->getAttributesById as $nkey=>$atr)
 											@if(!$atr->pivot->deleted_at)
@@ -366,7 +364,7 @@
 													</div>
 														<div class="form-group col-2">
 															<input type="hidden" id="idAtributoProducto_{!! $prod->id !!}" class="idAtributoProducto" value="{{$atr->pivot->id}}"/>
-															<a href="#" class="badge-pill eliminarAtributo shadow-sm">
+															<a href="#" class="badge-pill eliminarAtributoEdit shadow-sm">
 																<i class="material-icons">clear</i>
 															</a>
 														</div>
@@ -404,18 +402,18 @@
 									</div>
 								</div>
 								<div class="pt-4 pb-3 pl-3 mr-0 ml-0 border-top">
-									<div class="container_vinculacion container-fluid row col-12 justify-content-start align-items-center">
+									<div class="container_vinculacion_{!! $prod->id !!} container-fluid row col-12 justify-content-start align-items-center">
 										<?php $productosVinculados = json_decode($prod->vinculacion) ?>
 
 										@if($productosVinculados)
 											@foreach($productosVinculados as $pv)
 												<div class="container-fluid row col-12 justify-content-start align-items-center">
 													<div class="form-group col-9">
-														<input name="productoVinculado[]" type="hidden" value="{{$pv}}"/>
+														<input name="productoVinculadoEdit[]" type="hidden" value="{{$pv}}"/>
 														<div class="d-inline-flex"><img src="{{ asset('images/'.getJsonValue(getProductMainImageById($pv)))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{getProductsNameByIds($pv)}}</div>
 													</div>
 													<div class="form-group col-3">
-														<a href="#" class="badge-pill eliminarRelacion eliminarVinculacion shadow-sm">
+														<a href="#" class="badge-pill eliminarRelacion shadow-sm">
 															<i class="material-icons">clear</i>
 														</a>
 													</div>
