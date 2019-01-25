@@ -3,15 +3,21 @@
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 use GrahamCampbell\BootstrapCMS\Facades\PedidoRepository;
+use GrahamCampbell\Credentials\Credentials;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\App;
 
 class PdfController extends AbstractController
 {
 
-	public function index()
-	{
+	public function index(Credentials $credentials) {
+
+		if (!$credentials->check()) {
+			return Redirect::route('account.login');
+		}
+
 		$pedido = PedidoRepository::paginate();
 
 		$view =  View::make('pdf_pedido.index', ['pedido'=>$pedido])->render();

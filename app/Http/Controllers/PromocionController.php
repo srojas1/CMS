@@ -7,6 +7,7 @@ use GrahamCampbell\BootstrapCMS\Facades\ProductoRepository;
 use GrahamCampbell\BootstrapCMS\Facades\PromocionRepository;
 use GrahamCampbell\BootstrapCMS\Facades\RecompensaRepository;
 use GrahamCampbell\BootstrapCMS\Facades\ClienteRepository;
+use GrahamCampbell\Credentials\Credentials;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
@@ -34,7 +35,12 @@ class PromocionController extends AbstractController {
 	 *
 	 * @return Response
 	 */
-    public function index() {
+	public function index(Credentials $credentials) {
+
+		if (!$credentials->check()) {
+			return Redirect::route('account.login');
+		}
+
 		$promocion  = PromocionRepository::paginate();
 		$cupon      = CuponRepository::paginate();
 		$recompensa = RecompensaRepository::paginate();

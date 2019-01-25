@@ -39,7 +39,12 @@ class CategoriaController extends AbstractController {
 	 * Mostrar lista de categorias
 	 * @return \Illuminate\View\View
 	 */
-	public function index() {
+	public function index(Credentials $credentials) {
+
+		if (!$credentials->check()) {
+			return Redirect::route('account.login');
+		}
+
 		$categoria = CategoriaRepository::paginate();
 
 		return View::make('categorias.index', ['categoria' => $categoria]);

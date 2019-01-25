@@ -2,6 +2,8 @@
 
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
+use GrahamCampbell\Credentials\Credentials;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 
 class PersonalizaAppController extends AbstractController
@@ -11,7 +13,12 @@ class PersonalizaAppController extends AbstractController
 	 *
 	 * @return Response
 	 */
-	public function index() {
+	public function index(Credentials $credentials) {
+
+		if (!$credentials->check()) {
+			return Redirect::route('account.login');
+		}
+
 		return View::make('personaliza_app.index', ['']);
 	}
 }

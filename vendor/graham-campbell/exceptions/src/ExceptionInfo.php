@@ -63,11 +63,11 @@ class ExceptionInfo
             $msg = (string) $exception->getMessage();
             $info['detail'] = (strlen($msg) > 4) ? $msg : $info['message'];
             var_dump($msg);
-            $info['summary'] = (strlen($msg) < 36 && strlen($msg) > 4) ? $msg : 'Houston, We Have A Problem.';
+            $info['summary'] = (strlen($msg) < 36 && strlen($msg) > 4) ? $msg : 'Error en el procesamiento.';
         } else {
             $info['detail'] = $info['message'];
 			var_dump($exception->getMessage());
-            $info['summary'] = 'Houston, We Have A Problem.';
+            $info['summary'] = 'Algo salió mal.';
         }
 
         unset($info['message']);

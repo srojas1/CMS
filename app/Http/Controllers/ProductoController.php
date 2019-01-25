@@ -2,12 +2,15 @@
 
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
+use Cartalyst\Sentry\Sentry;
+use Cartalyst\Sentry\Users\UserNotFoundException;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\BootstrapCMS\Facades\AtributoRepository;
 use GrahamCampbell\BootstrapCMS\Facades\AtributoProductoRepository;
 use GrahamCampbell\BootstrapCMS\Facades\ProductoRepository;
 use GrahamCampbell\BootstrapCMS\Facades\CategoriaRepository;
 use GrahamCampbell\BootstrapCMS\Models\Product;
+use GrahamCampbell\Credentials\Credentials;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
@@ -22,18 +25,20 @@ class ProductoController extends AbstractController
 	 * @return void
 	 */
 	public function __construct() {
-		$this->setPermissions([
-			'create'  => 'edit',
-			'store'   => 'edit',
-			'store1'  => 'edit',
-			'edit'    => 'edit',
-			'update'  => 'edit',
-			'destroy' => 'edit',
-		]);
 
-        $this->producto = Product::with('getCategoryById')->get();
+			$this->setPermissions([
+				'create'  => 'edit',
+				'store'   => 'edit',
+				'store1'  => 'edit',
+				'edit'    => 'edit',
+				'update'  => 'edit',
+				'destroy' => 'edit',
+			]);
 
-		parent::__construct();
+			$this->producto = Product::with('getCategoryById')->get();
+
+			parent::__construct();
+
 	}
 
 	/**
@@ -41,7 +46,12 @@ class ProductoController extends AbstractController
 	 *
 	 * @return \Illuminate\View\View
 	 */
-	public function index() {
+	public function index(Credentials $credentials) {
+
+		if (!$credentials->check()) {
+			return Redirect::route('account.login');
+		}
+
 		$producto  = ProductoRepository::paginate();
 		$categoria = CategoriaRepository::paginate();
 		$links     = ProductoRepository::links();

@@ -3,6 +3,7 @@
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 use GrahamCampbell\BootstrapCMS\Facades\ClienteRepository;
+use GrahamCampbell\Credentials\Credentials;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -29,7 +30,12 @@ class ClienteController extends AbstractController {
 	 *
 	 * @return Response
 	 */
-	public function index() {
+	public function index(Credentials $credentials) {
+
+		if (!$credentials->check()) {
+			return Redirect::route('account.login');
+		}
+
 		$cliente   = ClienteRepository::paginate();
 		$links     = ClienteRepository::links();
 

@@ -4,8 +4,10 @@ namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 use GrahamCampbell\BootstrapCMS\Models\Empresa as Empresa;
 use GrahamCampbell\BootstrapCMS\Facades\EmpresaRepository;
+use GrahamCampbell\Credentials\Credentials;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Redirect;
 
 class ConfiguracionEmpresaController extends AbstractController
 {
@@ -14,7 +16,12 @@ class ConfiguracionEmpresaController extends AbstractController
 	 *
 	 * @return Response
 	 */
-	public function index() {
+	public function index(Credentials $credentials) {
+
+		if (!$credentials->check()) {
+			return Redirect::route('account.login');
+		}
+
 		$empresa  = Empresa::first();
 		return View::make('conf_empresa.index', ['empresa'=>$empresa]);
 	}

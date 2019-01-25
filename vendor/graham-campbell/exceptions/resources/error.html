@@ -48,21 +48,18 @@
             <h2>{{ $name }}</h2>
             <hr>
 
-            <h3>What does this mean?</h3>
+            <h3>Qué significa?</h3>
 
             <p>
-                Something went wrong on our servers while we were processing your request.
+                Algo salió mal en nuestros servidores mientras procesábamos su solicitud.
                 {{ $detail }}
-                This occurrence has been logged, and a highly trained team of monkeys has been
-                dispatched to deal with your problem. We're really sorry about this, and will
-                work hard to get this resolved as soon as possible.
+                 Este suceso ha sido registrado, con el fin de determinar el problema. Lamentamos mucho los inconvenientes y trataremos de resolver esto lo antes posible.
             </p>
             <p>
-                This error can be identified by <i>{{ $id }}</i>.
-                You might want to take a note of this code.
+                Este error puede ser identificado con el código: <i>{{ $id }}</i>.
             </p>
             <p>
-                Perhaps you would like to go to our <a href="{{ $home_url }}">home page</a>?
+                Desea ir a nuestra <a href="{{ $home_url }}">página principal</a>?
             </p>
         </div>
     </div>

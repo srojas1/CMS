@@ -4,6 +4,7 @@ namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 use GrahamCampbell\BootstrapCMS\Facades\AtributoRepository;
 use GrahamCampbell\BootstrapCMS\Facades\AtributoProductoRepository;
+use GrahamCampbell\Credentials\Credentials;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -30,8 +31,12 @@ class AtributoController extends AbstractController {
 	 *
 	 * @return \Illuminate\View\View
 	 */
-	public function index()
-	{
+	public function index(Credentials $credentials) {
+
+		if (!$credentials->check()) {
+			return Redirect::route('account.login');
+		}
+
 		$atributo = AtributoRepository::paginate();
 
 		return View::make('atributos.index', ['atributo'=>$atributo]);
