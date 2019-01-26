@@ -2,7 +2,6 @@
 
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
-use GrahamCampbell\BootstrapCMS\Models\Empresa as Empresa;
 use GrahamCampbell\BootstrapCMS\Facades\EmpresaRepository;
 use GrahamCampbell\Credentials\Credentials;
 use Illuminate\Http\Request;
@@ -22,8 +21,9 @@ class ConfiguracionEmpresaController extends AbstractController
 			return Redirect::route('account.login');
 		}
 
-		$empresa  = Empresa::first();
-		return View::make('conf_empresa.index', ['empresa'=>$empresa]);
+		$user = $credentials->getUser();
+
+		return View::make('conf_empresa.index', ['user'=>$user]);
 	}
 
 	/**
@@ -46,7 +46,7 @@ class ConfiguracionEmpresaController extends AbstractController
 			$data_main[] = $name_main;
 
 			if (!empty($data_main)) {
-				$input['logo'] = json_encode($data_main);
+				$input['logo'] = $data_main[0];
 			}
 		}
 

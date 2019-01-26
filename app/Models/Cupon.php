@@ -44,7 +44,7 @@ class Cupon extends AbstractModel implements HasPresenter {
      *
      * @var array
      */
-    public static $index = ['id','cupon','descuento','vencimiento','stock_maximo','condicion'];
+    public static $index = ['id','cupon','descuento','vencimiento','stock_maximo','condicion','user_id'];
 
     /**
      * The max events per page when displaying a paginated index.
@@ -88,5 +88,9 @@ class Cupon extends AbstractModel implements HasPresenter {
 
 	public function getClientsById() {
 		return $this->belongsToMany(Client::class,'cupon_client')->withPivot('id','deleted_at');
+	}
+
+	public function getUserById() {
+		return $this->hasOne(User::class,'id','user_id');
 	}
 }

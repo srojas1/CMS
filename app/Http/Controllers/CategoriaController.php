@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use GrahamCampbell\BootstrapCMS\Models\Empresa;
+use GrahamCampbell\BootstrapCMS\Http\Libraries\ElementLibrary;
 
 /**
  * Class CategoriaController
@@ -46,6 +48,10 @@ class CategoriaController extends AbstractController {
 		}
 
 		$categoria = CategoriaRepository::paginate();
+		$empresa   = Empresa::first();
+
+		$elementLibrary = new ElementLibrary();
+		$categoria = $elementLibrary->validacionEmpresa($categoria,$empresa);
 
 		return View::make('categorias.index', ['categoria' => $categoria]);
 	}

@@ -40,8 +40,8 @@
                             <tbody>
                             @foreach ($users as $user)
                                 <tr>
-                                    <th scope="row" class="align-middle"><div class="d-flex align-items-center"></div>{!! $user->name !!}</th>
-                                    <td class="align-middle"><div class="d-flex justify-content-center">{!! $user->user_company_id !!}</td>
+                                    <th scope="row" class="align-middle"><div class="d-flex align-items-center"></div>{!! $user->first_name !!}  {!! $user->last_name!!}</th>
+                                    <td class="align-middle"><div class="d-flex justify-content-center">{!! $user->getEmpresaById->nombre_empresa !!}</td>
                                     <td class="align-middle"><div class="d-flex justify-content-center">{!! $user->email !!}</td>
                                     <td class="align-middle">
                                         {{--&nbsp;<a class="btn btn-success" href="{!! URL::route('users.show', array('users' => $user->id)) !!}"><i class="fa fa-file-text"></i> Show</a>--}}

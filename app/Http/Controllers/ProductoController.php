@@ -2,8 +2,6 @@
 
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
-use Cartalyst\Sentry\Sentry;
-use Cartalyst\Sentry\Users\UserNotFoundException;
 use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\BootstrapCMS\Facades\AtributoRepository;
 use GrahamCampbell\BootstrapCMS\Facades\AtributoProductoRepository;
@@ -16,6 +14,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use GrahamCampbell\BootstrapCMS\Http\Constants as Config;
+use GrahamCampbell\BootstrapCMS\Http\Libraries\ElementLibrary;
+
 
 class ProductoController extends AbstractController
 {
@@ -55,7 +55,8 @@ class ProductoController extends AbstractController
 		$producto  = ProductoRepository::paginate();
 		$categoria = CategoriaRepository::paginate();
 		$links     = ProductoRepository::links();
-		$atributos  = AtributoRepository::all();
+		$atributos = AtributoRepository::all();
+		$userCompanyId = $credentials->getUser()->user_company_id;
 
 		$stockName = array(
 			array('nombre'=>Config::EN_STOCK_LABEL,'value'=>Config::EN_STOCK),
@@ -67,6 +68,11 @@ class ProductoController extends AbstractController
 		$categoryActive = "";
 
 		$links = formatPagination($links);
+
+		$elementLibrary = new ElementLibrary();
+
+		$producto  = $elementLibrary->validacionEmpresa($producto,$userCompanyId);
+		$categoria = $elementLibrary->validacionEmpresa($categoria,$userCompanyId);
 
 		return View::make('productos.index',
 			[

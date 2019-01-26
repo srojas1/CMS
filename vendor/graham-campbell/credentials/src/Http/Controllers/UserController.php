@@ -27,6 +27,8 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use GrahamCampbell\BootstrapCMS\Http\Libraries\ElementLibrary;
+use GrahamCampbell\Credentials\Credentials as CredentialsMain;
 
 /**
  * This is the user controller class.
@@ -63,12 +65,16 @@ class UserController extends AbstractController
 	 *
 	 * @return \Illuminate\View\View
 	 */
-	public function index()
+	public function index(CredentialsMain $credentials)
 	{
 		$users = UserRepository::paginate();
 		$links = UserRepository::links();
 
 		$links = formatPagination($links);
+		$userCompanyId = $credentials->getUser()->user_company_id;
+
+		$elementLibrary = new ElementLibrary();
+		$users = $elementLibrary->validacionEmpresaUser($users,$userCompanyId);
 
 		return View::make('credentials::users.index', compact('users', 'links'));
 	}

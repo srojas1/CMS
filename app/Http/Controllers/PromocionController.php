@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use GrahamCampbell\BootstrapCMS\Http\Libraries\ElementLibrary;
 
 class PromocionController extends AbstractController {
 
@@ -46,14 +47,20 @@ class PromocionController extends AbstractController {
 		$recompensa = RecompensaRepository::paginate();
 		$producto   = ProductoRepository::paginate();
 		$cliente    = ClienteRepository::paginate();
-
-		$links = PromocionRepository::links();
+		$links      = PromocionRepository::links();
+		$userCompanyId = $credentials->getUser()->user_company_id;
 
 		$arrStatus = array(
 			'promoStatus'=>'active',
 			'cuponStatus'=>'',
 			'recompensaStatus'=>'',
 		);
+
+		$elementLibrary = new ElementLibrary();
+
+		$promocion = $elementLibrary->validacionEmpresa($promocion,$userCompanyId);
+		$cupon = $elementLibrary->validacionEmpresa($cupon,$userCompanyId);
+		$recompensa = $elementLibrary->validacionEmpresa($recompensa,$userCompanyId);
 
 		return View::make('extras.index', [
 			'promocion'=>$promocion,

@@ -44,7 +44,7 @@ class Promo extends AbstractModel implements HasPresenter {
      *
      * @var array
      */
-    public static $index = ['id','promocion','precio','stock_maximo','fecha_inicio','fecha_fin','filename_main','vinculacion_producto'];
+    public static $index = ['id','promocion','precio','stock_maximo','fecha_inicio','fecha_fin','filename_main','vinculacion_producto','user_id'];
 
     /**
      * The max events per page when displaying a paginated index.
@@ -85,4 +85,8 @@ class Promo extends AbstractModel implements HasPresenter {
     {
         return 'GrahamCampbell\BootstrapCMS\Presenters\PromoPresenter';
     }
+
+	public function getUserById() {
+		return $this->hasOne(User::class,'id','user_id');
+	}
 }

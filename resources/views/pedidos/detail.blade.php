@@ -68,7 +68,7 @@
                             <div class="board-body">
                                 <h4>Detalles de pedido</h4>
                                 <div class="container-fluid">
-                                    <div class="table-responsive">download_pdf
+                                    <div class="table-responsive">
                                         <table class="table table-hover table-borderless">
                                             <tbody>
                                             <!--- LISTA DE PRODUCTOS --->

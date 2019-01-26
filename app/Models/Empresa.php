@@ -85,4 +85,8 @@ class Empresa extends AbstractModel implements HasPresenter {
     {
         return 'GrahamCampbell\BootstrapCMS\Presenters\EmpresaPresenter';
     }
+
+	public function getUserById() {
+		return $this->hasOne(User::class,'id','user_company_id');
+	}
 }

@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use GrahamCampbell\BootstrapCMS\Http\Libraries\ElementLibrary;
 
 class PedidoController extends AbstractController {
 
@@ -38,7 +39,11 @@ class PedidoController extends AbstractController {
 			return Redirect::route('account.login');
 		}
 
-		$pedido = PedidoRepository::paginate();
+		$pedido  = PedidoRepository::paginate();
+		$userCompanyId = $credentials->getUser()->user_company_id;
+
+		$elementLibrary = new ElementLibrary();
+		$pedido = $elementLibrary->validacionEmpresaPedido($pedido,$userCompanyId);
 
 		return View::make('pedidos.index', ['pedido' => $pedido]);
 	}

@@ -1,3 +1,4 @@
+@if(count($producto))
 @foreach ($producto as $nkey=>$prod)
 <div class="modal_editar_producto modal fade" id="modalEditarProducto_{!! $prod->id !!}" tabindex="-1" role="dialog" aria-labelledby="modalEditarProducto_{!! $prod->id !!}" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -52,7 +53,7 @@
 										</h4>
 										<div class="form-group">
 											<select name="selectCategorias" class="custom-select" id="categoriaProducto_{!! $prod->id !!}" rows="3">
-												@if($categoria->count() > 0)
+												@if(count($categoria) > 0)
 													@foreach($categoria as $key => $cats)
 														@if ($cats->id == $prod->category_id)
 															<option value={{$cats->id}} selected>{{$cats->categoria}}</option>
@@ -440,3 +441,4 @@
 	</div>
 </div>
 @endforeach
+@endif

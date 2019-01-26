@@ -44,7 +44,7 @@ class Product extends AbstractModel implements HasPresenter {
 	 *
 	 * @var array
 	 */
-	public static $index = ['id','producto','codigo','descripcion','category_id','id_stock','precio','oferta','filename','filename_main','vinculacion','visibilidad','SKU'];
+	public static $index = ['id','producto','codigo','descripcion','category_id','id_stock','precio','oferta','filename','filename_main','vinculacion','visibilidad','SKU','user_id'];
 
 	/**
 	 * The max events per page when displaying a paginated index.
@@ -105,6 +105,10 @@ class Product extends AbstractModel implements HasPresenter {
 
 	public function getAttributesById() {
 		return $this->belongsToMany(Attribute::class,'attributes_products')->withPivot('valor','id','deleted_at');
+	}
+
+	public function getUserById() {
+		return $this->hasOne(User::class,'id','user_id');
 	}
 
 }

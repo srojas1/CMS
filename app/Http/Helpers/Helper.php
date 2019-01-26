@@ -27,14 +27,23 @@ function formatPagination($links) {
  * Obtiene imagen principal de la empresa
  *
  * @param $id
- * @return mixed
+ * @return string
  */
-function getCompanyModel() {
+
+function getCompanyModelLogo() {
 
 	$userModel    = \GrahamCampbell\BootstrapCMS\Models\User::first();
-	$companyModel = EmpresaModel::where('id', $userModel->user_company_id)->first();;
+	$companyModel = $userModel->getEmpresaById();
 
-	return $companyModel;
+	var_dump($userModel);
+	exit;
+
+	if(!$companyModel->logo)
+		$logo = $companyModel->logo;
+	else
+		$logo = "";
+
+	return $logo;
 }
 
 /**

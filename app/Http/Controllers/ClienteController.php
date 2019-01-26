@@ -7,6 +7,7 @@ use GrahamCampbell\Credentials\Credentials;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use GrahamCampbell\BootstrapCMS\Http\Libraries\ElementLibrary;
 
 class ClienteController extends AbstractController {
 
@@ -38,8 +39,12 @@ class ClienteController extends AbstractController {
 
 		$cliente   = ClienteRepository::paginate();
 		$links     = ClienteRepository::links();
+		$links     = formatPagination($links);
+		$userCompanyId = $credentials->getUser()->user_company_id;
 
-		$links = formatPagination($links);
+		$elementLibrary = new ElementLibrary();
+
+		$cliente = $elementLibrary->validacionEmpresa($cliente,$userCompanyId);
 
 		return View::make('clientes.index',
 			[
