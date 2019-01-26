@@ -19,6 +19,8 @@ class PersonalizaAppController extends AbstractController
 			return Redirect::route('account.login');
 		}
 
-		return View::make('personaliza_app.index', ['']);
+		$user = $credentials->getUser();
+
+		return View::make('personaliza_app.index', ['user'=>$user]);
 	}
 }

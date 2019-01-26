@@ -1,4 +1,3 @@
-@if(count($producto))
 @foreach ($producto as $nkey=>$prod)
 <div class="modal_editar_producto modal fade" id="modalEditarProducto_{!! $prod->id !!}" tabindex="-1" role="dialog" aria-labelledby="modalEditarProducto_{!! $prod->id !!}" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -293,7 +292,7 @@
 										</div>
 										<div class="form-group col-7">
 
-											<select class="custom-select" id="atributoProducto_{!! $prod->id !!}" rows="3">
+											<select class="agregar_atributo custom-select" id="atributoProducto_{!! $prod->id !!}" rows="3">
 												<option>Selecciona un atributo</option>
 												@if($atributos)
 													@foreach($atributos as $nkey=>$atr)
@@ -302,7 +301,6 @@
 												@endif
 											</select>
 										</div>
-										<button type="button" class="btn btn-primary agregar_atributo">+</button>
 									</div>
 									<div class="container-fluid row col-12 justify-content-start align-items-center pr-0">
 										<div class="col-3"></div>
@@ -441,4 +439,3 @@
 	</div>
 </div>
 @endforeach
-@endif

@@ -1,8 +1,5 @@
 <!--- PANEL LATERAL IZQUIERDA --->
 <div class="panel-modulos col-12 col-sm-12 col-md-3 col-lg-3 col-xl-2">
-    <div class="logo-tienda">
-        <h1 class="text-hide" style="background-image: url('/images/{{ getCompanyModelLogo() }}'); background-size: contain; width: 320px; height: 50px; background-repeat: no-repeat;">Logo tienda</h1>
-    </div>
     <div class="modulos">
         <ul class="nav flex-column">
             @foreach($main as $item)

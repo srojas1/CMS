@@ -40,6 +40,7 @@ class ClienteController extends AbstractController {
 		$cliente   = ClienteRepository::paginate();
 		$links     = ClienteRepository::links();
 		$links     = formatPagination($links);
+		$user = $credentials->getUser();
 		$userCompanyId = $credentials->getUser()->user_company_id;
 
 		$elementLibrary = new ElementLibrary();
@@ -50,6 +51,7 @@ class ClienteController extends AbstractController {
 			[
 			'cliente' => $cliente,
 			'links'=>$links,
+			'user'=>$user
 			]
 		);
 	}

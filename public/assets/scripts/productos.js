@@ -312,7 +312,8 @@ $(document).ready(function(){
                 id_producto: $id_producto
             }
         }).done(function(data) {
-            location.reload();
+            $('.modal').modal('hide');
+            $(".table_producto").load(window.location + " .table_producto");
         });
     });
 

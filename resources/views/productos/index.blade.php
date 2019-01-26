@@ -108,6 +108,7 @@
 																	   data-target="#modalEditarProducto_{!! $prod->id !!}">
 																		<i class="material-icons">edit</i>
 																	</a>
+																	<input type="hidden" id="hid_visibilidad" value="{{$prod->visibilidad}}"/>
 																	<a href="#delete_producto_{!! $prod->id !!}" data-toggle="modal" data-target="#delete_producto_{!! $prod->id !!}" class="accion">
 																		<i class="material-icons">close</i>
 																	</a>

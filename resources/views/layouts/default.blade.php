@@ -59,7 +59,7 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="material-icons">account_circle</i>&nbsp;&nbsp;Usuario Administrador
+                        <i class="material-icons">account_circle</i>&nbsp;&nbsp;{{$user->last_name}}, {{$user->first_name}}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="{!! URL::route('conf_empresa.index') !!}">Configuración</a>
@@ -83,7 +83,7 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="material-icons">account_circle</i>&nbsp;&nbsp;Usuario Administrador
+                        <i class="material-icons">account_circle</i>&nbsp;&nbsp;{{$user->last_name}}, {{$user->first_name}}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="#">Cuenta</a>
@@ -96,7 +96,11 @@
 </nav>
 <div class="container-fluid">
     <div class="page-contenedor row">
-        @navigation
+        <div class="panel-modulos col-12 col-sm-12 col-md-3 col-lg-3 col-xl-2">
+            <div class="logo-tienda"></div>
+            <h1 class="text-hide" style="background-image: url('/images/{{ getCompanyModelLogo($user->user_company_id) }}'); background-size: contain; width: 320px; height: 50px; background-repeat: no-repeat;margin-left:15px">Logo tienda</h1>
+            @navigation
+        </div>
         <!--- CONTENIDO DEL MÓDULO SELECCIONADO --->
         <div class="container col-12 col-sm-12 col-md-9 col-lg-9 col-xl-10">
             @section('top')

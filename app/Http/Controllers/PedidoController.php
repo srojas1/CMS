@@ -40,12 +40,13 @@ class PedidoController extends AbstractController {
 		}
 
 		$pedido  = PedidoRepository::paginate();
+		$user = $credentials->getUser();
 		$userCompanyId = $credentials->getUser()->user_company_id;
 
 		$elementLibrary = new ElementLibrary();
 		$pedido = $elementLibrary->validacionEmpresaPedido($pedido,$userCompanyId);
 
-		return View::make('pedidos.index', ['pedido' => $pedido]);
+		return View::make('pedidos.index', ['pedido' => $pedido,'user'=>$user]);
 	}
 
 	/**

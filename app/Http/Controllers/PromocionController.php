@@ -48,6 +48,7 @@ class PromocionController extends AbstractController {
 		$producto   = ProductoRepository::paginate();
 		$cliente    = ClienteRepository::paginate();
 		$links      = PromocionRepository::links();
+		$user = $credentials->getUser();
 		$userCompanyId = $credentials->getUser()->user_company_id;
 
 		$arrStatus = array(
@@ -71,7 +72,8 @@ class PromocionController extends AbstractController {
 			'extra_type'=>'Promocion',
 			'extra_type_lbl'=>'promocion',
 			'producto' => $producto,
-			'cliente' => $cliente
+			'cliente' => $cliente,
+			'user'=>$user
 		]);
 	}
 

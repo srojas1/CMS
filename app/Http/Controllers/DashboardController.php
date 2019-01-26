@@ -19,6 +19,8 @@ class DashboardController extends AbstractController
 			return Redirect::route('account.login');
 		}
 
-		return View::make('dashboard.index', ['']);
+		$user = $credentials->getUser();
+
+		return View::make('dashboard.index', ['user'=>$user]);
 	}
 }

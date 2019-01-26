@@ -56,6 +56,7 @@ class ProductoController extends AbstractController
 		$categoria = CategoriaRepository::paginate();
 		$links     = ProductoRepository::links();
 		$atributos = AtributoRepository::all();
+		$user = $credentials->getUser();
 		$userCompanyId = $credentials->getUser()->user_company_id;
 
 		$stockName = array(
@@ -82,7 +83,8 @@ class ProductoController extends AbstractController
 			'stock' => $stockName,
 			'atributos'=>$atributos,
             'productActive' => $productActive,
-            'categoryActive' => $categoryActive
+            'categoryActive' => $categoryActive,
+			'user'=>$user
 			]);
 	}
 

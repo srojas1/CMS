@@ -18,6 +18,8 @@ class ChatController extends AbstractController
 			return Redirect::route('account.login');
 		}
 
-		return View::make('chat.index', ['']);
+		$user = $credentials->getUser();
+
+		return View::make('chat.index', ['user'=>$user]);
 	}
 }
