@@ -85,6 +85,7 @@ class CuponController extends AbstractController {
 		$input['vencimiento'] = formatStringToDateTime($request->input('vencimientoCupon'));
 		$input['stock_maximo'] = $request->input('stockMaximoCupon');
 		$input['condicion']    = $request->input('condicionPromocion');
+		$input['user_id'] = 1;
 
 		$cupon = CuponRepository::create($input);
 

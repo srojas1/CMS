@@ -27,7 +27,7 @@
                 </div>
                 <div class="form-group col-12 row justify-content-center">
                     @if (Config::get('credentials.activation'))
-                        <label><a href="{!! URL::route('account.reset') !!}" class="btn btn-link">¿Olvidaste tu contraseña?</a>/<a href="{!! URL::route('account.resend') !!}" class="btn btn-link">No Activado?</a></label>
+                        <label><a href="{!! URL::route('account.reset') !!}" class="btn btn-link">¿Olvidaste tu contraseña?</a></label>
                     @else
                         <label><a href="{!! URL::route('account.reset') !!}" class="btn btn-link">¿Olvidaste tu contraseña?</a>
                     @endif

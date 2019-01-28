@@ -3,6 +3,7 @@
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 use GrahamCampbell\BootstrapCMS\Facades\PedidoRepository;
+use GrahamCampbell\BootstrapCMS\Models\Order;
 use GrahamCampbell\Credentials\Credentials;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;

@@ -124,7 +124,7 @@ class PromocionController extends AbstractController {
 				$input['vinculacion_producto'] = json_encode($vincArr);
 			}
 		}
-
+		$input['user_id'] = 1;
 		$promocion = PromocionRepository::create($input);
 
 		return json_encode($promocion);

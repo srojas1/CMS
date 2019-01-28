@@ -283,6 +283,7 @@ class ProductoController extends AbstractController
 			}
 		}
 
+		$input['user_id'] = 1;
 		$producto = ProductoRepository::create($input);
 
 		$atributosList  = $request->input('atributoProductoVal');

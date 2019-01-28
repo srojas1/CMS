@@ -17,11 +17,11 @@
                 <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-2 d-flex align-items-center justify-content-end pb-4">
                 </div>
                 <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 d-flex align-items-center justify-content-end pb-4">
-                    <div>
-                        @auth('admin')
-                            <a href="{!! URL::route('users.create') !!}" class="">Agregar usuario (+)</a>
-                        @endauth
-                    </div>
+                    {{--<div>--}}
+                        {{--@auth('admin')--}}
+                            {{--<a href="{!! URL::route('users.create') !!}" class="">Agregar usuario (+)</a>--}}
+                        {{--@endauth--}}
+                    {{--</div>--}}
                 </div>
             </div>
             <!--- CONTENIDO DE MÓDULO--->
@@ -51,9 +51,9 @@
                                             {{--<i class="material-icons">edit</i>--}}
                                             {{--</a>--}}
                                         @endauth
-                                        &nbsp;<a class="btn btn-warning" href="#suspend_user_{!! $user->id !!}" data-toggle="modal" data-target="#suspend_user_{!! $user->id !!}"><i class="fa fa-ban"></i> Suspend</a>
+                                        {{--&nbsp;<a class="btn btn-warning" href="#suspend_user_{!! $user->id !!}" data-toggle="modal" data-target="#suspend_user_{!! $user->id !!}"><i class="fa fa-ban"></i> Suspend</a>--}}
                                         @auth('admin')
-                                            &nbsp;<a class="btn btn-default" href="#reset_user_{!! $user->id !!}" data-toggle="modal" data-target="#reset_user_{!! $user->id !!}"><i class="fa fa-lock"></i> Reset Password</a>
+                                            {{--&nbsp;<a class="btn btn-default" href="#reset_user_{!! $user->id !!}" data-toggle="modal" data-target="#reset_user_{!! $user->id !!}"><i class="fa fa-lock"></i> Reset Password</a>--}}
                                             &nbsp;<a class="btn btn-danger" href="#delete_user_{!! $user->id !!}" data-toggle="modal" data-target="#delete_user_{!! $user->id !!}"><i class="fa fa-times"></i> Delete</a>
                                         @endauth
                                     </td>

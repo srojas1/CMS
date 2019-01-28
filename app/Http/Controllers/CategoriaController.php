@@ -107,6 +107,8 @@ class CategoriaController extends AbstractController {
 			}
 		}
 
+		$input['user_id'] = 1;
+
 		$categoria = CategoriaRepository::create($input);
 
 		return json_encode($categoria);

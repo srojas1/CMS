@@ -8,7 +8,7 @@ use GrahamCampbell\Credentials\Models\Relations\RevisionableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
 
-class Status extends AbstractModel implements HasPresenter {
+class StatusDetail extends AbstractModel implements HasPresenter {
 
     use BelongsToUserTrait, RevisionableTrait, SoftDeletes;
     /**
@@ -16,14 +16,14 @@ class Status extends AbstractModel implements HasPresenter {
      *
      * @var string
      */
-    protected $table = 'status';
+    protected $table = 'status_detail';
 
     /**
      * The model name.
      *
      * @var string
      */
-    public static $name = 'status';
+    public static $name = 'statusdetail';
 
     /**
      * The properties on the model that are dates.
@@ -37,14 +37,14 @@ class Status extends AbstractModel implements HasPresenter {
      *
      * @var array
      */
-    protected $keepRevisionOf = ['estado, status_detail','status_reject'];
+    protected $keepRevisionOf = ['status_detail'];
 
     /**
      * The columns to select when displaying an index.
      *
      * @var array
      */
-    public static $index = ['estado, status_detail','status_reject'];
+    public static $index = ['status_detail'];
 
     /**
      * The max events per page when displaying a paginated index.
@@ -83,7 +83,7 @@ class Status extends AbstractModel implements HasPresenter {
      */
     public function getPresenterClass()
     {
-        return 'GrahamCampbell\BootstrapCMS\Presenters\StatusPresenter';
+        return 'GrahamCampbell\BootstrapCMS\Presenters\StatusDetailPresenter';
     }
 
 }

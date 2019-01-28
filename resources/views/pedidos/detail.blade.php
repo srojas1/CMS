@@ -16,38 +16,42 @@
                         </h3>
                         <span>{{formatTimeText($ped->fecha_pedido)}}</span>
                         <div class="row justify-content-start align-items-center pt-4">
-                            <div class="col-4">
+                            <div class="col-12">
                                 <div class="btn-group">
                                     @if ($ped->getStatusById->estado)
-                                        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            NO ATENDIDO
-                                        </button>
-                                        <select id="id_estado_change" class="dropdown-menu">
-                                            {{--todo: poner estados desde la bd--}}
-                                            @foreach(array('1'=>'EN ESPERA',
-                                            '2'=>'ATENTIENDO',
-                                            '3'=>'ENTREGADO',
-                                            '4'=>'FALLIDO',
-                                            '5'=>'RECHAZADO') as $key => $est)
-                                                <option class="dropdown-item" value={{$key}}>{{$est}}</option>
-                                            @endforeach
-                                        </select>
-                                        {{--@foreach(array('1'=>'NO ATENDIDO',--}}
-                                        {{--'2'=>'PROCESADO',--}}
-                                        {{--'3'=>'ENTREGADO',--}}
-                                        {{--'4'=>'FALLIDO',--}}
-                                        {{--'5'=>'RECHAZADO') as $key => $est)--}}
-                                        {{--<option value={{$key}}> {{$est}}</option>--}}
-                                        {{--@endforeach--}}
-
+                                        <?php $statusDetail = json_decode($ped->getStatusById->status_detail) ?>
+										<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											ACEPTAR PEDIDO
+										</button>
+                                        <input id="id_estado_done" type="hidden" value="2">
+										<div class="detalle_aceptar dropdown-menu">
+											@foreach($statusDetail as $nkey=>$pedetalle)
+											    <a class="dropdown-item">{{$pedetalle}}</a>
+											@endforeach
+										</div>
                                     @else
                                         <div>{{\GrahamCampbell\BootstrapCMS\Http\Constants::STATUS_EMPTY}}</div>
                                     @endif
                                 </div>
-                            </div>
-                            <div class="col-8 justify-content-center">
-                                <a href="{!! URL::route('pdf_pedido.index') !!}" class="accion"><i class="material-icons print">print</i></a>
-                                <a href="{!! URL::route('pdf_pedido.create') !!}" class="accion"><hidden id="editor"></hidden><i class="material-icons download">get_app</i></a>
+                                <div class="btn-group">
+                                    @if ($ped->getStatusById->estado)
+										<?php $statusDetailReject = json_decode($ped->getStatusById->status_reject) ?>
+										<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											RECHAZAR
+										</button>
+										<div class="detalle_rechazar dropdown-menu">
+                                            @foreach($statusDetailReject as $nkey=>$pedreject)
+                                                <a class="dropdown-item">{{$pedreject}}</a>
+                                            @endforeach
+										</div>
+                                    @else
+                                        <div>{{\GrahamCampbell\BootstrapCMS\Http\Constants::STATUS_EMPTY}}</div>
+                                    @endif
+                                </div>
+								<div class="btn-group">
+									<a href="{!! URL::route('pdf_pedido.index') !!}" class="accion"><i class="material-icons print">print</i></a>
+									<a href="{!! URL::route('pdf_pedido.create') !!}" class="accion"><hidden id="editor"></hidden><i class="material-icons download">get_app</i></a>
+								</div>
                             </div>
                         </div>
                     </div>
