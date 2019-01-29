@@ -38,9 +38,9 @@ class PromocionController extends AbstractController {
 	 */
 	public function index(Credentials $credentials) {
 
-		if (!$credentials->check()) {
-			return Redirect::route('account.login');
-		}
+//		if (!$credentials->check()) {
+//			return Redirect::route('account.login');
+//		}
 
 		$promocion  = PromocionRepository::paginate();
 		$cupon      = CuponRepository::paginate();

@@ -3,7 +3,7 @@
 	<div class="board-body shadow-sm border-left border-right border-bottom">
 			<div class="container-fluid">
 				<div class="table-responsive">
-					<table class="table table-hover table_categoria">
+					<table class="table table-hover page table_categoria">
 						<thead class="thead-light">
 						<tr>
 							<th scope="col"><div class="d-flex justify-content-center">CATEGORÍA</div></th>
@@ -46,9 +46,15 @@
 						@if(count($categoria)>0)
 							@foreach ($categoria as $key1=>$cat)
 								<tr>
-									<th scope="row" class="align-middle" href="#modalEditarCategoria_{!! $cat->id !!}" class="accion"
-										data-toggle="modal"
-										data-target="#modalEditarCategoria_{!! $cat->id !!}"><div class="d-flex align-items-center"><img src="{{ asset('images/'.getJsonValue($cat->filename_main))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left"><div>{{$cat->categoria}}</div></div></th>
+									@if($cat->filename_main)
+										<th scope="row" class="align-middle" href="#modalEditarCategoria_{!! $cat->id !!}" class="accion"
+											data-toggle="modal"
+											data-target="#modalEditarCategoria_{!! $cat->id !!}"><div class="d-flex align-items-center"><img src="{{ asset('images/'.getJsonValue($cat->filename_main))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left"><div>{{$cat->categoria}}</div></div></th>
+									@else
+										<th scope="row" class="align-middle" href="#modalEditarCategoria_{!! $cat->id !!}" class="accion"
+											data-toggle="modal"
+											data-target="#modalEditarCategoria_{!! $cat->id !!}"><div class="d-flex align-items-center"></div><img src="{{ asset('images/'.\GrahamCampbell\BootstrapCMS\Http\Constants::DEFAULT_IMAGE_NAME)}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$cat->categoria}}</th>
+									@endif
 									<?php $sumProductos = 0;
 									$sumVentas = 0;
 									$sumIngresos=0;
@@ -90,3 +96,19 @@
 			</div>
 	</div>
 </div>
+<ul id="pagination-demo" class="pagination-lg pull-right"></ul>
+{{--<!--- FOOTER DEL MODULO --->--}}
+{{--<div class="modulo-footer">--}}
+	{{--<div class="container-fluid">--}}
+		{{--<div class="row justify-content-end">--}}
+			{{--<nav aria-label="..." class="pagination-position">--}}
+				{{--<ul class="pagination">--}}
+					{{--{!! $linksCat !!}--}}
+				{{--</ul>--}}
+			{{--</nav>--}}
+		{{--</div>--}}
+		{{--<div class="row justify-content-end tools">--}}
+			{{--<a href="" class="">Exportar a excel</a>--}}
+		{{--</div>--}}
+	{{--</div>--}}
+{{--</div>--}}

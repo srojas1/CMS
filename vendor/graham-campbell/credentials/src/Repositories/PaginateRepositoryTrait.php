@@ -11,9 +11,9 @@
 
 namespace GrahamCampbell\Credentials\Repositories;
 
+use Illuminate\Contracts\Logging\Log;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
 /**
  * This is the paginate repository trait.
  *
@@ -38,11 +38,12 @@ trait PaginateRepositoryTrait
     public function paginate()
     {
         $model = $this->model;
-
         if (property_exists($model, 'order')) {
             $paginator = $model::orderBy($model::$order, $model::$sort)->paginate($model::$paginate, $model::$index);
+            //var_dump($model::$page_name);
         } else {
             $paginator = $model::paginate($model::$paginate, $model::$index);
+			dd("nurse 2");
         }
 
         if (!$this->isPageInRange($paginator) && !$this->isFirstPage($paginator)) {

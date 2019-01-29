@@ -16,7 +16,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use GrahamCampbell\BootstrapCMS\Http\Constants as Config;
 use GrahamCampbell\BootstrapCMS\Http\Libraries\ElementLibrary;
 
-
 class ProductoController extends AbstractController
 {
 	/**
@@ -48,13 +47,14 @@ class ProductoController extends AbstractController
 	 */
 	public function index(Credentials $credentials) {
 
-		if (!$credentials->check()) {
-			return Redirect::route('account.login');
-		}
+//		if (!$credentials->check()) {
+//			return Redirect::route('account.login');
+//		}
 
-		$producto  = ProductoRepository::paginate();
-		$categoria = CategoriaRepository::paginate();
+		$producto  = ProductoRepository::all();
 		$links     = ProductoRepository::links();
+		$categoria = CategoriaRepository::all();
+		$linksCat  = CategoriaRepository::links();
 		$atributos = AtributoRepository::all();
 		$user = $credentials->getUser();
 		$userCompanyId = $credentials->getUser()->user_company_id;
@@ -65,10 +65,8 @@ class ProductoController extends AbstractController
 			array('nombre'=>Config::PRONTO_LABEL,'value'=>Config::PRONTO)
 		);
 
-		$productActive = "active";
-		$categoryActive = "";
-
 		$links = formatPagination($links);
+		$linksCat = formatPagination($linksCat);
 
 		$elementLibrary = new ElementLibrary();
 
@@ -80,10 +78,9 @@ class ProductoController extends AbstractController
 			'producto' => $producto,
 			'links'=>$links,
 			'categoria'=>$categoria,
+			'linksCat'=>$linksCat,
 			'stock' => $stockName,
 			'atributos'=>$atributos,
-            'productActive' => $productActive,
-            'categoryActive' => $categoryActive,
 			'user'=>$user
 			]);
 	}

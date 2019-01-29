@@ -53,6 +53,13 @@ class Category extends AbstractModel implements HasPresenter {
      */
     public static $paginate = 10;
 
+	/**
+	 * The model name.
+	 *
+	 * @var string
+	 */
+	public static $page_name = 'categoria';
+
     /**
      * The columns to order by when displaying an index.
      *
