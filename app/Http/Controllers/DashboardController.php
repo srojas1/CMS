@@ -2,6 +2,8 @@
 
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
+use GrahamCampbell\Credentials\Credentials;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 
 class DashboardController extends AbstractController
@@ -11,7 +13,14 @@ class DashboardController extends AbstractController
 	 *
 	 * @return Response
 	 */
-	public function index() {
-		return View::make('dashboard.index', ['']);
+	public function index(Credentials $credentials) {
+
+		if (!$credentials->check()) {
+			return Redirect::route('account.login');
+		}
+
+		$user = $credentials->getUser();
+
+		return View::make('dashboard.index', ['user'=>$user]);
 	}
 }

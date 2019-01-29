@@ -165,9 +165,9 @@ public function subscribe(Dispatcher $events)
 public function onNavigationMainFirst()
 {
 
-	$this->navigation->addToMain(
-		['title' => 'Bienvenido', 'slug' => 'bienvenido', 'icon' => 'home']
-	);
+//	$this->navigation->addToMain(
+//		['title' => 'Bienvenido', 'slug' => 'bienvenido', 'icon' => 'home']
+//	);
 
 	if ($this->credentials->hasAccess('dashboard')) {
 		$this->navigation->addToMain(

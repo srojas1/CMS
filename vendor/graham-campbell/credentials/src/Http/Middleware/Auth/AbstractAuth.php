@@ -75,7 +75,7 @@ abstract class AbstractAuth
             }
 
             return Redirect::guest(URL::route('account.login'))
-                ->with('error', 'Debe estar logueado para proceder con esta acción.');
+                ->with('error', 'You must be logged in to perform that action.');
         }
 
         if (!$this->credentials->hasAccess($level = $this->level())) {

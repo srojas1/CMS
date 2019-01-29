@@ -8,11 +8,13 @@ use GrahamCampbell\BootstrapCMS\Facades\AtributoProductoRepository;
 use GrahamCampbell\BootstrapCMS\Facades\ProductoRepository;
 use GrahamCampbell\BootstrapCMS\Facades\CategoriaRepository;
 use GrahamCampbell\BootstrapCMS\Models\Product;
+use GrahamCampbell\Credentials\Credentials;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use GrahamCampbell\BootstrapCMS\Http\Constants as Config;
+use GrahamCampbell\BootstrapCMS\Http\Libraries\ElementLibrary;
 
 class ProductoController extends AbstractController
 {
@@ -22,18 +24,20 @@ class ProductoController extends AbstractController
 	 * @return void
 	 */
 	public function __construct() {
-		$this->setPermissions([
-			'create'  => 'edit',
-			'store'   => 'edit',
-			'store1'  => 'edit',
-			'edit'    => 'edit',
-			'update'  => 'edit',
-			'destroy' => 'edit',
-		]);
 
-        $this->producto = Product::with('getCategoryById')->get();
+			$this->setPermissions([
+				'create'  => 'edit',
+				'store'   => 'edit',
+				'store1'  => 'edit',
+				'edit'    => 'edit',
+				'update'  => 'edit',
+				'destroy' => 'edit',
+			]);
 
-		parent::__construct();
+			$this->producto = Product::with('getCategoryById')->get();
+
+			parent::__construct();
+
 	}
 
 	/**
@@ -41,11 +45,19 @@ class ProductoController extends AbstractController
 	 *
 	 * @return \Illuminate\View\View
 	 */
-	public function index() {
-		$producto  = ProductoRepository::paginate();
-		$categoria = CategoriaRepository::paginate();
+	public function index(Credentials $credentials) {
+
+//		if (!$credentials->check()) {
+//			return Redirect::route('account.login');
+//		}
+
+		$producto  = ProductoRepository::all();
 		$links     = ProductoRepository::links();
-		$atributos  = AtributoRepository::all();
+		$categoria = CategoriaRepository::all();
+		$linksCat  = CategoriaRepository::links();
+		$atributos = AtributoRepository::all();
+		$user = $credentials->getUser();
+		$userCompanyId = $credentials->getUser()->user_company_id;
 
 		$stockName = array(
 			array('nombre'=>Config::EN_STOCK_LABEL,'value'=>Config::EN_STOCK),
@@ -53,20 +65,23 @@ class ProductoController extends AbstractController
 			array('nombre'=>Config::PRONTO_LABEL,'value'=>Config::PRONTO)
 		);
 
-		$productActive = "active";
-		$categoryActive = "";
-
 		$links = formatPagination($links);
+		$linksCat = formatPagination($linksCat);
+
+		$elementLibrary = new ElementLibrary();
+
+		$producto  = $elementLibrary->validacionEmpresa($producto,$userCompanyId);
+		$categoria = $elementLibrary->validacionEmpresa($categoria,$userCompanyId);
 
 		return View::make('productos.index',
 			[
 			'producto' => $producto,
 			'links'=>$links,
 			'categoria'=>$categoria,
+			'linksCat'=>$linksCat,
 			'stock' => $stockName,
 			'atributos'=>$atributos,
-            'productActive' => $productActive,
-            'categoryActive' => $categoryActive
+			'user'=>$user
 			]);
 	}
 
@@ -265,6 +280,7 @@ class ProductoController extends AbstractController
 			}
 		}
 
+		$input['user_id'] = 1;
 		$producto = ProductoRepository::create($input);
 
 		$atributosList  = $request->input('atributoProductoVal');
@@ -407,6 +423,30 @@ class ProductoController extends AbstractController
 		return Redirect::route('producto.show', ['producto' => $producto->id])
 			->with('success', trans('messages.producto.update_success'));
 	}
+
+
+	/**
+	 * Deshabilita visualizacion de un producto
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function disable() {
+		$id = $_POST['id_producto'];
+		$producto = ProductoRepository::find($id);
+		$this->checkProduct($producto);
+
+		if($_POST['visibilidad']==1)
+			$input['visibilidad'] = 0;
+		else if($_POST['visibilidad']==0)
+			$input['visibilidad'] = 1;
+
+		$producto->update($input);
+
+		return Redirect::route('producto.index')
+			->with('success', trans('messages.producto.update_success'));
+	}
+
 
 	/**
 	 * Elimina un producto

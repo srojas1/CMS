@@ -44,11 +44,10 @@ interface DisplayerInterface
      *
      * @param \Exception $original
      * @param \Exception $transformed
-     * @param int        $code
      *
      * @return bool
      */
-    public function canDisplay(Exception $original, Exception $transformed, $code);
+    public function canDisplay(Exception $original, Exception $transformed);
 
     /**
      * Do we provide verbose information about the exception?

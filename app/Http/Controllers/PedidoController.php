@@ -3,9 +3,13 @@
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 use GrahamCampbell\BootstrapCMS\Facades\PedidoRepository;
+use GrahamCampbell\BootstrapCMS\Models\Order;
+use GrahamCampbell\Credentials\Credentials;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use GrahamCampbell\BootstrapCMS\Http\Libraries\ElementLibrary;
 
 class PedidoController extends AbstractController {
 
@@ -30,10 +34,20 @@ class PedidoController extends AbstractController {
 	 *
 	 * @return Response
 	 */
-	public function index() {
-		$pedido = PedidoRepository::paginate();
+	public function index(Credentials $credentials) {
 
-		return View::make('pedidos.index', ['pedido' => $pedido]);
+		if (!$credentials->check()) {
+			return Redirect::route('account.login');
+		}
+
+		$pedido  = PedidoRepository::paginate();
+		$user = $credentials->getUser();
+		$userCompanyId = $credentials->getUser()->user_company_id;
+
+		$elementLibrary = new ElementLibrary();
+		$pedido = $elementLibrary->validacionEmpresaPedido($pedido,$userCompanyId);
+
+		return View::make('pedidos.index', ['pedido' => $pedido,'user'=>$user]);
 	}
 
 	/**

@@ -32,10 +32,10 @@
 				<div class="tabpanel">
 					<ul class="nav nav-tabs" role="tablist">
 						<li class="nav-item">
-							<a class="productos nav-link {{$productActive}}" data-toggle="tab" href="#productos">Productos ({{getCantidadElementos($producto)}})</a>
+							<a class="productos nav-link active" data-toggle="tab" href="#productos">Productos ({{getCantidadElementos($producto)}})</a>
 						</li>
 						<li id="category_tab" class="nav-item">
-							<a class="categorias nav-link {{$categoryActive}}" data-toggle="tab" href="#categorias">Categorías ({{getCantidadElementos($categoria)}})</a>
+							<a class="categorias nav-link" data-toggle="tab" href="#categorias">Categorías ({{getCantidadElementos($categoria)}})</a>
 						</li>
 					</ul>
 					<div class="tab-content">
@@ -44,7 +44,7 @@
 							<div class="modulo-body shadow-sm border-left border-right border-button">
 								<div class="container-fluid">
 									<div class="table-responsive">
-										<table class="table table-hover table_producto">
+										<table class="page table table-hover table_producto">
 											<thead class="thead-light">
 											<tr>
 												<th scope="col"><div class="d-flex justify-content-center">PRODUCTO</div></th>
@@ -58,56 +58,68 @@
 											</tr>
 											</thead>
 											<tbody>
-											@if(count($producto)>0)
-												@foreach ($producto as $prod)
-														@if($prod->filename_main)
-															<th scope="row" class="align-middle" href="#modalEditarProducto_{!! $prod->id !!}" class="accion"
-																data-toggle="modal"
-																data-target="#modalEditarProducto_{!! $prod->id !!}">
-															<div class="d-flex align-items-center"></div><img src="{{ asset('images/'.getJsonValue($prod->filename_main))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prod->producto}}</th>
-														@else
-															<th scope="row" class="align-middle"><div class="d-flex align-items-center"></div><img src="{{ asset('images/'.\GrahamCampbell\BootstrapCMS\Http\Constants::DEFAULT_IMAGE_NAME)}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prod->producto}}</th>
-														@endif
-														@if($prod->getCategoryById)
-															<td class="align-middle"><div class="d-flex justify-content-center">{{$prod->getCategoryById->categoria}}</div></td>
-														@else
-															<td class="align-middle"><div class="d-flex justify-content-center">Sin categoria existente</div></td>
-														@endif
-														<td class="align-middle"><div class="d-flex justify-content-center"> {{getStockName($prod->id_stock)}}</div></td>
-														<td class="align-middle"><div class="d-flex justify-content-center">S/ {{$prod->precio}}</td>
-														<td class="align-middle"><div class="d-flex justify-content-center">S/ {{$prod->oferta}}</td>
-														<?php $sumVentas= 0 ?>
-														<?php $ord_prod= array();?>
-														@if($prod->orders)
-															@foreach($prod->orders as $key=>$ord_prod)
-																<?php $sumVentas+=$ord_prod->pivot->cantidad?>
-															@endforeach
-														@endif
-														<td class="align-middle"><div class="d-flex justify-content-center">{{$sumVentas}}</td>
-														<?php $ingreso=$sumVentas*$prod->precio?>
-														<td class="align-middle">
-															<div class="d-flex justify-content-center">
-																S/ {{number_format($ingreso,2)}}</td>
-														<td class="align-middle">
-															<div class="d-flex justify-content-center">
-																<a href="#detail_disableprod_{!! $prod->id !!}"
-																   data-toggle="modal"
-																   data-target="#detail_disableprod_{!! $prod->id !!}" class="accion">
-																	<i class="material-icons">remove_red_eye</i>
-																</a>
-																<a href="#modalEditarProducto_{!! $prod->id !!}" class="accion"
-																   data-toggle="modal"
-																   data-target="#modalEditarProducto_{!! $prod->id !!}">
-																	<i class="material-icons">edit</i>
-																</a>
-																<a href="#delete_producto_{!! $prod->id !!}" data-toggle="modal" data-target="#delete_producto_{!! $prod->id !!}" class="accion">
-																	<i class="material-icons">close</i>
-																</a>
-															</div>
-														</td>
-													</tr>
-												@endforeach
-											@endif
+											<tr>
+												@if(count($producto)>0)
+													@foreach ($producto as $prod)
+															@if($prod->filename_main)
+																<th scope="row" class="align-middle" href="#modalEditarProducto_{!! $prod->id !!}" class="accion"
+																	data-toggle="modal"
+																	data-target="#modalEditarProducto_{!! $prod->id !!}">
+																<div class="d-flex align-items-center"></div><img src="{{ asset('images/'.getJsonValue($prod->filename_main))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prod->producto}}</th>
+															@else
+																<th scope="row" class="align-middle" href="#modalEditarProducto_{!! $prod->id !!}" class="accion"
+																	data-toggle="modal"
+																	data-target="#modalEditarProducto_{!! $prod->id !!}"><div class="d-flex align-items-center"></div><img src="{{ asset('images/'.\GrahamCampbell\BootstrapCMS\Http\Constants::DEFAULT_IMAGE_NAME)}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prod->producto}}</th>
+															@endif
+															@if($prod->getCategoryById)
+																<td class="align-middle"><div class="d-flex justify-content-center">{{$prod->getCategoryById->categoria}}</div></td>
+															@else
+																<td class="align-middle"><div class="d-flex justify-content-center">Sin categoria existente</div></td>
+															@endif
+															<td class="align-middle"><div class="d-flex justify-content-center"> {{getStockName($prod->id_stock)}}</div></td>
+															<td class="align-middle"><div class="d-flex justify-content-center">S/ {{$prod->precio}}</div></td>
+															<td class="align-middle"><div class="d-flex justify-content-center">S/ {{$prod->oferta}}</div></td>
+															<?php $sumVentas= 0 ?>
+															<?php $ord_prod= array();?>
+															@if($prod->orders)
+																@foreach($prod->orders as $key=>$ord_prod)
+																	<?php $sumVentas+=$ord_prod->pivot->cantidad?>
+																@endforeach
+															@endif
+															<td class="align-middle"><div class="d-flex justify-content-center">{{$sumVentas}}</div></td>
+															<?php $ingreso=$sumVentas*$prod->precio?>
+															<td class="align-middle">
+																<div class="d-flex justify-content-center">
+																	S/ {{number_format($ingreso,2)}}</div></td>
+															<td class="align-middle">
+																<div class="d-flex justify-content-center">
+																	@if($prod->visibilidad==1)
+																		<a href="#detail_disableprod_{!! $prod->id !!}"
+																		   data-toggle="modal"
+																		   data-target="#detail_disableprod_{!! $prod->id !!}" class="accion">
+																			<i class="material-icons">remove_red_eye</i>
+																		</a>
+																	@else
+																		<a href="#detail_disableprod_{!! $prod->id !!}"
+																		   data-toggle="modal"
+																		   data-target="#detail_disableprod_{!! $prod->id !!}" class="accion">
+																			<i class="material-icons">remove_circle_outline</i>
+																		</a>
+																	@endif
+																	<a href="#modalEditarProducto_{!! $prod->id !!}" class="accion"
+																	   data-toggle="modal"
+																	   data-target="#modalEditarProducto_{!! $prod->id !!}">
+																		<i class="material-icons">edit</i>
+																	</a>
+																	<input type="hidden" id="hid_visibilidad" value="{{$prod->visibilidad}}"/>
+																	<a href="#delete_producto_{!! $prod->id !!}" data-toggle="modal" data-target="#delete_producto_{!! $prod->id !!}" class="accion">
+																		<i class="material-icons">close</i>
+																	</a>
+																</div>
+															</td>
+														</tr>
+													@endforeach
+												@endif
 											</tbody>
 										</table>
 									</div>
@@ -119,21 +131,22 @@
 				  </div>
 			</div>
         </div>
-    <!--- FOOTER DEL MODULO --->
-    <div class="modulo-footer">
-        <div class="container-fluid">
-            <div class="row justify-content-end">
-                <nav aria-label="..." class="pagination-position">
-                    <ul class="pagination">
-                        {!! $links !!}
-                    </ul>
-                </nav>
-            </div>
-            <div class="row justify-content-end tools">
-                {{--<a href="" class="">Exportar a excel</a>--}}
-            </div>
-        </div>
-    </div>
+	<ul id="pagination-demo" class="pagination-lg pull-right"></ul>
+	<!--- FOOTER DEL MODULO --->
+	{{--<div class="modulo-footer">--}}
+		{{--<div class="container-fluid">--}}
+			{{--<div class="row justify-content-end">--}}
+				{{--<nav aria-label="..." class="pagination-position">--}}
+					{{--<ul class="pagination">--}}
+						{{--{!! $links !!}--}}
+					{{--</ul>--}}
+				{{--</nav>--}}
+			{{--</div>--}}
+			{{--<div class="row justify-content-end tools">--}}
+				{{--<a href="" class="">Exportar a excel</a>--}}
+			{{--</div>--}}
+		{{--</div>--}}
+	{{--</div>--}}
 @endauth
 @stop
 
@@ -156,4 +169,5 @@
 @section('js')
 	<script type="text/javascript" src="{{ asset('assets/scripts/categorias.js')}}"></script>
 	<script type="text/javascript" src="{{ asset('assets/scripts/productos.js')}}"></script>
+	<script type="text/javascript" src="{{ asset('assets/scripts/jquery.twsPagination.js')}}"></script>
 @endsection

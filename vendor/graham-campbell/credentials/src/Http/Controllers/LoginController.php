@@ -32,119 +32,119 @@ use Illuminate\Support\Facades\View;
  */
 class LoginController extends AbstractController
 {
-    /**
-     * The throttler instance.
-     *
-     * @var \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface
-     */
-    protected $throttler;
+	/**
+	 * The throttler instance.
+	 *
+	 * @var \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface
+	 */
+	protected $throttler;
 
-    /**
-     * Create a new instance.
-     *
-     * @param \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface $throttler
-     *
-     * @return void
-     */
-    public function __construct(ThrottlerInterface $throttler)
-    {
-        $this->throttler = $throttler;
+	/**
+	 * Create a new instance.
+	 *
+	 * @param \GrahamCampbell\Throttle\Throttlers\ThrottlerInterface $throttler
+	 *
+	 * @return void
+	 */
+	public function __construct(ThrottlerInterface $throttler)
+	{
+		$this->throttler = $throttler;
 
-        $this->setPermissions([
-            'getLogout' => 'user',
-        ]);
+		$this->setPermissions([
+			'getLogout' => 'user',
+		]);
 
-        $this->beforeFilter('throttle.login', ['only' => ['postLogin']]);
-        $this->middleware(SentryThrottle::class, ['only' => ['postLogin']]);
+		$this->beforeFilter('throttle.login', ['only' => ['postLogin']]);
+		$this->middleware(SentryThrottle::class, ['only' => ['postLogin']]);
 
-        parent::__construct();
-    }
+		parent::__construct();
+	}
 
-    /**
-     * Display the login form.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function getLogin()
-    {
-        return View::make('credentials::account.login');
-    }
+	/**
+	 * Display the login form.
+	 *
+	 * @return \Illuminate\View\View
+	 */
+	public function getLogin()
+	{
+		return View::make('credentials::account.login');
+	}
 
-    /**
-     * Display the login form.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function getError()
-    {
-        return View::make('credentials::account.error');
-    }
+	/**
+	 * Display the login form.
+	 *
+	 * @return \Illuminate\View\View
+	 */
+	public function getError()
+	{
+		return View::make('credentials::account.error');
+	}
 
-    /**
-     * Attempt to login the specified user.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function postLogin()
-    {
-        $remember = Binput::get('rememberMe');
+	/**
+	 * Attempt to login the specified user.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function postLogin()
+	{
+		$remember = Binput::get('rememberMe');
 
-        $input = Binput::only(['email', 'password']);
+		$input = Binput::only(['email', 'password']);
 
-        $rules = UserRepository::rules(array_keys($input));
-        $rules['password'] = 'required|min:6';
+		$rules = UserRepository::rules(array_keys($input));
+		$rules['password'] = 'required|min:6';
 
-        $val = UserRepository::validate($input, $rules, true);
-        if ($val->fails()) {
-            return Redirect::route('account.error')->withInput()->withErrors($val->errors());
-        }
+		$val = UserRepository::validate($input, $rules, true);
+		if ($val->fails()) {
+			return Redirect::route('account.error')->withInput()->withErrors($val->errors());
+		}
 
-        //samuel (remove validation of throttle)
-        //$this->throttler->hit();
+		//samuel (remove validation of throttle)
+		//$this->throttler->hit();
 
-        try {
-            $throttle = Credentials::getThrottleProvider()->findByUserLogin($input['email']);
-            $throttle->check();
+		try {
+			$throttle = Credentials::getThrottleProvider()->findByUserLogin($input['email']);
+			$throttle->check();
 
-            Credentials::authenticate($input, $remember);
-        } catch (WrongPasswordException $e) {
-            return Redirect::route('account.error')->withInput()->withErrors($val->errors())
-                ->with('error', 'Contraseña Incorrecta');
-        } catch (UserNotFoundException $e) {
-            return Redirect::route('account.error')->withInput()->withErrors($val->errors())
-                ->with('error', 'Usuario incorrecto');
-        } catch (UserNotActivatedException $e) {
-            if (Config::get('credentials::activation')) {
-                return Redirect::route('accoundashboardt.error')->withInput()->withErrors($val->errors())
-                ->with('error', 'You have not yet activated this account.');
-            } else {
-                $throttle->user->attemptActivation($throttle->user->getActivationCode());
-                $throttle->user->addGroup(Credentials::getGroupProvider()->findByName('Users'));
+			Credentials::authenticate($input, $remember);
+		} catch (WrongPasswordException $e) {
+			return Redirect::route('account.error')->withInput()->withErrors($val->errors())
+				->with('error', 'Contraseña Incorrecta');
+		} catch (UserNotFoundException $e) {
+			return Redirect::route('account.error')->withInput()->withErrors($val->errors())
+				->with('error', 'Usuario incorrecto');
+		} catch (UserNotActivatedException $e) {
+			if (Config::get('credentials::activation')) {
+				return Redirect::route('accoundashboardt.error')->withInput()->withErrors($val->errors())
+					->with('error', 'You have not yet activated this account.');
+			} else {
+				$throttle->user->attemptActivation($throttle->user->getActivationCode());
+				$throttle->user->addGroup(Credentials::getGroupProvider()->findByName('Users'));
 
-                return $this->postLogin();
-            }
-        } catch (UserSuspendedException $e) {
-            $time = $throttle->getSuspensionTime();
+				return $this->postLogin();
+			}
+		} catch (UserSuspendedException $e) {
+			$time = $throttle->getSuspensionTime();
 
-            return Redirect::route('account.error')->withInput()->withErrors($val->errors())
-                ->with('error', "Your account has been suspended for $time minutes.");
-        } catch (UserBannedException $e) {
-            return Redirect::route('account.error')->withInput()->withErrors($val->errors())
-                ->with('error', 'You have been banned. Please contact support.');
-        }
+			return Redirect::route('account.error')->withInput()->withErrors($val->errors())
+				->with('error', "Your account has been suspended for $time minutes.");
+		} catch (UserBannedException $e) {
+			return Redirect::route('account.error')->withInput()->withErrors($val->errors())
+				->with('error', 'You have been banned. Please contact support.');
+		}
 
-        return Redirect::intended(Config::get('credentials.main_page', '/'));
-    }
+		return Redirect::intended(Config::get('credentials.main_page', '/'));
+	}
 
-    /**
-     * Logout the specified user.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getLogout()
-    {
-        Credentials::logout();
+	/**
+	 * Logout the specified user.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function getLogout()
+	{
+		Credentials::logout();
 
-        return Redirect::to(Config::get('credentials.home', '/'));
-    }
+		return Redirect::to(Config::get('credentials.home', '/'));
+	}
 }

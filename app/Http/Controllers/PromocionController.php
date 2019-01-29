@@ -7,10 +7,12 @@ use GrahamCampbell\BootstrapCMS\Facades\ProductoRepository;
 use GrahamCampbell\BootstrapCMS\Facades\PromocionRepository;
 use GrahamCampbell\BootstrapCMS\Facades\RecompensaRepository;
 use GrahamCampbell\BootstrapCMS\Facades\ClienteRepository;
+use GrahamCampbell\Credentials\Credentials;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use GrahamCampbell\BootstrapCMS\Http\Libraries\ElementLibrary;
 
 class PromocionController extends AbstractController {
 
@@ -34,20 +36,32 @@ class PromocionController extends AbstractController {
 	 *
 	 * @return Response
 	 */
-    public function index() {
+	public function index(Credentials $credentials) {
+
+//		if (!$credentials->check()) {
+//			return Redirect::route('account.login');
+//		}
+
 		$promocion  = PromocionRepository::paginate();
 		$cupon      = CuponRepository::paginate();
 		$recompensa = RecompensaRepository::paginate();
 		$producto   = ProductoRepository::paginate();
 		$cliente    = ClienteRepository::paginate();
-
-		$links = PromocionRepository::links();
+		$links      = PromocionRepository::links();
+		$user = $credentials->getUser();
+		$userCompanyId = $credentials->getUser()->user_company_id;
 
 		$arrStatus = array(
 			'promoStatus'=>'active',
 			'cuponStatus'=>'',
 			'recompensaStatus'=>'',
 		);
+
+		$elementLibrary = new ElementLibrary();
+
+		$promocion = $elementLibrary->validacionEmpresa($promocion,$userCompanyId);
+		$cupon = $elementLibrary->validacionEmpresa($cupon,$userCompanyId);
+		$recompensa = $elementLibrary->validacionEmpresa($recompensa,$userCompanyId);
 
 		return View::make('extras.index', [
 			'promocion'=>$promocion,
@@ -58,7 +72,8 @@ class PromocionController extends AbstractController {
 			'extra_type'=>'Promocion',
 			'extra_type_lbl'=>'promocion',
 			'producto' => $producto,
-			'cliente' => $cliente
+			'cliente' => $cliente,
+			'user'=>$user
 		]);
 	}
 
@@ -109,7 +124,7 @@ class PromocionController extends AbstractController {
 				$input['vinculacion_producto'] = json_encode($vincArr);
 			}
 		}
-
+		$input['user_id'] = 1;
 		$promocion = PromocionRepository::create($input);
 
 		return json_encode($promocion);

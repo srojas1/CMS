@@ -8,6 +8,7 @@ use GrahamCampbell\BootstrapCMS\Facades\CuponRepository;
 use GrahamCampbell\BootstrapCMS\Facades\PromocionRepository;
 use GrahamCampbell\BootstrapCMS\Facades\RecompensaRepository;
 use GrahamCampbell\BootstrapCMS\Facades\CuponClienteRepository;
+use GrahamCampbell\Credentials\Credentials;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
@@ -37,8 +38,12 @@ class CuponController extends AbstractController {
 	 *
 	 * @return Response
 	 */
-	public function index()
-	{
+	public function index(Credentials $credentials) {
+
+		if (!$credentials->check()) {
+			return Redirect::route('account.login');
+		}
+
 		$cupon         = CuponRepository::paginate();
 		$promocion     = PromocionRepository::paginate();
 		$recompensa    = RecompensaRepository::paginate();
@@ -80,6 +85,7 @@ class CuponController extends AbstractController {
 		$input['vencimiento'] = formatStringToDateTime($request->input('vencimientoCupon'));
 		$input['stock_maximo'] = $request->input('stockMaximoCupon');
 		$input['condicion']    = $request->input('condicionPromocion');
+		$input['user_id'] = 1;
 
 		$cupon = CuponRepository::create($input);
 

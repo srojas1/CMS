@@ -6,6 +6,7 @@ use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\BootstrapCMS\Facades\RecompensaRepository;
 use GrahamCampbell\BootstrapCMS\Facades\CuponRepository;
 use GrahamCampbell\BootstrapCMS\Facades\PromocionRepository;
+use GrahamCampbell\Credentials\Credentials;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
@@ -33,7 +34,12 @@ class RecompensaController extends AbstractController {
 	 *
 	 * @return Response
 	 */
-	public function index() {
+	public function index(Credentials $credentials) {
+
+		if (!$credentials->check()) {
+			return Redirect::route('account.login');
+		}
+
 		$recompensa = RecompensaRepository::paginate();
 		$links = RecompensaRepository::links();
 
@@ -64,6 +70,7 @@ class RecompensaController extends AbstractController {
 		$input['evento']        = $request->input('eventoRecompensa');
 		$input['puntos']        = $request->input('puntosRecompensa');
 		$input['descripcion']   = $request->input('descripcionRecompensa');
+		$input['user_id'] = 1;
 
 		$recompensa = RecompensaRepository::create($input);
 

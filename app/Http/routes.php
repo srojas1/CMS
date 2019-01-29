@@ -59,13 +59,17 @@ if (Config::get('cms.events')) {
 $router->resource('bienvenido', 'BienvenidoController');
 $router->resource('dashboard', 'DashboardController');
 $router->resource('conf_empresa', 'ConfiguracionEmpresaController');
+$router->resource('pdf_pedido', 'PdfController');
 
 // categorias routes
 if (Config::get('cms.categoria')) {
 	$router->resource('categoria', 'CategoriaController');
 }
 
-$router->resource('producto', 'ProductoController');
+if (Config::get('cms.producto')) {
+		$router->resource('producto', 'ProductoController');
+}
+
 $router->resource('cliente', 'ClienteController');
 $router->resource('pedido', 'PedidoController');
 $router->resource('promocion', 'PromocionController');
@@ -93,3 +97,4 @@ Route::post('promocion/editPromocion', 'PromocionController@editPromocion');
 Route::post('cupon/editCupon', 'CuponController@editCupon');
 Route::post('recompensa/editRecompensa', 'RecompensaController@editRecompensa');
 Route::post('confEmpresa/editEmpresa', 'ConfiguracionEmpresaController@editEmpresa');
+Route::post('producto/disable', 'ProductoController@disable');

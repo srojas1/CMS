@@ -27,7 +27,7 @@
                 </div>
                 <div class="form-group col-12 row justify-content-center">
                     @if (Config::get('credentials.activation'))
-                        <label><a href="{!! URL::route('account.reset') !!}" class="btn btn-link">¿Olvidaste tu contraseña?</a>/<a href="{!! URL::route('account.resend') !!}" class="btn btn-link">No Activado?</a></label>
+                        <label><a href="{!! URL::route('account.reset') !!}" class="btn btn-link">¿Olvidaste tu contraseña?</a></label>
                     @else
                         <label><a href="{!! URL::route('account.reset') !!}" class="btn btn-link">¿Olvidaste tu contraseña?</a>
                     @endif
@@ -36,18 +36,18 @@
             <div class="card-footer col-12 row justify-content-center"><span class="creditos">Todos los derechos reservados.</span></div>
         </div>
     </div>
-    </form>
+</form>
 </body>
-        {{--<div class="form-group">--}}
-            {{--<div class="col-md-offset-2 col-sm-offset-3 col-sm-10 col-xs-12">--}}
-                {{--<button class="btn btn-primary" type="submit"><i class="fa fa-rocket"></i> Ingresar</button>--}}
-                {{--@if (Config::get('credentials.activation'))--}}
-                    {{--<label><a href="{!! URL::route('account.reset') !!}" class="btn btn-link">Perdí mi contraseña</a>/<a href="{!! URL::route('account.resend') !!}" class="btn btn-link">No Activado?</a></label>--}}
-                {{--@else--}}
-                    {{--<label><a href="{!! URL::route('account.reset') !!}" class="btn btn-link">Perdí mi contraseña</a>--}}
-                {{--@endif--}}
-            {{--</div>--}}
-        {{--</div>--}}
+{{--<div class="form-group">--}}
+{{--<div class="col-md-offset-2 col-sm-offset-3 col-sm-10 col-xs-12">--}}
+{{--<button class="btn btn-primary" type="submit"><i class="fa fa-rocket"></i> Ingresar</button>--}}
+{{--@if (Config::get('credentials.activation'))--}}
+{{--<label><a href="{!! URL::route('account.reset') !!}" class="btn btn-link">Perdí mi contraseña</a>/<a href="{!! URL::route('account.resend') !!}" class="btn btn-link">No Activado?</a></label>--}}
+{{--@else--}}
+{{--<label><a href="{!! URL::route('account.reset') !!}" class="btn btn-link">Perdí mi contraseña</a>--}}
+{{--@endif--}}
+{{--</div>--}}
+{{--</div>--}}
 
-  {{--</form>--}}
+{{--</form>--}}
 {{--</div>--}}

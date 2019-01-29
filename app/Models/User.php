@@ -48,4 +48,8 @@ class User extends CredentialsUser
         $this->deleteEvents();
         $this->deleteComments();
     }
+
+	public function getEmpresaById() {
+		return $this->hasOne(Empresa::class,'id','user_company_id');
+	}
 }

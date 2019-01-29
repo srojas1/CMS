@@ -298,4 +298,49 @@ $(document).ready(function(){
         });
     });
 
+    $(document).on('click','#disable_product', function(){
+
+        $visibilidad = $('#hid_visibilidad').val();
+        $id_producto = $('#id_producto').val();
+
+        $.ajax({
+            type: "POST",
+            url: 'producto/disable',
+            cache: false,
+            data: {
+                visibilidad: $visibilidad,
+                id_producto: $id_producto
+            }
+        }).done(function(data) {
+            $('.modal').modal('hide');
+            $(".table_producto").load(window.location + " .table_producto");
+        });
+    });
+
+    $('.pagination-demo').twbsPagination({
+        totalPages: 5,
+        startPage: 1,
+        visiblePages: 5,
+        initiateStartPageClick: true,
+        href: false,
+        hrefVariable: '{{number}}',
+        first: 'First',
+        prev: 'Previous',
+        next: 'Next',
+        last: 'Last',
+        loop: false,
+        onPageClick: function (event, page) {
+            $('.page-active').removeClass('page-active');
+            $('#page'+page).addClass('page-active');
+        },
+        paginationClass: 'pagination',
+        nextClass: 'next',
+        prevClass: 'prev',
+        lastClass: 'last',
+        firstClass: 'first',
+        pageClass: 'page',
+        activeClass: 'active',
+        disabledClass: 'disabled'
+
+    });
 });

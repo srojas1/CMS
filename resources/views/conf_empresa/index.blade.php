@@ -15,9 +15,9 @@
 
     <div class="board-body">
         <div class="container-fluid">
-            <form id="edit_empresa_form_{!! $empresa->id !!}" enctype="multipart/form-data" method="post">
+            <form id="edit_empresa_form_{!! $user->getEmpresaById->id !!}" enctype="multipart/form-data" method="post">
                 <div class="form-group">
-                    <input name="nombreEmpresa" value="{{$empresa->nombre_empresa}}" type="text" class="form-control" id="nombreEmpresa" placeholder="Empresa">
+                    <input name="nombreEmpresa" value="{{$user->getEmpresaById->nombre_empresa}}" type="text" class="form-control" id="nombreEmpresa" placeholder="Empresa">
                 </div>
                 <div class="d-flex align-items-center row ml-1">
                     Imagen principal
@@ -45,14 +45,14 @@
                 <div class="d-flex">
                     <div class="form-group">
                         <div class="inline-block position-relative">
-                            <img src="{{ asset('images/'.getJsonValue($empresa->logo)) }}" class="imagen-featured shadow-sm border-top border-bottom border-right border-left">
+                            <img src="{{ asset('images/'.$user->getEmpresaById->logo) }}" class="imagen-featured shadow-sm border-top border-bottom border-right border-left">
                             <a href="#" class="badge badge-light badge-pill eliminarImagen shadow-sm">
                                 <i class="material-icons">clear</i>
                             </a>
                         </div>
                     </div>
                 </div>
-                <input type="hidden" name="id_empresa" class="id_empresa" value="{{$empresa->id}}"/>
+                <input type="hidden" name="id_empresa" class="id_empresa" value="{{$user->getEmpresaById->id}}"/>
             </form>
         </div>
     </div>

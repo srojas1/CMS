@@ -44,7 +44,7 @@ class Category extends AbstractModel implements HasPresenter {
      *
      * @var array
      */
-    public static $index = ['id','categoria','filename_main'];
+    public static $index = ['id','categoria','filename_main','user_id'];
 
     /**
      * The max events per page when displaying a paginated index.
@@ -52,6 +52,13 @@ class Category extends AbstractModel implements HasPresenter {
      * @var int
      */
     public static $paginate = 10;
+
+	/**
+	 * The model name.
+	 *
+	 * @var string
+	 */
+	public static $page_name = 'categoria';
 
     /**
      * The columns to order by when displaying an index.
@@ -89,5 +96,9 @@ class Category extends AbstractModel implements HasPresenter {
     public function products(){
         return $this->hasMany(Product::class);
     }
+
+	public function getUserById() {
+		return $this->hasOne(User::class,'id','user_id');
+	}
 
 }

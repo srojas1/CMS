@@ -6,23 +6,23 @@ $(document).ready(function(){
         
         idPedido = $(this).find('#id_pedido').val();
         selectEstado = $(this).find('.id_estado');
+        idEstadoChange = $(this).find('#id_estado_done').val();
 
-        $(this).find('#id_estado_change').on('change', function () {
-
-            idEstado = $(this).val();
+        $(this).find('.detalle_aceptar a').on('click', function () {
 
             $.ajax({
                 type: "POST",
-                url: 'pedido/changeStatus', // This is what I have updated
-                data: { id_estado: idEstado,
-                        id_pedido: idPedido
-                      }
-                }).done(function(msg) {
-                    alert('se modificó el estado');
-                    location.reload();
-                });
+                url: 'pedido/changeStatus',
+                data: {
+                    id_estado: idEstadoChange,
+                    id_pedido: idPedido
+                }
+            }).done(function(msg) {
+                alert('se modificó el estado');
             });
         });
+
+    });
         
         $(this).on('hidden.bs.modal', function (){
             window.location.reload();
@@ -53,25 +53,6 @@ $(document).ready(function(){
         $(".table_historico tr").filter(function() {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
-    });
-
-    $(document).on('click','.print',function(){
-        window.print();
-    });
-
-    var doc = new jsPDF();
-    var specialElementHandlers = {
-        '#editor': function (element, renderer) {
-            return true;
-        }
-    };
-
-    $(document).on('click','.download',function(){
-        doc.fromHTML($('.modal-content').html(), 15, 15, {
-            'width': 170,
-            'elementHandlers': specialElementHandlers
-        });
-        doc.save('pedidos.pdf');
     });
 
 });

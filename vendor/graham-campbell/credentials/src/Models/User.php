@@ -14,7 +14,6 @@ namespace GrahamCampbell\Credentials\Models;
 use Carbon\Carbon;
 use Cartalyst\Sentry\Groups\GroupInterface;
 use Cartalyst\Sentry\Users\Eloquent\User as SentryUser;
-use GrahamCampbell\BootstrapCMS\Models\Category;
 use GrahamCampbell\Credentials\Facades\Credentials;
 use GrahamCampbell\Credentials\Facades\RevisionRepository;
 use GrahamCampbell\Credentials\Models\Relations\RevisionableTrait;
@@ -57,21 +56,21 @@ class User extends SentryUser implements HasPresenter
      *
      * @var array
      */
-    protected $keepRevisionOf = ['user_company_id', 'email', 'password', 'activated', 'last_login', 'first_name', 'last_name'];
+    protected $keepRevisionOf = ['id', 'email', 'password', 'activated', 'last_login', 'first_name', 'last_name', 'user_company_id'];
 
     /**
      * The columns to select when displaying an index.
      *
      * @var array
      */
-    public static $index = ['id', 'email', 'first_name', 'last_name'];
+    public static $index = ['id', 'email', 'first_name', 'last_name', 'user_company_id'];
 
     /**
      * The max users per page when displaying a paginated index.
      *
      * @var int
      */
-    public static $paginate = 2;
+    public static $paginate = 20;
 
     /**
      * The columns to order by when displaying an index.
@@ -241,8 +240,4 @@ class User extends SentryUser implements HasPresenter
 
         return parent::removeGroup($group);
     }
-
-	public function GetUserCompanyById() {
-		return $this->hasOne(UserCompany::class,'id','user_company_id');
-	}
 }

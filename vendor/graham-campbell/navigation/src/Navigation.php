@@ -11,6 +11,7 @@
 
 namespace GrahamCampbell\Navigation;
 
+use GrahamCampbell\Credentials\Credentials;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;

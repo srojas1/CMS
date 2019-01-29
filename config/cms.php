@@ -378,4 +378,17 @@
 	*/
 
 		'empresa' => 'GrahamCampbell\BootstrapCMS\Models\Empresa',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Status Detail
+	|--------------------------------------------------------------------------
+	|
+	| This defines the model to be used.
+	|
+	| Default: 'GrahamCampbell\BootstrapCMS\Models\StatusDetail'
+	|
+	*/
+
+		'statusdetail' => 'GrahamCampbell\BootstrapCMS\Models\StatusDetail',
 ];

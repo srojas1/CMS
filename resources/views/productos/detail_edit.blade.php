@@ -52,7 +52,7 @@
 										</h4>
 										<div class="form-group">
 											<select name="selectCategorias" class="custom-select" id="categoriaProducto_{!! $prod->id !!}" rows="3">
-												@if($categoria->count() > 0)
+												@if(count($categoria) > 0)
 													@foreach($categoria as $key => $cats)
 														@if ($cats->id == $prod->category_id)
 															<option value={{$cats->id}} selected>{{$cats->categoria}}</option>
@@ -292,7 +292,7 @@
 										</div>
 										<div class="form-group col-7">
 
-											<select class="custom-select" id="atributoProducto_{!! $prod->id !!}" rows="3">
+											<select class="agregar_atributo custom-select" id="atributoProducto_{!! $prod->id !!}" rows="3">
 												<option>Selecciona un atributo</option>
 												@if($atributos)
 													@foreach($atributos as $nkey=>$atr)
@@ -301,7 +301,6 @@
 												@endif
 											</select>
 										</div>
-										<button type="button" class="btn btn-primary agregar_atributo">+</button>
 									</div>
 									<div class="container-fluid row col-12 justify-content-start align-items-center pr-0">
 										<div class="col-3"></div>

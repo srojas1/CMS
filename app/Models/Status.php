@@ -37,14 +37,14 @@ class Status extends AbstractModel implements HasPresenter {
      *
      * @var array
      */
-    protected $keepRevisionOf = ['estado'];
+    protected $keepRevisionOf = ['estado, status_detail','status_reject'];
 
     /**
      * The columns to select when displaying an index.
      *
      * @var array
      */
-    public static $index = ['estado'];
+    public static $index = ['estado, status_detail','status_reject'];
 
     /**
      * The max events per page when displaying a paginated index.
