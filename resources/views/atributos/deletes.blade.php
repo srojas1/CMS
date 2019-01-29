@@ -11,7 +11,7 @@
                     <p>Está seguro que desea continuar?</p>
                 </div>
                 <div class="modal-footer">
-                    <a class="btn btn-success" href="{!! URL::route('atributo.destroy', array('atributo' => $atr->id)) !!}" data-token="{!! Session::getToken() !!}" data-method="DELETE">Yes</a>
+                    <a class="btn btn-success" href="{!! URL::route('atributo.destroy', array('atributo' => $atr->id)) !!}" data-token="{!! Session::getToken() !!}" data-method="DELETE">Sí</a>
                     <button class="btn btn-danger" data-dismiss="modal">No</button>
                 </div>
             </div>

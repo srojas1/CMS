@@ -30,7 +30,7 @@ class CommandSubscriber
     protected $pagerepository;
 
     /**
-     * Create a new instance.
+     * Crear nueva instancia
      *
      * @param \GrahamCampbell\BootstrapCMS\Repositories\PageRepository $pagerepository
      *

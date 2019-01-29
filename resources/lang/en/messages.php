@@ -70,4 +70,10 @@ return [
 		'update_success' => 'La recompensa fue actualizada correctamente',
 		'delete_success' => 'La recompensa fue eliminada correctamente',
 	],
+	
+	'promocion' => [
+		'store_success'  => 'La promoción fue creada correctamente',
+		'update_success' => 'La promoción fue actualizada correctamente',
+		'delete_success' => 'La promoción fue eliminada correctamente',
+	],
 ];

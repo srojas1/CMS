@@ -7,35 +7,37 @@ use GrahamCampbell\BootstrapCMS\Facades\AtributoRepository;
 use GrahamCampbell\BootstrapCMS\Facades\AtributoProductoRepository;
 use GrahamCampbell\BootstrapCMS\Facades\ProductoRepository;
 use GrahamCampbell\BootstrapCMS\Facades\CategoriaRepository;
-use GrahamCampbell\BootstrapCMS\Models\Category;
 use GrahamCampbell\BootstrapCMS\Models\Product;
-use GrahamCampbell\Credentials\Facades\Credentials;
+use GrahamCampbell\Credentials\Credentials;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use GrahamCampbell\BootstrapCMS\Http\Constants as Config;
+use GrahamCampbell\BootstrapCMS\Http\Libraries\ElementLibrary;
 
 class ProductoController extends AbstractController
 {
 	/**
-	 * Create a new instance.
+	 * Crear nueva instancia
 	 *
 	 * @return void
 	 */
-	public function __construct()
-	{
-		$this->setPermissions([
-			'create'  => 'edit',
-			'store'   => 'edit',
-			'edit'    => 'edit',
-			'update'  => 'edit',
-			'destroy' => 'edit',
-		]);
+	public function __construct() {
 
-        $this->producto = Product::with('getCategoryById')->get();
+			$this->setPermissions([
+				'create'  => 'edit',
+				'store'   => 'edit',
+				'store1'  => 'edit',
+				'edit'    => 'edit',
+				'update'  => 'edit',
+				'destroy' => 'edit',
+			]);
 
-		parent::__construct();
+			$this->producto = Product::with('getCategoryById')->get();
+
+			parent::__construct();
+
 	}
 
 	/**
@@ -43,21 +45,52 @@ class ProductoController extends AbstractController
 	 *
 	 * @return \Illuminate\View\View
 	 */
-	public function index()
-	{
-		$producto = ProductoRepository::paginate();
-        $links = ProductoRepository::links();
+	public function index(Credentials $credentials) {
 
-        return View::make('productos.index', ['producto' => $producto,'links'=>$links]);
+//		if (!$credentials->check()) {
+//			return Redirect::route('account.login');
+//		}
+
+		$producto  = ProductoRepository::all();
+		$links     = ProductoRepository::links();
+		$categoria = CategoriaRepository::all();
+		$linksCat  = CategoriaRepository::links();
+		$atributos = AtributoRepository::all();
+		$user = $credentials->getUser();
+		$userCompanyId = $credentials->getUser()->user_company_id;
+
+		$stockName = array(
+			array('nombre'=>Config::EN_STOCK_LABEL,'value'=>Config::EN_STOCK),
+			array('nombre'=>Config::AGOTADO_LABEL,'value'=>Config::AGOTADO),
+			array('nombre'=>Config::PRONTO_LABEL,'value'=>Config::PRONTO)
+		);
+
+		$links = formatPagination($links);
+		$linksCat = formatPagination($linksCat);
+
+		$elementLibrary = new ElementLibrary();
+
+		$producto  = $elementLibrary->validacionEmpresa($producto,$userCompanyId);
+		$categoria = $elementLibrary->validacionEmpresa($categoria,$userCompanyId);
+
+		return View::make('productos.index',
+			[
+			'producto' => $producto,
+			'links'=>$links,
+			'categoria'=>$categoria,
+			'linksCat'=>$linksCat,
+			'stock' => $stockName,
+			'atributos'=>$atributos,
+			'user'=>$user
+			]);
 	}
 
 	/**
-	 * Show the form for creating a new resource.
+	 * Muestra el formulario para crear un nuevo recurso
 	 *
 	 * @return Response
 	 */
-	public function create()
-	{
+	public function create() {
 		$categorias = CategoriaRepository::all();
 		$atributos  = AtributoRepository::all();
 
@@ -74,24 +107,198 @@ class ProductoController extends AbstractController
         ]);
 	}
 
-    /**
-     * Get the user input.
-     *
-     * @return string[]
-     */
-    protected function getInput()
-    {
-        return [
-            'producto'   => Binput::get('producto'),
-            'codigo'     => Binput::get('codigo'),
-            'descripcion'=> Binput::get('descripcion'),
-            'id_categoria' => Binput::get('id_categoria'),
-            'id_stock' => Binput::get('id_stock'),
-            'precio' => Binput::get('precio'),
-            'oferta' => Binput::get('oferta'),
-            'filename' => ''
-        ];
-    }
+	/**
+	 * Obtiene valores del input
+	 *
+	 * @return array
+	 */
+	protected function getInput() {
+		return [
+			'producto'     => Binput::get('nombreProducto'),
+			'codigo'       => Binput::get('codigoProducto'),
+			'descripcion'  => Binput::get('descripcionProducto'),
+			'id_categoria' => Binput::get('selectCategorias'),
+			'id_stock'     => Binput::get('stockValue'),
+			'sku'          => Binput::get('sku'),
+			'precio'       => Binput::get('precio'),
+			'oferta'       => Binput::get('oferta'),
+			'visibilidad'  => Binput::get('visibilidad')
+		];
+	}
+
+	/**
+	 * Edita un Producto
+	 */
+	public function editProducto(Request $request) {
+
+		//Get Data
+		$input['producto']     = $request->input('nombreProducto');
+		$input['codigo']       = $request->input('codigoProducto');
+		$input['descripcion']  = $request->input('descripcionProducto');
+		$input['category_id']  = $request->input('selectCategorias');
+		$input['id_stock']     = $request->input('stockValue_edit');
+		$input['sku']          = $request->input('sku');
+		$input['id_moneda']    = 1;
+		$input['precio']       = $request->input('precio');
+		$input['oferta']       = $request->input('oferta');
+		$input['visibilidad']  = $request->input('visibilidad_edit');
+		$vinculacionList       = $request->input('productoVinculadoEdit');
+
+		//Multiple images
+		if ($request->hasfile('filename')) {
+
+			$images = $request->file('filename');
+
+			foreach ($images as $key => $image) {
+				if (!empty($image)) {
+					$name = $image->getClientOriginalName();
+					$image->move(public_path() . '/images/', $name);
+					$data[] = $name;
+				} else
+					continue;
+			}
+
+			if (!empty($data)) {
+				$input['filename'] = json_encode($data);
+			}
+		}
+
+		//Main image
+		if ($request->hasfile('filename_main')) {
+
+			$images_main = $request->file('filename_main');
+
+			$name_main = $images_main->getClientOriginalName();
+			$images_main->move(public_path() . '/images/', $name_main);
+			$data_main[] = $name_main;
+
+			if (!empty($data_main)) {
+				$input['filename_main'] = json_encode($data_main);
+			}
+		}
+
+		if(!empty($vinculacionList)) {
+
+			//Multiple vinculacion
+			foreach($vinculacionList as $nkey=>$vinc) {
+				$vincArr[]  = $vinc;
+			}
+
+			if (!empty($vincArr)) {
+				$input['vinculacion'] = json_encode($vincArr);
+			}
+		}
+		else {
+			$vincArr = array();
+			$input['vinculacion'] = json_encode($vincArr);
+		}
+
+		$id = $request->input('id_producto');
+
+		$atributosList  = $request->input('atributoProductoVal');
+
+		if(!empty($atributosList))
+		{
+			//Multiple attributes
+			foreach($atributosList as $nkey=>$atrProdID) {
+
+				$atrProd = AtributoProductoRepository::find($nkey);
+
+				$inputAtr['valor'] = $atrProdID;
+
+				$atrProd->update($inputAtr);
+			}
+		}
+
+		$producto = ProductoRepository::find($id);
+
+		$producto->update($input);
+
+		return json_encode($producto);
+	}
+
+	/**
+	 * Graba un nuevo producto (nuevo)
+	 */
+	public function storeProducto(Request $request) {
+
+		//Get Data
+		$input['producto']     = $request->input('nombreProducto');
+		$input['codigo']       = $request->input('codigoProducto');
+		$input['descripcion']  = $request->input('descripcionProducto');
+		$input['category_id']  = $request->input('selectCategorias');
+		$input['id_stock']     = $request->input('stockValue_add');
+		$input['sku']          = $request->input('sku');
+		$input['id_moneda']    = 1;
+		$input['precio']       = $request->input('precio');
+		$input['oferta']       = $request->input('oferta');
+		$input['visibilidad']  = $request->input('visibilidad_add');
+		$vinculacionList       = $request->input('productoVinculado');
+
+		//Multiple images
+		if ($request->hasfile('filename')) {
+
+			$images = $request->file('filename');
+
+			foreach ($images as $key => $image) {
+				if (!empty($image)) {
+					$name = $image->getClientOriginalName();
+					$image->move(public_path() . '/images/', $name);
+					$data[] = $name;
+				} else
+					continue;
+			}
+
+			if (!empty($data)) {
+				$input['filename'] = json_encode($data);
+			}
+		}
+
+		//Main image
+		if ($request->hasfile('filename_main')) {
+
+			$images_main = $request->file('filename_main');
+
+			$name_main = $images_main->getClientOriginalName();
+			$images_main->move(public_path() . '/images/', $name_main);
+			$data_main[] = $name_main;
+
+			if (!empty($data_main)) {
+				$input['filename_main'] = json_encode($data_main);
+			}
+		}
+
+		if(!empty($vinculacionList)) {
+
+			//Multiple vinculacion
+			foreach($vinculacionList as $nkey=>$vinc) {
+				$vincArr[]  = $vinc;
+			}
+
+			if (!empty($vincArr)) {
+				$input['vinculacion'] = json_encode($vincArr);
+			}
+		}
+
+		$input['user_id'] = 1;
+		$producto = ProductoRepository::create($input);
+
+		$atributosList  = $request->input('atributoProductoVal');
+
+		if(!empty($atributosList)) {
+
+			//Multiple attributes
+			foreach($atributosList as $nkey=>$atr) {
+				$inputAttr['attribute_id']  = $nkey;
+				$inputAttr['valor'] = $atr;
+				$inputAttr['product_id'] = $producto->id;
+
+				AtributoProductoRepository::create($inputAttr);
+			}
+		}
+
+		return json_encode($producto);
+	}
 
 	/**
 	 * Store a newly created resource in storage.
@@ -99,50 +306,52 @@ class ProductoController extends AbstractController
 	 * @param  Request  $request
 	 * @return Response
 	 */
-	public function store(Request $request)
-    {
-        $input = array_merge(
-            $this->getInput()
-        );
+	public function store(Request $request) {
+		$input = array_merge(
+			$this->getInput()
+		);
 
-        $val = ProductoRepository::validate($input, array_keys($input));
 
-        if ($val->fails()) {
-            return Redirect::route('producto.create')->withInput()->withErrors($val->errors());
-        }
-
-        $atributos = $request->input('valor');
-		$id_atributos = $request->input('id_atributo');
-
-        if ($request->hasfile('filename')) {
-            $images = $request->file('filename');
-
-            foreach ($images as $key => $image) {
-                if (!empty($image)) {
-                    $name = $image->getClientOriginalName();
-                    $image->move(public_path() . '/images/', $name);
-                    $data[] = $name;
-                } else {
-                    continue;
-                }
-            }
-        }
-
-        if (!empty($data)) {
-            $input['filename'] = json_encode($data);
-        }
-
-        $producto = ProductoRepository::create($input);
-
-		foreach ($atributos as $key => $atr) {
-			$arr['attribute_id'] = $key;
-			$arr['valor'] = $atr;
-			$arr['product_id'] = $producto->id;
-			AtributoProductoRepository::create($arr);
+		$val = ProductoRepository::validate($input, array_keys($input));
+		
+		if ($val->fails()) {
+			return Redirect::route('producto.create')->withInput()->withErrors($val->errors());
 		}
 
-        return Redirect::route('producto.show', ['producto' => $producto->id])
-            ->with('success', trans('messages.producto.store_success'));
+		$atributos = $request->input('valor');
+		$idAtributo = $request->input('id_atributo');
+
+		foreach ($atributos as $key => $atr) {
+			$arr['valor'] = $atr;
+		}
+
+		if ($request->hasfile('filename')) {
+			$images = $request->file('filename');
+
+			foreach ($images as $key => $image) {
+				if (!empty($image)) {
+					$name = $image->getClientOriginalName();
+					$image->move(public_path() . '/images/', $name);
+					$data[] = $name;
+				} else {
+					continue;
+				}
+			}
+		}
+
+		if (!empty($data)) {
+			$input['filename'] = json_encode($data);
+		}
+		
+		$producto = ProductoRepository::create($input);
+
+		$arr['product_id'] = $producto->id;
+		$arr['attribute_id'] = $idAtributo;
+		
+		AtributoProductoRepository::create($arr);
+
+		return Redirect::route('producto.show', ['producto' => $producto->id])
+			->with('success', trans('messages.producto.store_success'));
 	}
 
 	/**
@@ -153,10 +362,10 @@ class ProductoController extends AbstractController
 	 */
 	public function show()
 	{
-        $producto = ProductoRepository::paginate();
-        $links = ProductoRepository::links();
+		$producto = ProductoRepository::paginate();
+		$links = ProductoRepository::links();
 
-        return View::make('productos.show', ['producto' => $producto,'links'=>$links]);
+		return View::make('productos.show', ['producto' => $producto,'links'=>$links]);
 	}
 
 	/**
@@ -167,21 +376,21 @@ class ProductoController extends AbstractController
 	 */
 	public function edit($id)
 	{
-        $producto = ProductoRepository::find($id);
-        $this->checkProduct($producto);
+		$producto = ProductoRepository::find($id);
+		$this->checkProduct($producto);
 
-        $categoria = CategoriaRepository::all();
+		$categoria = CategoriaRepository::all();
 
-        $stockName = array(
-            array('nombre'=>Config::EN_STOCK_LABEL,'value'=>Config::EN_STOCK),
-            array('nombre'=>Config::AGOTADO_LABEL,'value'=>Config::AGOTADO),
-            array('nombre'=>Config::PRONTO_LABEL,'value'=>Config::PRONTO)
-        );
+		$stockName = array(
+			array('nombre'=>Config::EN_STOCK_LABEL,'value'=>Config::EN_STOCK),
+			array('nombre'=>Config::AGOTADO_LABEL,'value'=>Config::AGOTADO),
+			array('nombre'=>Config::PRONTO_LABEL,'value'=>Config::PRONTO)
+		);
 
-        return View::make('productos.edit', [
-            'producto' => $producto,
-            'categorias' => $categoria,
-            'stock' => $stockName]);
+		return View::make('productos.edit', [
+			'producto' => $producto,
+			'categorias' => $categoria,
+			'stock' => $stockName]);
 	}
 
 	/**
@@ -193,58 +402,78 @@ class ProductoController extends AbstractController
 	 */
 	public function update(Request $request, $id)
 	{
-        $input = Binput::only(['producto',
-                                'codigo',
-                                'descripcion',
-                                'id_categoria',
-                                'id_stock',
-                                'precio',
-                                'oferta']);
+		$input = Binput::only(['producto',
+								'codigo',
+								'descripcion',
+								'id_categoria',
+								'id_stock',
+								'precio',
+								'oferta']);
 
-        $val = ProductoRepository::validate($input, array_keys($input));
-        if ($val->fails()) {
-            return Redirect::route('producto.edit', ['producto' => $id])->withInput()->withErrors($val->errors());
-        }
+		$val = ProductoRepository::validate($input, array_keys($input));
+		if ($val->fails()) {
+			return Redirect::route('producto.edit', ['producto' => $id])->withInput()->withErrors($val->errors());
+		}
 
-        $producto = ProductoRepository::find($id);
-        $this->checkProduct($producto);
+		$producto = ProductoRepository::find($id);
+		$this->checkProduct($producto);
 
-        $producto->update($input);
+		$producto->update($input);
 
-        return Redirect::route('producto.show', ['producto' => $producto->id])
-            ->with('success', trans('messages.producto.update_success'));
+		return Redirect::route('producto.show', ['producto' => $producto->id])
+			->with('success', trans('messages.producto.update_success'));
 	}
 
+
 	/**
-	 * Remove the specified resource from storage.
+	 * Deshabilita visualizacion de un producto
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
-	{
-        $producto = ProductoRepository::find($id);
-        $this->checkProduct($producto);
+	public function disable() {
+		$id = $_POST['id_producto'];
+		$producto = ProductoRepository::find($id);
+		$this->checkProduct($producto);
 
-        $producto->delete();
+		if($_POST['visibilidad']==1)
+			$input['visibilidad'] = 0;
+		else if($_POST['visibilidad']==0)
+			$input['visibilidad'] = 1;
 
-        return Redirect::route('producto.index')
-            ->with('success', trans('messages.producto.delete_success'));
+		$producto->update($input);
+
+		return Redirect::route('producto.index')
+			->with('success', trans('messages.producto.update_success'));
 	}
 
-    /**
-     * Check the product model.
-     *
-     * @param mixed $product
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return void
-     */
-    protected function checkProduct($product)
-    {
-        if (!$product) {
-            throw new NotFoundHttpException('Producto No Encontrado');
-        }
-    }
+
+	/**
+	 * Elimina un producto
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function destroy($id) {
+		$producto = ProductoRepository::find($id);
+		$this->checkProduct($producto);
+
+		$producto->delete();
+
+		return Redirect::route('producto.index')
+			->with('success', trans('messages.producto.delete_success'));
+	}
+
+	/**
+	 * Revisa el modelo del producto
+	 *
+	 * @param mixed $product
+	 * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+	 * @return void
+	 */
+	protected function checkProduct($product) {
+		if (!$product) {
+			throw new NotFoundHttpException('Producto No Encontrado');
+		}
+	}
 }

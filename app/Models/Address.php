@@ -37,14 +37,14 @@ class Address extends AbstractModel implements HasPresenter {
      *
      * @var array
      */
-    protected $keepRevisionOf = ['direccion'];
+    protected $keepRevisionOf = ['direccion','id_cliente'];
 
     /**
      * The columns to select when displaying an index.
      *
      * @var array
      */
-    public static $index = ['id','direccion'];
+    public static $index = ['id','direccion','id_cliente'];
 
     /**
      * The max events per page when displaying a paginated index.
@@ -85,5 +85,13 @@ class Address extends AbstractModel implements HasPresenter {
     {
         return 'GrahamCampbell\BootstrapCMS\Presenters\AddressPresenter';
     }
+
+    public function getDistrict() {
+		return $this->hasOne(Districts::class,'id','id_distrito');
+	}
+
+	public function getAddressType() {
+    	return $this->hasOne(AddressType::class,'id','id_tipo_direccion');
+	}
 
 }

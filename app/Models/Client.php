@@ -6,6 +6,7 @@ use GrahamCampbell\Credentials\Models\AbstractModel;
 use GrahamCampbell\Credentials\Models\Relations\BelongsToUserTrait;
 use GrahamCampbell\Credentials\Models\Relations\RevisionableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 use McCool\LaravelAutoPresenter\HasPresenter;
 
 class Client extends AbstractModel implements HasPresenter {
@@ -44,7 +45,7 @@ class Client extends AbstractModel implements HasPresenter {
 	 *
 	 * @var array
 	 */
-	public static $index = ['id','nombres','apaterno','amaterno','puntos','last_login'];
+	public static $index = ['id','nombres','apaterno','amaterno','puntos','last_login','movil','fecha_nacimiento','puntos','email','documento','ranking','filename_main','created_at','user_id'];
 
 	/**
 	 * The max events per page when displaying a paginated index.
@@ -61,8 +62,7 @@ class Client extends AbstractModel implements HasPresenter {
 	public static $order = 'id';
 
 	/**
-	 * The direction to order by when displaying an index.
-	 *
+	 * The direction to order by when displaying an index.*
 	 * @var string
 	 */
 	public static $sort = 'asc';
@@ -86,8 +86,27 @@ class Client extends AbstractModel implements HasPresenter {
 		return 'GrahamCampbell\BootstrapCMS\Presenters\ClientPresenter';
 	}
 
-    public function address(){
-        return $this->hasMany(Promo::class);
-    }
+	public function address(){
+		return $this->hasMany(Address::class);
+	}
 
+	public function orders(){
+		return $this->hasMany(Order::class);
+	}
+
+	public function lastOrder() {
+		return $this->hasOne(Order::class)->orderBy('fecha_compra', 'desc');
+	}
+
+	public function getPaymentCard() {
+		return $this->hasMany(ClientPaymentCard::class);
+	}
+
+	public function getCuponById() {
+		return $this->belongsToMany(Cupon::class,'cupon_client')->withPivot('id','deleted_at');
+	}
+
+	public function getUserById() {
+		return $this->hasOne(User::class,'id','user_id');
+	}
 }

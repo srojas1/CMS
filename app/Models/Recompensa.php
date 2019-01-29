@@ -44,7 +44,7 @@
 	 *
 	 * @var array
 	 */
-	public static $index = ['id','recompensa','puntos','descripcion'];
+	public static $index = ['id','recompensa','evento','puntos','descripcion','user_id'];
 
 	/**
 	 * The max events per page when displaying a paginated index.
@@ -85,4 +85,8 @@
 	{
 		return 'GrahamCampbell\BootstrapCMS\Presenters\RecompensaPresenter';
 	}
+
+	public function getUserById() {
+		return $this->hasOne(User::class,'id','user_id');
 	}
+}

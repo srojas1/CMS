@@ -220,7 +220,7 @@
 	|
 	*/
 
-	'cliente' => 'GrahamCampbell\BootstrapCMS\Models\Promo',
+	'cliente' => 'GrahamCampbell\BootstrapCMS\Models\Client',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -326,4 +326,69 @@
     */
 
     'atributoproducto' => 'GrahamCampbell\BootstrapCMS\Models\AttributeProduct',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Cupon Cliente Model
+	|--------------------------------------------------------------------------
+	|
+	| This defines the cupon cliente model to be used.
+	|
+	| Default: 'GrahamCampbell\BootstrapCMS\Models\CuponClient'
+	|
+	*/
+
+		'cuponcliente' => 'GrahamCampbell\BootstrapCMS\Models\CuponClient',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Distrito Model
+	|--------------------------------------------------------------------------
+	|
+	| This defines the recompensa model to be used.
+	|
+	| Default: 'GrahamCampbell\BootstrapCMS\Models\District'
+	|
+	*/
+
+		'districts' => 'GrahamCampbell\BootstrapCMS\Models\Districts',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Tipo Direccion Model
+	|--------------------------------------------------------------------------
+	|
+	| This defines the model to be used.
+	|
+	| Default: 'GrahamCampbell\BootstrapCMS\Models\AddressType'
+	|
+	*/
+
+		'addresstype' => 'GrahamCampbell\BootstrapCMS\Models\AddressType',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Empresa Model
+	|--------------------------------------------------------------------------
+	|
+	| This defines the model to be used.
+	|
+	| Default: 'GrahamCampbell\BootstrapCMS\Models\Empresa'
+	|
+	*/
+
+		'empresa' => 'GrahamCampbell\BootstrapCMS\Models\Empresa',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Status Detail
+	|--------------------------------------------------------------------------
+	|
+	| This defines the model to be used.
+	|
+	| Default: 'GrahamCampbell\BootstrapCMS\Models\StatusDetail'
+	|
+	*/
+
+		'statusdetail' => 'GrahamCampbell\BootstrapCMS\Models\StatusDetail',
 ];

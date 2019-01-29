@@ -41,7 +41,7 @@
             @foreach ($categoria as $cat)
                 <tr>
                     <td>{{$cat->categoria}}</td>
-                    <td>[cant_productos]</td>
+                    <td>{{$cat->products}}</td>
                     <td>[ventas]</td>
                     <td>[ingresos]</td>
                     <td>
