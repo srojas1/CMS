@@ -99,5 +99,6 @@ Route::post('recompensa/editRecompensa', 'RecompensaController@editRecompensa');
 Route::post('confEmpresa/editEmpresa', 'ConfiguracionEmpresaController@editEmpresa');
 Route::post('producto/disable', 'ProductoController@disable');
 
-Route::get('obtener_productos','APIController@ObtenerProductos');
-Route::get('obtener_categorias','APIController@ObtenerCategorias');
+Route::get('get_productos','APIController@GetProductos');
+Route::get('get_categorias','APIController@GetCategorias');
+Route::post('add_categoria','APIController@AddCategoria');
