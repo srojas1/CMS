@@ -98,3 +98,6 @@ Route::post('cupon/editCupon', 'CuponController@editCupon');
 Route::post('recompensa/editRecompensa', 'RecompensaController@editRecompensa');
 Route::post('confEmpresa/editEmpresa', 'ConfiguracionEmpresaController@editEmpresa');
 Route::post('producto/disable', 'ProductoController@disable');
+
+Route::get('obtener_productos','APIController@ObtenerProductos');
+Route::get('obtener_categorias','APIController@ObtenerCategorias');
