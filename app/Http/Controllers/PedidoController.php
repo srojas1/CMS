@@ -3,7 +3,7 @@
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 use GrahamCampbell\BootstrapCMS\Facades\PedidoRepository;
-use GrahamCampbell\BootstrapCMS\Models\Order;
+use GrahamCampbell\BootstrapCMS\Models\Status;
 use GrahamCampbell\Credentials\Credentials;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
@@ -59,12 +59,18 @@ class PedidoController extends AbstractController {
 
 		$id = $_POST['id_pedido'];
 		$idEstado = $_POST['id_estado'];
+		$labelExtra = $_POST['label_extra'];
 
 		$pedido = PedidoRepository::find($id);
 		$this->checkPedido($pedido);
 
 		$input = ['id_estado'=>$idEstado];
 
+		$estado = Status::find($idEstado);
+		$inputEstado = ['status_label_extra'=>$labelExtra];
+		if($idEstado==2) {
+			$estado->update($inputEstado);
+		}
 		$pedido->update($input);
 	}
 

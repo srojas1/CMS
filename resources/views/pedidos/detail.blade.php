@@ -1,5 +1,5 @@
 @foreach ($pedido as $nkey=>$ped)
-<div id="detail_pedido_{!! $ped->id !!}" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+<div id="detail_pedido_{!! $ped->id !!}" class="modal fade modalPedido" tabindex="-1" role="dialog" aria-labelledby="detail_pedido_{!! $ped->id !!}" aria-hidden="true">
     <input type="hidden" id="id_pedido" value="{{$ped->id}}"/>
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
@@ -20,34 +20,37 @@
                                 <div class="btn-group">
                                     @if ($ped->getStatusById->estado)
                                         <?php $statusDetail = json_decode($ped->getStatusById->status_detail) ?>
-										<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											ACEPTAR PEDIDO
+										<button type="button" class="btn {{getColorByStatus($ped->id_estado)}} dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											{{$ped->getStatusById->status_label_first}} {{$ped->getStatusById->status_label_extra}}
 										</button>
-                                        <input id="id_estado_done" type="hidden" value="2">
 										<div class="detalle_aceptar dropdown-menu">
 											@foreach($statusDetail as $nkey=>$pedetalle)
-											    <a class="dropdown-item">{{$pedetalle}}</a>
+											    <a class="dropdown-item">{{$nkey}}</a>
+                                                <input id="id_status_next" type="hidden" value={{$pedetalle}}>
 											@endforeach
 										</div>
                                     @else
                                         <div>{{\GrahamCampbell\BootstrapCMS\Http\Constants::STATUS_EMPTY}}</div>
                                     @endif
                                 </div>
+                                @if($ped->id_estado != 5)
                                 <div class="btn-group">
                                     @if ($ped->getStatusById->estado)
 										<?php $statusDetailReject = json_decode($ped->getStatusById->status_reject) ?>
-										<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											RECHAZAR
+										<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            {{$ped->getStatusById->status_label_second}}
 										</button>
 										<div class="detalle_rechazar dropdown-menu">
                                             @foreach($statusDetailReject as $nkey=>$pedreject)
-                                                <a class="dropdown-item">{{$pedreject}}</a>
+                                                <a class="dropdown-item">{{$nkey}}</a>
+                                                <input id="id_status_next" type="hidden" value={{$pedreject}}>
                                             @endforeach
 										</div>
                                     @else
                                         <div>{{\GrahamCampbell\BootstrapCMS\Http\Constants::STATUS_EMPTY}}</div>
                                     @endif
                                 </div>
+                                @endif
 								<div class="btn-group">
 									<a href="{!! URL::route('pdf_pedido.index') !!}" class="accion"><i class="material-icons print">print</i></a>
 									<a href="{!! URL::route('pdf_pedido.create') !!}" class="accion"><hidden id="editor"></hidden><i class="material-icons download">get_app</i></a>
@@ -183,5 +186,4 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="{{ asset('assets/scripts/pedidos.js')}}"></script>
 @endsection

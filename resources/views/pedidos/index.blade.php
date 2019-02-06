@@ -60,9 +60,9 @@
                                                 <td>{{$ped->getAddressById->direccion}}</td>
                                                 @if ($ped->getStatusById->estado)
                                                     <td>
-                                                        <button type="button" class="btn_modal btn {{getColorByStatus($ped->id_estado)}}" href="#detail_pedido_{!! $ped->id !!}"
+                                                        <a class="btn_modal btn {{getColorByStatus($ped->id_estado)}}" href="#detail_pedido_{!! $ped->id !!}"
                                                            data-toggle="modal"
-                                                           data-target="#detail_pedido_{!! $ped->id !!}">{{$ped->getStatusById->estado}}</button>
+                                                           data-target="#detail_pedido_{!! $ped->id !!}">{{$ped->getStatusById->estado}}</a>
                                                     </td>
                                                 @else
                                                     <td>{{\GrahamCampbell\BootstrapCMS\Http\Constants::STATUS_EMPTY}}</td>
@@ -143,13 +143,11 @@
                 <span>@Copyright</span>
             </div>
         </div>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
 @endauth
 @stop
+@section('js')
+    <script type="text/javascript" src="{{ asset('assets/scripts/pedidos.js')}}"></script>
+@endsection
 
 @section('bottom')
     @include('pedidos.detail')

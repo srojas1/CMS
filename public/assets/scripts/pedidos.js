@@ -1,14 +1,39 @@
 $(document).ready(function(){
 
+    $('.modalPedido').on('hidden.bs.modal', function (e) {
+       e.stopImmediatePropagation();
+       location.reload();
+    });
+
     $('.modal').on('show.bs.modal', function (e) {
+        e.stopImmediatePropagation();
 
         var rowid = $(e.relatedTarget).data('id');
         
         idPedido = $(this).find('#id_pedido').val();
         selectEstado = $(this).find('.id_estado');
-        idEstadoChange = $(this).find('#id_estado_done').val();
 
-        $(this).find('.detalle_aceptar a').on('click', function () {
+        $(this).on('click',".detalle_aceptar a", function (event) {
+
+            idEstadoChange = $(this).next('#id_status_next').val();
+            labelExtra     = "("+$(this).text()+")";
+
+            $.ajax({
+                type: "POST",
+                url: 'pedido/changeStatus',
+                data: {
+                    id_estado: idEstadoChange,
+                    id_pedido: idPedido,
+                    label_extra: labelExtra
+                }
+            }).done(function(msg) {
+                $(".modal-content").load(window.location + " .modal-content");
+            });
+        });
+
+        $(this).on('click',".detalle_rechazar a", function (event) {
+
+            idEstadoChange = $(this).next('#id_status_next').val();
 
             $.ajax({
                 type: "POST",
@@ -18,15 +43,10 @@ $(document).ready(function(){
                     id_pedido: idPedido
                 }
             }).done(function(msg) {
-                alert('se modificó el estado');
+                $(".modal-content").load(window.location + " .modal-content");
             });
         });
-
     });
-        
-        $(this).on('hidden.bs.modal', function (){
-            window.location.reload();
-        });
 
     $('.nav-tabs > li > a.historico').on("click",function(e){
         e.preventDefault();
