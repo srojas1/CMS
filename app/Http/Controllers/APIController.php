@@ -3,24 +3,24 @@
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 
-use GrahamCampbell\BootstrapCMS\Models\Category;
-use GrahamCampbell\BootstrapCMS\Models\Product;
+use GrahamCampbell\BootstrapCMS\Models\Categoria;
+use GrahamCampbell\BootstrapCMS\Models\Producto;
 use Illuminate\Http\Request;
 
 class APIController extends AbstractController{
 
 	public function GetProductos(){
-		$data = Product::all();
+		$data = Producto::all();
 		return response()->json($data);
 	}
 	
 	public function GetCategorias() {
-		$data = Category::all();
+		$data = Categoria::all();
 		return response()->json($data);
 	}
 	
 	public function AddCategoria(Request $request) {
-		$categoria = Category::create($request->all());
+		$categoria = Categoria::create($request->all());
 		return $categoria;
 	}
 }

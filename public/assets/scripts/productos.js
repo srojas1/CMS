@@ -19,7 +19,7 @@ $(document).ready(function(){
 
             $.ajax({
                 type: "POST",
-                url: 'producto/editProducto',
+                url: 'producto/update',
                 contentType: false,
                 cache: false,
                 processData: false,
@@ -97,7 +97,7 @@ $(document).ready(function(){
 
             $.ajax({
                 type: "POST",
-                url: 'categoria/storeCategory',
+                url: 'categoria/create',
                 cache: false,
                 data: {categoria: $nombreCategoria}
             }).done(function(data) {
@@ -116,7 +116,7 @@ $(document).ready(function(){
 
             $.ajax({
                 type: "POST",
-                url: 'categoria/storeCategory',
+                url: 'categoria/create',
                 cache: false,
                 data: {categoria: $nombreCategoria}
             }).done(function(data) {
@@ -188,7 +188,7 @@ $(document).ready(function(){
 
         $.ajax({
             type: "POST",
-            url: 'producto/storeProducto',
+            url: 'producto/create',
             contentType: false,
             cache: false,
             processData: false,

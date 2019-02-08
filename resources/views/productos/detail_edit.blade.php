@@ -409,7 +409,13 @@
 												<div class="container-fluid row col-12 justify-content-start align-items-center">
 													<div class="form-group col-9">
 														<input name="productoVinculadoEdit[]" type="hidden" value="{{$pv}}"/>
-														<div class="d-inline-flex"><img src="{{ asset('images/'.getJsonValue(getProductMainImageById($pv)))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{getProductsNameByIds($pv)}}</div>
+														@if(getProductMainImageById($pv))
+															<div class="d-inline-flex"><img src="{{ asset('images/'.getJsonValue(getProductMainImageById($pv)))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{getProductsNameByIds($pv)}}
+															</div>
+														@else
+															<div class="d-inline-flex"><img src="{{ asset('images/producto-icon.jpg') }}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{getProductsNameByIds($pv)}}
+															</div>
+														@endif
 													</div>
 													<div class="form-group col-3">
 														<a href="#" class="badge-pill eliminarRelacion shadow-sm">

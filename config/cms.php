@@ -185,16 +185,16 @@
 
 	/*
 	|--------------------------------------------------------------------------
-	| Category Model
+	| Categoria Model
 	|--------------------------------------------------------------------------
 	|
 	| This defines the categoria model to be used.
 	|
-	| Default: 'GrahamCampbell\BootstrapCMS\Models\Category'
+	| Default: 'GrahamCampbell\BootstrapCMS\Models\Categoria'
 	|
 	*/
 
-	'categoria' => 'GrahamCampbell\BootstrapCMS\Models\Category',
+	'categoria' => 'GrahamCampbell\BootstrapCMS\Models\Categoria',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -203,11 +203,11 @@
 	|
 	| This defines the producto model to be used.
 	|
-	| Default: 'GrahamCampbell\BootstrapCMS\Models\Product'
+	| Default: 'GrahamCampbell\BootstrapCMS\Models\Producto'
 	|
 	*/
 
-	'producto' => 'GrahamCampbell\BootstrapCMS\Models\Product',
+	'producto' => 'GrahamCampbell\BootstrapCMS\Models\Producto',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -233,7 +233,7 @@
 	|
 	*/
 
-	'pedido' => 'GrahamCampbell\BootstrapCMS\Models\Order',
+	'pedido' => 'GrahamCampbell\BootstrapCMS\Models\Orden',
 
 	/*
 	|--------------------------------------------------------------------------

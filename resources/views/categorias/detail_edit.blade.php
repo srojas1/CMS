@@ -43,7 +43,11 @@
                             <div class="d-flex">
                                 <div class="form-group">
                                     <div class="inline-block position-relative">
-                                        <img src="{{ asset('images/'.getJsonValue($cat->imagen_principal))}}" class="imagen-featured shadow-sm border-top border-bottom border-right border-left">
+                                        @if($cat->imagen_principal)
+                                            <img src="{{ asset('images/'.getJsonValue($cat->imagen_principal))}}" class="imagen-featured shadow-sm border-top border-bottom border-right border-left">
+                                        @else
+                                            <img src="{{ asset('images/producto-icon.jpg') }}" class="imagen-featured shadow-sm border-top border-bottom border-right border-left">
+                                        @endif
                                         <a href="#" class="badge badge-light badge-pill eliminarImagen shadow-sm">
                                             <i class="material-icons">clear</i>
                                         </a>

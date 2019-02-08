@@ -83,11 +83,11 @@ $router->resource('configuracion', 'ConfiguracionControllerOld');
 
 //Ajax Contollers
 Route::post('pedido/changeStatus', 'PedidoController@ChangeStatus');
-Route::post('categoria/storeCategory', 'CategoriaController@storeCategory');
-Route::post('categoria/editCategoria', 'CategoriaController@editCategoria');
-Route::post('producto/storeProducto', 'ProductoController@storeProducto');
+Route::post('categoria/create', 'CategoriaController@create');
+Route::post('categoria/update', 'CategoriaController@update');
+Route::post('producto/create', 'ProductoController@create');
 Route::post('atributo/storeAtributo', 'AtributoController@storeAtributo');
-Route::post('producto/editProducto', 'ProductoController@editProducto');
+Route::post('producto/update', 'ProductoController@update');
 Route::post('atributo/destroyAtributo', 'AtributoController@destroyAtributo');
 Route::post('atributo/addAtributoProductoFromEdit', 'AtributoController@addAtributoProductoFromEdit');
 Route::post('promocion/storePromocion', 'PromocionController@storePromocion');

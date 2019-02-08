@@ -94,11 +94,11 @@ class Client extends AbstractModel implements HasPresenter {
 	}
 
 	public function orders(){
-		return $this->hasMany(Order::class);
+		return $this->hasMany(Orden::class);
 	}
 
 	public function lastOrder() {
-		return $this->hasOne(Order::class)->orderBy('fecha_compra', 'desc');
+		return $this->hasOne(Orden::class)->orderBy('fecha_compra', 'desc');
 	}
 
 	public function getPaymentCard() {

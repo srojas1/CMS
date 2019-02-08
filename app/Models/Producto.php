@@ -8,7 +8,7 @@ use GrahamCampbell\Credentials\Models\Relations\RevisionableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
 
-class Product extends AbstractModel implements HasPresenter {
+class Producto extends AbstractModel implements HasPresenter {
 
 	use BelongsToUserTrait, RevisionableTrait, SoftDeletes;
 	/**
@@ -23,7 +23,7 @@ class Product extends AbstractModel implements HasPresenter {
 	 *
 	 * @var string
 	 */
-	public static $name = 'product';
+	public static $name = 'producto';
 
 	/**
 	 * The properties on the model that are dates.
@@ -95,16 +95,16 @@ class Product extends AbstractModel implements HasPresenter {
 	}
 
 	/**
-	 * Get Category by Product
+	 * Get Categoria by Product
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
 	 */
 	public function getCategoryById() {
-		return $this->hasOne(Category::class,'id','id_categoria');
+		return $this->hasOne(Categoria::class,'id','id_categoria');
 	}
 
 	public function orders() {
-		return $this->belongsToMany(Order::class,'orders_products')->withPivot('cantidad');
+		return $this->belongsToMany(Orden::class,'orden_producto')->withPivot('cantidad');
 	}
 
 	public function getCurrencyById() {
@@ -112,11 +112,11 @@ class Product extends AbstractModel implements HasPresenter {
 	}
 
 	public function getAttributesById() {
-		return $this->belongsToMany(Attribute::class,'attributes_products')->withPivot('valor','id','deleted_at');
+		return $this->belongsToMany(Attribute::class,'atributo_producto')->withPivot('valor','id','deleted_at');
 	}
 
 	public function getUserById() {
-		return $this->hasOne(User::class,'id','user_id');
+		return $this->hasOne(User::class,'id','id_usuario');
 	}
 
 }

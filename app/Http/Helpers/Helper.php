@@ -1,7 +1,7 @@
 <?php
 
 use GrahamCampbell\BootstrapCMS\Http\Constants as Config;
-use GrahamCampbell\BootstrapCMS\Models\Product as ProductModel;
+use GrahamCampbell\BootstrapCMS\Models\Producto as ProductModel;
 use GrahamCampbell\BootstrapCMS\Models\User as UserModel;
 use GrahamCampbell\BootstrapCMS\Models\Empresa as EmpresaModel;
 use GrahamCampbell\BootstrapCMS\Http\Constants as Constants;

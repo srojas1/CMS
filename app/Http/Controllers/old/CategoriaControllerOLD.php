@@ -2,6 +2,7 @@
 
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
+use GrahamCampbell\Binput\Facades\Binput;
 use GrahamCampbell\BootstrapCMS\Facades\CategoriaRepository;
 use GrahamCampbell\Credentials\Facades\Credentials;
 use Illuminate\Http\Request;
@@ -42,6 +43,10 @@ class CategoriaController extends AbstractController {
 	 */
 	public function index(Credentials $credentials) {
 
+		if (!$credentials->check()) {
+			return Redirect::route('account.login');
+		}
+
 		$categoria = CategoriaRepository::paginate();
 		$empresa   = Empresa::first();
 
@@ -52,61 +57,84 @@ class CategoriaController extends AbstractController {
 	}
 
 	/**
-	* Guarda nueva categoría (nuevo)
-	*/
-	public function create(Request $request) {
-
-		$input['categoria'] = $request->input('categoria');
-
-		//Main image
-		if ($request->hasfile('imagen_principal')) {
-
-			$images_main = $request->file('imagen_principal');
-			$name_main = $images_main->getClientOriginalName();
-
-			$images_main->move(public_path() . '/images/', $name_main);
-			$data_main[] = $name_main;
-
-			if (!empty($data_main)) {
-				$input['imagen_principal'] = json_encode($data_main);
-			}
-		}
-
-		$input['id_usuario'] = $this->GetUserId();
-
-		$categoria = CategoriaRepository::create($input);
-
-		return json_encode($categoria);
+	 * Muestra formulario para crear nueva categoría
+	 * @return \Illuminate\View\View
+	 */
+	public function create() {
+		return View::make('categorias.create');
 	}
 
 	/**
-	 * Editar categoría
+	 * Guarda nueva categoría
+	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request) {
+	public function store(Request $request) {
 
-		//Get Data
-		$input['categoria']     = $request->input('nombreCategoria');
-		$id = $request->input('id_categoria');
+		$input = array_merge(['user_id' => Credentials::getuser()->id], Binput::only([
+			'categoria'
+		]));
 
-		//Main image
-		if ($request->hasfile('imagen_principal')) {
+		$val = CategoriaRepository::validate($input, array_keys($input));
 
-			$images_main = $request->file('imagen_principal');
-			$name_main = $images_main->getClientOriginalName();
+		if ($val->fails()) {
+			return Redirect::route('categoria.create')->withInput()->withErrors($val->errors());
+		}
 
-			$images_main->move(public_path() . '/images/', $name_main);
-			$data_main[] = $name_main;
+		$categoria = CategoriaRepository::create($request->all());
 
-			if (!empty($data_main)) {
-				$input['imagen_principal'] = json_encode($data_main);
-			}
+		return Redirect::route('categoria.show', ['categoria'=>$categoria->id])
+			->with('success', trans('messages.categoria.store_success'));
+	}
+
+	/**
+	 * Muestra categoría específica
+	 *
+	 * @param int $id
+	 * @return \Illuminate\View\View
+	 */
+	public function show()
+	{
+		$categoria = CategoriaRepository::paginate();
+
+		return View::make('categorias.show', ['categoria' => $categoria]);
+	}
+
+	/**
+	 * Muestra formulario para editar categoría específica
+	 *
+	 * @param int $id
+	 * @return \Illuminate\View\View
+	 */
+	public function edit($id)
+	{
+		$categoria = CategoriaRepository::find($id);
+		$this->checkCategoria($categoria);
+
+		return View::make('categorias.edit', ['categoria' => $categoria]);
+	}
+
+	/**
+	 * Actualiza categoría existente
+	 *
+	 * @param int $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function update($id)
+	{
+		$input = Binput::only(['categoria']);
+
+		$val = $val = CategoriaRepository::validate($input, array_keys($input));
+		if ($val->fails()) {
+			return Redirect::route('categoria.edit', ['categoria' => $id])->withInput()->withErrors($val->errors());
 		}
 
 		$categoria = CategoriaRepository::find($id);
+		$this->checkCategoria($categoria);
 
 		$categoria->update($input);
 
-		return json_encode($categoria);
+		return Redirect::route('categoria.show', ['categoria' => $categoria->id])
+			->with('success', trans('messages.categoria.update_success'));
 	}
 
 	/**

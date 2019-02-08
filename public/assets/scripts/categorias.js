@@ -5,7 +5,7 @@ $(document).ready(function(){
 
             $.ajax({
                 type: "POST",
-                url: 'categoria/storeCategory',
+                url: 'categoria/create',
                 contentType: false,
                 cache: false,
                 processData: false,
@@ -28,7 +28,7 @@ $(document).ready(function(){
 
             $.ajax({
                 type: "POST",
-                url: 'categoria/editCategoria',
+                url: 'categoria/update',
                 contentType: false,
                 cache: false,
                 processData: false,

@@ -8,7 +8,7 @@ use GrahamCampbell\Credentials\Models\Relations\RevisionableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
 
-class Order extends AbstractModel implements HasPresenter {
+class Orden extends AbstractModel implements HasPresenter {
 
     use BelongsToUserTrait, RevisionableTrait, SoftDeletes;
     /**
@@ -23,7 +23,7 @@ class Order extends AbstractModel implements HasPresenter {
      *
      * @var string
      */
-    public static $name = 'order';
+    public static $name = 'orden';
 
     /**
      * The properties on the model that are dates.
@@ -116,7 +116,7 @@ class Order extends AbstractModel implements HasPresenter {
     }
 
     public function getProductsById() {
-        return $this->belongsToMany(Product::class,
+        return $this->belongsToMany(Producto::class,
             'orders_products',
             'id_orden',
             'id_producto');

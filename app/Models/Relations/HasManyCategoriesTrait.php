@@ -12,7 +12,7 @@ trait HasManyCategoriesTrait
      */
     public function categorias()
     {
-        return $this->hasMany('GrahamCampbell\BootstrapCMS\Models\Category');
+        return $this->hasMany('GrahamCampbell\BootstrapCMS\Models\Categoria');
     }
 
     /**

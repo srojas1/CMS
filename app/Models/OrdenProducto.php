@@ -8,22 +8,23 @@ use GrahamCampbell\Credentials\Models\Relations\RevisionableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
 
-class Category extends AbstractModel implements HasPresenter {
+class OrdenProducto extends AbstractModel implements HasPresenter {
 
     use BelongsToUserTrait, RevisionableTrait, SoftDeletes;
+
     /**
      * The table the events are stored in.
      *
      * @var string
      */
-    protected $table = 'categoria';
+    protected $table = 'orden_producto';
 
     /**
      * The model name.
      *
      * @var string
      */
-    public static $name = 'category';
+    public static $name = 'ordenproducto';
 
     /**
      * The properties on the model that are dates.
@@ -37,28 +38,21 @@ class Category extends AbstractModel implements HasPresenter {
      *
      * @var array
      */
-    protected $keepRevisionOf = ['categoria'];
+    protected $keepRevisionOf = ['id'];
 
     /**
      * The columns to select when displaying an index.
      *
      * @var array
      */
-    public static $index = ['id','categoria','imagen_principal','user_id'];
+    public static $index = ['id'];
 
     /**
      * The max events per page when displaying a paginated index.
      *
      * @var int
      */
-    public static $paginate = 10;
-
-	/**
-	 * The model name.
-	 *
-	 * @var string
-	 */
-	public static $page_name = 'categoria';
+    public static $paginate = 5;
 
     /**
      * The columns to order by when displaying an index.
@@ -80,7 +74,7 @@ class Category extends AbstractModel implements HasPresenter {
      * @var array
      */
     public static $rules = [
-        'categoria'    => 'required'
+        'id'    => 'required'
     ];
 
     /**
@@ -90,15 +84,7 @@ class Category extends AbstractModel implements HasPresenter {
      */
     public function getPresenterClass()
     {
-        return 'GrahamCampbell\BootstrapCMS\Presenters\CategoryPresenter';
+        return 'GrahamCampbell\BootstrapCMS\Presenters\OrderProductPresenter';
     }
-
-    public function products(){
-        return $this->hasMany(Product::class);
-    }
-
-	public function getUserById() {
-		return $this->hasOne(User::class,'id','user_id');
-	}
 
 }

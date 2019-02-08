@@ -13,6 +13,7 @@ namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 use GrahamCampbell\BootstrapCMS\Http\Middleware\Auth\Blog;
 use GrahamCampbell\BootstrapCMS\Http\Middleware\Auth\Edit;
+use GrahamCampbell\Credentials\Facades\Credentials;
 use GrahamCampbell\Credentials\Http\Controllers\AbstractController as Controller;
 
 /**
@@ -53,4 +54,8 @@ abstract class AbstractController extends Controller
             $this->middleware(Blog::class, ['only' => $this->blogs]);
         }
     }
+
+	public function GetUserId() {
+		return Credentials::getuser()->id;
+	}
 }
