@@ -112,7 +112,7 @@ class Producto extends AbstractModel implements HasPresenter {
 	}
 
 	public function getAttributesById() {
-		return $this->belongsToMany(Attribute::class,'atributo_producto')->withPivot('valor','id','deleted_at');
+		return $this->belongsToMany(Atributo::class,'atributo_producto')->withPivot('valor','id','deleted_at');
 	}
 
 	public function getUserById() {

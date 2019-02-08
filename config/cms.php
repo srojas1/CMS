@@ -272,7 +272,7 @@
 	|
 	*/
 
-	'atributo' => 'GrahamCampbell\BootstrapCMS\Models\Attribute',
+	'atributo' => 'GrahamCampbell\BootstrapCMS\Models\Atributo',
 
 
 	/*
@@ -325,7 +325,7 @@
     |
     */
 
-    'atributoproducto' => 'GrahamCampbell\BootstrapCMS\Models\AttributeProduct',
+    'atributoproducto' => 'GrahamCampbell\BootstrapCMS\Models\AtributoProducto',
 
 	/*
 	|--------------------------------------------------------------------------

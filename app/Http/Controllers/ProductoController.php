@@ -157,7 +157,7 @@ class ProductoController extends AbstractController
 
 			//Multiple attributes
 			foreach($atributosList as $nkey=>$atr) {
-				$inputAttr['attribute_id']  = $nkey;
+				$inputAttr['atributo_id']  = $nkey;
 				$inputAttr['valor'] = $atr;
 				$inputAttr['id_producto'] = $producto->id;
 
