@@ -16,7 +16,7 @@ class Category extends AbstractModel implements HasPresenter {
      *
      * @var string
      */
-    protected $table = 'categories';
+    protected $table = 'categoria';
 
     /**
      * The model name.
@@ -44,7 +44,7 @@ class Category extends AbstractModel implements HasPresenter {
      *
      * @var array
      */
-    public static $index = ['id','categoria','filename_main','user_id'];
+    public static $index = ['id','categoria','imagen_principal','user_id'];
 
     /**
      * The max events per page when displaying a paginated index.

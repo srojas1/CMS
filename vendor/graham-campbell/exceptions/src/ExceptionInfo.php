@@ -21,57 +21,57 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
  */
 class ExceptionInfo
 {
-    /**
-     * The error info path.
-     *
-     * @var string
-     */
-    protected $path;
+	/**
+	 * The error info path.
+	 *
+	 * @var string
+	 */
+	protected $path;
 
-    /**
-     * Create a exception info instance.
-     *
-     * @param string $path
-     *
-     * @return void
-     */
-    public function __construct($path)
-    {
-        $this->path = $path;
-    }
+	/**
+	 * Create a exception info instance.
+	 *
+	 * @param string $path
+	 *
+	 * @return void
+	 */
+	public function __construct($path)
+	{
+		$this->path = $path;
+	}
 
-    /**
-     * Get the exception information.
-     *
-     * @param \Exception $exception
-     * @param string     $id
-     * @param int        $code
-     *
-     * @return array
-     */
-    public function generate(Exception $exception, $id, $code)
-    {
-        $errors = json_decode(file_get_contents($this->path), true);
+	/**
+	 * Get the exception information.
+	 *
+	 * @param \Exception $exception
+	 * @param string     $id
+	 * @param int        $code
+	 *
+	 * @return array
+	 */
+	public function generate(Exception $exception, $id, $code)
+	{
+		$errors = json_decode(file_get_contents($this->path), true);
 
-        if (isset($errors[$code])) {
-            $info = array_merge(['id' => $id, 'code' => $code], $errors[$code]);
-        } else {
-            $info = array_merge(['id' => $id, 'code' => 500], $errors[500]);
-        }
+		if (isset($errors[$code])) {
+			$info = array_merge(['id' => $id, 'code' => $code], $errors[$code]);
+		} else {
+			$info = array_merge(['id' => $id, 'code' => 500], $errors[500]);
+		}
 
-        if ($exception instanceof HttpExceptionInterface) {
-            $msg = (string) $exception->getMessage();
-            $info['detail'] = (strlen($msg) > 4) ? $msg : $info['message'];
-            var_dump($msg);
-            $info['summary'] = (strlen($msg) < 36 && strlen($msg) > 4) ? $msg : 'Error en el procesamiento.';
-        } else {
-            $info['detail'] = $info['message'];
+		if ($exception instanceof HttpExceptionInterface) {
+			$msg = (string) $exception->getMessage();
+			$info['detail'] = (strlen($msg) > 4) ? $msg : $info['message'];
+			var_dump($msg);
+			$info['summary'] = (strlen($msg) < 36 && strlen($msg) > 4) ? $msg : 'Error en el procesamiento.';
+		} else {
+			$info['detail'] = $info['message'];
 			var_dump($exception->getMessage());
-            $info['summary'] = 'Algo salió mal.';
-        }
+			$info['summary'] = 'Algo salió mal.';
+		}
 
-        unset($info['message']);
+		unset($info['message']);
 
-        return $info;
-    }
+		return $info;
+	}
 }

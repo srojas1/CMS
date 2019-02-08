@@ -94,16 +94,16 @@ class CategoriaController extends AbstractController {
 		$input['categoria'] = $request->input('categoria');
 
 		//Main image
-		if ($request->hasfile('filename_main')) {
+		if ($request->hasfile('imagen_principal')) {
 
-			$images_main = $request->file('filename_main');
+			$images_main = $request->file('imagen_principal');
 			$name_main = $images_main->getClientOriginalName();
 
 			$images_main->move(public_path() . '/images/', $name_main);
 			$data_main[] = $name_main;
 
 			if (!empty($data_main)) {
-				$input['filename_main'] = json_encode($data_main);
+				$input['imagen_principal'] = json_encode($data_main);
 			}
 		}
 
@@ -124,16 +124,16 @@ class CategoriaController extends AbstractController {
 		$id = $request->input('id_categoria');
 
 		//Main image
-		if ($request->hasfile('filename_main')) {
+		if ($request->hasfile('imagen_principal')) {
 
-			$images_main = $request->file('filename_main');
+			$images_main = $request->file('imagen_principal');
 			$name_main = $images_main->getClientOriginalName();
 
 			$images_main->move(public_path() . '/images/', $name_main);
 			$data_main[] = $name_main;
 
 			if (!empty($data_main)) {
-				$input['filename_main'] = json_encode($data_main);
+				$input['imagen_principal'] = json_encode($data_main);
 			}
 		}
 

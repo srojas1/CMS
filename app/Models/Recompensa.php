@@ -44,7 +44,7 @@
 	 *
 	 * @var array
 	 */
-	public static $index = ['id','recompensa','evento','puntos','descripcion','user_id'];
+	public static $index = ['id','recompensa','evento','puntos','descripcion','id_usuario'];
 
 	/**
 	 * The max events per page when displaying a paginated index.

@@ -57,7 +57,7 @@ class ProductoController extends AbstractController
 		$linksCat  = CategoriaRepository::links();
 		$atributos = AtributoRepository::all();
 		$user = $credentials->getUser();
-		$userCompanyId = $credentials->getUser()->user_company_id;
+		$userCompanyId = $credentials->getUser()->usuario_empresa_id;
 
 		$stockName = array(
 			array('nombre'=>Config::EN_STOCK_LABEL,'value'=>Config::EN_STOCK),
@@ -135,7 +135,7 @@ class ProductoController extends AbstractController
 		$input['producto']     = $request->input('nombreProducto');
 		$input['codigo']       = $request->input('codigoProducto');
 		$input['descripcion']  = $request->input('descripcionProducto');
-		$input['category_id']  = $request->input('selectCategorias');
+		$input['id_categoria']  = $request->input('selectCategorias');
 		$input['id_stock']     = $request->input('stockValue_edit');
 		$input['sku']          = $request->input('sku');
 		$input['id_moneda']    = 1;
@@ -164,16 +164,16 @@ class ProductoController extends AbstractController
 		}
 
 		//Main image
-		if ($request->hasfile('filename_main')) {
+		if ($request->hasfile('imagen_principal')) {
 
-			$images_main = $request->file('filename_main');
+			$images_main = $request->file('imagen_principal');
 
 			$name_main = $images_main->getClientOriginalName();
 			$images_main->move(public_path() . '/images/', $name_main);
 			$data_main[] = $name_main;
 
 			if (!empty($data_main)) {
-				$input['filename_main'] = json_encode($data_main);
+				$input['imagen_principal'] = json_encode($data_main);
 			}
 		}
 
@@ -226,7 +226,7 @@ class ProductoController extends AbstractController
 		$input['producto']     = $request->input('nombreProducto');
 		$input['codigo']       = $request->input('codigoProducto');
 		$input['descripcion']  = $request->input('descripcionProducto');
-		$input['category_id']  = $request->input('selectCategorias');
+		$input['id_categoria']  = $request->input('selectCategorias');
 		$input['id_stock']     = $request->input('stockValue_add');
 		$input['sku']          = $request->input('sku');
 		$input['id_moneda']    = 1;
@@ -255,16 +255,16 @@ class ProductoController extends AbstractController
 		}
 
 		//Main image
-		if ($request->hasfile('filename_main')) {
+		if ($request->hasfile('imagen_principal')) {
 
-			$images_main = $request->file('filename_main');
+			$images_main = $request->file('imagen_principal');
 
 			$name_main = $images_main->getClientOriginalName();
 			$images_main->move(public_path() . '/images/', $name_main);
 			$data_main[] = $name_main;
 
 			if (!empty($data_main)) {
-				$input['filename_main'] = json_encode($data_main);
+				$input['imagen_principal'] = json_encode($data_main);
 			}
 		}
 
@@ -291,7 +291,7 @@ class ProductoController extends AbstractController
 			foreach($atributosList as $nkey=>$atr) {
 				$inputAttr['attribute_id']  = $nkey;
 				$inputAttr['valor'] = $atr;
-				$inputAttr['product_id'] = $producto->id;
+				$inputAttr['id_producto'] = $producto->id;
 
 				AtributoProductoRepository::create($inputAttr);
 			}
@@ -345,7 +345,7 @@ class ProductoController extends AbstractController
 		
 		$producto = ProductoRepository::create($input);
 
-		$arr['product_id'] = $producto->id;
+		$arr['id_producto'] = $producto->id;
 		$arr['attribute_id'] = $idAtributo;
 		
 		AtributoProductoRepository::create($arr);

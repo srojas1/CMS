@@ -16,7 +16,7 @@ class Attribute extends AbstractModel implements HasPresenter {
 	 *
 	 * @var string
 	 */
-	protected $table = 'attributes';
+	protected $table = 'atributo';
 
 	/**
 	 * The model name.

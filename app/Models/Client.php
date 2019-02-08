@@ -17,7 +17,7 @@ class Client extends AbstractModel implements HasPresenter {
 	 *
 	 * @var string
 	 */
-	protected $table = 'clients';
+	protected $table = 'cliente';
 
 	/**
 	 * The model name.
@@ -45,7 +45,10 @@ class Client extends AbstractModel implements HasPresenter {
 	 *
 	 * @var array
 	 */
-	public static $index = ['id','nombres','apaterno','amaterno','puntos','last_login','movil','fecha_nacimiento','puntos','email','documento','ranking','filename_main','created_at','user_id'];
+	public static $index = ['id',
+		'nombres','apaterno','amaterno','puntos','last_login','movil',
+		'fecha_nacimiento','puntos','email','documento','ranking','imagen_principal',
+		'created_at','id_usuario'];
 
 	/**
 	 * The max events per page when displaying a paginated index.

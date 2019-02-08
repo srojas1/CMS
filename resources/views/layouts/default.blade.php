@@ -98,7 +98,11 @@
     <div class="page-contenedor row">
         <div class="panel-modulos col-12 col-sm-12 col-md-3 col-lg-3 col-xl-2">
             <div class="logo-tienda"></div>
-            <h1 class="text-hide" style="background-image: url('/images/{{ getCompanyModelLogo($user->user_company_id) }}'); background-size: contain; width: 320px; height: 50px; background-repeat: no-repeat;margin-left:15px">Logo tienda</h1>
+            @if(getCompanyModelLogo($user->usuario_empresa_id))
+                <h1 class="text-hide" style="background-image: url('/images/{{ getCompanyModelLogo($user->usuario_empresa_id) }}'); background-size: contain; width: 320px; height: 50px; background-repeat: no-repeat;margin-left:15px">Logo tienda</h1>
+            @else
+                <h1 class="text-hide" style="background-image: url('/images/producto-icon.jpg'); background-size: contain; width: 320px; height: 50px; background-repeat: no-repeat;margin-left:15px">Logo tienda</h1>
+            @endif
             @navigation
         </div>
         <!--- CONTENIDO DEL MÓDULO SELECCIONADO --->

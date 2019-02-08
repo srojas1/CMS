@@ -50,6 +50,6 @@ class User extends CredentialsUser
     }
 
 	public function getEmpresaById() {
-		return $this->hasOne(Empresa::class,'id','user_company_id');
+		return $this->hasOne(Empresa::class,'id','usuario_empresa_id');
 	}
 }

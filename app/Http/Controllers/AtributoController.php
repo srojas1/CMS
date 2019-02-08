@@ -84,10 +84,10 @@ class AtributoController extends AbstractController {
 	public function addAtributoProductoFromEdit() {
 
 		$attribute_id = $_POST['attribute_id'];
-		$product_id   = $_POST['product_id'];
+		$id_producto   = $_POST['id_producto'];
 		$valor        = $_POST['valor'];
 
-		$input = ['attribute_id'=>$attribute_id,'product_id'=>$product_id,'valor'=>$valor];
+		$input = ['attribute_id'=>$attribute_id,'id_producto'=>$id_producto,'valor'=>$valor];
 
 		$atributoProducto = AtributoProductoRepository::create($input);
 

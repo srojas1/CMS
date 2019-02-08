@@ -32,7 +32,7 @@
 								<div class="agregar-imagen-featured form-group">
 									<div class="input-group">
 										<div class="custom-file">
-											<input type="file" name="filename_main" class="main_image custom-file-input justify-content-center" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+											<input type="file" name="imagen_principal" class="main_image custom-file-input justify-content-center" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
 											<label class="custom-file-label custom-file-label-promo justify-content-center" for="inputGroupFile04">
 												<i class="material-icons">add_photo_alternate</i>
 											</label>

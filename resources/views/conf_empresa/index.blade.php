@@ -45,7 +45,11 @@
                 <div class="d-flex">
                     <div class="form-group">
                         <div class="inline-block position-relative">
+                            @if($user->getEmpresaById->logo)
                             <img src="{{ asset('images/'.$user->getEmpresaById->logo) }}" class="imagen-featured shadow-sm border-top border-bottom border-right border-left">
+                            @else
+                            <img src="{{ asset('images/producto-icon.jpg') }}" class="imagen-featured shadow-sm border-top border-bottom border-right border-left">
+                            @endif
                             <a href="#" class="badge badge-light badge-pill eliminarImagen shadow-sm">
                                 <i class="material-icons">clear</i>
                             </a>

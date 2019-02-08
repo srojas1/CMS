@@ -54,7 +54,7 @@
 											<select name="selectCategorias" class="custom-select" id="categoriaProducto_{!! $prod->id !!}" rows="3">
 												@if(count($categoria) > 0)
 													@foreach($categoria as $key => $cats)
-														@if ($cats->id == $prod->category_id)
+														@if ($cats->id == $prod->id_categoria)
 															<option value={{$cats->id}} selected>{{$cats->categoria}}</option>
 														@else
 															<option value="{{$cats->id}}">{{$cats->categoria}}</option>
@@ -132,7 +132,7 @@
 											<div class="agregar-imagen-featured form-group">
 												<div class="input-group">
 													<div class="custom-file">
-														<input type="file" name="filename_main" class="main_image custom-file-input justify-content-center" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+														<input type="file" name="imagen_principal" class="main_image custom-file-input justify-content-center" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
 														<label class="custom-file-label justify-content-center" for="inputGroupFile04">
 															<i class="material-icons">add_photo_alternate</i>
 														</label>
@@ -143,7 +143,7 @@
 										<div class="d-flex">
 											<div class="form-group">
 												<div class="inline-block position-relative">
-													<img src="{{ asset('images/'.getJsonValue($prod->filename_main))}}" class="imagen-featured shadow-sm border-top border-bottom border-right border-left">
+													<img src="{{ asset('images/'.getJsonValue($prod->imagen_principal))}}" class="imagen-featured shadow-sm border-top border-bottom border-right border-left">
 													<a href="#" class="badge badge-light badge-pill eliminarImagen shadow-sm">
 														<i class="material-icons">clear</i>
 													</a>

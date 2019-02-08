@@ -71,7 +71,7 @@ class UserController extends AbstractController
 		$links = UserRepository::links();
 
 		$links = formatPagination($links);
-		$userCompanyId = $credentials->getUser()->user_company_id;
+		$userCompanyId = $credentials->getUser()->usuario_empresa_id;
 
 		$elementLibrary = new ElementLibrary();
 		$users = $elementLibrary->validacionEmpresaUser($users,$userCompanyId);

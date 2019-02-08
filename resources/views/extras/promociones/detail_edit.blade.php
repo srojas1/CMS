@@ -32,7 +32,7 @@
 							<div class="agregar-imagen-featured form-group">
 								<div class="input-group">
 									<div class="custom-file">
-										<input type="file" name="filename_main" class="main_image custom-file-input justify-content-center" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+										<input type="file" name="imagen_principal" class="main_image custom-file-input justify-content-center" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
 										<label class="custom-file-label justify-content-center" for="inputGroupFile04">
 											<i class="material-icons">add_photo_alternate</i>
 										</label>
@@ -43,7 +43,7 @@
 						<div class="d-flex">
 							<div class="form-group">
 								<div class="inline-block position-relative">
-									<img src="{{ asset('images/'.getJsonValue($prom->filename_main))}}" class="imagen-featured shadow-sm border-top border-bottom border-right border-left">
+									<img src="{{ asset('images/'.getJsonValue($prom->imagen_principal))}}" class="imagen-featured shadow-sm border-top border-bottom border-right border-left">
 									<a href="#" class="badge badge-light badge-pill eliminarImagen shadow-sm">
 										<i class="material-icons">clear</i>
 									</a>

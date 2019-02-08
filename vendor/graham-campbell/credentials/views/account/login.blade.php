@@ -38,16 +38,3 @@
     </div>
 </form>
 </body>
-{{--<div class="form-group">--}}
-{{--<div class="col-md-offset-2 col-sm-offset-3 col-sm-10 col-xs-12">--}}
-{{--<button class="btn btn-primary" type="submit"><i class="fa fa-rocket"></i> Ingresar</button>--}}
-{{--@if (Config::get('credentials.activation'))--}}
-{{--<label><a href="{!! URL::route('account.reset') !!}" class="btn btn-link">Perdí mi contraseña</a>/<a href="{!! URL::route('account.resend') !!}" class="btn btn-link">No Activado?</a></label>--}}
-{{--@else--}}
-{{--<label><a href="{!! URL::route('account.reset') !!}" class="btn btn-link">Perdí mi contraseña</a>--}}
-{{--@endif--}}
-{{--</div>--}}
-{{--</div>--}}
-
-{{--</form>--}}
-{{--</div>--}}

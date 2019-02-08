@@ -17,7 +17,7 @@ class OrderProduct extends AbstractModel implements HasPresenter {
      *
      * @var string
      */
-    protected $table = 'orders_products';
+    protected $table = 'orden_producto';
 
     /**
      * The model name.

@@ -49,7 +49,7 @@ class PromocionController extends AbstractController {
 		$cliente    = ClienteRepository::paginate();
 		$links      = PromocionRepository::links();
 		$user = $credentials->getUser();
-		$userCompanyId = $credentials->getUser()->user_company_id;
+		$userCompanyId = $credentials->getUser()->usuario_empresa_id;
 
 		$arrStatus = array(
 			'promoStatus'=>'active',
@@ -99,16 +99,16 @@ class PromocionController extends AbstractController {
 		$vinculacionList       = $request->input('productoVinculadoPromo');
 
 		//Main image
-		if ($request->hasfile('filename_main')) {
+		if ($request->hasfile('imagen_principal')) {
 
-			$images_main = $request->file('filename_main');
+			$images_main = $request->file('imagen_principal');
 			$name_main = $images_main->getClientOriginalName();
 
 			$images_main->move(public_path() . '/images/', $name_main);
 			$data_main[] = $name_main;
 
 			if (!empty($data_main)) {
-				$input['filename_main'] = json_encode($data_main);
+				$input['imagen_principal'] = json_encode($data_main);
 			}
 		}
 
@@ -146,16 +146,16 @@ class PromocionController extends AbstractController {
 		$id = $request->input('id_promocion');
 
 		//Main image
-		if ($request->hasfile('filename_main')) {
+		if ($request->hasfile('imagen_principal')) {
 
-			$images_main = $request->file('filename_main');
+			$images_main = $request->file('imagen_principal');
 			$name_main = $images_main->getClientOriginalName();
 
 			$images_main->move(public_path() . '/images/', $name_main);
 			$data_main[] = $name_main;
 
 			if (!empty($data_main)) {
-				$input['filename_main'] = json_encode($data_main);
+				$input['imagen_principal'] = json_encode($data_main);
 			}
 		}
 

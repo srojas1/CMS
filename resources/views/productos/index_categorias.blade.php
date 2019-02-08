@@ -21,7 +21,7 @@
 										<div class="form-group">
 											<div class="input-group">
 												<div class="custom-file">
-													<input type="file" name="filename_main" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+													<input type="file" name="imagen_principal" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
 													<label class="custom-file-label" for="inputGroupFile04"><i class="material-icons">add_photo_alternate</i></label>
 												</div>
 											</div>
@@ -46,10 +46,10 @@
 						@if(count($categoria)>0)
 							@foreach ($categoria as $key1=>$cat)
 								<tr>
-									@if($cat->filename_main)
+									@if($cat->imagen_principal)
 										<th scope="row" class="align-middle" href="#modalEditarCategoria_{!! $cat->id !!}" class="accion"
 											data-toggle="modal"
-											data-target="#modalEditarCategoria_{!! $cat->id !!}"><div class="d-flex align-items-center"><img src="{{ asset('images/'.getJsonValue($cat->filename_main))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left"><div>{{$cat->categoria}}</div></div></th>
+											data-target="#modalEditarCategoria_{!! $cat->id !!}"><div class="d-flex align-items-center"><img src="{{ asset('images/'.getJsonValue($cat->imagen_principal))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left"><div>{{$cat->categoria}}</div></div></th>
 									@else
 										<th scope="row" class="align-middle" href="#modalEditarCategoria_{!! $cat->id !!}" class="accion"
 											data-toggle="modal"

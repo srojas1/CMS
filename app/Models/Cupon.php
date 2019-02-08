@@ -44,7 +44,7 @@ class Cupon extends AbstractModel implements HasPresenter {
      *
      * @var array
      */
-    public static $index = ['id','cupon','descuento','vencimiento','stock_maximo','condicion','user_id'];
+    public static $index = ['id','cupon','descuento','vencimiento','stock_maximo','condicion','id_usuario'];
 
     /**
      * The max events per page when displaying a paginated index.

@@ -42,7 +42,7 @@
 											@foreach($ped->getProductsById as $prod)
 												<tr>
 													<td>{{$prod->orders[0]->pivot->cantidad}}</td>
-													<td><div class="d-inline-flex"><img width="50" height="50"  class="pedido_imagen" src="{{ asset('images/'.getJsonValue($prod->filename_main))}}" alt="..." class="producto-icon border-top border-bottom border-right border-left">{{$prod->producto}}</div></td>
+													<td><div class="d-inline-flex"><img width="50" height="50"  class="pedido_imagen" src="{{ asset('images/'.getJsonValue($prod->imagen_principal))}}" alt="..." class="producto-icon border-top border-bottom border-right border-left">{{$prod->producto}}</div></td>
 													@if($prod->getCurrencyById->simbolo)
 														<td class="d-flex justify-content-end">{{$prod->getCurrencyById->simbolo}} {{$prod->precio}}</td>
 													@endif

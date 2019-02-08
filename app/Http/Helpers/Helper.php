@@ -53,7 +53,7 @@ use Illuminate\Support\Facades\Auth;
 	{
 		$products = ProductModel::where('id', $id)->first();
 
-		return $products['filename_main'];
+		return $products['imagen_principal'];
 	}
 
 

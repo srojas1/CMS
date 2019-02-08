@@ -16,7 +16,7 @@ class Product extends AbstractModel implements HasPresenter {
 	 *
 	 * @var string
 	 */
-	protected $table = 'products';
+	protected $table = 'producto';
 
 	/**
 	 * The model name.
@@ -44,7 +44,7 @@ class Product extends AbstractModel implements HasPresenter {
 	 *
 	 * @var array
 	 */
-	public static $index = ['id','producto','codigo','descripcion','category_id','id_stock','precio','oferta','filename','filename_main','vinculacion','visibilidad','SKU','user_id'];
+	public static $index = ['id','producto','codigo','descripcion','id_categoria','id_stock','precio','oferta','imagen','imagen_principal','vinculacion','visibilidad','SKU','id_usuario'];
 
 	/**
 	 * The max events per page when displaying a paginated index.
@@ -100,7 +100,7 @@ class Product extends AbstractModel implements HasPresenter {
 	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
 	 */
 	public function getCategoryById() {
-		return $this->hasOne(Category::class,'id','category_id');
+		return $this->hasOne(Category::class,'id','id_categoria');
 	}
 
 	public function orders() {

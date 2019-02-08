@@ -51,7 +51,6 @@ class ConfiguracionEmpresaController extends AbstractController
 		}
 
 		$confEmpresa = EmpresaRepository::find($id);
-
 		$confEmpresa->update($input);
 
 		return json_encode($confEmpresa);

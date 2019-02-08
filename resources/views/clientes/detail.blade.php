@@ -12,7 +12,7 @@
 					<div class="container-fluid row col-12 align-items-center">
 						<div class="container-fluid row col-12 justify-content-start align-items-center pb-3">
 							<div class="col-12 col-md-3 col-lg-2">
-								<img src="{{ asset('images/'.getJsonValue($cli->filename_main)) }}" alt="..." class="fotoPerfil img-fluid border-top border-bottom border-right border-left">
+								<img src="{{ asset('images/'.getJsonValue($cli->imagen_principal)) }}" alt="..." class="fotoPerfil img-fluid border-top border-bottom border-right border-left">
 							</div>
 							<div class="col-12 col-md-9 col-lg-10">
 								<h3 class="modal-title">{{$cli->nombres}} {{$cli->apaterno}} {{$cli->amaterno}}</h3>

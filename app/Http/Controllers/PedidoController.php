@@ -42,7 +42,7 @@ class PedidoController extends AbstractController {
 
 		$pedido  = PedidoRepository::paginate();
 		$user = $credentials->getUser();
-		$userCompanyId = $credentials->getUser()->user_company_id;
+		$userCompanyId = $credentials->getUser()->usuario_empresa_id;
 
 		$elementLibrary = new ElementLibrary();
 		$pedido = $elementLibrary->validacionEmpresaPedido($pedido,$userCompanyId);

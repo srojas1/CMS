@@ -164,7 +164,7 @@ $(document).ready(function(){
         $(document).on('click','.agregar_atributo',function () {
 
             $attribute_id = $('#atributoProducto_'+$idProducto).val();
-            $product_id   = $idProducto;
+            $id_producto   = $idProducto;
 
                 $.ajax({
                     type: "POST",
@@ -172,7 +172,7 @@ $(document).ready(function(){
                     cache: false,
                     data: {
                         attribute_id: $attribute_id,
-                        product_id: $product_id,
+                        id_producto: $id_producto,
                         valor: 'sin valor asignado'
                     }
                 }).done(function(data) {

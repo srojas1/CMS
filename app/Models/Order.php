@@ -16,7 +16,7 @@ class Order extends AbstractModel implements HasPresenter {
      *
      * @var string
      */
-    protected $table = 'orders';
+    protected $table = 'orden';
 
     /**
      * The model name.
@@ -45,17 +45,17 @@ class Order extends AbstractModel implements HasPresenter {
      * @var array
      */
     public static $index =
-        ['id',
-         'client_id',
-         'total',
-         'contacto_entrega',
-         'movil_contacto_entrega',
-         'id_estado',
-         'fecha_pedido',
-         'fecha_compra',
-         'id_cliente_tipo_pago',
-         'id_direccion'
-        ];
+		['id',
+		 'id_cliente',
+		 'id_cliente_tipo_pago',
+		 'id_direccion',
+		 'id_estado',
+		 'fecha_pedido',
+		 'fecha_compra',
+		 'total',
+		 'contacto_entrega',
+		 'movil_contacto_entrega'
+		];
 
     /**
      * The max events per page when displaying a paginated index.
@@ -118,8 +118,8 @@ class Order extends AbstractModel implements HasPresenter {
     public function getProductsById() {
         return $this->belongsToMany(Product::class,
             'orders_products',
-            'order_id',
-            'product_id');
+            'id_orden',
+            'id_producto');
     }
 
     public function getPaymentCardByIdClient() {

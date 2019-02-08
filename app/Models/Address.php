@@ -16,7 +16,7 @@ class Address extends AbstractModel implements HasPresenter {
      *
      * @var string
      */
-    protected $table = 'addresses';
+    protected $table = 'direccion';
 
     /**
      * The model name.

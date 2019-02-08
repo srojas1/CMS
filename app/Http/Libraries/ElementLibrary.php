@@ -8,7 +8,7 @@ class ElementLibrary
 		$arr = array();
 
 		foreach ($element as $el) {
-			if ($el->getUserById->user_company_id != $userCompanyId) {
+			if ($el->getUserById->usuario_empresa_id != $userCompanyId) {
 				continue;
 			} else
 				$arr[] = $el;
@@ -22,7 +22,7 @@ class ElementLibrary
 		$arr = array();
 
 		foreach ($element as $el) {
-			if ($el->user_company_id != $userCompanyId) {
+			if ($el->usuario_empresa_id != $userCompanyId) {
 				continue;
 			} else
 				$arr[] = $el;
@@ -37,7 +37,7 @@ class ElementLibrary
 
 		foreach ($element as $el) {
 			$cliente = $el->getClientById;
-			if ($cliente->getUserById->user_company_id != $userCompanyId) {
+			if ($cliente->getUserById->usuario_empresa_id != $userCompanyId) {
 				continue;
 			} else
 				$arr[] = $el;

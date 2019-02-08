@@ -16,7 +16,7 @@ class Empresa extends AbstractModel implements HasPresenter {
      *
      * @var string
      */
-    protected $table = 'user_company';
+    protected $table = 'usuario_empresa';
 
     /**
      * The model name.
@@ -44,7 +44,7 @@ class Empresa extends AbstractModel implements HasPresenter {
      *
      * @var array
      */
-    public static $index = ['id'];
+    public static $index = ['id','logo'];
 
     /**
      * The max events per page when displaying a paginated index.
@@ -87,6 +87,6 @@ class Empresa extends AbstractModel implements HasPresenter {
     }
 
 	public function getUserById() {
-		return $this->hasOne(User::class,'id','user_company_id');
+		return $this->hasOne(User::class,'id','usuario_empresa_id');
 	}
 }
