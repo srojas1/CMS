@@ -87,7 +87,7 @@ class AtributoController extends AbstractController {
 		$id_producto   = $_POST['id_producto'];
 		$valor        = $_POST['valor'];
 
-		$input = ['atributo_id'=>$attribute_id,'id_producto'=>$id_producto,'valor'=>$valor];
+		$input = ['atributo_id'=>$attribute_id,'producto_id'=>$id_producto,'valor'=>$valor];
 
 		$atributoProducto = AtributoProductoRepository::create($input);
 

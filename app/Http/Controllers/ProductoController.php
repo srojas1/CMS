@@ -159,7 +159,7 @@ class ProductoController extends AbstractController
 			foreach($atributosList as $nkey=>$atr) {
 				$inputAttr['atributo_id']  = $nkey;
 				$inputAttr['valor'] = $atr;
-				$inputAttr['id_producto'] = $producto->id;
+				$inputAttr['producto_id'] = $producto->id;
 
 				AtributoProductoRepository::create($inputAttr);
 			}
