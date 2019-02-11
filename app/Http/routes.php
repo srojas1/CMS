@@ -101,4 +101,6 @@ Route::post('producto/disable', 'ProductoController@disable');
 
 Route::get('get_productos','APIController@GetProductos');
 Route::get('get_categorias','APIController@GetCategorias');
+Route::get('get_empresas','APIController@GetEmpresas');
 Route::post('add_categoria','APIController@AddCategoria');
+Route::post('validar_cliente','APIController@ValidarCliente');
