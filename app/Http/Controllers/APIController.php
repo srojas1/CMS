@@ -43,37 +43,61 @@ class APIController extends AbstractController{
 		return response()->json($return);
 	}
 
+	public function GetUsuarios($idEmpresa) {
+		$usuarios = \GrahamCampbell\BootstrapCMS\Models\User::where($idEmpresa)->get()->toArray();
+		return $usuarios;
+	}
+
+	public function GetRecordsByModel($model, $idEmpresa) {
+		$returnData = array();
+		$usuarios = $this->GetUsuarios($idEmpresa);
+
+		//recorro cada usuario y obtengo los productos x usuario
+		foreach($usuarios as $nkey=>$us) {
+			$matchUsuario = ['id_usuario'=> $us['id']];
+			$data = $model::where($matchUsuario)->get();
+			if($data)
+				$data->toArray();
+
+			//meto en un array los que encuentre
+			$returnData[] = $data;
+		}
+
+		return $returnData;
+	}
+
 	public function GetProductos(){
-		$data = Producto::all();
+		//set response data
 		$return['estado'] = false;
 		$return['mensaje'] = "Lista de productos no encontrada";
 
-		if($data) {
+		//get records by model and id_empresa
+		$returnData = $this->GetRecordsByModel(Producto::class, Input::only('usuario_empresa_id'));
+
+		//si el array esta lleno, mando mensaje de exito y lleno data
+		if(count($returnData)>0) {
 			$return['estado'] = true;
 			$return['mensaje'] = "Lista de productos encontrada";
-			$return['data'] = $data;
+			$return['data'] = $returnData;
 		}
 
 		return response()->json($return);
 	}
 	
 	public function GetCategorias() {
-		$data = Categoria::all();
+
 		$return['estado'] = false;
 		$return['mensaje'] = "Lista de categorías no encontrada";
 
-		if($data) {
+		$returnData = $this->GetRecordsByModel(Categoria::class, Input::only('usuario_empresa_id'));
+
+		if(count($returnData)>0) {
 			$return['estado'] = true;
 			$return['mensaje'] = "Lista de categorías encontrada";
-			$return['data'] = $data;
+			$return['data'] = $returnData;
 		}
 
 		return response()->json($return);
-	}
-	
-	public function AddCategoria(Request $request) {
-		$categoria = Categoria::create($request->all());
-		return $categoria;
 	}
 
 	public function GetEmpresas() {
