@@ -2,6 +2,7 @@
 
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
+use Cartalyst\Sentry\Users\Eloquent\User;
 use GrahamCampbell\BootstrapCMS\Models\Empresa;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
@@ -13,7 +14,7 @@ use Illuminate\Http\Request;
 class APIController extends AbstractController{
 
 	public function ValidarCliente() {
-
+		
 		$user = Input::only('email');
 		$pwd  = Input::only('password');
 		$clienteEmpresaId  = Input::only('cliente_empresa_id');
@@ -29,6 +30,9 @@ class APIController extends AbstractController{
 			$responseArr = $validateClient->toArray();
 			//remove pwd from the response
 			unset($responseArr['password']);
+			$user = new User();
+			$token = ["token"=>$user->getRandomString()];
+			$responseArr = array_merge($responseArr,$token);
 			$return['data']    = $responseArr;
 		} else {
 			$return['estado']  = false;

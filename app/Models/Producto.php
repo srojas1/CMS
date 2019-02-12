@@ -100,7 +100,7 @@ class Producto extends AbstractModel implements HasPresenter {
 	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
 	 */
 	public function getCategoryById() {
-		return $this->hasOne(Categoria::class,'id','id_categoria');
+		return $this->hasOne(Categoria::class,'id','categoria_id');
 	}
 
 	public function orders() {
