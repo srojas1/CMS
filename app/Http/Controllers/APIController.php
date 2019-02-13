@@ -3,6 +3,7 @@
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 use Cartalyst\Sentry\Users\Eloquent\User;
+use GrahamCampbell\BootstrapCMS\Facades\ClienteRepository;
 use GrahamCampbell\BootstrapCMS\Models\Empresa;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
@@ -12,6 +13,27 @@ use GrahamCampbell\BootstrapCMS\Models\Producto;
 use Illuminate\Http\Request;
 
 class APIController extends AbstractController{
+
+	public function RegistrarCliente() {
+
+		$user = Input::only('email');
+		$pwd  = Input::only('password');
+		$clienteEmpresaId  = Input::only('cliente_empresa_id');
+
+		$input['email'] = $user['email'];
+		$input['password'] = password_hash($pwd['password'],PASSWORD_DEFAULT);
+		$input['cliente_empresa_id'] = $clienteEmpresaId['cliente_empresa_id'];
+
+		$cliente = ClienteRepository::create($input);
+
+		if($cliente) {
+			$return['estado']  = true;
+			$return['mensaje'] = "Usuario registrado exitosamente";
+			$return['data'] = $cliente->email;
+		}
+
+		return response()->json($return);
+	}
 
 	public function ValidarCliente() {
 		

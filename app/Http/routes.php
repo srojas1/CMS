@@ -101,8 +101,10 @@ Route::post('recompensa/editRecompensa', 'RecompensaController@editRecompensa');
 Route::post('confEmpresa/editEmpresa', 'ConfiguracionEmpresaController@editEmpresa');
 Route::post('producto/disable', 'ProductoController@disable');
 
+//API
 Route::get('get_empresas','APIController@GetEmpresas');
 Route::post('get_productos','APIController@GetProductos');
 Route::post('get_categorias','APIController@GetCategorias');
 Route::post('add_categoria','APIController@AddCategoria');
 Route::post('validar_cliente','APIController@ValidarCliente');
+Route::post('registrar_cliente','APIController@RegistrarCliente');
