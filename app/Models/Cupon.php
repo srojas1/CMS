@@ -87,10 +87,10 @@ class Cupon extends AbstractModel implements HasPresenter {
     }
 
 	public function getClientsById() {
-		return $this->belongsToMany(Client::class,'cupon_client')->withPivot('id','deleted_at');
+		return $this->belongsToMany(Cliente::class,'cupon_cliente')->withPivot('id','deleted_at');
 	}
 
 	public function getUserById() {
-		return $this->hasOne(User::class,'id','user_id');
+		return $this->hasOne(User::class,'id','id_usuario');
 	}
 }

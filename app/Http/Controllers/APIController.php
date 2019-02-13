@@ -7,7 +7,7 @@ use GrahamCampbell\BootstrapCMS\Models\Empresa;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use GrahamCampbell\BootstrapCMS\Models\Categoria;
-use GrahamCampbell\BootstrapCMS\Models\Client;
+use GrahamCampbell\BootstrapCMS\Models\Cliente;
 use GrahamCampbell\BootstrapCMS\Models\Producto;
 use Illuminate\Http\Request;
 
@@ -22,7 +22,7 @@ class APIController extends AbstractController{
 		$matchCredentials = ['email' => $user,'cliente_empresa_id'=>$clienteEmpresaId];
 		$columns          = ['id','email','password','nombres','apaterno','amaterno'];
 
-		$validateClient   = Client::where($matchCredentials)->select($columns)->first();
+		$validateClient   = Cliente::where($matchCredentials)->select($columns)->first();
 
 		if ($validateClient && Hash::check($pwd['password'], $validateClient->password)) {
 			$return['estado']  = true;

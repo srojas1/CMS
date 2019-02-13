@@ -38,10 +38,6 @@ class PromocionController extends AbstractController {
 	 */
 	public function index(Credentials $credentials) {
 
-//		if (!$credentials->check()) {
-//			return Redirect::route('account.login');
-//		}
-
 		$promocion  = PromocionRepository::paginate();
 		$cupon      = CuponRepository::paginate();
 		$recompensa = RecompensaRepository::paginate();
@@ -124,7 +120,7 @@ class PromocionController extends AbstractController {
 				$input['vinculacion_producto'] = json_encode($vincArr);
 			}
 		}
-		$input['user_id'] = 1;
+		$input['id_usuario'] = $this->GetUserId();
 		$promocion = PromocionRepository::create($input);
 
 		return json_encode($promocion);

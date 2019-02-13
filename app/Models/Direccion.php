@@ -8,7 +8,7 @@ use GrahamCampbell\Credentials\Models\Relations\RevisionableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
 
-class Address extends AbstractModel implements HasPresenter {
+class Direccion extends AbstractModel implements HasPresenter {
 
     use BelongsToUserTrait, RevisionableTrait, SoftDeletes;
     /**
@@ -23,7 +23,7 @@ class Address extends AbstractModel implements HasPresenter {
      *
      * @var string
      */
-    public static $name = 'address';
+    public static $name = 'direccion';
 
     /**
      * The properties on the model that are dates.
@@ -37,14 +37,14 @@ class Address extends AbstractModel implements HasPresenter {
      *
      * @var array
      */
-    protected $keepRevisionOf = ['direccion','id_cliente'];
+    protected $keepRevisionOf = ['direccion','cliente_id'];
 
     /**
      * The columns to select when displaying an index.
      *
      * @var array
      */
-    public static $index = ['id','direccion','id_cliente'];
+    public static $index = ['id','direccion','cliente_id'];
 
     /**
      * The max events per page when displaying a paginated index.
@@ -87,7 +87,7 @@ class Address extends AbstractModel implements HasPresenter {
     }
 
     public function getDistrict() {
-		return $this->hasOne(Districts::class,'id','id_distrito');
+		return $this->hasOne(Distrito::class,'id','distrito_id');
 	}
 
 	public function getAddressType() {

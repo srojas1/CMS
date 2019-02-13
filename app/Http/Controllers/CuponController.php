@@ -80,12 +80,12 @@ class CuponController extends AbstractController {
 	 */
 	public function storeCupon(Request $request) {
 
-		$input['cupon']    = $request->input('nombreCupon');
-		$input['descuento']       = $request->input('descuentoCupon');
-		$input['vencimiento'] = formatStringToDateTime($request->input('vencimientoCupon'));
+		$input['cupon']        = $request->input('nombreCupon');
+		$input['descuento']    = $request->input('descuentoCupon');
+		$input['vencimiento']  = formatStringToDateTime($request->input('vencimientoCupon'));
 		$input['stock_maximo'] = $request->input('stockMaximoCupon');
 		$input['condicion']    = $request->input('condicionPromocion');
-		$input['user_id'] = 1;
+		$input['id_usuario']   = $this->GetUserId();
 
 		$cupon = CuponRepository::create($input);
 
@@ -95,7 +95,7 @@ class CuponController extends AbstractController {
 
 			//Multiple clients
 			foreach($vinculacionCliente as $nkey=>$vinCli) {
-				$inputCli['client_id']   = $vinCli;
+				$inputCli['cliente_id']   = $vinCli;
 				$inputCli['cupon_id']    = $cupon->id;
 
 				CuponClienteRepository::create($inputCli);

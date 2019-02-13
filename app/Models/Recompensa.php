@@ -87,6 +87,6 @@
 	}
 
 	public function getUserById() {
-		return $this->hasOne(User::class,'id','user_id');
+		return $this->hasOne(User::class,'id','id_usuario');
 	}
 }

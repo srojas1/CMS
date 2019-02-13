@@ -46,7 +46,7 @@ class Orden extends AbstractModel implements HasPresenter {
      */
     public static $index =
 		['id',
-		 'id_cliente',
+		 'cliente_id',
 		 'id_cliente_tipo_pago',
 		 'id_direccion',
 		 'id_estado',
@@ -103,7 +103,7 @@ class Orden extends AbstractModel implements HasPresenter {
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function getClientById() {
-        return $this->hasOne(Client::class,'id','client_id');
+        return $this->hasOne(Cliente::class,'id','client_id');
     }
 
     /**
@@ -123,10 +123,10 @@ class Orden extends AbstractModel implements HasPresenter {
     }
 
     public function getPaymentCardByIdClient() {
-        return $this->hasOne(ClientPaymentCard::class,'id','id_cliente_tipo_pago');
+        return $this->hasOne(ClienteTipoPago::class,'id','id_cliente_tipo_pago');
     }
 
     public function getAddressById() {
-        return $this->hasOne(Address::class,'id','id_direccion');
+        return $this->hasOne(Direccion::class,'id','id_direccion');
     }
 }

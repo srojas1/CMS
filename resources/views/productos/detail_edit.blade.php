@@ -54,7 +54,7 @@
 											<select name="selectCategorias" class="custom-select" id="categoriaProducto_{!! $prod->id !!}" rows="3">
 												@if(count($categoria) > 0)
 													@foreach($categoria as $key => $cats)
-														@if ($cats->id == $prod->id_categoria)
+														@if ($cats->id == $prod->categoria_id)
 															<option value={{$cats->id}} selected>{{$cats->categoria}}</option>
 														@else
 															<option value="{{$cats->id}}">{{$cats->categoria}}</option>

@@ -44,7 +44,7 @@ class Producto extends AbstractModel implements HasPresenter {
 	 *
 	 * @var array
 	 */
-	public static $index = ['id','producto','codigo','descripcion','id_categoria','id_stock','precio','oferta','imagen_principal','imagenes','vinculacion','visibilidad','SKU','id_usuario'];
+	public static $index = ['id','producto','codigo','descripcion','categoria_id','id_stock','precio','oferta','imagen_principal','imagenes','vinculacion','visibilidad','SKU','id_usuario'];
 
 	/**
 	 * The max events per page when displaying a paginated index.

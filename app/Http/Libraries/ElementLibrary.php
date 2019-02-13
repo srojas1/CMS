@@ -45,4 +45,18 @@ class ElementLibrary
 
 		return $arr;
 	}
+
+	public static function validacionEmpresaCliente($element, $userCompanyId)
+	{
+		$arr = array();
+
+		foreach ($element as $el) {
+			if ($el->cliente_empresa_id != $userCompanyId) {
+				continue;
+			} else
+				$arr[] = $el;
+		}
+
+		return $arr;
+	}
 }

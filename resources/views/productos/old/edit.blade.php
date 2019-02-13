@@ -36,7 +36,7 @@
                 'producto'   => $producto->producto,
                 'codigo' => $producto->codigo,
                 'descripcion' => $producto->descripcion,
-                'id_categoria'=> $producto->id_categoria,
+                'id_categoria'=> $producto->categoria_id,
                 'id_stock' => $producto->id_stock,
                 'precio' => $producto->precio,
                 'oferta' => $producto->oferta

@@ -8,7 +8,7 @@ use GrahamCampbell\Credentials\Models\Relations\RevisionableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
 
-class CuponClient extends AbstractModel implements HasPresenter {
+class CuponCliente extends AbstractModel implements HasPresenter {
 
 	use BelongsToUserTrait, RevisionableTrait, SoftDeletes;
 	/**
@@ -16,14 +16,14 @@ class CuponClient extends AbstractModel implements HasPresenter {
 	 *
 	 * @var string
 	 */
-	protected $table = 'cupon_client';
+	protected $table = 'cupon_cliente';
 
 	/**
 	 * The model name.
 	 *
 	 * @var string
 	 */
-	public static $name = 'CuponClient';
+	public static $name = 'CuponCliente';
 
 	/**
 	 * The properties on the model that are dates.

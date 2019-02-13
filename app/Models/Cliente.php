@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use McCool\LaravelAutoPresenter\HasPresenter;
 
-class Client extends AbstractModel implements HasPresenter {
+class Cliente extends AbstractModel implements HasPresenter {
 
 	use BelongsToUserTrait, RevisionableTrait, SoftDeletes;
 	/**
@@ -24,7 +24,7 @@ class Client extends AbstractModel implements HasPresenter {
 	 *
 	 * @var string
 	 */
-	public static $name = 'client';
+	public static $name = 'cliente';
 
 	/**
 	 * The properties on the model that are dates.
@@ -45,10 +45,10 @@ class Client extends AbstractModel implements HasPresenter {
 	 *
 	 * @var array
 	 */
-	public static $index = ['id',
+	public static $index = ['id','cliente_empresa_id',
 		'nombres','apaterno','amaterno','puntos','last_login','movil',
 		'fecha_nacimiento','puntos','email','documento','ranking','imagen_principal',
-		'created_at','id_usuario'];
+		'created_at'];
 
 	/**
 	 * The max events per page when displaying a paginated index.
@@ -90,7 +90,7 @@ class Client extends AbstractModel implements HasPresenter {
 	}
 
 	public function address(){
-		return $this->hasMany(Address::class);
+		return $this->hasMany(Direccion::class);
 	}
 
 	public function orders(){
@@ -102,14 +102,14 @@ class Client extends AbstractModel implements HasPresenter {
 	}
 
 	public function getPaymentCard() {
-		return $this->hasMany(ClientPaymentCard::class);
+		return $this->hasMany(ClienteTipoPago::class);
 	}
 
-	public function getCuponById() {
-		return $this->belongsToMany(Cupon::class,'cupon_client')->withPivot('id','deleted_at');
-	}
+//	public function getCuponById() {
+//		return $this->belongsToMany(Cupon::class,'cupon_client')->withPivot('id','deleted_at');
+//	}
 
 	public function getUserById() {
-		return $this->hasOne(User::class,'id','user_id');
+		return $this->hasOne(User::class,'id','id_usuario');
 	}
 }

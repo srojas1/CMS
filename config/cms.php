@@ -216,11 +216,11 @@
 	|
 	| This defines the cliente model to be used.
 	|
-	| Default: 'GrahamCampbell\BootstrapCMS\Models\Client'
+	| Default: 'GrahamCampbell\BootstrapCMS\Models\Cliente'
 	|
 	*/
 
-	'cliente' => 'GrahamCampbell\BootstrapCMS\Models\Client',
+	'cliente' => 'GrahamCampbell\BootstrapCMS\Models\Cliente',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -338,7 +338,7 @@
 	|
 	*/
 
-		'cuponcliente' => 'GrahamCampbell\BootstrapCMS\Models\CuponClient',
+		'cuponcliente' => 'GrahamCampbell\BootstrapCMS\Models\CuponCliente',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -351,7 +351,7 @@
 	|
 	*/
 
-		'districts' => 'GrahamCampbell\BootstrapCMS\Models\Districts',
+		'districts' => 'GrahamCampbell\BootstrapCMS\Models\Distrito',
 
 	/*
 	|--------------------------------------------------------------------------

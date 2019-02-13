@@ -53,7 +53,11 @@
 												<div class="form-group col-5">
 													<input name="productoVinculadoPromoEdit[]" type="hidden" value="{{$cliCup->pivot->id}}"/>
 													<div class="d-inline-flex">
+														@if($cliCup->imagen_principal)
 														<img src="{{asset('images/'.getJsonValue($cliCup->imagen_principal))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left"> {{$cliCup->nombres}} {{$cliCup->apaterno}} {{$cliCup->amaterno}}
+														@else
+														<img src="{{ asset('images/'.\GrahamCampbell\BootstrapCMS\Http\Constants::DEFAULT_IMAGE_NAME)}}" alt="..." class="thumbnail border-top border-bottom border-right border-left"> {{$cliCup->nombres}} {{$cliCup->apaterno}} {{$cliCup->amaterno}}
+														@endif
 													</div>
 												</div>
 												<div class="form-group col-3">

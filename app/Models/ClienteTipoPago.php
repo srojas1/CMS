@@ -8,7 +8,7 @@ use GrahamCampbell\Credentials\Models\Relations\RevisionableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
 
-class ClientPaymentCard extends AbstractModel implements HasPresenter {
+class ClienteTipoPago extends AbstractModel implements HasPresenter {
 
     use BelongsToUserTrait, RevisionableTrait, SoftDeletes;
     /**
@@ -16,14 +16,14 @@ class ClientPaymentCard extends AbstractModel implements HasPresenter {
      *
      * @var string
      */
-    protected $table = 'client_payment_card';
+    protected $table = 'cliente_tipo_pago';
 
     /**
      * The model name.
      *
      * @var string
      */
-    public static $name = 'clientpaymentcard';
+    public static $name = 'clientetipopago';
 
     /**
      * The properties on the model that are dates.

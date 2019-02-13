@@ -33,10 +33,6 @@ class ClienteController extends AbstractController {
 	 */
 	public function index(Credentials $credentials) {
 
-		if (!$credentials->check()) {
-			return Redirect::route('account.login');
-		}
-
 		$cliente   = ClienteRepository::paginate();
 		$links     = ClienteRepository::links();
 		$links     = formatPagination($links);
@@ -45,7 +41,7 @@ class ClienteController extends AbstractController {
 
 		$elementLibrary = new ElementLibrary();
 
-		$cliente = $elementLibrary->validacionEmpresa($cliente,$userCompanyId);
+		$cliente = $elementLibrary->validacionEmpresaCliente($cliente,$userCompanyId);
 
 		return View::make('clientes.index',
 			[

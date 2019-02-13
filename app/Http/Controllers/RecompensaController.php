@@ -70,7 +70,7 @@ class RecompensaController extends AbstractController {
 		$input['evento']        = $request->input('eventoRecompensa');
 		$input['puntos']        = $request->input('puntosRecompensa');
 		$input['descripcion']   = $request->input('descripcionRecompensa');
-		$input['user_id'] = 1;
+		$input['id_usuario']    = $this->GetUserId();
 
 		$recompensa = RecompensaRepository::create($input);
 

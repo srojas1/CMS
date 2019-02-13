@@ -39,7 +39,7 @@
 											<div class="d-flex">
 												<div class="form-group">
 													<div class="inline-block position-relative">
-														<img style="width: 80px; height: 80px; margin-top: 16px;" class="imagen-featured shadow-sm border-top border-bottom border-right border-left">
+														<img src="{{ asset('images/'.\GrahamCampbell\BootstrapCMS\Http\Constants::DEFAULT_IMAGE_NAME)}}" style="width: 80px; height: 80px; margin-top: 16px;" class="imagen-featured shadow-sm border-top border-bottom border-right border-left">
 														<a href="#" class="badge badge-light badge-pill eliminarImagen shadow-sm">
 															<i class="material-icons">clear</i>
 														</a>
