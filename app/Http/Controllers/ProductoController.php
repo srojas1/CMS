@@ -185,6 +185,16 @@ class ProductoController extends AbstractController
 		$input['oferta']       = $request->input('oferta');
 		$input['visibilidad']  = $request->input('visibilidad_edit');
 		$vinculacionList       = $request->input('productoVinculadoEdit');
+		$id                    = $request->input('id_producto');
+
+		$producto = ProductoRepository::find($id);
+		$existingImages = json_decode($producto->imagenes);
+
+		if($existingImages) {
+			foreach($existingImages as $exImg) {
+				$exImages[] = $exImg;
+			}
+		}
 
 		//Multiple images
 		if ($request->hasfile('filename')) {
@@ -201,7 +211,11 @@ class ProductoController extends AbstractController
 			}
 
 			if (!empty($data)) {
-				$input['filename'] = json_encode($data);
+				if($existingImages)
+					$mergedImages = array_merge($exImages,$data);
+				else
+					$mergedImages = $data;
+				$input['imagenes'] = json_encode($mergedImages);
 			}
 		}
 
@@ -235,8 +249,6 @@ class ProductoController extends AbstractController
 			$input['vinculacion'] = json_encode($vincArr);
 		}
 
-		$id = $request->input('id_producto');
-
 		$atributosList  = $request->input('atributoProductoVal');
 
 		if(!empty($atributosList))
@@ -259,6 +271,43 @@ class ProductoController extends AbstractController
 		return json_encode($producto);
 	}
 
+	/**
+	 * Elimina imagen
+	 */
+	public function destroyImagenPrincipal() {
+
+		$idProducto       = $_POST['id_producto'];
+		$producto = ProductoRepository::find($idProducto);
+		$newImgArr = array("");
+
+		if($producto->imagen_principal == $_POST['nombre']) {
+			$input['imagen_principal'] = json_encode($newImgArr);
+		}
+
+		$producto->update($input);
+	}
+
+	/**
+	 * Elimina imagen
+	 */
+	public function destroyImagen() {
+
+		$idProducto       = $_POST['id_producto'];
+		$producto = ProductoRepository::find($idProducto);
+		$newImgArr = array();
+
+		$productoArr = json_decode($producto->imagenes);
+
+		foreach($productoArr as $prodImg) {
+			if($prodImg!=$_POST['nombre']) {
+				$newImgArr[] = $prodImg;
+			}
+		}
+
+		$input['imagenes'] = json_encode($newImgArr);
+
+		$producto->update($input);
+	}
 
 	/**
 	 * Deshabilita visualizacion de un producto

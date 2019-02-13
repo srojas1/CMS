@@ -143,48 +143,54 @@
 										<div class="d-flex">
 											<div class="form-group">
 												<div class="inline-block position-relative">
-													<img src="{{ asset('images/'.getJsonValue($prod->imagen_principal))}}" class="imagen-featured shadow-sm border-top border-bottom border-right border-left">
-													<a href="#" class="badge badge-light badge-pill eliminarImagen shadow-sm">
-														<i class="material-icons">clear</i>
-													</a>
+													@if($prod->imagen_principal!='[""]')
+													<img name={{$prod->imagen_principal}} src="{{ asset('images/'.getJsonValue($prod->imagen_principal))}}" class="imagen-featured shadow-sm border-top border-bottom border-right border-left">
+														<a href="#" class="badge badge-light badge-pill eliminarImagenPrincipal shadow-sm">
+															<i class="material-icons">clear</i>
+														</a>
+													@else
+													<img src="{{ asset('images/'.\GrahamCampbell\BootstrapCMS\Http\Constants::DEFAULT_IMAGE_NAME)}}"	 class="imagen-featured shadow-sm border-top border-bottom border-right border-left">
+													@endif
+
 												</div>
 											</div>
 										</div>
 									</div>
 									<div class="col-12 col-sm-6 col-md-6 col-lg-8">
 										<div class="d-flex align-items-center row ml-1">
-											{{--Galería de producto--}}
-											{{--<span class="help pl-3">--}}
-													{{--<a tabindex="0" class="btn badge badge-pill badge-secondary badge-light" role="button" data-toggle="tooltip" title="Agrega una imagen 600px x 600px">--}}
-														{{--<i class="material-icons">help</i>--}}
-													{{--</a>--}}
-												{{--</span>--}}
-											{{--<div class="imagen-medidas row col-12">--}}
-												{{--<small>.jpg .png | 350px x 140px</small>--}}
-											{{--</div>--}}
+											Galería de producto
+											<span class="help pl-3">
+													<a tabindex="0" class="btn badge badge-pill badge-secondary badge-light" role="button" data-toggle="tooltip" title="Agrega una imagen 600px x 600px">
+														<i class="material-icons">help</i>
+													</a>
+													</a>
+												</span>
+											<div class="imagen-medidas row col-12">
+												<small>.jpg .png | 350px x 140px</small>
+											</div>
 										</div>
 										<div class="d-flex pt-4 row ml-1">
-											{{--<div class="agregar-imagen-galeria form-group mr-2">--}}
-												{{--<div class="input-group">--}}
-													{{--<div class="custom-file">--}}
-														{{--<input type="file" name="filename[]" multiple="multiple" class="gallery_image custom-file-input justify-content-center" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">--}}
-														{{--<label class="custom-file-label justify-content-center" for="inputGroupFile04">--}}
-															{{--<i class="material-icons">add_photo_alternate</i>--}}
-														{{--</label>--}}
-													{{--</div>--}}
-												{{--</div>--}}
-											{{--</div>--}}
-
-											{{--<div class="d-flex mr-2">--}}
-												{{--<div class="form-group">--}}
-													{{--<div class="inline-block position-relative">--}}
-														{{--<img src="{{ asset('images/demoproducto.jpg') }}" class="imagen-galeria shadow-sm border-top border-bottom border-right border-left">--}}
-														{{--<a href="#" class="badge badge-light badge-pill eliminarImagen shadow-sm">--}}
-															{{--<i class="material-icons">clear</i>--}}
-														{{--</a>--}}
-													{{--</div>--}}
-												{{--</div>--}}
-											{{--</div>--}}
+											<div class="agregar-imagen-galeria form-group mr-2">
+												<div class="input-group">
+													<div class="custom-file">
+														<input type="file" name="filename[]" multiple="multiple" class="gallery_image custom-file-input justify-content-center" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+														<label class="custom-file-label justify-content-center" for="inputGroupFile04">
+															<i class="material-icons">add_photo_alternate</i>
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="d-flex mr-2">
+												<div class="form-group">
+													<?php $images = (array)json_decode($prod->imagenes) ?>
+													<div class="inline-block position-relative multiple-images-add">
+														@foreach($images as $img)
+															<img name={{$img}} src="{{ asset('images/'.$img)}}" class="imagen-galeria shadow-sm border-top border-bottom border-right border-left">
+															<a href="#" class="badge badge-light badge-pill eliminarImagen shadow-sm"><i class="material-icons">clear</i></a>
+														@endforeach
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>

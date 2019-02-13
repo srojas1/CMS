@@ -91,6 +91,46 @@ $(document).ready(function(){
 
         });
 
+        $(document).on('click','.eliminarImagenPrincipal',function () {
+
+            $idProducto = $(document).find('.id_producto').val();
+            $name = $(this).prev().attr("name");
+
+            $.ajax({
+                type:"POST",
+                url: 'producto/destroyImagenPrincipal',
+                cache: false,
+                data: {
+                    id_producto:$idProducto,
+                    nombre: $name
+                }
+            }).done(function(data){
+            });
+
+            $(this).prev().remove();
+            $(this).remove();
+        });
+
+        $(document).on('click','.eliminarImagen',function () {
+
+            $idProducto = $(document).find('.id_producto').val();
+            $name = $(this).prev().attr("name");
+
+            $.ajax({
+                type:"POST",
+                url: 'producto/destroyImagen',
+                cache: false,
+                data: {
+                    id_producto:$idProducto,
+                    nombre: $name
+                }
+            }).done(function(data){
+            });
+
+            $(this).prev().remove();
+            $(this).remove();
+        });
+
         $(document).on('click','.crear_categoria_inside',function () {
             $nombreCategoria  = $('#nueva_categoria_inside').val();
             $selectCategorias = $('#categoriaProducto');
@@ -216,15 +256,19 @@ $(document).ready(function(){
 
     //images
     function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
+        for(file of input.files)
+        {
+            if(file) {
+                var reader = new FileReader();
 
-            reader.onload = function (e) {
-                $('.imagen-galeria')
-                    .attr('src', e.target.result);
-            };
+                reader.onload = function (e) {
+                    $('.multiple-images-add')
+                        .append('<img src="' + e.target.result + '" class="imagen-galeria shadow-sm border-top border-bottom border-right border-left">'+
+                            '<a href="#" class="badge badge-light badge-pill eliminarImagen shadow-sm"><i class="material-icons">clear</i></a>');
+                };
 
-            reader.readAsDataURL(input.files[0]);
+                reader.readAsDataURL(file);
+            }
         }
     }
 
@@ -236,8 +280,7 @@ $(document).ready(function(){
         readURL(this);
     });
 
-    //atributos
-
+    //Atributos
     $(document).on('click','.crear_atributo',function () {
 
         $nombreAtributo  = $('.nuevo_atributo').val();

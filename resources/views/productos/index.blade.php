@@ -61,7 +61,7 @@
 											<tr>
 												@if(count($producto)>0)
 													@foreach ($producto as $prod)
-															@if($prod->imagen_principal)
+															@if($prod->imagen_principal!='[""]')
 																<th scope="row" class="align-middle" href="#modalEditarProducto_{!! $prod->id !!}" class="accion"
 																	data-toggle="modal"
 																	data-target="#modalEditarProducto_{!! $prod->id !!}">

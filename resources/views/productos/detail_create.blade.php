@@ -151,34 +151,34 @@
 									</div>
 									<div class="col-12 col-sm-6 col-md-6 col-lg-8">
 										<div class="d-flex align-items-center row ml-1">
-											{{--Galería de producto--}}
-											{{--<span class="help pl-3">--}}
-													{{--<a tabindex="0" class="btn badge badge-pill badge-secondary badge-light" role="button" data-toggle="tooltip" title="Agrega una imagen 600px x 600px">--}}
-														{{--<i class="material-icons">help</i>--}}
-													{{--</a>--}}
-												{{--</span>--}}
-											{{--<div class="imagen-medidas row col-12">--}}
-												{{--<small>.jpg .png | 350px x 140px</small>--}}
+											Galería de producto
+											<span class="help pl-3">
+													<a tabindex="0" class="btn badge badge-pill badge-secondary badge-light" role="button" data-toggle="tooltip" title="Agrega una imagen 600px x 600px">
+														<i class="material-icons">help</i>
+													</a>
+											</span>
+											<div class="imagen-medidas row col-12">
+												<small>.jpg .png | 350px x 140px</small>
 											</div>
 										</div>
 										<div class="d-flex pt-4 row ml-1">
-											{{--<div class="agregar-imagen-galeria form-group mr-2">--}}
-												{{--<div class="input-group">--}}
-													{{--<div class="custom-file">--}}
-														{{--<input type="file" name="filename[]" multiple="multiple" class="gallery_image custom-file-input justify-content-center" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">--}}
-														{{--<label class="custom-file-label justify-content-center" for="inputGroupFile04">--}}
-															{{--<i class="material-icons">add_photo_alternate</i>--}}
-														{{--</label>--}}
-													{{--</div>--}}
-												{{--</div>--}}
-											{{--</div>--}}
+											<div class="agregar-imagen-galeria form-group mr-2">
+												<div class="input-group">
+													<div class="custom-file">
+														<input type="file" name="filename[]" multiple="multiple" class="gallery_image custom-file-input justify-content-center" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+														<label class="custom-file-label justify-content-center" for="inputGroupFile04">
+															<i class="material-icons">add_photo_alternate</i>
+														</label>
+													</div>
+												</div>
+											</div>
 
-											{{--<div class="d-flex mr-2">--}}
-												{{--<div class="form-group">--}}
-													{{--<div class="contenedor_galeria inline-block position-relative">--}}
-													{{--</div>--}}
-												{{--</div>--}}
-											{{--</div>--}}
+											<div class="d-flex mr-2">
+												<div class="form-group">
+													<div class="inline-block position-relative multiple-images-add">
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -191,7 +191,7 @@
 									</a>
 								</div>
 							</div>
-
+						</div>
 						<div class="tab-pane fade show" id="editarProductoInventario" role="tabpanel" aria-labelledby="editarProductoInventario-tab">
 							<div class="board-body">
 								<h4>Inventario del producto</h4>

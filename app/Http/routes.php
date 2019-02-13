@@ -86,6 +86,8 @@ Route::post('pedido/changeStatus', 'PedidoController@ChangeStatus');
 Route::post('categoria/create', 'CategoriaController@create');
 Route::post('categoria/update', 'CategoriaController@update');
 Route::post('producto/create', 'ProductoController@create');
+Route::post('producto/destroyImagen', 'ProductoController@destroyImagen');
+Route::post('producto/destroyImagenPrincipal', 'ProductoController@destroyImagenPrincipal');
 Route::post('atributo/storeAtributo', 'AtributoController@storeAtributo');
 Route::post('producto/update', 'ProductoController@update');
 Route::post('atributo/destroyAtributo', 'AtributoController@destroyAtributo');
