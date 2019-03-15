@@ -5,8 +5,8 @@ namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 use GrahamCampbell\BootstrapCMS\Facades\EmpresaRepository;
 use GrahamCampbell\Credentials\Credentials;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\View;
 
 class ConfiguracionEmpresaController extends AbstractController
 {

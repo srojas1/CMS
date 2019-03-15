@@ -11,6 +11,7 @@ class PersonalizaAppController extends AbstractController
 	/**
 	 * Mostrar lista del recurso
 	 *
+	 * @param Credentials $credentials
 	 * @return Response
 	 */
 	public function index(Credentials $credentials) {

@@ -237,6 +237,19 @@
 
 	/*
 	|--------------------------------------------------------------------------
+	| OrderProducto Model
+	|--------------------------------------------------------------------------
+	|
+	| This defines the order model to be used.
+	|
+	| Default: 'GrahamCampbell\BootstrapCMS\Models\PedidoProducto'
+	|
+	*/
+
+		'pedidoproducto' => 'GrahamCampbell\BootstrapCMS\Models\OrdenProducto',
+
+	/*
+	|--------------------------------------------------------------------------
 	| Status Model
 	|--------------------------------------------------------------------------
 	|

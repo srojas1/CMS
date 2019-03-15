@@ -3,21 +3,20 @@
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 use GrahamCampbell\BootstrapCMS\Facades\PedidoRepository;
+use GrahamCampbell\BootstrapCMS\Http\Libraries\ElementLibrary;
 use GrahamCampbell\BootstrapCMS\Models\Status;
 use GrahamCampbell\Credentials\Credentials;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use GrahamCampbell\BootstrapCMS\Http\Libraries\ElementLibrary;
 
 class PedidoController extends AbstractController {
 
 	/**
 	 * Crear nueva instancia
 	 */
-	public function __construct()
-	{
+	public function __construct() {
 		$this->setPermissions([
 			'create'  => 'edit',
 			'store'   => 'edit',
@@ -32,6 +31,7 @@ class PedidoController extends AbstractController {
 	/**
 	 * Mostrar lista del recurso
 	 *
+	 * @param Credentials $credentials
 	 * @return Response
 	 */
 	public function index(Credentials $credentials) {

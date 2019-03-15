@@ -47,10 +47,6 @@ class ProductoController extends AbstractController
 	 */
 	public function index(Credentials $credentials) {
 
-//		if (!$credentials->check()) {
-//			return Redirect::route('account.login');
-//		}
-
 		$producto  = ProductoRepository::all();
 		$links     = ProductoRepository::links();
 		$categoria = CategoriaRepository::all();
@@ -87,6 +83,9 @@ class ProductoController extends AbstractController
 
 	/**
 	 * Graba un nuevo producto (nuevo)
+	 *
+	 * @param Request $request
+	 * @return false|string
 	 */
 	public function create(Request $request) {
 
@@ -170,6 +169,9 @@ class ProductoController extends AbstractController
 
 	/**
 	 * Edita un Producto
+	 *
+	 * @param Request $request
+	 * @return false|string
 	 */
 	public function update(Request $request) {
 

@@ -3,11 +3,11 @@
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 use GrahamCampbell\BootstrapCMS\Facades\ClienteRepository;
+use GrahamCampbell\BootstrapCMS\Http\Libraries\ElementLibrary;
 use GrahamCampbell\Credentials\Credentials;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use GrahamCampbell\BootstrapCMS\Http\Libraries\ElementLibrary;
 
 class ClienteController extends AbstractController {
 
@@ -29,7 +29,8 @@ class ClienteController extends AbstractController {
 	/**
 	 * Mostrar lista del recurso
 	 *
-	 * @return Response
+	 * @param Credentials $credentials
+	 * @return
 	 */
 	public function index(Credentials $credentials) {
 
@@ -58,8 +59,8 @@ class ClienteController extends AbstractController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
-	{
+	public function destroy($id) {
+
 		$cliente = ClienteRepository::find($id);
 		$this->checkClient($cliente);
 
@@ -76,10 +77,10 @@ class ClienteController extends AbstractController {
 	 * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
 	 * @return void
 	 */
-	protected function checkClient($client)
-	{
+	protected function checkClient($client)	{
+
 		if (!$client) {
 			throw new NotFoundHttpException('Cliente No Encontrado');
 		}
 	}
-	}
+}

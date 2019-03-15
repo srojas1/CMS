@@ -2,12 +2,13 @@
 
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
-use GrahamCampbell\BootstrapCMS\Models\Empresa;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
+use GrahamCampbell\BootstrapCMS\Models\Empresa;
 use GrahamCampbell\Credentials\Credentials;
 
 class BienvenidoController extends AbstractController {
+
 	/**
 	 * Mostrar lista del recurso
 	 *

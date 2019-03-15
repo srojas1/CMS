@@ -2,20 +2,14 @@
 
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
-use GrahamCampbell\BootstrapCMS\Facades\CategoriaRepository;
-use GrahamCampbell\Credentials\Facades\Credentials;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use GrahamCampbell\BootstrapCMS\Models\Empresa;
+use GrahamCampbell\BootstrapCMS\Facades\CategoriaRepository;
 use GrahamCampbell\BootstrapCMS\Http\Libraries\ElementLibrary;
+use GrahamCampbell\BootstrapCMS\Models\Empresa;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-/**
- * Class CategoriaController
- *
- * @package GrahamCampbell\BootstrapCMS\Http\Controllers
- */
 class CategoriaController extends AbstractController {
 
 	/**
@@ -23,8 +17,7 @@ class CategoriaController extends AbstractController {
 	 *
 	 * @return void
 	 */
-	public function __construct()
-	{
+	public function __construct() {
 		$this->setPermissions([
 			'create'  => 'edit',
 			'store'   => 'edit',
@@ -38,9 +31,10 @@ class CategoriaController extends AbstractController {
 
 	/**
 	 * Mostrar lista de categorias
+	 *
 	 * @return \Illuminate\View\View
 	 */
-	public function index(Credentials $credentials) {
+	public function index() {
 
 		$categoria = CategoriaRepository::paginate();
 		$empresa   = Empresa::first();
@@ -52,8 +46,11 @@ class CategoriaController extends AbstractController {
 	}
 
 	/**
-	* Guarda nueva categoría (nuevo)
-	*/
+	 * Guarda nueva categoría (nuevo)
+	 *
+	 * @param Request $request
+	 * @return false|string
+	 */
 	public function create(Request $request) {
 
 		$input['categoria'] = $request->input('categoria');
@@ -81,6 +78,9 @@ class CategoriaController extends AbstractController {
 
 	/**
 	 * Editar categoría
+	 *
+	 * @param Request $request
+	 * @return false|string
 	 */
 	public function update(Request $request) {
 
@@ -115,8 +115,8 @@ class CategoriaController extends AbstractController {
 	 * @param int $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy($id)
-	{
+	public function destroy($id) {
+
 		$categoria = CategoriaRepository::find($id);
 		$this->checkCategoria($categoria);
 
@@ -134,6 +134,7 @@ class CategoriaController extends AbstractController {
 	 * @return void
 	 */
 	protected function checkCategoria($category) {
+
 		if (!$category) {
 			throw new NotFoundHttpException('Categoria No Encontrada');
 		}

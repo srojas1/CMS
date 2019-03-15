@@ -26,6 +26,7 @@ use GrahamCampbell\BootstrapCMS\Repositories\PageRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\PostRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\ProductoRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\PedidoRepository;
+use GrahamCampbell\BootstrapCMS\Repositories\PedidoProductoRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\PromocionRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\CuponRepository;
 use GrahamCampbell\BootstrapCMS\Repositories\RecompensaRepository;
@@ -103,6 +104,7 @@ class AppServiceProvider extends ServiceProvider
 		$this->registerProductoRepository();
 		$this->registerClienteRepository();
 		$this->registerPedidoRepository();
+		$this->registerPedidoProductoRepository();
 		$this->registerPromocionRepository();
 		$this->registerCuponRepository();
 		$this->registerAtributoRepository();
@@ -293,6 +295,26 @@ class AppServiceProvider extends ServiceProvider
 
 		$this->app->alias('pedidorepository',
 			'GrahamCampbell\BootstrapCMS\Repositories\PedidoRepository');
+	}
+
+	/**
+	 * Register the pedidoprod repository class.
+	 *
+	 * @return void
+	 */
+	protected function registerPedidoProductoRepository()
+	{
+		$this->app->singleton('pedidoproductorepository', function ($app) {
+			$model = $app['config']['cms.pedidoproducto'];
+			$pedido = new $model();
+
+			$validator = $app['validator'];
+
+			return new PedidoProductoRepository($pedido, $validator);
+		});
+
+		$this->app->alias('pedidoproductorepository',
+			'GrahamCampbell\BootstrapCMS\Repositories\PedidoProductoRepository');
 	}
 
 	/**
@@ -515,6 +537,7 @@ class AppServiceProvider extends ServiceProvider
 			'categoriarepository',
 			'productorepository',
 			'pedidorepository',
+			'pedidoproductorepository',
 			'promocionrepository',
 			'clienterepository',
 			'empresarepository'

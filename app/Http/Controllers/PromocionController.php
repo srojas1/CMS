@@ -34,6 +34,7 @@ class PromocionController extends AbstractController {
 	/**
 	 * Mostrar lista del recurso
 	 *
+	 * @param Credentials $credentials
 	 * @return Response
 	 */
 	public function index(Credentials $credentials) {
@@ -84,6 +85,9 @@ class PromocionController extends AbstractController {
 
 	/**
 	 * Guarda nueva promocion
+	 *
+	 * @param Request $request
+	 * @return false|string
 	 */
 	public function storePromocion(Request $request) {
 
@@ -128,6 +132,9 @@ class PromocionController extends AbstractController {
 
 	/**
 	 * Editar promocion.
+	 *
+	 * @param Request $request
+	 * @return false|string
 	 */
 	public function editPromocion(Request $request) {
 

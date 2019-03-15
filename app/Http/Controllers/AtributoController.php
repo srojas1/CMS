@@ -2,10 +2,10 @@
 
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
-use GrahamCampbell\BootstrapCMS\Facades\AtributoRepository;
-use GrahamCampbell\BootstrapCMS\Facades\AtributoProductoRepository;
-use GrahamCampbell\Credentials\Credentials;
 use Illuminate\Support\Facades\View;
+use GrahamCampbell\BootstrapCMS\Facades\AtributoProductoRepository;
+use GrahamCampbell\BootstrapCMS\Facades\AtributoRepository;
+use GrahamCampbell\Credentials\Credentials;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AtributoController extends AbstractController {
@@ -29,6 +29,7 @@ class AtributoController extends AbstractController {
 	/**
 	 * Mostrar lista del recurso
 	 *
+	 * @param Credentials $credentials
 	 * @return \Illuminate\View\View
 	 */
 	public function index(Credentials $credentials) {
@@ -79,7 +80,7 @@ class AtributoController extends AbstractController {
 	}
 
 	/**
-	 * Añade Atributo
+	 * Añade Atributo en ventana de edicion
 	 */
 	public function addAtributoProductoFromEdit() {
 
@@ -96,12 +97,10 @@ class AtributoController extends AbstractController {
 	}
 
 	/**
-	 * Check the client model.
+	 * Revisa si existe modelo
 	 *
 	 * @param mixed $atributo
-	 *
 	 * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-	 *
 	 * @return void
 	 */
 	protected function checkAtributo($atributo) {

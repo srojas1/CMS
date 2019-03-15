@@ -20,8 +20,7 @@ class CuponController extends AbstractController {
 	/**
 	 * Crear nueva instancia
 	 */
-	public function __construct()
-	{
+	public function __construct() {
 		$this->setPermissions([
 			'create'  => 'edit',
 			'store'   => 'edit',
@@ -31,12 +30,13 @@ class CuponController extends AbstractController {
 		]);
 
 		parent::__construct();
-		}
+	}
 
 	/**
 	 * Mostrar lista del recurso
 	 *
-	 * @return Response
+	 * @param Credentials $credentials
+	 * @return
 	 */
 	public function index(Credentials $credentials) {
 
@@ -67,16 +67,17 @@ class CuponController extends AbstractController {
 
 	/**
 	 * Muestra el formulario para crear un nuevo recurso
-	 *
-	 * @return Response
 	 */
-	public function create()
-	{
+	public function create() {
+
 		return View::make('extras.cupones.create');
 	}
 
 	/**
 	 * Guarda nuevo cupon
+	 *
+	 * @param Request $request
+	 * @return false|string
 	 */
 	public function storeCupon(Request $request) {
 
@@ -107,6 +108,9 @@ class CuponController extends AbstractController {
 
 	/**
 	 * Edita cupon
+	 *
+	 * @param Request $request
+	 * @return false|string
 	 */
 	public function editCupon(Request $request) {
 
@@ -128,8 +132,6 @@ class CuponController extends AbstractController {
 
 	/**
 	 * Graba un nuevo recurso
-	 *
-	 * @return Response
 	 */
 	public function store() {
 		$input = array_merge(Binput::only(['cupon', 'descuento', 'vencimiento', 'stock_maximo', 'condicion',
@@ -151,10 +153,8 @@ class CuponController extends AbstractController {
 
 	/**
 	 * Muestra el recurso específico
-	 *
-	 * @return Response
 	 */
-	public function show($id) {
+	public function show() {
 		$cupon         = CuponRepository::paginate();
 		$promocion     = PromocionRepository::paginate();
 		$recompensa    = RecompensaRepository::paginate();
@@ -181,8 +181,8 @@ class CuponController extends AbstractController {
 	/**
 	 * Muestra el formulario de edición del recurso
 	 *
-	 * @param  int  $id
-	 * @return Response
+	 * @param $id
+	 * @return
 	 */
 	public function edit($id) {
 		$cupon = CuponRepository::find($id);
