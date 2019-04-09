@@ -91,6 +91,7 @@ Route::post('producto/destroyImagenPrincipal', 'ProductoController@destroyImagen
 Route::post('atributo/storeAtributo', 'AtributoController@storeAtributo');
 Route::post('producto/update', 'ProductoController@update');
 Route::post('atributo/destroyAtributo', 'AtributoController@destroyAtributo');
+Route::post('atributo/destroyAtributo', 'AtributoController@destroyAtributo');
 Route::post('atributo/addAtributoProductoFromEdit', 'AtributoController@addAtributoProductoFromEdit');
 Route::post('promocion/storePromocion', 'PromocionController@storePromocion');
 Route::post('cupon/storeCupon', 'CuponController@storeCupon');
@@ -116,3 +117,7 @@ Route::post('cambiar_password','APIController@CambiarPassword');
 Route::post('get_direcciones','APIController@GetDireccionesByCliente');
 Route::post('crear_pedido','APIController@crearPedido');
 Route::post('get_cupones','APIController@GetCuponByCliente');
+Route::post('get_recomendados','APIController@GetRecomendados');
+Route::post('registrar_direccion','APIController@RegistrarDireccion');
+Route::post('eliminar_direccion','APIController@EliminarDireccion');
+Route::post('get_pedidos','APIController@GetPedidos');

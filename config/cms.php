@@ -246,7 +246,7 @@
 	|
 	*/
 
-		'pedidoproducto' => 'GrahamCampbell\BootstrapCMS\Models\OrdenProducto',
+	'pedidoproducto' => 'GrahamCampbell\BootstrapCMS\Models\OrdenProducto',
 
 	/*
 	|--------------------------------------------------------------------------

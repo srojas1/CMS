@@ -6,6 +6,7 @@ use Cartalyst\Sentry\Users\Eloquent\User;
 use GrahamCampbell\BootstrapCMS\Facades\ClienteRepository;
 use GrahamCampbell\BootstrapCMS\Facades\PedidoProductoRepository;
 use GrahamCampbell\BootstrapCMS\Facades\PedidoRepository;
+use GrahamCampbell\BootstrapCMS\Facades\DireccionRepository;
 use GrahamCampbell\BootstrapCMS\Models\Atributo;
 use GrahamCampbell\BootstrapCMS\Models\AtributoProducto;
 use GrahamCampbell\BootstrapCMS\Models\Cupon;
@@ -13,16 +14,144 @@ use GrahamCampbell\BootstrapCMS\Models\CuponCliente;
 use GrahamCampbell\BootstrapCMS\Models\Direccion;
 use GrahamCampbell\BootstrapCMS\Models\Empresa;
 use GrahamCampbell\BootstrapCMS\Models\Promo;
+use GrahamCampbell\BootstrapCMS\Models\Orden;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use GrahamCampbell\BootstrapCMS\Models\Categoria;
 use GrahamCampbell\BootstrapCMS\Models\Cliente;
 use GrahamCampbell\BootstrapCMS\Models\Producto;
-use Request;
 use League\Flysystem\Exception;
+use Request;
 
 class APIController extends AbstractController{
+
+	public function GetPedidos(){
+		//set response data
+		$return['estado'] = false;
+		$return['mensaje'] = "Lista de pedidos no encontrada";
+
+		$clienteid = Input::only('cliente_id');
+
+		$match = ['cliente_id' => $clienteid['cliente_id']];
+
+		//get records by model and id_empresa
+		$returnData = Orden::where($match)->select('*')->get();
+
+		//si el array esta lleno, mando mensaje de exito y lleno data
+		if(count($returnData)>0) {
+			$return['estado'] = true;
+			$return['mensaje'] = "Lista de pedidos encontrada";
+			$return['data'] = $returnData->ToArray();
+		}
+
+		return response()->json($return);
+	}
+
+	public function EliminarDireccion() {
+
+		$direccionId = Input::only('id_direccion');
+
+		$direccion = DireccionRepository::find($direccionId['id_direccion']);
+
+		if (!$direccion) {
+			$return['estado']  = false;
+			$return['mensaje'] = "No se pudo eliminar direccion. Direccion no existente";
+			return response()->json($return);
+		}
+
+		try {
+			$direccion->delete();
+			$return['estado']  = true;
+			$return['mensaje'] = "Direccion eliminada exitosamente";
+		} catch (QueryException $e){
+			$return['estado']  = false;
+			$return['mensaje'] = "No se pudo eliminar direccion";
+		}
+
+		return response()->json($return);
+	}
+
+	public function RegistrarDireccion() {
+
+		$clienteId = Input::only('cliente_id');
+		$direccion = Input::only('direccion');
+		$numero_detalles = Input::only('numero_detalles');
+		$referencia = Input::only('referencia');
+
+		$input['cliente_id'] = $clienteId['cliente_id'];
+		$input['direccion'] = $direccion['direccion'];
+		$input['numero_detalles'] = $numero_detalles['numero_detalles'];
+		$input['referencia'] = $referencia['referencia'];
+
+		try {
+			$direccion = DireccionRepository::create($input);
+			$responseArr['id'] = $direccion->id;
+			$responseArr['direccion'] = $direccion->direccion;
+
+			if(!$direccion) {
+				$return['estado']  = false;
+				$return['mensaje'] = "No se pudo registrar direccion";
+				$return['data'] = array();
+			}
+			else {
+				$return['estado']  = true;
+				$return['mensaje'] = "Direccion registrada exitosamente";
+				$return['data'] = $responseArr;
+			}
+
+		}
+		catch (QueryException $e) {
+			$return['estado']  = false;
+			$return['mensaje'] = "No se pudo registrar direccion";
+		}
+
+		return response()->json($return);
+	}
+
+	public function GetRecomendados() {
+		$returnArr = array();
+
+		$return['estado'] = false;
+		$return['mensaje'] = "Lista de recomendados no encontrada";
+		$return['data'] = $returnArr;
+
+		$idProducto = Input::only('id_producto');
+		$match = ['id' => $idProducto['id_producto']];
+
+		$modelProducto = Producto::where($match)->first()->toArray();
+
+		$recomendados = $modelProducto['vinculacion'];
+		$recomendados = json_decode($recomendados);
+		
+		for($i=0;$i<3;$i++) {
+			if(!isset($recomendados[$i])) {
+				$rec = rand(1,count($modelProducto));
+			} else {
+				$rec = $recomendados[$i];
+			}
+			$matchRec = ['id' => $rec];
+			$modelProductoRec[] = Producto::where($matchRec)->first()->toArray();
+		}
+
+		if($modelProductoRec) {
+			foreach($modelProductoRec as $data) {
+				$img = Request::url();
+				$trimmed = str_replace('get_recomendados', '', $img) ;
+				$imagenPrincipal = $trimmed.'images/'.json_decode($data['imagen_principal'])[0];
+				$data['imagen_principal'] = $imagenPrincipal;
+				$returnArr[]=$data;
+			}
+		}
+
+		if(count($returnArr)>0) {
+			$return['estado'] = true;
+			$return['mensaje'] = "Lista de recomendados encontrada";
+			$return['data'] = $returnArr;
+		}
+
+		return response()->json($return);
+	}
 
 	public function GetCuponByCliente() {
 		$return['estado'] = false;
@@ -51,7 +180,8 @@ class APIController extends AbstractController{
 		return response()->json($return);
 	}
 
-	public function crearPedido() {
+	public function crearPedido()
+	{
 		$return['estado'] = false;
 		$return['mensaje'] = "Problema al crear pedido";
 
@@ -60,35 +190,51 @@ class APIController extends AbstractController{
 
 		$pedido = PedidoRepository::create($input);
 
-		$productosDataArray[] = json_decode($requestProducto['productos_data'],true);
+		$productosDataArray[] = json_decode($requestProducto['productos_data'], true);
 
-		foreach($productosDataArray as $nkey=>$pdata) {
-			$productoId = $pdata['productos']['producto_id'];
-			$productoAtributoId = $pdata['productos']['producto_atributo_id'];
-			$cantidad = $pdata['productos']['cantidad'];
+		foreach ($productosDataArray as $nkey => $pdata) {
+			$productoId = $pdata['productos'][$nkey]['producto_id'];
+			$productoAtributoId = $pdata['productos'][$nkey]['producto_atributo_id'];
+			$cantidad = $pdata['productos'][$nkey]['cantidad'];
 
 			$inputDetail['producto_id'] = $productoId;
-			$inputDetail['producto_atributo_id'] = $productoAtributoId;
 			$inputDetail['cantidad'] = $cantidad;
 			$inputDetail['orden_id'] = $pedido->id;
-			//pedido detail
-			$pedidoDetail = PedidoProductoRepository::create($inputDetail);
-			$pedidoDetail = $pedidoDetail->ToArray();
-			//producto detail
-			$matchProducto = ['id' => $pedidoDetail['producto_id']];
+
+			$matchProducto = ['id' => $productoId];
 			$producto = Producto::where($matchProducto)->first();
 			$producto = $producto->ToArray();
-			//atributo detail
-			$atributoProductoArray = $this->GetAtributoPorProducto($producto['id']);
-			$atributoProductoList = array();
 
-			foreach($atributoProductoArray as $atributoProd) {
-				$matchAtributo = ['id' => $atributoProd['id_atributo_seleccionado']];
-				$atributoProductoList = AtributoProducto::where($matchAtributo)->first();
-				$atributoProductoList = $atributoProductoList->ToArray();
+			//LISTA DE ATRIBUTOS
+			$atributoProductoArray = $this->GetAtributoPorProducto($productoId);
+
+			//TABLA PEDIDO DETALLE
+			foreach ($productoAtributoId as $p) {
+				$inputDetail['producto_atributo_id'] = $p;
+				try {
+					$pedidoDetail = PedidoProductoRepository::create($inputDetail);
+					$pedidoDetailArr[] = $pedidoDetail->ToArray();
+				}
+				catch(Exception $ex) {
+					$return['estado'] = false;
+					$return['mensaje'] = "Hubo un problema al crear en la tabla Orden Producto";
+					exit;
+				}
 			}
 
-			$returnData[] = array_merge($producto,$pedidoDetail,$atributoProductoList);
+			foreach($pedidoDetailArr as $detailPed) {
+				foreach($atributoProductoArray as $atr) {
+					if($detailPed['producto_atributo_id'] == $atr['id_atributo_seleccionado']) {
+						$arrAtr[] = $atr;
+					}
+					else
+						continue;
+				}
+			}
+
+			$detailPed2['atributos'] = $arrAtr;
+
+			$returnData[] = array_merge($detailPed2,$producto);
 		}
 
 		if(count($pedido)>0) {
@@ -171,15 +317,21 @@ class APIController extends AbstractController{
 		$categoria_id = Input::only('categoria_id');
 
 		$match = ['categoria_id' => $categoria_id];
-		$columns = ['producto','descripcion','imagen_principal','precio'];
+		$columns = ['id','producto','descripcion','imagen_principal','precio'];
 
 		$producto = Producto::where($match)->select($columns)->get();
+		$producto = $producto->ToArray();
+
+		foreach($producto as $nkey=>$rData) {
+			$atributoProductoArray = $this->GetAtributoPorProducto($rData['id']);
+			$returnProducto[] = array_merge($rData,array('atributos'=>$atributoProductoArray));
+		}
 
 		//si el array esta lleno, mando mensaje de exito y lleno data
 		if(count($producto)>0) {
 			$return['estado'] = true;
 			$return['mensaje'] = "Lista de productos encontrada";
-			$return['data'] = $producto;
+			$return['data'] = $returnProducto;
 		}
 
 		return response()->json($return);
