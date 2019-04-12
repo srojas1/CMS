@@ -37,7 +37,7 @@ class ClienteTipoPago extends AbstractModel implements HasPresenter {
      *
      * @var array
      */
-    protected $keepRevisionOf = ['nro_tarjeta'];
+    protected $keepRevisionOf = ['marca','nro_tarjeta'];
 
     /**
      * The columns to select when displaying an index.

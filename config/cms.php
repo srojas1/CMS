@@ -259,7 +259,7 @@
 	|
 	*/
 
-	'estado' => 'GrahamCampbell\BootstrapCMS\Models\Status',
+	'estado' => 'GrahamCampbell\BootstrapCMS\Models\Estado',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -365,6 +365,19 @@
 	*/
 
 		'districts' => 'GrahamCampbell\BootstrapCMS\Models\Distrito',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Direccion Model
+	|--------------------------------------------------------------------------
+	|
+	| This defines the model to be used.
+	|
+	| Default: 'GrahamCampbell\BootstrapCMS\Models\Direccion'
+	|
+	*/
+
+	'direccion' => 'GrahamCampbell\BootstrapCMS\Models\Direccion',
 
 	/*
 	|--------------------------------------------------------------------------

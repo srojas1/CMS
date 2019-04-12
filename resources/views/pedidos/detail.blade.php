@@ -19,42 +19,42 @@
                             <div class="col-12">
                                 <div class="btn-group">
                                     @if ($ped->getStatusById->estado)
-                                        <?php $statusDetail = json_decode($ped->getStatusById->status_detail) ?>
-										<button type="button" class="btn {{getColorByStatus($ped->id_estado)}} dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											{{$ped->getStatusById->status_label_first}} {{$ped->getStatusById->status_label_extra}}
-										</button>
-										<div class="detalle_aceptar dropdown-menu">
-											@foreach($statusDetail as $nkey=>$pedetalle)
-											    <a class="dropdown-item">{{$nkey}}</a>
+										<?php $statusDetail = json_decode($ped->getStatusById->status_detail) ?>
+                                        <button type="button" class="btn {{getColorByStatus($ped->id_estado)}} dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            {{$ped->getStatusById->status_label_first}} {{$ped->getStatusById->status_label_extra}}
+                                        </button>
+                                        <div class="detalle_aceptar dropdown-menu">
+                                            @foreach($statusDetail as $nkey=>$pedetalle)
+                                                <a class="dropdown-item">{{$nkey}}</a>
                                                 <input id="id_status_next" type="hidden" value={{$pedetalle}}>
-											@endforeach
-										</div>
+                                            @endforeach
+                                        </div>
                                     @else
                                         <div>{{\GrahamCampbell\BootstrapCMS\Http\Constants::STATUS_EMPTY}}</div>
                                     @endif
                                 </div>
                                 @if($ped->id_estado != 5)
-                                <div class="btn-group">
-                                    @if ($ped->getStatusById->estado)
-										<?php $statusDetailReject = json_decode($ped->getStatusById->status_reject) ?>
-										<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            {{$ped->getStatusById->status_label_second}}
-										</button>
-										<div class="detalle_rechazar dropdown-menu">
-                                            @foreach($statusDetailReject as $nkey=>$pedreject)
-                                                <a class="dropdown-item">{{$nkey}}</a>
-                                                <input id="id_status_next" type="hidden" value={{$pedreject}}>
-                                            @endforeach
-										</div>
-                                    @else
-                                        <div>{{\GrahamCampbell\BootstrapCMS\Http\Constants::STATUS_EMPTY}}</div>
-                                    @endif
-                                </div>
+                                    <div class="btn-group">
+                                        @if ($ped->getStatusById->estado)
+											<?php $statusDetailReject = json_decode($ped->getStatusById->status_reject) ?>
+                                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                {{$ped->getStatusById->status_label_second}}
+                                            </button>
+                                            <div class="detalle_rechazar dropdown-menu">
+                                                @foreach($statusDetailReject as $nkey=>$pedreject)
+                                                    <a class="dropdown-item">{{$nkey}}</a>
+                                                    <input id="id_status_next" type="hidden" value={{$pedreject}}>
+                                                @endforeach
+                                            </div>
+                                        @else
+                                            <div>{{\GrahamCampbell\BootstrapCMS\Http\Constants::STATUS_EMPTY}}</div>
+                                        @endif
+                                    </div>
                                 @endif
-								<div class="btn-group">
-									<a href="{!! URL::route('pdf_pedido.index') !!}" class="accion"><i class="material-icons print">print</i></a>
-									<a href="{!! URL::route('pdf_pedido.create') !!}" class="accion"><hidden id="editor"></hidden><i class="material-icons download">get_app</i></a>
-								</div>
+                                <div class="btn-group">
+                                    <a href="{!! URL::route('pdf_pedido.index') !!}" class="accion"><i class="material-icons print">print</i></a>
+                                    <a href="{!! URL::route('pdf_pedido.create') !!}" class="accion"><hidden id="editor"></hidden><i class="material-icons download">get_app</i></a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -79,18 +79,18 @@
                                         <table class="table table-hover table-borderless">
                                             <tbody>
                                             <!--- LISTA DE PRODUCTOS --->
-                                            <?php $subtotal1=0.00?>
+											<?php $subtotal1=0.00?>
 											<?php $subtotal=0.00?>
                                             @foreach($ped->getProductsById as $prod)
-                                            <tr>
-										        <td>{{$prod->orders[0]->pivot->cantidad}}</td>
-                                                <td><div class="d-inline-flex"><img class="pedido_imagen" src="{{ asset('images/'.getJsonValue($prod->imagen_principal))}}" alt="..." class="producto-icon border-top border-bottom border-right border-left">{{$prod->producto}}</div></td>
-                                                @if($prod->getCurrencyById->simbolo)
-                                                    <td class="d-flex justify-content-end">{{$prod->getCurrencyById->simbolo}} {{$prod->precio}}</td>
-                                                @endif
-                                                <?php $subtotal1 = $prod->orders[0]->pivot->cantidad*$prod->precio?>
-                                                <?php $subtotal += $subtotal1 ?>
-                                            </tr>
+                                                <tr>
+                                                    <td>{{$prod->orders[0]->pivot->cantidad}}</td>
+                                                    <td><div class="d-inline-flex"><img class="pedido_imagen" src="{{ asset('images/'.getJsonValue($prod->imagen_principal))}}" alt="..." class="producto-icon border-top border-bottom border-right border-left">{{$prod->producto}}</div></td>
+                                                    @if($prod->getCurrencyById->simbolo)
+                                                        <td class="d-flex justify-content-end">{{$prod->getCurrencyById->simbolo}} {{$prod->precio}}</td>
+                                                    @endif
+													<?php $subtotal1 = $prod->orders[0]->pivot->cantidad*$prod->precio?>
+													<?php $subtotal += $subtotal1 ?>
+                                                </tr>
                                             @endforeach
                                             <!--- LISTA DE DESCUENTOS --->
                                             <tr class="border-bottom">
@@ -111,17 +111,17 @@
                                             </tr>
                                             <tr>
                                                 <td><div class="d-flex justify-content-end">COSTO DE ENVÍO: </div></td>
-                                                <?php $costoEnvio = \GrahamCampbell\BootstrapCMS\Http\Constants::COSTO_ENVIO;?>
+												<?php $costoEnvio = \GrahamCampbell\BootstrapCMS\Http\Constants::COSTO_ENVIO;?>
                                                 <td class="d-flex justify-content-end">S/ {{number_format($costoEnvio,2)}}</td>
                                             </tr>
                                             <tr>
                                                 <td><div class="d-flex justify-content-end">IGV (18%):</div></td>
-                                                <?php  $igv = \GrahamCampbell\BootstrapCMS\Http\Constants::IGV*number_format($subtotal,2);?>
+												<?php  $igv = \GrahamCampbell\BootstrapCMS\Http\Constants::IGV*number_format($subtotal,2);?>
                                                 <td class="d-flex justify-content-end">S/ {{number_format($igv,2)}}</td>
                                             </tr>
                                             <tr>
                                                 <td><div class="d-flex justify-content-end">TOTAL:</div></td>
-                                                <?php $extras = $igv + $costoEnvio?>
+												<?php $extras = $igv + $costoEnvio?>
                                                 <td class="d-flex justify-content-end">S/ {{number_format($subtotal+$extras,2)}}</td>
                                             </tr>
                                             </tbody>
@@ -157,8 +157,11 @@
                                     <div class="row justify-content-start align-items-center">
                                         <div class="col-12">
                                             <div class="datos">
-                                                <div>{{$ped->getPaymentCardByIdClient->marca}}</div>
-                                                <div>{{$ped->getPaymentCardByIdClient->nro_tarjeta}}</div>
+                                                @if($ped->getPaymentCardByIdClient)
+                                                    <div>{{$ped->getPaymentCardByIdClient->marca}}</div>
+                                                @else
+                                                    <div>[sin marca asignada]</div>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

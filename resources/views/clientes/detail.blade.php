@@ -73,7 +73,7 @@
 									@if($cli->address)
 										@foreach($cli->address as $nkey=>$adr)
 											<div class="col-12 col-lg-6">
-												<h4>{{$adr->getAddressType->address_type}}</h4>
+												{{--<h4>{{$adr->getAddressType->address_type}}</h4>--}}
 												<div class="row">
 													<div class="col-12">
 														<div class="mapa m-0">

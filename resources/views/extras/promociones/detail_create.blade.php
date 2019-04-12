@@ -39,13 +39,19 @@
 											<div class="d-flex">
 												<div class="form-group">
 													<div class="inline-block position-relative">
-														<img src="{{ asset('images/'.\GrahamCampbell\BootstrapCMS\Http\Constants::DEFAULT_IMAGE_NAME)}}" style="width: 80px; height: 80px; margin-top: 16px;" class="imagen-featured shadow-sm border-top border-bottom border-right border-left">
+														<img class="imagen-featured shadow-sm border-top border-bottom border-right border-left" src="#" style="width: 80px; height: 80px; margin-top: 16px;" >
 														<a href="#" class="badge badge-light badge-pill eliminarImagen shadow-sm">
 															<i class="material-icons">clear</i>
 														</a>
 													</div>
 												</div>
 											</div>
+										</div>
+									</div>
+								</div>
+								<div class="d-flex mr-2">
+									<div class="form-group">
+										<div class="inline-block position-relative multiple-images-add">
 										</div>
 									</div>
 								</div>

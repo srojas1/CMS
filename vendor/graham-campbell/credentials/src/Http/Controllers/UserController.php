@@ -278,7 +278,7 @@ class UserController extends AbstractController
 			->with('success', 'El usuario fue modificado exitosamente');
 	}
 
-	/**
+	/**|
 	 * Suspend an existing user.
 	 *
 	 * @param int $id

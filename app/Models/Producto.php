@@ -108,7 +108,7 @@ class Producto extends AbstractModel implements HasPresenter {
 	}
 
 	public function getCurrencyById() {
-		return $this->hasOne(Currency::class,'id','id_moneda');
+		return $this->hasOne(Moneda::class,'id','id_moneda');
 	}
 
 	public function getAttributesById() {

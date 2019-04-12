@@ -111,7 +111,7 @@ $(document).ready(function(){
             $(this).remove();
         });
 
-        $(document).on('click','.eliminarImagen',function () {
+        $(document).on('click','.eliminarImagenEdit',function () {
 
             $idProducto = $(document).find('.id_producto').val();
             $name = $(this).prev().attr("name");
@@ -127,6 +127,11 @@ $(document).ready(function(){
             }).done(function(data){
             });
 
+            $(this).prev().remove();
+            $(this).remove();
+        });
+
+        $(document).on('click','.eliminarImagen',function () {
             $(this).prev().remove();
             $(this).remove();
         });

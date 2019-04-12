@@ -37,7 +37,8 @@ class ElementLibrary
 
 		foreach ($element as $el) {
 			$cliente = $el->getClientById;
-			if ($cliente->getUserById->usuario_empresa_id != $userCompanyId) {
+
+			if ($cliente->cliente_empresa_id != $userCompanyId) {
 				continue;
 			} else
 				$arr[] = $el;

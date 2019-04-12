@@ -37,7 +37,7 @@ class Orden extends AbstractModel implements HasPresenter {
      *
      * @var array
      */
-    protected $keepRevisionOf = ['id'];
+    protected $keepRevisionOf = ['id','id_direccion'];
 
     /**
      * The columns to select when displaying an index.
@@ -103,7 +103,7 @@ class Orden extends AbstractModel implements HasPresenter {
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function getClientById() {
-        return $this->hasOne(Cliente::class,'id','client_id');
+        return $this->hasOne(Cliente::class,'id','cliente_id');
     }
 
     /**
@@ -112,14 +112,14 @@ class Orden extends AbstractModel implements HasPresenter {
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function getStatusById() {
-        return $this->hasOne(Status::class,'id','id_estado');
+        return $this->hasOne(Estado::class,'id','id_estado');
     }
 
     public function getProductsById() {
         return $this->belongsToMany(Producto::class,
-            'orders_products',
-            'id_orden',
-            'id_producto');
+            'orden_producto',
+            'orden_id',
+            'producto_id');
     }
 
     public function getPaymentCardByIdClient() {

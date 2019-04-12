@@ -4,7 +4,7 @@ namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
 use GrahamCampbell\BootstrapCMS\Facades\PedidoRepository;
 use GrahamCampbell\BootstrapCMS\Http\Libraries\ElementLibrary;
-use GrahamCampbell\BootstrapCMS\Models\Status;
+use GrahamCampbell\BootstrapCMS\Models\Estado;
 use GrahamCampbell\Credentials\Credentials;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
@@ -66,7 +66,7 @@ class PedidoController extends AbstractController {
 
 		$input = ['id_estado'=>$idEstado];
 
-		$estado = Status::find($idEstado);
+		$estado = Estado::find($idEstado);
 		$inputEstado = ['status_label_extra'=>$labelExtra];
 		if($idEstado==2) {
 			$estado->update($inputEstado);

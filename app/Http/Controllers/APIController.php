@@ -13,8 +13,10 @@ use GrahamCampbell\BootstrapCMS\Models\Cupon;
 use GrahamCampbell\BootstrapCMS\Models\CuponCliente;
 use GrahamCampbell\BootstrapCMS\Models\Direccion;
 use GrahamCampbell\BootstrapCMS\Models\Empresa;
+use GrahamCampbell\BootstrapCMS\Models\Estado;
 use GrahamCampbell\BootstrapCMS\Models\Promo;
 use GrahamCampbell\BootstrapCMS\Models\Orden;
+use GrahamCampbell\BootstrapCMS\Models\Status;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
@@ -30,6 +32,7 @@ class APIController extends AbstractController{
 		//set response data
 		$return['estado'] = false;
 		$return['mensaje'] = "Lista de pedidos no encontrada";
+		$returnArr = array();
 
 		$clienteid = Input::only('cliente_id');
 
@@ -37,12 +40,28 @@ class APIController extends AbstractController{
 
 		//get records by model and id_empresa
 		$returnData = Orden::where($match)->select('*')->get();
+		$returnData = $returnData->ToArray();
+
+		foreach($returnData as $ret) {
+			$idEstado =$ret['id_estado'];
+			$matchEstado = ['id' => $idEstado];
+			$returnEstado = Estado::where($matchEstado)->select('*')->first();
+			$returnEstado = $returnEstado->ToArray();
+			if($returnEstado['status_label_extra']!='') {
+				$detalleEstado = $returnEstado['estado'].' '.$returnEstado['status_label_extra'];
+			}
+			else {
+				$detalleEstado = $returnEstado['estado'];
+			}
+			$ret['estado_detalle'] = $detalleEstado;
+			$returnArr[] = $ret;
+		}
 
 		//si el array esta lleno, mando mensaje de exito y lleno data
-		if(count($returnData)>0) {
+		if(count($returnArr)>0) {
 			$return['estado'] = true;
 			$return['mensaje'] = "Lista de pedidos encontrada";
-			$return['data'] = $returnData->ToArray();
+			$return['data'] = $returnArr;
 		}
 
 		return response()->json($return);

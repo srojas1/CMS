@@ -51,24 +51,28 @@
                                             </thead>
                                             <tbody>
                                             @foreach ($pedido as $ped)
-                                            <tr>
-                                                <th scope="row" href="#detail_pedido_{!! $ped->id !!}"
-                                                    data-toggle="modal"
-                                                    data-target="#detail_pedido_{!! $ped->id !!}">#{{formatNumber($ped->id)}} {{$ped->getClientById->nombres}} {{$ped->getClientById->apaterno}} {{$ped->getClientById->amaterno}}</th>
-                                                <td>Hace {{timeSince($ped->fecha_pedido)}}</td>
-                                                <td>S/ [cambiar total]</td>
-                                                <td>{{$ped->getAddressById->direccion}}</td>
-                                                @if ($ped->getStatusById->estado)
-                                                    <td>
-                                                        <a class="btn_modal btn {{getColorByStatus($ped->id_estado)}}" href="#detail_pedido_{!! $ped->id !!}"
-                                                           data-toggle="modal"
-                                                           data-target="#detail_pedido_{!! $ped->id !!}">{{$ped->getStatusById->estado}}</a>
-                                                    </td>
-                                                @else
-                                                    <td>{{\GrahamCampbell\BootstrapCMS\Http\Constants::STATUS_EMPTY}}</td>
-                                                @endif
-                                                <input type="hidden" class="id_pedido" value="{{$ped->id}}"/>
-                                            </tr>
+                                                <tr>
+                                                    <th scope="row" href="#detail_pedido_{!! $ped->id !!}"
+                                                        data-toggle="modal"
+                                                        data-target="#detail_pedido_{!! $ped->id !!}">#{{formatNumber($ped->id)}} {{$ped->getClientById->nombres}} {{$ped->getClientById->apaterno}} {{$ped->getClientById->amaterno}}</th>
+                                                    <td>Hace {{timeSince($ped->fecha_pedido)}}</td>
+                                                    <td>S/ [cambiar total]</td>
+                                                    @if($ped->getAddressById->direccion)
+                                                        <td>{{$ped->getAddressById->direccion}}</td>
+                                                    @else
+                                                        <td>[sin direccion asignada]</td>
+                                                    @endif
+                                                    @if ($ped->getStatusById->estado)
+                                                        <td>
+                                                            <a class="btn_modal btn {{getColorByStatus($ped->id_estado)}}" href="#detail_pedido_{!! $ped->id !!}"
+                                                               data-toggle="modal"
+                                                               data-target="#detail_pedido_{!! $ped->id !!}">{{$ped->getStatusById->estado}}</a>
+                                                        </td>
+                                                    @else
+                                                        <td>{{\GrahamCampbell\BootstrapCMS\Http\Constants::STATUS_EMPTY}}</td>
+                                                    @endif
+                                                    <input type="hidden" class="id_pedido" value="{{$ped->id}}"/>
+                                                </tr>
                                             @endforeach
                                             </tbody>
                                         </table>
@@ -92,22 +96,26 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach ($pedido as $ped)
-                                                <tr>
-                                                    <th scope="row"> #{{formatNumber($ped->id)}} {{$ped->getClientById->nombres}} {{$ped->getClientById->apaterno}} {{$ped->getClientById->amaterno}}</th>
-                                                    <td>Hace {{timeSince($ped->fecha_pedido)}}</td>
-                                                    <td>S/ [cambiar total]</td>
-                                                    <td>{{$ped->getAddressById->direccion}}</td>
-                                                    @if ($ped->getStatusById->estado)
-                                                        <td>
-                                                            <button type="button" class="btn_modal btn {{getColorByStatus($ped->id_estado)}}">{{$ped->getStatusById->estado}}</button>
-                                                        </td>
-                                                    @else
-                                                        <td>{{\GrahamCampbell\BootstrapCMS\Http\Constants::STATUS_EMPTY}}</td>
-                                                    @endif
-                                                    <input type="hidden" class="id_pedido" value="{{$ped->id}}"/>
-                                                </tr>
-                                            @endforeach
+                                                @foreach ($pedido as $ped)
+                                                    <tr>
+                                                        <th scope="row"> #{{formatNumber($ped->id)}} {{$ped->getClientById->nombres}} {{$ped->getClientById->apaterno}} {{$ped->getClientById->amaterno}}</th>
+                                                        <td>Hace {{timeSince($ped->fecha_pedido)}}</td>
+                                                        <td>S/ [cambiar total]</td>
+                                                        @if($ped->getAddressById)
+                                                            <td>{{$ped->getAddressById->direccion}}</td>
+                                                        @else
+                                                            <td>[sin direccion asignada]</td>
+                                                        @endif
+                                                        @if ($ped->getStatusById->estado)
+                                                            <td>
+                                                                <button type="button" class="btn_modal btn {{getColorByStatus($ped->id_estado)}}">{{$ped->getStatusById->estado}}</button>
+                                                            </td>
+                                                        @else
+                                                            <td>{{\GrahamCampbell\BootstrapCMS\Http\Constants::STATUS_EMPTY}}</td>
+                                                        @endif
+                                                        <input type="hidden" class="id_pedido" value="{{$ped->id}}"/>
+                                                    </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -116,25 +124,6 @@
                         </div>
                     </div>
                 </div>
-                <!--- FOOTER DEL MODULO --->
-                {{--<div class="modulo-footer">--}}
-                    {{--<div class="container-fluid">--}}
-                        {{--<div class="row justify-content-end">--}}
-                            {{--<nav aria-label="...">--}}
-                                {{--<ul class="pagination">--}}
-                                    {{--<li class="page-item disabled">--}}
-                                        {{--<a class="page-link" href="#" tabindex="-1">1</a>--}}
-                                    {{--</li>--}}
-                                    {{--<li class="page-item"><a class="page-link" href="#">2</a></li>--}}
-                                    {{--<li class="page-item"><a class="page-link" href="#">3</a></li>--}}
-                                {{--</ul>--}}
-                            {{--</nav>--}}
-                        {{--</div>--}}
-                        {{--<div class="row justify-content-end tools">--}}
-                            {{--<a href="" class="">Exportar a excel</a>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
             </div>
         </div>
         <!--- FOOTER DE CMS --->

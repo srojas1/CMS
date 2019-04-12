@@ -8,7 +8,7 @@ use GrahamCampbell\Credentials\Models\Relations\RevisionableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
 
-class Currency extends AbstractModel implements HasPresenter {
+class Estado extends AbstractModel implements HasPresenter {
 
     use BelongsToUserTrait, RevisionableTrait, SoftDeletes;
     /**
@@ -16,14 +16,14 @@ class Currency extends AbstractModel implements HasPresenter {
      *
      * @var string
      */
-    protected $table = 'currency';
+    protected $table = 'estado';
 
     /**
      * The model name.
      *
      * @var string
      */
-    public static $name = 'currency';
+    public static $name = 'estado';
 
     /**
      * The properties on the model that are dates.
@@ -37,21 +37,21 @@ class Currency extends AbstractModel implements HasPresenter {
      *
      * @var array
      */
-    protected $keepRevisionOf = ['moneda','simbolo'];
+    protected $keepRevisionOf = ['estado, status_detail','status_reject'];
 
     /**
      * The columns to select when displaying an index.
      *
      * @var array
      */
-    public static $index = ['id'];
+    public static $index = ['estado, status_detail','status_reject'];
 
     /**
      * The max events per page when displaying a paginated index.
      *
      * @var int
      */
-    public static $paginate = 5;
+    public static $paginate = 2;
 
     /**
      * The columns to order by when displaying an index.
@@ -73,7 +73,7 @@ class Currency extends AbstractModel implements HasPresenter {
      * @var array
      */
     public static $rules = [
-        'moneda'    => 'required'
+        'id'    => 'required'
     ];
 
     /**
@@ -83,7 +83,7 @@ class Currency extends AbstractModel implements HasPresenter {
      */
     public function getPresenterClass()
     {
-        return 'GrahamCampbell\BootstrapCMS\Presenters\CurrencyPresenter';
+        return 'GrahamCampbell\BootstrapCMS\Presenters\StatusPresenter';
     }
 
 }

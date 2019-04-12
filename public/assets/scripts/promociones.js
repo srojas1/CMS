@@ -105,6 +105,11 @@ $(document).ready(function(){
         readURLMain(this);
     });
 
+    $(document).on('click','.eliminarImagen',function () {
+        $(this).prev().remove();
+        $(this).remove();
+    });
+
     $('.nav-tabs > li > a.promocion').on("click",function(e){
         e.preventDefault();
         $(document).find(".buscadorRecompensa").addClass("buscador");

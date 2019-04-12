@@ -186,7 +186,7 @@
 													<div class="inline-block position-relative multiple-images-add">
 														@foreach($images as $img)
 															<img name={{$img}} src="{{ asset('images/'.$img)}}" class="imagen-galeria shadow-sm border-top border-bottom border-right border-left">
-															<a href="#" class="badge badge-light badge-pill eliminarImagen shadow-sm"><i class="material-icons">clear</i></a>
+															<a href="#" class="badge badge-light badge-pill eliminarImagenEdit shadow-sm"><i class="material-icons">clear</i></a>
 														@endforeach
 													</div>
 												</div>

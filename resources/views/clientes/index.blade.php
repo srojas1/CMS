@@ -42,7 +42,6 @@
                                     <thead class="thead-light">
                                     <tr>
                                         <th scope="col"><div class="d-flex justify-content-center">USUARIO</div></th>
-                                        <th scope="col"><div class="d-flex justify-content-center">DISTRITO</div></th>
                                         <th scope="col"><div class="d-flex justify-content-center">RANKING</div></th>
                                         <th scope="col"><div class="d-flex justify-content-center">PUNTOS</div></th>
                                         <th scope="col"><div class="d-flex justify-content-center">ÚLTIMO ACCESO</div></th>
@@ -57,11 +56,11 @@
                                         @foreach ($cliente as $cli)
                                             <tr>
                                                 <th scope="row" class="align-middle"><div class="d-flex align-items-center"><img src="{{ asset('images/'.getJsonValue($cli->imagen_principal)) }}" alt="..." class="thumbnail border-top border-bottom border-right border-left"><div>{{$cli->nombres}} {{$cli->apaterno}} {{$cli->amaterno}} (30)<small class="d-flex justify-content-start">{{$cli->email}} / {{$cli->movil}}</small></div></div></th>
-                                                @if(count($cli->address)>0)
-                                                    <td class="align-middle"><div class="d-flex justify-content-center">{{$cli->address[0]->getDistrict->distrito}}</div></td>
-                                                @else
-                                                    <td class="align-middle"><div class="d-flex justify-content-center">Sin distrito asignado</div></td>
-                                                @endif
+                                                {{--@if(count($cli->address)>0)--}}
+                                                    {{--<td class="align-middle"><div class="d-flex justify-content-center">{{$cli->address[0]->getDistrict->distrito}}</div></td>--}}
+                                                {{--@else--}}
+                                                    {{--<td class="align-middle"><div class="d-flex justify-content-center">Sin distrito asignado</div></td>--}}
+                                                {{--@endif--}}
                                                 <td class="align-middle"><div class="d-flex justify-content-center">#{{$cli->ranking}}</div></td>
                                                 <td class="align-middle"><div class="d-flex justify-content-center">{{$cli->puntos}}</div></td>
                                                 <td class="align-middle"><div class="d-flex justify-content-center">{{$cli->last_login}}</div></td>

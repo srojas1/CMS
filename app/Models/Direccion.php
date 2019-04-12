@@ -90,8 +90,8 @@ class Direccion extends AbstractModel implements HasPresenter {
 		return $this->hasOne(Distrito::class,'id','distrito_id');
 	}
 
-	public function getAddressType() {
-    	return $this->hasOne(AddressType::class,'id','id_tipo_direccion');
-	}
+//	public function getAddressType() {
+//    	return $this->hasOne(AddressType::class,'id','id_tipo_direccion');
+//	}
 
 }
