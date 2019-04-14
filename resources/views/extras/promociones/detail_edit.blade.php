@@ -43,10 +43,14 @@
 						<div class="d-flex">
 							<div class="form-group">
 								<div class="inline-block position-relative">
-									<img src="{{ asset('images/'.getJsonValue($prom->imagen_principal))}}" class="imagen-featured shadow-sm border-top border-bottom border-right border-left">
-									<a href="#" class="badge badge-light badge-pill eliminarImagen shadow-sm">
-										<i class="material-icons">clear</i>
-									</a>
+									@if($prom->imagen_principal!='[""]')
+										<img src="{{ asset('images/'.getJsonValue($prom->imagen_principal))}}" class="imagen-featured shadow-sm border-top border-bottom border-right border-left">
+										<a href="#" class="badge badge-light badge-pill eliminarImagenEdit shadow-sm">
+											<i class="material-icons">clear</i>
+										</a>
+									@else
+										<img src="{{ asset('images/'.\GrahamCampbell\BootstrapCMS\Http\Constants::DEFAULT_IMAGE_NAME)}}" class="imagen-featured shadow-sm border-top border-bottom border-right border-left">
+									@endif
 								</div>
 							</div>
 						</div>

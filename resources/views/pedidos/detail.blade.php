@@ -81,9 +81,12 @@
                                             <!--- LISTA DE PRODUCTOS --->
 											<?php $subtotal1=0.00?>
 											<?php $subtotal=0.00?>
-                                            @foreach($ped->getProductsById as $prod)
+                                            @foreach($ped->getProductsById as $nkey=>$prod)
                                                 <tr>
-                                                    <td>{{$prod->orders[0]->pivot->cantidad}}</td>
+                                                    <?php $total = count($ped->getProductsById);
+                                                          $cantidad = $prod->orders[0]->pivot->cantidad/$total
+                                                    ?>
+                                                    <td>{{$cantidad}}</td>
                                                     <td><div class="d-inline-flex"><img class="pedido_imagen" src="{{ asset('images/'.getJsonValue($prod->imagen_principal))}}" alt="..." class="producto-icon border-top border-bottom border-right border-left">{{$prod->producto}}</div></td>
                                                     @if($prod->getCurrencyById->simbolo)
                                                         <td class="d-flex justify-content-end">{{$prod->getCurrencyById->simbolo}} {{$prod->precio}}</td>

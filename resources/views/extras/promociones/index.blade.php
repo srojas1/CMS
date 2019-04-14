@@ -24,7 +24,7 @@
 				@if(count($promocion)>0)
 					@foreach ($promocion as $prom)
 						<tr>
-							@if($prom->imagen_principal)
+							@if($prom->imagen_principal!='[""]')
 								<th scope="row" class="align-middle"><div class="d-flex align-items-center"></div><img src="{{ asset('images/'.getJsonValue($prom->imagen_principal))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prom->promocion}}</th>
 							@else
 								<th scope="row" class="align-middle"><div class="d-flex align-items-center"></div><img src="{{ asset('images/'.\GrahamCampbell\BootstrapCMS\Http\Constants::DEFAULT_IMAGE_NAME)}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prom->promocion}}</th>

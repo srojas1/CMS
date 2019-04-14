@@ -14,6 +14,7 @@ use GrahamCampbell\BootstrapCMS\Models\CuponCliente;
 use GrahamCampbell\BootstrapCMS\Models\Direccion;
 use GrahamCampbell\BootstrapCMS\Models\Empresa;
 use GrahamCampbell\BootstrapCMS\Models\Estado;
+use GrahamCampbell\BootstrapCMS\Models\OrdenProducto;
 use GrahamCampbell\BootstrapCMS\Models\Promo;
 use GrahamCampbell\BootstrapCMS\Models\Orden;
 use GrahamCampbell\BootstrapCMS\Models\Status;
@@ -27,7 +28,44 @@ use League\Flysystem\Exception;
 use Request;
 
 class APIController extends AbstractController{
-
+	
+	public function ValidarCuponByCliente()
+	{
+		$return['estado'] = false;
+		$return['mensaje'] = "Lista de cupones no encontrada";
+		$returnArr = array();
+		
+		$clienteid = Input::only('cliente_id');
+		$codigo = Input::only('codigo');
+		
+		$match = ['cliente_id' => $clienteid['cliente_id']];
+		
+		//get records by model and id_empresa
+		$returnData = CuponCliente::where($match)->select('*')->get();
+		$returnData = $returnData->ToArray();
+		
+		foreach($returnData as $data) {
+			if(!empty($data['cupon_id'])) {
+				$cuponId = $data['cupon_id'];
+				$match2 = ['id'=>$cuponId];
+				$returnData2 = Cupon::where($match2)->select('*')->first();
+				$returnData2 = $returnData2->ToArray();
+				if($returnData2['cupon'] == $codigo['codigo']) {
+					$returnArr[] = $returnData2;
+				}
+			}
+		}
+		
+		//si el array esta lleno, mando mensaje de exito y lleno data
+		if(count($returnArr)>0) {
+			$return['estado'] = true;
+			$return['mensaje'] = "Lista de cupones por codigo encontrada";
+			$return['data'] = $returnArr;
+		}
+		
+		return response()->json($return);
+	}
+	
 	public function GetPedidos(){
 		//set response data
 		$return['estado'] = false;
@@ -43,6 +81,7 @@ class APIController extends AbstractController{
 		$returnData = $returnData->ToArray();
 
 		foreach($returnData as $ret) {
+			$arrRetProd = array();
 			$idEstado =$ret['id_estado'];
 			$matchEstado = ['id' => $idEstado];
 			$returnEstado = Estado::where($matchEstado)->select('*')->first();
@@ -54,6 +93,20 @@ class APIController extends AbstractController{
 				$detalleEstado = $returnEstado['estado'];
 			}
 			$ret['estado_detalle'] = $detalleEstado;
+			
+			$idPedido = $ret['id'];
+			$matchPedido = ['orden_id'=>$idPedido];
+			$returnPedidoDetalle = OrdenProducto::where($matchPedido)->get()->ToArray();
+			
+			foreach($returnPedidoDetalle as $retPedDetalle) {
+				$idProducto = $retPedDetalle['producto_id'];
+				$matchProducto = ['id'=>$idProducto];
+				$returnProducto = Producto::where($matchProducto)->get()->ToArray();
+				$arrRetProd[] = $returnProducto;
+			}
+			
+			$ret['producto_detalle'] = $arrRetProd;
+			
 			$returnArr[] = $ret;
 		}
 
@@ -138,14 +191,21 @@ class APIController extends AbstractController{
 		$idProducto = Input::only('id_producto');
 		$match = ['id' => $idProducto['id_producto']];
 
-		$modelProducto = Producto::where($match)->first()->toArray();
-
+		$modelProducto = Producto::where($match)->first();
+		
+		if(!$modelProducto) {
+			$return['estado'] = false;
+			$return['mensaje'] = "El producto no existe";
+			return response()->json($return);
+		}
+		$modelProducto = $modelProducto->ToArray();
 		$recomendados = $modelProducto['vinculacion'];
 		$recomendados = json_decode($recomendados);
 		
+		//TODO: mejorar esto (para captar correctamente el id y para que no se repitan
 		for($i=0;$i<3;$i++) {
 			if(!isset($recomendados[$i])) {
-				$rec = rand(1,count($modelProducto));
+				$rec = rand(23,count($modelProducto));
 			} else {
 				$rec = $recomendados[$i];
 			}
@@ -203,9 +263,19 @@ class APIController extends AbstractController{
 	{
 		$return['estado'] = false;
 		$return['mensaje'] = "Problema al crear pedido";
-
+		
+		$arrAtr = array();
+		$detailPed2 = array();
 		$requestProducto = Input::all();
 		$input['cliente_id'] = $requestProducto['cliente_id'];
+		$input['id_direccion'] = $requestProducto['direccion_id'];
+		$input['contacto_entrega'] = $requestProducto['contacto'];
+		$input['movil_contacto_entrega'] = $requestProducto['celular'];
+		$input['id_cliente_tipo_pago'] = $requestProducto['forma_pago'];
+		$input['subtotal'] = $requestProducto['subtotal'];
+		$input['total'] = $requestProducto['total'];
+		$input['monto_efectivo'] = $requestProducto['monto_efectivo'];
+		$returnData = array();
 
 		$pedido = PedidoRepository::create($input);
 
@@ -221,9 +291,18 @@ class APIController extends AbstractController{
 			$inputDetail['orden_id'] = $pedido->id;
 
 			$matchProducto = ['id' => $productoId];
-			$producto = Producto::where($matchProducto)->first();
-			$producto = $producto->ToArray();
 
+			$producto = Producto::where($matchProducto)->select('*')->get();
+
+			if($producto->isEmpty()) {
+				$return['estado'] = false;
+				$return['mensaje'] = "No se encontro producto con ese ID";
+				return response()->json($return);
+				exit;
+			} else {
+				$producto = $producto->ToArray();
+			}
+			
 			//LISTA DE ATRIBUTOS
 			$atributoProductoArray = $this->GetAtributoPorProducto($productoId);
 
@@ -240,7 +319,7 @@ class APIController extends AbstractController{
 					exit;
 				}
 			}
-
+			
 			foreach($pedidoDetailArr as $detailPed) {
 				foreach($atributoProductoArray as $atr) {
 					if($detailPed['producto_atributo_id'] == $atr['id_atributo_seleccionado']) {
@@ -250,10 +329,16 @@ class APIController extends AbstractController{
 						continue;
 				}
 			}
-
-			$detailPed2['atributos'] = $arrAtr;
-
-			$returnData[] = array_merge($detailPed2,$producto);
+			if($arrAtr)
+				$detailPed2['atributos'] = $arrAtr;
+			
+			if(!count($detailPed2)>0)
+				$returnData[] = array_merge($detailPed2,$producto);
+			else {
+				$return['estado'] = false;
+				$return['mensaje'] = "Pedido creado fallo";
+				return response()->json($return);
+			}
 		}
 
 		if(count($pedido)>0) {
@@ -361,13 +446,20 @@ class APIController extends AbstractController{
 		$return['mensaje'] = "Lista de promociones no encontrada";
 
 		$returnData = $this->GetRecordsByModel(Promo::class, Input::only('usuario_empresa_id'));
-		$returnData = $returnData[0];
 
-		foreach($returnData as $retDat) {
-			$img = Request::url();
-			$trimmed = str_replace('listar_promociones_imagen', '', $img) ;
-			$imagenPrincipal = $trimmed.'images/'.json_decode($retDat['imagen_principal'])[0];
-			$imagArr[]=$imagenPrincipal;
+		foreach($returnData as $nkey=>$retDat) {
+			if(!empty($retDat)) {
+				foreach ($retDat as $rd) {
+					$img = Request::url();
+					$trimmed = str_replace('listar_promociones_imagen', '', $img);
+					
+					$imagenPrincipal = $trimmed . 'images/' . json_decode($rd['imagen_principal'], 1)[0];
+					$imagArr[] = $imagenPrincipal;
+				}
+			}
+			else {
+				continue;
+			}
 		}
 
 		if(count($returnData)>0) {
@@ -567,7 +659,7 @@ class APIController extends AbstractController{
 
 		//get records by model and id_empresa
 		$returnData = $this->GetRecordsProdByModel(Producto::class, Input::only('usuario_empresa_id'));
-
+		
 		foreach($returnData as $nkey=>$rData) {
 			$atributoProductoArray = $this->GetAtributoPorProducto($rData['id']);
 			$returnProducto[] = array_merge($rData,array('atributos'=>$atributoProductoArray));

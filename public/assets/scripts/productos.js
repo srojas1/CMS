@@ -93,7 +93,6 @@ $(document).ready(function(){
 
         $(document).on('click','.eliminarImagenPrincipal',function () {
 
-            $idProducto = $(document).find('.id_producto').val();
             $name = $(this).prev().attr("name");
 
             $.ajax({
@@ -113,7 +112,6 @@ $(document).ready(function(){
 
         $(document).on('click','.eliminarImagenEdit',function () {
 
-            $idProducto = $(document).find('.id_producto').val();
             $name = $(this).prev().attr("name");
 
             $.ajax({

@@ -280,12 +280,10 @@ class ProductoController extends AbstractController
 
 		$idProducto       = $_POST['id_producto'];
 		$producto = ProductoRepository::find($idProducto);
-		$newImgArr = array("");
-
-		if($producto->imagen_principal == $_POST['nombre']) {
-			$input['imagen_principal'] = json_encode($newImgArr);
-		}
-
+		$newImgArr = array('');
+		
+		$input['imagen_principal'] = json_encode($newImgArr);
+		
 		$producto->update($input);
 	}
 

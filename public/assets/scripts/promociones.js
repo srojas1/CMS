@@ -110,6 +110,24 @@ $(document).ready(function(){
         $(this).remove();
     });
 
+    $(document).on('click','.eliminarImagenEdit',function () {
+        $name = $(this).prev().attr("name");
+
+        $.ajax({
+            type:"POST",
+            url: 'promocion/destroyImagen',
+            cache: false,
+            data: {
+                id_promocion:$idPromocion,
+                nombre: $name
+            }
+        }).done(function(data){
+        });
+
+        $(this).prev().remove();
+        $(this).remove();
+    });
+
     $('.nav-tabs > li > a.promocion').on("click",function(e){
         e.preventDefault();
         $(document).find(".buscadorRecompensa").addClass("buscador");

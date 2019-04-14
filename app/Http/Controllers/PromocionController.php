@@ -203,6 +203,21 @@ class PromocionController extends AbstractController {
 	}
 	
 	/**
+	 * Elimina imagen
+	 */
+	public function destroyImagen() {
+		
+		$idPromocion       = $_POST['id_promocion'];
+		$promocion = PromocionRepository::find($idPromocion);
+		$newImgArr = array('');
+		
+		$input['imagen_principal'] = json_encode($newImgArr);
+		
+		$promocion->update($input);
+	}
+	
+	
+	/**
 	 * Revisa el modelo de la promoción
 	 *
 	 * @param mixed $promocion

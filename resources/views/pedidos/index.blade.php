@@ -57,11 +57,7 @@
                                                         data-target="#detail_pedido_{!! $ped->id !!}">#{{formatNumber($ped->id)}} {{$ped->getClientById->nombres}} {{$ped->getClientById->apaterno}} {{$ped->getClientById->amaterno}}</th>
                                                     <td>Hace {{timeSince($ped->fecha_pedido)}}</td>
                                                     <td>S/ [cambiar total]</td>
-                                                    @if($ped->getAddressById->direccion)
-                                                        <td>{{$ped->getAddressById->direccion}}</td>
-                                                    @else
-                                                        <td>[sin direccion asignada]</td>
-                                                    @endif
+
                                                     @if ($ped->getStatusById->estado)
                                                         <td>
                                                             <a class="btn_modal btn {{getColorByStatus($ped->id_estado)}}" href="#detail_pedido_{!! $ped->id !!}"
