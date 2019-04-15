@@ -14,6 +14,7 @@ use GrahamCampbell\BootstrapCMS\Models\CuponCliente;
 use GrahamCampbell\BootstrapCMS\Models\Direccion;
 use GrahamCampbell\BootstrapCMS\Models\Empresa;
 use GrahamCampbell\BootstrapCMS\Models\Estado;
+use GrahamCampbell\BootstrapCMS\Models\Moneda;
 use GrahamCampbell\BootstrapCMS\Models\OrdenProducto;
 use GrahamCampbell\BootstrapCMS\Models\Promo;
 use GrahamCampbell\BootstrapCMS\Models\Orden;
@@ -81,7 +82,8 @@ class APIController extends AbstractController{
 		$returnData = $returnData->ToArray();
 
 		foreach($returnData as $ret) {
-			$arrRetProd = array();
+			$detalleProducto = array();
+			$cantidad = 1;
 			$idEstado =$ret['id_estado'];
 			$matchEstado = ['id' => $idEstado];
 			$returnEstado = Estado::where($matchEstado)->select('*')->first();
@@ -98,14 +100,36 @@ class APIController extends AbstractController{
 			$matchPedido = ['orden_id'=>$idPedido];
 			$returnPedidoDetalle = OrdenProducto::where($matchPedido)->get()->ToArray();
 			
-			foreach($returnPedidoDetalle as $retPedDetalle) {
+			foreach($returnPedidoDetalle as $nkey=>$retPedDetalle) {
 				$idProducto = $retPedDetalle['producto_id'];
 				$matchProducto = ['id'=>$idProducto];
 				$returnProducto = Producto::where($matchProducto)->get()->ToArray();
-				$arrRetProd[] = $returnProducto;
+				
+				if(!empty($returnProducto)) {
+					$idProductoModel = $returnProducto[0]['id'];
+					$detalleProducto['cantidad'] = $cantidad;
+					
+					if(($idProductoModel === $idProducto) && $nkey!=0) {
+						$cantidad++;
+						$detalleProducto['cantidad'] = $cantidad;
+					}
+
+					$img = Request::url();
+					$trimmed = str_replace('get_pedidos', '', $img);
+					$imagenPrincipal = $trimmed . 'images/' . json_decode($returnProducto[0]['imagen_principal'], 1)[0];
+
+					$moneda = Moneda::where('id', $returnProducto[0]['id_moneda'])->first();
+
+					$detalleProducto['imagen_principal'] = $imagenPrincipal;
+					$detalleProducto['producto'] = $returnProducto[0]['producto'];
+					$detalleProducto['descripcion'] = $returnProducto[0]['descripcion'];
+					$detalleProducto['precio'] = $moneda->simbolo.' '.$returnProducto[0]['precio'];
+				}
+				else
+					continue;
 			}
 			
-			$ret['producto_detalle'] = $arrRetProd;
+			$ret['producto_detalle'] = $detalleProducto;
 			
 			$returnArr[] = $ret;
 		}
@@ -428,6 +452,12 @@ class APIController extends AbstractController{
 
 		foreach($producto as $nkey=>$rData) {
 			$atributoProductoArray = $this->GetAtributoPorProducto($rData['id']);
+
+			$img = Request::url();
+			$trimmed = str_replace('get_productos_categoria', '', $img) ;
+			$imagenPrincipal = $trimmed.'images/'.json_decode($rData['imagen_principal'])[0];
+			$rData['imagen_principal'] = $imagenPrincipal;
+
 			$returnProducto[] = array_merge($rData,array('atributos'=>$atributoProductoArray));
 		}
 
@@ -661,6 +691,10 @@ class APIController extends AbstractController{
 		$returnData = $this->GetRecordsProdByModel(Producto::class, Input::only('usuario_empresa_id'));
 		
 		foreach($returnData as $nkey=>$rData) {
+			$img = Request::url();
+			$trimmed = str_replace('get_productos_categoria', '', $img) ;
+			$imagenPrincipal = $trimmed.'images/'.json_decode($rData['imagen_principal'])[0];
+			$rData['imagen_principal'] = $imagenPrincipal;
 			$atributoProductoArray = $this->GetAtributoPorProducto($rData['id']);
 			$returnProducto[] = array_merge($rData,array('atributos'=>$atributoProductoArray));
 		}

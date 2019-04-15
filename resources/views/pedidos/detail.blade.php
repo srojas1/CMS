@@ -63,15 +63,15 @@
                     <div class="board-tabs">
                         <ul class="nav nav-tabs" id="detallePedidoTAB" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="informacionPedido-tab" data-toggle="tab" href="#informacionPedido" role="tab" aria-controls="informacionPedido" aria-selected="true">1. Información de pedido</a>
+                                <a class="nav-link active" id="informacionPedido-tab" data-toggle="tab" href="#informacionPedido_{!! $ped->id !!}" role="tab" aria-controls="informacionPedido" aria-selected="true">1. Información de pedido</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="datosEntrega-tab" data-toggle="tab" href="#datosEntrega" role="tab" aria-controls="datosEntrega" aria-selected="false">2. Datos de entrega</a>
+                                <a class="nav-link" id="datosEntrega-tab" data-toggle="tab" href="#datosEntrega_{!! $ped->id !!}" role="tab" aria-controls="datosEntrega" aria-selected="false">2. Datos de entrega</a>
                             </li>
                         </ul>
                     </div>
                     <div class="tab-content" id="detallePedidoTABContent">
-                        <div class="tab-pane fade show active" id="informacionPedido" role="tabpanel" aria-labelledby="informacionPedido-tab">
+                        <div class="tab-pane fade show active" id="informacionPedido_{!! $ped->id !!}" role="tabpanel" aria-labelledby="informacionPedido-tab">
                             <div class="board-body">
                                 <h4>Detalles de pedido</h4>
                                 <div class="container-fluid">
@@ -88,8 +88,8 @@
                                                     ?>
                                                     <td>{{$cantidad}}</td>
                                                     <td><div class="d-inline-flex"><img class="pedido_imagen" src="{{ asset('images/'.getJsonValue($prod->imagen_principal))}}" alt="..." class="producto-icon border-top border-bottom border-right border-left">{{$prod->producto}}</div></td>
-                                                    @if($prod->getCurrencyById->simbolo)
-                                                        <td class="d-flex justify-content-end">{{$prod->getCurrencyById->simbolo}} {{$prod->precio}}</td>
+                                                    @if($prod->getMOnedaById->simbolo)
+                                                        <td class="d-flex justify-content-end">{{$prod->getMOnedaById->simbolo}} {{$prod->precio}}</td>
                                                     @endif
 													<?php $subtotal1 = $prod->orders[0]->pivot->cantidad*$prod->precio?>
 													<?php $subtotal += $subtotal1 ?>
@@ -133,7 +133,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="datosEntrega" role="tabpanel" aria-labelledby="datosEntrega-tab">
+                        <div class="tab-pane fade" id="datosEntrega_{!! $ped->id !!}" role="tabpanel" aria-labelledby="datosEntrega-tab">
                             <div class="board-body">
                                 <h4>Datos de entrega</h4>
                                 <div class="container-fluid">
