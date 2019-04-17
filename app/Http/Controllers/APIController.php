@@ -107,11 +107,11 @@ class APIController extends AbstractController{
 				
 				if(!empty($returnProducto)) {
 					$idProductoModel = $returnProducto[0]['id'];
-					$detalleProducto['cantidad'] = $cantidad;
+					$detalleProducto[$nkey]['cantidad'] = $cantidad;
 					
 					if(($idProductoModel === $idProducto) && $nkey!=0) {
 						$cantidad++;
-						$detalleProducto['cantidad'] = $cantidad;
+						$detalleProducto[$nkey]['cantidad'] = $cantidad;
 					}
 
 					$img = Request::url();
@@ -120,10 +120,10 @@ class APIController extends AbstractController{
 
 					$moneda = Moneda::where('id', $returnProducto[0]['id_moneda'])->first();
 
-					$detalleProducto['imagen_principal'] = $imagenPrincipal;
-					$detalleProducto['producto'] = $returnProducto[0]['producto'];
-					$detalleProducto['descripcion'] = $returnProducto[0]['descripcion'];
-					$detalleProducto['precio'] = $moneda->simbolo.' '.$returnProducto[0]['precio'];
+					$detalleProducto[$nkey]['imagen_principal'] = $imagenPrincipal;
+					$detalleProducto[$nkey]['producto'] = $returnProducto[0]['producto'];
+					$detalleProducto[$nkey]['descripcion'] = $returnProducto[0]['descripcion'];
+					$detalleProducto[$nkey]['precio'] = $moneda->simbolo.' '.$returnProducto[0]['precio'];
 				}
 				else
 					continue;
@@ -285,11 +285,12 @@ class APIController extends AbstractController{
 
 	public function crearPedido()
 	{
-		$return['estado'] = false;
-		$return['mensaje'] = "Problema al crear pedido";
-		
+		//DEFINICION DE VARIABLES Y MENSAJES
 		$arrAtr = array();
 		$detailPed2 = array();
+		$return['estado'] = false;
+		$return['mensaje'] = "Problema al crear pedido";
+
 		$requestProducto = Input::all();
 		$input['cliente_id'] = $requestProducto['cliente_id'];
 		$input['id_direccion'] = $requestProducto['direccion_id'];
@@ -301,14 +302,19 @@ class APIController extends AbstractController{
 		$input['monto_efectivo'] = $requestProducto['monto_efectivo'];
 		$returnData = array();
 
+		//CREA PEDIDO CON LO QUE VIENE DEL REQUEST
 		$pedido = PedidoRepository::create($input);
 
+		//METE EN UN ARRAY EL PRODUCTOS_DATA DONDE PONE LOS DETALLES
 		$productosDataArray[] = json_decode($requestProducto['productos_data'], true);
 
+		$productosDataArray = $productosDataArray[0]['productos'];
+
+		//RECORRE EL PRODUCTOS DATA
 		foreach ($productosDataArray as $nkey => $pdata) {
-			$productoId = $pdata['productos'][$nkey]['producto_id'];
-			$productoAtributoId = $pdata['productos'][$nkey]['producto_atributo_id'];
-			$cantidad = $pdata['productos'][$nkey]['cantidad'];
+			$productoId = $pdata['producto_id'];
+			$productoAtributoIds = $pdata['producto_atributo_id'];
+			$cantidad = $pdata['cantidad'];
 
 			$inputDetail['producto_id'] = $productoId;
 			$inputDetail['cantidad'] = $cantidad;
@@ -316,8 +322,10 @@ class APIController extends AbstractController{
 
 			$matchProducto = ['id' => $productoId];
 
+			//OBTIENE EL PRODUCTO DEPENDIENDO DEL ID
 			$producto = Producto::where($matchProducto)->select('*')->get();
 
+			//VALIDA SI NO ENCUENTRA PRODUCTO
 			if($producto->isEmpty()) {
 				$return['estado'] = false;
 				$return['mensaje'] = "No se encontro producto con ese ID";
@@ -326,24 +334,27 @@ class APIController extends AbstractController{
 			} else {
 				$producto = $producto->ToArray();
 			}
-			
+
+			//OBTIENE ARRAY DE ATRIBUTOS Y LOS METE
+			$productoAtributoId = json_encode($productoAtributoIds);
+			$inputDetail['producto_atributo_id'] = $productoAtributoId;
+
+			//CREO EN TABLA ORDEN_PRODUCTO
+			$pedidoDetail = PedidoProductoRepository::create($inputDetail);
+
+			//SI NO VIENE...
+			if(!$pedidoDetail) {
+				$return['estado'] = false;
+				$return['mensaje'] = "Hubo un problema al crear en la tabla Orden Producto";
+				exit;
+			} else {
+				$pedidoDetailArr[] = $pedidoDetail->ToArray();
+			}
+
 			//LISTA DE ATRIBUTOS
 			$atributoProductoArray = $this->GetAtributoPorProducto($productoId);
 
-			//TABLA PEDIDO DETALLE
-			foreach ($productoAtributoId as $p) {
-				$inputDetail['producto_atributo_id'] = $p;
-				try {
-					$pedidoDetail = PedidoProductoRepository::create($inputDetail);
-					$pedidoDetailArr[] = $pedidoDetail->ToArray();
-				}
-				catch(Exception $ex) {
-					$return['estado'] = false;
-					$return['mensaje'] = "Hubo un problema al crear en la tabla Orden Producto";
-					exit;
-				}
-			}
-			
+			//RECORRO C
 			foreach($pedidoDetailArr as $detailPed) {
 				foreach($atributoProductoArray as $atr) {
 					if($detailPed['producto_atributo_id'] == $atr['id_atributo_seleccionado']) {
@@ -692,7 +703,7 @@ class APIController extends AbstractController{
 		
 		foreach($returnData as $nkey=>$rData) {
 			$img = Request::url();
-			$trimmed = str_replace('get_productos_categoria', '', $img) ;
+			$trimmed = str_replace('get_productos', '', $img) ;
 			$imagenPrincipal = $trimmed.'images/'.json_decode($rData['imagen_principal'])[0];
 			$rData['imagen_principal'] = $imagenPrincipal;
 			$atributoProductoArray = $this->GetAtributoPorProducto($rData['id']);
