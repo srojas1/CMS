@@ -229,14 +229,18 @@ class APIController extends AbstractController{
 		//TODO: mejorar esto (para captar correctamente el id y para que no se repitan
 		for($i=0;$i<3;$i++) {
 			if(!isset($recomendados[$i])) {
-				$rec = rand(23,count($modelProducto));
+				//otra forma de obtener numeros random
+				//$prod = Producto::orderByRaw("RAND()")->first();
+				$prod = Producto::all()->random(1);
 			} else {
 				$rec = $recomendados[$i];
+				$matchRec = ['id' => $rec];
+				$prod = Producto::where($matchRec)->first();
 			}
-			$matchRec = ['id' => $rec];
-			$modelProductoRec[] = Producto::where($matchRec)->first()->toArray();
-		}
 
+			$modelProductoRec[] = $prod->toArray();
+		}
+		
 		if($modelProductoRec) {
 			foreach($modelProductoRec as $data) {
 				$img = Request::url();
