@@ -37,7 +37,7 @@ class Atributo extends AbstractModel implements HasPresenter {
 	 *
 	 * @var array
 	 */
-	protected $keepRevisionOf = ['atributo','valor'];
+	protected $keepRevisionOf = ['atributo'];
 
 	/**
 	 * The columns to select when displaying an index.
@@ -75,7 +75,11 @@ class Atributo extends AbstractModel implements HasPresenter {
 	public static $rules = [
 		'atributo'    => 'required'
 	];
-
+	
+	public function getAtributoOpciones() {
+		return $this->hasMany(AtributoOpcion::class);
+	}
+	
 	/**
 	 * Get the presenter class.
 	 *

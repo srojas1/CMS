@@ -624,13 +624,58 @@ class APIController extends AbstractController{
 		return response()->json($return);
 	}
 	
+	public function validarProductos($productosArr) {
+		$responseArr = array();
+		
+		foreach($productosArr as $nkey => $pdata) {
+			$productoId = $pdata['producto_id'];
+			$matchProducto = ['id' => $productoId];
+			
+			//OBTIENE EL PRODUCTO DEPENDIENDO DEL ID
+			$producto = Producto::where($matchProducto)->select('id')->first();
+			
+			//VALIDA SI NO ENCUENTRA PRODUCTO
+			if(!$producto) {
+				continue;
+			} else {
+				$responseArr[] = $producto->id_producto;
+			}
+		}
+		
+		return $responseArr;
+		
+	}
+	
+	public function validarAtributoDeProducto($idAtributoOpcion, $productoId) {
+		$response = false;
+		
+		$matchOpcion = ['id'=>$idAtributoOpcion];
+		
+		$atributoProductoOpcion = AtributoOpcion::where($matchOpcion)->select('atributo_id')->first();
+		
+		if(!$atributoProductoOpcion) {
+			$response = false;
+		} else {
+			
+			$matchProducto = ['atributo_id' => $atributoProductoOpcion->atributo_id, 'producto_id'=>$productoId];
+			
+			//OBTIENE EL PRODUCTO DEPENDIENDO DEL ID
+			$atributoProducto = AtributoProducto::where($matchProducto)->select('atributo_id')->first();
+			
+			if($atributoProducto) {
+				$response = true;
+			}
+		}
+		
+		return $response;
+	}
+	
 	public function CrearPedido()
 	{
 		//DEFINICION DE VARIABLES Y MENSAJES
-		$arrAtr = array();
-		$detailPed2 = array();
 		$return['estado'] = false;
 		$return['mensaje'] = "Problema al crear pedido";
+		$productosPedido = array();
 
 		$requestProducto = Input::all();
 		$input['cliente_id'] = $requestProducto['cliente_id'];
@@ -641,79 +686,100 @@ class APIController extends AbstractController{
 		$input['subtotal'] = $requestProducto['subtotal'];
 		$input['total'] = $requestProducto['total'];
 		$input['monto_efectivo'] = $requestProducto['monto_efectivo'];
-		$returnData = array();
-
-		//CREA PEDIDO CON LO QUE VIENE DEL REQUEST
-		$pedido = PedidoRepository::create($input);
-
+		
 		//METE EN UN ARRAY EL PRODUCTOS_DATA DONDE PONE LOS DETALLES
 		$productosDataArray[] = json_decode($requestProducto['productos_data'], true);
-
 		$productosDataArray = $productosDataArray[0]['productos'];
-
+		
+		$productosPedido = $this->validarProductos($productosDataArray);
+		
+		if(empty($productosPedido)) {
+			$return['estado'] = false;
+			$return['mensaje'] = "No ha agregado productos válidos al pedido";
+			return response()->json($return);
+		}
+		
+		//CREA PEDIDO CON LO QUE VIENE DEL REQUEST
+		$pedido = PedidoRepository::create($input);
+		
 		//RECORRE EL PRODUCTOS DATA
 		foreach ($productosDataArray as $nkey => $pdata) {
 			$productoId = $pdata['producto_id'];
 			$productoAtributoIds = $pdata['producto_atributo_id'];
 			$cantidad = $pdata['cantidad'];
-
+			$arrAtribExiste = array();
+			
 			$inputDetail['producto_id'] = $productoId;
 			$inputDetail['cantidad'] = $cantidad;
 			$inputDetail['orden_id'] = $pedido->id;
-
+			
 			$matchProducto = ['id' => $productoId];
-
+			
 			//OBTIENE EL PRODUCTO DEPENDIENDO DEL ID
 			$producto = Producto::where($matchProducto)->select('*')->get();
-
+			
 			//VALIDA SI NO ENCUENTRA PRODUCTO
-			if($producto->isEmpty()) {
-				$return['estado'] = false;
-				$return['mensaje'] = "No se encontro producto con ese ID";
-				return response()->json($return);
-				exit;
+			if ($producto->isEmpty()) {
+				$productoReturn[$nkey]['id_producto'] = 'ID producto inexistente';
+				continue;
 			} else {
 				$producto = $producto->ToArray();
 			}
-
+			
+			$cont = 0;
+			
+			foreach ($productoAtributoIds as $atributoIds) {
+				$existeAtributo = $this->validarAtributoDeProducto($atributoIds, $productoId);
+				
+				if ($existeAtributo) {
+					$arrAtribExiste[] = $atributoIds;
+				} else {
+					$arrAtribExiste[] = '';
+					$cont++;
+				}
+			}
+			
+			if (count($productoAtributoIds) == $cont) {
+				$productoReturn[$nkey]['error'] = 'Ninguno de los atributos de este pedido coincide con el producto';
+				continue;
+			}
+			
 			//OBTIENE ARRAY DE ATRIBUTOS Y LOS METE
-			$productoAtributoId = json_encode($productoAtributoIds);
+			$productoAtributoId = json_encode($arrAtribExiste);
 			$inputDetail['producto_atributo_id'] = $productoAtributoId;
-
+			
 			//CREO EN TABLA ORDEN_PRODUCTO
 			$pedidoDetail = PedidoProductoRepository::create($inputDetail);
-
+			
 			//SI NO VIENE...
-			if(!$pedidoDetail) {
+			if (!$pedidoDetail) {
 				$return['estado'] = false;
 				$return['mensaje'] = "Hubo un problema al crear en la tabla Orden Producto";
 				exit;
 			} else {
 				$pedidoDetailArr[] = $pedidoDetail->ToArray();
 			}
-
+			
 			//LISTA DE ATRIBUTOS
-			$atributoProductoArray = $this->GetAtributoPorProductoPedido($productoId,$pedido->id);
+			$atributoProductoArray = $this->GetAtributoPorProductoPedido($productoId, $pedido->id);
+
+			$idMoneda = $producto[0]['id_moneda'];
 			
 			$productoReturn[$nkey]['id_pedido'] = $pedido->id;
+			$productoReturn[$nkey]['subtotal'] = getMonedaSimbol($idMoneda).' '.$pedido->subtotal;
+			$productoReturn[$nkey]['total'] = getMonedaSimbol($idMoneda).' '.$pedido->total;
+			$productoReturn[$nkey]['monto_efectivo'] = getMonedaSimbol($idMoneda).' '.$pedido->monto_efectivo;
+			$productoReturn[$nkey]['id_producto'] = $producto[0]['id'];
 			$productoReturn[$nkey]['producto'] = $producto[0]['producto'];
-			$productoReturn[$nkey]['imagen_principal'] = $producto[0]['imagen_principal'];
-			$productoReturn[$nkey]['precio'] = $producto[0]['precio'];
+			$productoReturn[$nkey]['precio'] = getMonedaSimbol($idMoneda).' '.$producto[0]['precio'];
+			$productoReturn[$nkey]['imagen_principal'] = getFullURLImage('crear_pedido').json_decode($producto[0]['imagen_principal'],1)[0];
 			$productoReturn[$nkey]['atributo_detalle'] = $atributoProductoArray;
-			
-			if(count($producto)>0)
-				$returnData = $productoReturn;
-			else {
-				$return['estado'] = false;
-				$return['mensaje'] = "Pedido creado fallo";
-				return response()->json($return);
-			}
 		}
-
-		if(count($pedido)>0) {
+		
+		if(!empty($pedido)) {
 			$return['estado'] = true;
 			$return['mensaje'] = "Pedido creado exitosamente";
-			$return['data'] = $returnData;
+			$return['data'] = $productoReturn;
 		}
 
 		return response()->json($return);
@@ -767,14 +833,28 @@ class APIController extends AbstractController{
 		
 		$atributoSeleccionadoArray = json_decode($ordenProducto->producto_atributo_id, 1);
 		
-		
 		foreach($atributoSeleccionadoArray as $nkey=>$atrSelecc) {
 			$opcionesArr = array();
 			$opcionesIdArr = array();
 			
 			$matchAtributoOpcion = ['id'=>$atrSelecc];
 			$atributoOpcion = AtributoOpcion::where($matchAtributoOpcion)->first();
+			
+			//Valido si trae opcion
+			if(!$atributoOpcion) {
+				//1
+				$atributoArray[$nkey]['error'] = 'Este valor seleccionado del atributo no tiene un atributo asociado';
+				continue;
+			}
+			
 			$atributoID = $atributoOpcion->atributo_id;
+			
+			$validarAtributo = $this->validarAtributoDeProducto($atributoID, $productoId);
+
+			if(!$validarAtributo) {
+				$atributoArray[$nkey]['error'] = 'Este valor seleccionado del atributo no tiene un atributo asociado';
+				continue;
+			}
 			
 			$matchAtributo = ['id'=>$atributoID];
 			$atributoModel = Atributo::where($matchAtributo)->first();

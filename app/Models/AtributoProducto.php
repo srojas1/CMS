@@ -37,14 +37,14 @@ class AtributoProducto extends AbstractModel implements HasPresenter {
 	 *
 	 * @var array
 	 */
-	protected $keepRevisionOf = ['id','valor'];
+	protected $keepRevisionOf = ['id'];
 
 	/**
 	 * The columns to select when displaying an index.
 	 *
 	 * @var array
 	 */
-	public static $index = ['id','valor'];
+	public static $index = ['id'];
 
 	/**
 	 * The max events per page when displaying a paginated index.

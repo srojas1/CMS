@@ -331,9 +331,8 @@
 												</div>
 												<div class="form-group col-7">
 													<select class="custom-select" id="atributoProducto" name="atributoProductoVal[{{$atr->id}}]" rows="3">
-														<?php $values = json_decode($atr->valor) ?>
-														@foreach($values as $val)
-															<option value="{{$val}}">{{$val}}</option>
+														@foreach($atr->getAtributoOpciones as $val)
+															<option value="{{$val->id}}">{{$val->valor}}</option>
 														@endforeach
 													</select>
 												</div>

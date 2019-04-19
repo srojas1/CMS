@@ -357,13 +357,8 @@
 													<div class="form-group col-7">
 														<select class="custom-select" id="categoriaProducto" name="atributoProductoVal[{{$atr->pivot->id}}]" rows="3">
 															<option>Selecciona un valor</option>
-															<?php $values = json_decode($atr->valor) ?>
-															@foreach($values as $val)
-																@if($val==$atr->pivot->valor)
-																	<option value="{{$val}}" selected>{{$val}}</option>
-																@else
-																	<option value="{{$val}}">{{$val}}</option>
-																@endif
+															@foreach($atr->getAtributoOpciones as $val)
+																<option value="{{$val->id}}">{{$val->valor}}</option>
 															@endforeach
 														</select>
 													</div>

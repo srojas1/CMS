@@ -2,6 +2,7 @@
 
 namespace GrahamCampbell\BootstrapCMS\Http\Controllers;
 
+use GrahamCampbell\BootstrapCMS\Facades\AtributoOpcionRepository;
 use Illuminate\Support\Facades\View;
 use GrahamCampbell\BootstrapCMS\Facades\AtributoProductoRepository;
 use GrahamCampbell\BootstrapCMS\Facades\AtributoRepository;
@@ -60,9 +61,13 @@ class AtributoController extends AbstractController {
 		$atributo    = $_POST['atributo'];
 		$valores     = $_POST['valores'];
 
-		$jsonValores = json_encode($valores);
-		$input = ['atributo'=>$atributo,'valor'=>$jsonValores];
+		$input = ['atributo'=>$atributo];
 		$atributo = AtributoRepository::create($input);
+		
+		foreach($valores as $val) {
+			$inputOpcion = ['atributo_id'=>$atributo->id,'valor'=>$val];
+			AtributoOpcionRepository::create($inputOpcion);
+		}
 
 		return json_encode($atributo);
 	}
@@ -85,10 +90,9 @@ class AtributoController extends AbstractController {
 	public function addAtributoProductoFromEdit() {
 
 		$attribute_id = $_POST['attribute_id'];
-		$id_producto   = $_POST['id_producto'];
-		$valor        = $_POST['valor'];
+		$id_producto  = $_POST['id_producto'];
 
-		$input = ['atributo_id'=>$attribute_id,'producto_id'=>$id_producto,'valor'=>$valor];
+		$input = ['atributo_id'=>$attribute_id,'producto_id'=>$id_producto];
 
 		$atributoProducto = AtributoProductoRepository::create($input);
 
