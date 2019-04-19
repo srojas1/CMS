@@ -115,7 +115,7 @@ Route::post('listar_promociones_imagen','APIController@ListarPromocionesImagen')
 Route::post('get_productos_categoria','APIController@GetProductosxCategoria');
 Route::post('cambiar_password','APIController@CambiarPassword');
 Route::post('get_direcciones','APIController@GetDireccionesByCliente');
-Route::post('crear_pedido','APIController@crearPedido');
+Route::post('crear_pedido','APIController@CrearPedido');
 Route::post('get_cupones','APIController@GetCuponByCliente');
 Route::post('get_recomendados','APIController@GetRecomendados');
 Route::post('registrar_direccion','APIController@RegistrarDireccion');

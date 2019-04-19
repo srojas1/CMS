@@ -339,7 +339,20 @@
     */
 
     'atributoproducto' => 'GrahamCampbell\BootstrapCMS\Models\AtributoProducto',
-
+		
+	/*
+	|--------------------------------------------------------------------------
+	| Atributo Opcion Model
+	|--------------------------------------------------------------------------
+	|
+	| This defines the recompensa model to be used.
+	|
+	| Default: 'GrahamCampbell\BootstrapCMS\Models\AtributoOpcion'
+	|
+	*/
+		
+		'atributoopcion' => 'GrahamCampbell\BootstrapCMS\Models\AtributoOpcion',
+		
 	/*
 	|--------------------------------------------------------------------------
 	| Cupon Cliente Model

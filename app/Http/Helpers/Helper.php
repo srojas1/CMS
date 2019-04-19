@@ -5,9 +5,21 @@ use GrahamCampbell\BootstrapCMS\Models\Producto as ProductModel;
 use GrahamCampbell\BootstrapCMS\Models\User as UserModel;
 use GrahamCampbell\BootstrapCMS\Models\Empresa as EmpresaModel;
 use GrahamCampbell\BootstrapCMS\Http\Constants as Constants;
+use GrahamCampbell\BootstrapCMS\Models\Moneda;
 use GrahamCampbell\BootstrapCMS\Navigation\Factory;
 use Illuminate\Support\Facades\Auth;
+use Request;
 
+	function getMonedaSimbol($idMoneda) {
+		$moneda = Moneda::where('id', $idMoneda)->first();
+		return $moneda->simbolo;
+	}
+	
+	function getFullURLImage($endpoint) {
+		$url = Request::url();
+		$replacedURL = str_replace($endpoint, '', $url) ;
+		return $replacedURL.'images/';
+	}
 
 	/**
 	 * Formatea paginacion a nuevo diseño

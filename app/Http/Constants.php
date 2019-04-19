@@ -14,4 +14,5 @@ class Constants {
     const COSTO_ENVIO = 5;
     const IGV = 0.18;
     const DEFAULT_IMAGE_NAME = 'producto-icon.jpg';
+    const OPTION_VALID = 1;
 }
