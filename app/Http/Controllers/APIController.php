@@ -610,6 +610,14 @@ class APIController extends AbstractController{
 			}
 			
 			$ret['producto_detalle'] = $detalleProducto;
+
+			$ret['id'] = $ret['id'];
+			
+			$ret['subtotal'] = getMonedaSimbol($ret['moneda_id']).' '.$ret['subtotal'];
+			$ret['total'] = getMonedaSimbol($ret['moneda_id']).' '.$ret['total'];
+			$ret['monto_efectivo'] = getMonedaSimbol($ret['moneda_id']).' '.$ret['monto_efectivo'];
+			$ret['contacto_entrega'] = $ret['contacto_entrega'];
+			$ret['movil_contacto_entrega'] = $ret['movil_contacto_entrega'];
 			
 			$returnArr[] = $ret;
 		}
