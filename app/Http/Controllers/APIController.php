@@ -27,8 +27,8 @@ use Illuminate\Support\Facades\Input;
 use GrahamCampbell\BootstrapCMS\Models\Categoria;
 use GrahamCampbell\BootstrapCMS\Models\Cliente;
 use GrahamCampbell\BootstrapCMS\Models\Producto;
+use Illuminate\Support\Facades\Request;
 use League\Flysystem\Exception;
-use Request;
 
 class APIController extends AbstractController{
 	
@@ -798,6 +798,11 @@ class APIController extends AbstractController{
 	public function GetAtributoPorProducto($productoId) {
 		$matchAtributo = ['producto_id'=>$productoId];
 		$atributoProducto = AtributoProducto::where($matchAtributo)->get()->toArray();
+		
+		if(empty($atributoProducto)) {
+			$atributoArray = array();
+			return $atributoArray;
+		}
 		
 		foreach($atributoProducto as $nkey=>$aProd) {
 			$atributoId = $aProd['atributo_id'];
