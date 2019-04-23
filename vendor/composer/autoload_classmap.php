@@ -207,7 +207,7 @@ return array(
     'GrahamCampbell\\BootstrapCMS\\Models\\AtributoProducto' => $baseDir . '/app/Models/AtributoProducto.php',
     'GrahamCampbell\\BootstrapCMS\\Models\\Categoria' => $baseDir . '/app/Models/Categoria.php',
     'GrahamCampbell\\BootstrapCMS\\Models\\Cliente' => $baseDir . '/app/Models/Cliente.php',
-    'GrahamCampbell\\BootstrapCMS\\Models\\ClienteTipoPago' => $baseDir . '/app/Models/ClienteTipoPago.php',
+    'GrahamCampbell\\BootstrapCMS\\Models\\ClienteTarjeta' => $baseDir . '/app/Models/ClienteTarjeta.php',
     'GrahamCampbell\\BootstrapCMS\\Models\\Comment' => $baseDir . '/app/Models/Comment.php',
     'GrahamCampbell\\BootstrapCMS\\Models\\Cupon' => $baseDir . '/app/Models/Cupon.php',
     'GrahamCampbell\\BootstrapCMS\\Models\\CuponCliente' => $baseDir . '/app/Models/CuponCliente.php',

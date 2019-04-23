@@ -102,7 +102,7 @@ class Cliente extends AbstractModel implements HasPresenter {
 	}
 
 	public function getPaymentCard() {
-		return $this->hasMany(ClienteTipoPago::class);
+		return $this->hasMany(ClienteTarjeta::class);
 	}
 
 //	public function getCuponById() {

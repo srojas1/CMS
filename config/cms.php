@@ -430,4 +430,30 @@
 	*/
 
 		'statusdetail' => 'GrahamCampbell\BootstrapCMS\Models\StatusDetail',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Forma Pago
+	|--------------------------------------------------------------------------
+	|
+	| This defines the model to be used.
+	|
+	| Default: 'GrahamCampbell\BootstrapCMS\Models\FormaPago'
+	|
+	*/
+
+		'formapago' => 'GrahamCampbell\BootstrapCMS\Models\FormaPago',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Pago Contraentrega detalle
+	|--------------------------------------------------------------------------
+	|
+	| This defines the model to be used.
+	|
+	| Default: 'GrahamCampbell\BootstrapCMS\Models\PagoContraentregaDetalle'
+	|
+	*/
+
+		'pagocontraentregadetalle' => 'GrahamCampbell\BootstrapCMS\Models\PagoContraentregaDetalle',
 ];

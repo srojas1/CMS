@@ -47,14 +47,17 @@ class Orden extends AbstractModel implements HasPresenter {
     public static $index =
 		['id',
 		 'cliente_id',
-		 'id_cliente_tipo_pago',
 		 'id_direccion',
 		 'id_estado',
 		 'fecha_pedido',
 		 'fecha_compra',
 		 'total',
 		 'contacto_entrega',
-		 'movil_contacto_entrega'
+		 'movil_contacto_entrega',
+		 'id_forma_pago',
+		 'id_pago_contraentrega_detalle',
+		 'id_cliente_tarjeta',
+		 'monto_efectivo'
 		];
 
     /**
@@ -123,10 +126,18 @@ class Orden extends AbstractModel implements HasPresenter {
     }
 
     public function getPaymentCardByIdClient() {
-        return $this->hasOne(ClienteTipoPago::class,'id','id_cliente_tipo_pago');
+        return $this->hasOne(ClienteTarjeta::class,'id','id_cliente_tarjeta');
     }
 
     public function getAddressById() {
         return $this->hasOne(Direccion::class,'id','id_direccion');
     }
+
+    public function getFormaPago() {
+		return $this->hasOne(FormaPago::class,'id','id_forma_pago');
+	}
+
+	public function getPagoContraentregaDetalle() {
+		return $this->hasOne(PagoContraentregaDetalle::class,'id','id_pago_contraentrega_detalle');
+	}
 }

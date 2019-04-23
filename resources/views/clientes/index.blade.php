@@ -55,7 +55,9 @@
                                     @if(count($cliente)>0)
                                         @foreach ($cliente as $cli)
                                             <tr>
-                                                <th scope="row" class="align-middle"><div class="d-flex align-items-center"><img src="{{ asset('images/'.getJsonValue($cli->imagen_principal)) }}" alt="..." class="thumbnail border-top border-bottom border-right border-left"><div>{{$cli->nombres}} {{$cli->apaterno}} {{$cli->amaterno}} (30)<small class="d-flex justify-content-start">{{$cli->email}} / {{$cli->movil}}</small></div></div></th>
+                                                <th scope="row" class="align-middle  href="#detail_cliente_{!! $cli->id !!}" class="accion"
+                                                data-toggle="modal"
+                                                data-target="#detail_cliente_{!! $cli->id !!}"><div class="d-flex align-items-center"><img src="{{ asset('images/'.getJsonValue($cli->imagen_principal)) }}" alt="..." class="thumbnail border-top border-bottom border-right border-left"><div>{{$cli->nombres}} {{$cli->apaterno}} {{$cli->amaterno}} (30)<small class="d-flex justify-content-start">{{$cli->email}} / {{$cli->movil}}</small></div></div></th>
                                                 {{--@if(count($cli->address)>0)--}}
                                                     {{--<td class="align-middle"><div class="d-flex justify-content-center">{{$cli->address[0]->getDistrict->distrito}}</div></td>--}}
                                                 {{--@else--}}
@@ -80,8 +82,8 @@
                                                 @endforeach
                                                 <td class="align-middle"><div class="d-flex justify-content-center">S/ {{number_format($sumTotales,2)}}</div></td>
                                                 <td class="align-middle"><div class="d-flex justify-content-center">
-                                                        <a href="#detail_producto_{!! $cli->id !!}" class="accion"   data-toggle="modal"
-                                                           data-target="#detail_producto_{!! $cli->id !!}">
+                                                        <a href="#detail_cliente_{!! $cli->id !!}" class="accion" data-toggle="modal"
+                                                           data-target="#detail_cliente_{!! $cli->id !!}">
                                                             <i class="material-icons">edit</i>
                                                         </a>
                                                         <a href="#delete_cliente_{!! $cli->id !!}" data-toggle="modal" data-target="#delete_cliente_{!! $cli->id !!}" data-toggle="modal" data-target="#delete_cliente_{!! $cli->id !!}" class="accion">

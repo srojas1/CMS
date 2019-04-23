@@ -2,7 +2,7 @@
 <div id="detail_pedido_{!! $ped->id !!}" class="modal fade modalPedido" tabindex="-1" role="dialog" aria-labelledby="detail_pedido_{!! $ped->id !!}" aria-hidden="true">
     <input type="hidden" id="id_pedido" value="{{$ped->id}}"/>
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
+            <div class="modal-content pedido_content_{!! $ped->id  !!}">
                 <!--- MODAL HEADER --->
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -33,22 +33,22 @@
                                         <div>{{\GrahamCampbell\BootstrapCMS\Http\Constants::STATUS_EMPTY}}</div>
                                     @endif
                                 </div>
-                                @if($ped->id_estado != 5)
+                                @if($ped->id_estado != 5 && $ped->id_estado == 1)
                                     <div class="btn-group">
-                                        @if ($ped->getStatusById->estado)
-											<?php $statusDetailReject = json_decode($ped->getStatusById->status_reject) ?>
-                                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                {{$ped->getStatusById->status_label_second}}
-                                            </button>
-                                            <div class="detalle_rechazar dropdown-menu">
-                                                @foreach($statusDetailReject as $nkey=>$pedreject)
-                                                    <a class="dropdown-item">{{$nkey}}</a>
-                                                    <input id="id_status_next" type="hidden" value={{$pedreject}}>
-                                                @endforeach
-                                            </div>
-                                        @else
-                                            <div>{{\GrahamCampbell\BootstrapCMS\Http\Constants::STATUS_EMPTY}}</div>
-                                        @endif
+                                            @if ($ped->getStatusById->estado)
+												<?php $statusDetailReject = json_decode($ped->getStatusById->status_reject) ?>
+                                                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    {{$ped->getStatusById->status_label_second}}
+                                                </button>
+                                                <div class="detalle_rechazar dropdown-menu">
+                                                    @foreach($statusDetailReject as $nkey=>$pedreject)
+                                                        <a class="dropdown-item">{{$nkey}}</a>
+                                                        <input id="id_status_next" type="hidden" value={{$pedreject}}>
+                                                    @endforeach
+                                                </div>
+                                            @else
+                                                <div>{{\GrahamCampbell\BootstrapCMS\Http\Constants::STATUS_EMPTY}}</div>
+                                            @endif
                                     </div>
                                 @endif
                                 <div class="btn-group">
@@ -160,7 +160,14 @@
                                     <div class="row justify-content-start align-items-center">
                                         <div class="col-12">
                                             <div class="datos">
-                                                @if($ped->getPaymentCardByIdClient)
+                                                @if($ped->id_forma_pago == 1)
+                                                    <div><b>Forma de pago:</b> {{$ped->getFormaPago->forma_pago}}</div>
+                                                    <br>
+                                                    <div><b>Tipo de pago contraentrega:</b> {{$ped->getPagoContraentregaDetalle->pago_detalle}}</div>
+                                                    @if($ped->getPagoContraentregaDetalle->id == 1)
+                                                        <div><b>Monto efectivo:</b> S/ {{$ped->monto_efectivo}}</div>
+                                                    @endif
+                                                @elseif($ped->getPaymentCardByIdClient)
                                                     <div>{{$ped->getPaymentCardByIdClient->marca}}</div>
                                                 @else
                                                     <div>[sin marca asignada]</div>

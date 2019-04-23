@@ -1,7 +1,7 @@
 @if(count($cliente)>0)
 	@foreach ($cliente as $nkey=>$cli)
 	<!--- MODAL USUARIOS --->
-	<div class="modal fade" id="detail_producto_{!! $cli->id !!}" tabindex="-1" role="dialog" aria-labelledby="detail_producto_{!! $cli->id !!}" aria-hidden="true">
+	<div class="modal fade" id="detail_cliente_{!! $cli->id !!}" tabindex="-1" role="dialog" aria-labelledby="detail_cliente_{!! $cli->id !!}" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 			<div class="modal-content">
 				<!--- MODAL HEADER --->

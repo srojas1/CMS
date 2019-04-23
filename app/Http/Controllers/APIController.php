@@ -618,7 +618,10 @@ class APIController extends AbstractController{
 			$ret['monto_efectivo'] = getMonedaSimbol($ret['moneda_id']).' '.$ret['monto_efectivo'];
 			$ret['contacto_entrega'] = $ret['contacto_entrega'];
 			$ret['movil_contacto_entrega'] = $ret['movil_contacto_entrega'];
-			
+			$ret['id_forma_pago'] = $ret['id_forma_pago'];
+			$ret['id_pago_contraentrega_detalle'] = $ret['id_pago_contraentrega_detalle'];
+			$ret['id_cliente_tarjeta'] = $ret['id_cliente_tarjeta'];
+
 			$returnArr[] = $ret;
 		}
 
@@ -652,6 +655,20 @@ class APIController extends AbstractController{
 		
 		return $responseArr;
 		
+	}
+
+	public function validarClienteExistente($clienteId) {
+
+		$matchCliente = ['id' => $clienteId];
+
+		//OBTIENE EL Cliente DEPENDIENDO DEL ID
+		$cliente = Cliente::where($matchCliente)->select('id')->first();
+
+		if(!$cliente) {
+			return false;
+		}
+
+		return true;
 	}
 	
 	public function validarAtributoDeProducto($idAtributoOpcion, $productoId) {
@@ -687,14 +704,23 @@ class APIController extends AbstractController{
 
 		$requestProducto = Input::all();
 		$input['cliente_id'] = $requestProducto['cliente_id'];
+		if(!$this->validarClienteExistente($input['cliente_id'])) {
+			$return['estado'] = false;
+			$return['mensaje'] = "No existe el cliente seleccionado";
+			return response()->json($return);
+		}
+
 		$input['id_direccion'] = $requestProducto['direccion_id'];
 		$input['contacto_entrega'] = $requestProducto['contacto'];
 		$input['movil_contacto_entrega'] = $requestProducto['celular'];
-		$input['id_cliente_tipo_pago'] = $requestProducto['forma_pago'];
 		$input['subtotal'] = $requestProducto['subtotal'];
 		$input['total'] = $requestProducto['total'];
 		$input['monto_efectivo'] = $requestProducto['monto_efectivo'];
-		
+		$input['id_forma_pago'] = $requestProducto['forma_pago_id'];
+		$input['id_pago_contraentrega_detalle'] = $requestProducto['pago_contraentrega_detalle_id'];
+		//esto para cuando se habilite el ONLINE
+		//$input['id_cliente_tarjeta'] = $requestProducto['cliente_tarjeta_id'];
+
 		//METE EN UN ARRAY EL PRODUCTOS_DATA DONDE PONE LOS DETALLES
 		$productosDataArray[] = json_decode($requestProducto['productos_data'], true);
 		$productosDataArray = $productosDataArray[0]['productos'];
@@ -773,6 +799,12 @@ class APIController extends AbstractController{
 
 			$idMoneda = $producto[0]['id_moneda'];
 			
+			$productoReturn[$nkey]['id_pedido'] = $pedido->id;
+			$productoReturn[$nkey]['id_forma_pago'] = $pedido->id_forma_pago;
+			if($pedido->id_pago_contraentrega_detalle != null)
+				$productoReturn[$nkey]['id_pago_contraentrega_detalle'] = $pedido->id_pago_contraentrega_detalle;
+			if($pedido->id_cliente_tarjeta != null)
+				$productoReturn[$nkey]['id_cliente_tarjeta'] = $pedido->id_cliente_tarjeta;
 			$productoReturn[$nkey]['id_pedido'] = $pedido->id;
 			$productoReturn[$nkey]['subtotal'] = getMonedaSimbol($idMoneda).' '.$pedido->subtotal;
 			$productoReturn[$nkey]['total'] = getMonedaSimbol($idMoneda).' '.$pedido->total;

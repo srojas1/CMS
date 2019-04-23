@@ -65,7 +65,7 @@
 																<th scope="row" class="align-middle" href="#modalEditarProducto_{!! $prod->id !!}" class="accion"
 																	data-toggle="modal"
 																	data-target="#modalEditarProducto_{!! $prod->id !!}">
-																<div class="d-flex align-items-center"></div><img src="{{ asset('images/'.getJsonValue($prod->imagen_principal))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prod->producto}}</th>
+																<div class="d-flex align-items-center"></div><img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="{{ asset('images/'.getJsonValue($prod->imagen_principal))}}" alt="..." class="thumbnail border-top border-bottom border-right border-left">{{$prod->producto}}</th>
 															@else
 																<th scope="row" class="align-middle" href="#modalEditarProducto_{!! $prod->id !!}" class="accion"
 																	data-toggle="modal"

@@ -27,23 +27,25 @@ $(document).ready(function(){
                     label_extra: labelExtra
                 }
             }).done(function(msg) {
-                $(".modal-content").load(window.location + " .modal-content");
+                $(".modal-content").load(window.location + " .pedido_content_"+idPedido);
             });
         });
 
         $(this).on('click',".detalle_rechazar a", function (event) {
 
             idEstadoChange = $(this).next('#id_status_next').val();
+            labelExtra     = "";
 
             $.ajax({
                 type: "POST",
                 url: 'pedido/changeStatus',
                 data: {
                     id_estado: idEstadoChange,
-                    id_pedido: idPedido
+                    id_pedido: idPedido,
+                    label_extra: labelExtra
                 }
             }).done(function(msg) {
-                $(".modal-content").load(window.location + " .modal-content");
+                $(".modal-content").load(window.location + " .pedido_content_"+idPedido);
             });
         });
     });
