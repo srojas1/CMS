@@ -31,6 +31,10 @@ use Illuminate\Support\Facades\Request;
 use League\Flysystem\Exception;
 
 class APIController extends AbstractController{
+
+	/**
+	 * Cliente Login y registro
+	 */
 	
 	public function ValidarClienteUsuarioPassword() {
 		
@@ -210,6 +214,10 @@ class APIController extends AbstractController{
 		
 		return response()->json($return);
 	}
+
+	/**
+	 * Categorias y productos
+	 */
 	
 	public function GetCategorias() {
 		
@@ -362,6 +370,10 @@ class APIController extends AbstractController{
 		
 		return response()->json($return);
 	}
+
+	/**
+	 * Promociones
+	 */
 	
 	public function ListarPromocionesImagen() {
 		$return['estado'] = false;
@@ -396,7 +408,10 @@ class APIController extends AbstractController{
 		
 		return response()->json($return);
 	}
-	
+
+	/**
+	 * Direcciones
+	 */
 	public function GetDireccionesByCliente(){
 		//set response data
 		$return['estado'] = false;
@@ -479,6 +494,10 @@ class APIController extends AbstractController{
 		
 		return response()->json($return);
 	}
+
+	/**
+	 * Cupones
+	 */
 	
 	public function GetCuponByCliente() {
 		$return['estado'] = false;
@@ -545,6 +564,10 @@ class APIController extends AbstractController{
 		
 		return response()->json($return);
 	}
+
+	/**
+	 * Pedidos (Ordenes)
+	 */
 	
 	public function GetPedidos(){
 		//set response data
@@ -634,67 +657,7 @@ class APIController extends AbstractController{
 
 		return response()->json($return);
 	}
-	
-	public function validarProductos($productosArr) {
-		$responseArr = array();
-		
-		foreach($productosArr as $nkey => $pdata) {
-			$productoId = $pdata['producto_id'];
-			$matchProducto = ['id' => $productoId];
-			
-			//OBTIENE EL PRODUCTO DEPENDIENDO DEL ID
-			$producto = Producto::where($matchProducto)->select('id')->first();
-			
-			//VALIDA SI NO ENCUENTRA PRODUCTO
-			if(!$producto) {
-				continue;
-			} else {
-				$responseArr[] = $producto->id_producto;
-			}
-		}
-		
-		return $responseArr;
-		
-	}
 
-	public function validarClienteExistente($clienteId) {
-
-		$matchCliente = ['id' => $clienteId];
-
-		//OBTIENE EL Cliente DEPENDIENDO DEL ID
-		$cliente = Cliente::where($matchCliente)->select('id')->first();
-
-		if(!$cliente) {
-			return false;
-		}
-
-		return true;
-	}
-	
-	public function validarAtributoDeProducto($idAtributoOpcion, $productoId) {
-		$response = false;
-		
-		$matchOpcion = ['id'=>$idAtributoOpcion];
-		
-		$atributoProductoOpcion = AtributoOpcion::where($matchOpcion)->select('atributo_id')->first();
-		
-		if(!$atributoProductoOpcion) {
-			$response = false;
-		} else {
-			
-			$matchProducto = ['atributo_id' => $atributoProductoOpcion->atributo_id, 'producto_id'=>$productoId];
-			
-			//OBTIENE EL PRODUCTO DEPENDIENDO DEL ID
-			$atributoProducto = AtributoProducto::where($matchProducto)->select('atributo_id')->first();
-			
-			if($atributoProducto) {
-				$response = true;
-			}
-		}
-		
-		return $response;
-	}
-	
 	public function CrearPedido()
 	{
 		//DEFINICION DE VARIABLES Y MENSAJES
@@ -724,34 +687,42 @@ class APIController extends AbstractController{
 		//METE EN UN ARRAY EL PRODUCTOS_DATA DONDE PONE LOS DETALLES
 		$productosDataArray[] = json_decode($requestProducto['productos_data'], true);
 		$productosDataArray = $productosDataArray[0]['productos'];
-		
+
 		$productosPedido = $this->validarProductos($productosDataArray);
-		
-		if(empty($productosPedido)) {
+
+		//Valida que los productos existan
+		if(!($productosPedido)) {
 			$return['estado'] = false;
-			$return['mensaje'] = "No ha agregado productos válidos al pedido";
+			$return['mensaje'] = "No ha agregado productos válidos al pedido. Al menos uno no es válido.";
 			return response()->json($return);
 		}
-		
+
+		//Valida que todos los atributos pertenezcan a los productos ingresados
+		if(!($this->validarAtributosExistentes($productosDataArray))) {
+			$return['estado'] = false;
+			$return['mensaje'] = "Todos los atributos deben coincidir con el producto. Al menos uno no coincide.";
+			return response()->json($return);
+		}
+
 		//CREA PEDIDO CON LO QUE VIENE DEL REQUEST
 		$pedido = PedidoRepository::create($input);
-		
+
 		//RECORRE EL PRODUCTOS DATA
 		foreach ($productosDataArray as $nkey => $pdata) {
 			$productoId = $pdata['producto_id'];
 			$productoAtributoIds = $pdata['producto_atributo_id'];
 			$cantidad = $pdata['cantidad'];
 			$arrAtribExiste = array();
-			
+
 			$inputDetail['producto_id'] = $productoId;
 			$inputDetail['cantidad'] = $cantidad;
 			$inputDetail['orden_id'] = $pedido->id;
-			
+
 			$matchProducto = ['id' => $productoId];
-			
+
 			//OBTIENE EL PRODUCTO DEPENDIENDO DEL ID
 			$producto = Producto::where($matchProducto)->select('*')->get();
-			
+
 			//VALIDA SI NO ENCUENTRA PRODUCTO
 			if ($producto->isEmpty()) {
 				$productoReturn[$nkey]['id_producto'] = 'ID producto inexistente';
@@ -759,32 +730,24 @@ class APIController extends AbstractController{
 			} else {
 				$producto = $producto->ToArray();
 			}
-			
-			$cont = 0;
-			
+
 			foreach ($productoAtributoIds as $atributoIds) {
 				$existeAtributo = $this->validarAtributoDeProducto($atributoIds, $productoId);
-				
+
 				if ($existeAtributo) {
 					$arrAtribExiste[] = $atributoIds;
 				} else {
 					$arrAtribExiste[] = '';
-					$cont++;
 				}
 			}
-			
-			if (count($productoAtributoIds) == $cont) {
-				$productoReturn[$nkey]['error'] = 'Ninguno de los atributos de este pedido coincide con el producto';
-				continue;
-			}
-			
+
 			//OBTIENE ARRAY DE ATRIBUTOS Y LOS METE
 			$productoAtributoId = json_encode($arrAtribExiste);
 			$inputDetail['producto_atributo_id'] = $productoAtributoId;
-			
+
 			//CREO EN TABLA ORDEN_PRODUCTO
 			$pedidoDetail = PedidoProductoRepository::create($inputDetail);
-			
+
 			//SI NO VIENE...
 			if (!$pedidoDetail) {
 				$return['estado'] = false;
@@ -793,12 +756,12 @@ class APIController extends AbstractController{
 			} else {
 				$pedidoDetailArr[] = $pedidoDetail->ToArray();
 			}
-			
+
 			//LISTA DE ATRIBUTOS
 			$atributoProductoArray = $this->GetAtributoPorProductoPedido($productoId, $pedido->id);
 
 			$idMoneda = $producto[0]['id_moneda'];
-			
+
 			$productoReturn[$nkey]['id_pedido'] = $pedido->id;
 			$productoReturn[$nkey]['id_forma_pago'] = $pedido->id_forma_pago;
 			if($pedido->id_pago_contraentrega_detalle != null)
@@ -815,7 +778,7 @@ class APIController extends AbstractController{
 			$productoReturn[$nkey]['imagen_principal'] = getFullURLImage('crear_pedido').json_decode($producto[0]['imagen_principal'],1)[0];
 			$productoReturn[$nkey]['atributo_detalle'] = $atributoProductoArray;
 		}
-		
+
 		if(!empty($pedido)) {
 			$return['estado'] = true;
 			$return['mensaje'] = "Pedido creado exitosamente";
@@ -824,8 +787,88 @@ class APIController extends AbstractController{
 
 		return response()->json($return);
 	}
+
+	/**
+	 * Validaciones
+	 */
 	
-	//Utils
+	public function validarProductos($productosArr) {
+
+		foreach($productosArr as $nkey => $pdata) {
+			$productoId = $pdata['producto_id'];
+			$matchProducto = ['id' => $productoId];
+			
+			//OBTIENE EL PRODUCTO DEPENDIENDO DEL ID
+			$producto = Producto::where($matchProducto)->select('id')->first();
+			
+			//VALIDA SI NO ENCUENTRA PRODUCTO
+			if(!$producto) {
+				return false;
+			}
+		}
+		
+		return true;
+		
+	}
+
+	public function validarClienteExistente($clienteId) {
+
+		$matchCliente = ['id' => $clienteId];
+
+		//OBTIENE EL Cliente DEPENDIENDO DEL ID
+		$cliente = Cliente::where($matchCliente)->select('id')->first();
+
+		if(!$cliente) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public function validarAtributosExistentes($productosDataArray) {
+
+		foreach ($productosDataArray as $nkey => $pdata) {
+			$productoId = $pdata['producto_id'];
+			$productoAtributoIds = $pdata['producto_atributo_id'];
+
+			foreach ($productoAtributoIds as $atributoIds) {
+				$existeAtributo = $this->validarAtributoDeProducto($atributoIds, $productoId);
+
+				if (!$existeAtributo) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public function validarAtributoDeProducto($idAtributoOpcion, $productoId) {
+		$response = false;
+		
+		$matchOpcion = ['id'=>$idAtributoOpcion];
+		
+		$atributoProductoOpcion = AtributoOpcion::where($matchOpcion)->select('atributo_id')->first();
+		
+		if(!$atributoProductoOpcion) {
+			$response = false;
+		} else {
+			
+			$matchProducto = ['atributo_id' => $atributoProductoOpcion->atributo_id, 'producto_id'=>$productoId];
+
+			//OBTIENE EL PRODUCTO DEPENDIENDO DEL ID
+			$atributoProducto = AtributoProducto::where($matchProducto)->select('atributo_id')->first();
+			
+			if($atributoProducto) {
+				$response = true;
+			}
+		}
+		
+		return $response;
+	}
+
+	/**
+	 * Utils
+	 */
 	
 	public function GetAtributoPorProducto($productoId) {
 		$matchAtributo = ['producto_id'=>$productoId];
@@ -931,25 +974,6 @@ class APIController extends AbstractController{
 		return $atributoArray;
 	}
 	
-	public function GetUsuarios($idEmpresa) {
-		$usuarios = \GrahamCampbell\BootstrapCMS\Models\User::where($idEmpresa)->get()->toArray();
-		return $usuarios;
-	}
-	
-	public function GetEmpresas() {
-		$data = Empresa::all();
-		$return['estado'] = false;
-		$return['mensaje'] = "Lista de empresas no encontrada";
-		
-		if($data) {
-			$return['estado'] = true;
-			$return['mensaje'] = "Lista de empresas encontrada";
-			$return['data'] = $data;
-		}
-		
-		return response()->json($return);
-	}
-	
 	public function GetRecordsByModel($model, $idEmpresa) {
 		$returnData = array();
 		$usuarios = $this->GetUsuarios($idEmpresa);
@@ -979,6 +1003,29 @@ class APIController extends AbstractController{
 		}
 		
 		return $returnData;
+	}
+
+	/**
+	 * Usuarios y empresas
+	*/
+
+	public function GetUsuarios($idEmpresa) {
+		$usuarios = \GrahamCampbell\BootstrapCMS\Models\User::where($idEmpresa)->get()->toArray();
+		return $usuarios;
+	}
+
+	public function GetEmpresas() {
+		$data = Empresa::all();
+		$return['estado'] = false;
+		$return['mensaje'] = "Lista de empresas no encontrada";
+
+		if($data) {
+			$return['estado'] = true;
+			$return['mensaje'] = "Lista de empresas encontrada";
+			$return['data'] = $data;
+		}
+
+		return response()->json($return);
 	}
 	
 }
