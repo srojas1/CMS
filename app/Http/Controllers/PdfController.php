@@ -8,16 +8,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\App;
+use GrahamCampbell\BootstrapCMS\Http\Libraries\ElementLibrary;
 
 class PdfController extends AbstractController {
 
 	public function index(Credentials $credentials) {
 
-		if (!$credentials->check()) {
-			return Redirect::route('account.login');
-		}
-
 		$pedido = PedidoRepository::paginate();
+		$user = $credentials->getUser();
+		$userCompanyId = $user->usuario_empresa_id;
+
+		$elementLibrary = new ElementLibrary();
+		$pedido = $elementLibrary->validacionEmpresaPedido($pedido,$userCompanyId);
 
 		$view =  View::make('pdf_pedido.index', ['pedido'=>$pedido])->render();
 		$pdf = App::make('dompdf.wrapper');
@@ -25,8 +27,14 @@ class PdfController extends AbstractController {
 		return $pdf->stream('print');
 	}
 
-	public function create() {
+	public function create(Credentials $credentials) {
 		$pedido = PedidoRepository::paginate();
+
+		$user = $credentials->getUser();
+		$userCompanyId = $user->usuario_empresa_id;
+
+		$elementLibrary = new ElementLibrary();
+		$pedido = $elementLibrary->validacionEmpresaPedido($pedido,$userCompanyId);
 
 		$view =  View::make('pdf_pedido.index', ['pedido'=>$pedido])->render();
 		$pdf = App::make('dompdf.wrapper');

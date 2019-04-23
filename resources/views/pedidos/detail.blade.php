@@ -167,10 +167,14 @@
                                                     @if($ped->getPagoContraentregaDetalle->id == 1)
                                                         <div><b>Monto efectivo:</b> S/ {{$ped->monto_efectivo}}</div>
                                                     @endif
-                                                @elseif($ped->getPaymentCardByIdClient)
-                                                    <div>{{$ped->getPaymentCardByIdClient->marca}}</div>
+                                                @elseif($ped->id_forma_pago == 2)
+                                                    @if($ped->getPaymentCardByIdClient)
+                                                        <div>{{$ped->getPaymentCardByIdClient->marca}}</div>
+                                                    @else
+                                                        <div>[sin marca asignada]</div>
+                                                    @endif
                                                 @else
-                                                    <div>[sin marca asignada]</div>
+                                                    <div>[sin pago asignado]</div>
                                                 @endif
                                             </div>
                                         </div>
@@ -181,7 +185,7 @@
                                     <div class="row justify-content-start align-items-center">
                                         <div class="col-12">
                                             <div class="datos">
-                                                <div>comentarios de prueba</div>
+                                                <div>Comentarios de prueba</div>
                                             </div>
                                         </div>
                                     </div>
