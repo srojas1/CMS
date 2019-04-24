@@ -124,7 +124,7 @@
                                             </tr>
                                             <tr>
                                                 <td><div class="d-flex justify-content-end">TOTAL:</div></td>
-												<?php $extras = $igv + $costoEnvio?>
+												<?php $extras = $costoEnvio?>
                                                 <td class="d-flex justify-content-end">S/ {{number_format($subtotal+$extras,2)}}</td>
                                             </tr>
                                             </tbody>

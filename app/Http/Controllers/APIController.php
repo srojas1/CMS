@@ -289,7 +289,7 @@ class APIController extends AbstractController{
 		$match = ['categoria_id' => $categoriaId, 'visibilidad'=>Constants::OPTION_VALID];
 		$columns = ['id','producto','descripcion','imagen_principal','precio','id_moneda'];
 		
-		$producto = Producto::where($match)->select($columns)->get();
+		$producto = Producto::orderBy('producto')->where($match)->select($columns)->get();
 		$producto = $producto->ToArray();
 		
 		foreach($producto as $nkey=>$rData) {
@@ -580,7 +580,7 @@ class APIController extends AbstractController{
 		$match = ['cliente_id' => $clienteid['cliente_id']];
 
 		//get records by model and id_empresa
-		$returnData = Orden::where($match)->select('*')->get();
+		$returnData = Orden::orderBy('created_at','desc')->where($match)->select('*')->get();
 		$returnData = $returnData->ToArray();
 
 		foreach($returnData as $ret) {
@@ -619,6 +619,7 @@ class APIController extends AbstractController{
 					$imagenPrincipal = getFullURLImage('get_pedidos') . json_decode($returnProducto[0]['imagen_principal'], 1)[0];
 
 					$detalleProducto[$nkey]['imagen_principal'] = $imagenPrincipal;
+					$detalleProducto[$nkey]['id_producto'] = $returnProducto[0]['id'];
 					$detalleProducto[$nkey]['producto'] = $returnProducto[0]['producto'];
 					$detalleProducto[$nkey]['descripcion'] = $returnProducto[0]['descripcion'];
 					$detalleProducto[$nkey]['precio'] = getMonedaSimbol($returnProducto[0]['id_moneda']).' '.$returnProducto[0]['precio'];
@@ -637,6 +638,7 @@ class APIController extends AbstractController{
 			$ret['id'] = $ret['id'];
 			
 			$ret['subtotal'] = getMonedaSimbol($ret['moneda_id']).' '.$ret['subtotal'];
+			$ret['costo_envio'] = getMonedaSimbol($ret['moneda_id']).' '.$ret['costo_envio'];
 			$ret['total'] = getMonedaSimbol($ret['moneda_id']).' '.$ret['total'];
 			$ret['monto_efectivo'] = getMonedaSimbol($ret['moneda_id']).' '.$ret['monto_efectivo'];
 			$ret['contacto_entrega'] = $ret['contacto_entrega'];
@@ -677,7 +679,8 @@ class APIController extends AbstractController{
 		$input['contacto_entrega'] = $requestProducto['contacto'];
 		$input['movil_contacto_entrega'] = $requestProducto['celular'];
 		$input['subtotal'] = $requestProducto['subtotal'];
-		$input['total'] = $requestProducto['total'];
+		$input['costo_envio'] = $requestProducto['costo_envio'];
+		$input['total'] = $requestProducto['subtotal']+$requestProducto['costo_envio'];
 		$input['monto_efectivo'] = $requestProducto['monto_efectivo'];
 		$input['id_forma_pago'] = $requestProducto['forma_pago_id'];
 		$input['id_pago_contraentrega_detalle'] = $requestProducto['pago_contraentrega_detalle_id'];
@@ -770,7 +773,11 @@ class APIController extends AbstractController{
 				$productoReturn[$nkey]['id_cliente_tarjeta'] = $pedido->id_cliente_tarjeta;
 			$productoReturn[$nkey]['id_pedido'] = $pedido->id;
 			$productoReturn[$nkey]['subtotal'] = getMonedaSimbol($idMoneda).' '.$pedido->subtotal;
-			$productoReturn[$nkey]['total'] = getMonedaSimbol($idMoneda).' '.$pedido->total;
+			$productoReturn[$nkey]['costo_envio'] = getMonedaSimbol($idMoneda).' '.$pedido->costo_envio;
+
+			$montoTotal = number_format($pedido->subtotal + $pedido->costo_envio, 2);
+
+			$productoReturn[$nkey]['total'] = getMonedaSimbol($idMoneda).' '.$montoTotal;
 			$productoReturn[$nkey]['monto_efectivo'] = getMonedaSimbol($idMoneda).' '.$pedido->monto_efectivo;
 			$productoReturn[$nkey]['id_producto'] = $producto[0]['id'];
 			$productoReturn[$nkey]['producto'] = $producto[0]['producto'];
@@ -878,7 +885,7 @@ class APIController extends AbstractController{
 			$atributoArray = array();
 			return $atributoArray;
 		}
-		
+
 		foreach($atributoProducto as $nkey=>$aProd) {
 			$atributoId = $aProd['atributo_id'];
 			$atributosArray[] = $atributoId;
@@ -920,6 +927,11 @@ class APIController extends AbstractController{
 		$ordenProducto = OrdenProducto::where($match)->first();
 		
 		$atributoSeleccionadoArray = json_decode($ordenProducto->producto_atributo_id, 1);
+
+		if(empty($atributoSeleccionadoArray)) {
+			$atributoArray = array();
+			return $atributoArray;
+		}
 		
 		foreach($atributoSeleccionadoArray as $nkey=>$atrSelecc) {
 			$opcionesArr = array();

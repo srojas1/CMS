@@ -205,7 +205,7 @@ use Request;
 	{
 		if (isset($time)) {
 			return $time =
-				strtotime(date('Y-m-d H:i', strtotime('+5 hours', strtotime($time))));
+				strtotime(date('Y-m-d H:i', strtotime($time)));
 		}
 	}
 

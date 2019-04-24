@@ -51,6 +51,8 @@ class Orden extends AbstractModel implements HasPresenter {
 		 'id_estado',
 		 'fecha_pedido',
 		 'fecha_compra',
+		 'subtotal',
+		 'costo_envio',
 		 'total',
 		 'contacto_entrega',
 		 'movil_contacto_entrega',
