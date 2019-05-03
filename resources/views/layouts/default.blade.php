@@ -21,14 +21,26 @@
             </li>
         </ul>
         @foreach($user->getClientes as $nkey=>$cli)
-            @foreach($cli->orders as $nkey=>$or)
-               <?php $orderedOrders[$or->id] =  $or?>
-            @endforeach
+			@if($cli->orders)
+				@foreach($cli->orders as $nkey=>$or)
+				   <?php $orderedOrders[$or->id] =  $or?>
+				@endforeach
+			@endif
         @endforeach
+		<?php
+		$arr = array();
+		if(!empty($orderedOrders))
+			{
+				krsort($orderedOrders);
+				$orders = true;
+			}
+		else {
+			$orders = false;
+			krsort($arr);
+		}
+		?>
 
-        <?php krsort($orderedOrders) ?>
-
-        <!--- menu en dispositivos grandes --->
+	<!--- menu en dispositivos grandes --->
         <div class="d-none d-lg-block">
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -45,24 +57,39 @@
                             </div>
                         </li>
 						<?php $count = 0; ?>
-                        @foreach($orderedOrders as $or)
-							<?php if($count == \GrahamCampbell\BootstrapCMS\Http\Constants::NUMERO_PEDIDOS_NOTIFICACION) break; ?>
-                            <li class="notification-box">
-                                <div class="row">
-                                    <div class="col-lg-3 col-sm-3 col-3 text-center">
-                                        <img src="" class="w-50 rounded-circle">
-                                    </div>
-                                    <div class="col-lg-8 col-sm-8 col-8">
-                                        <strong class="text-info">{{$or->getClientById->nombres}}</strong>
-                                        <div>
-                                            Ha realizado un pedido
-                                        </div>
-                                        <small class="text-warning">Hace {{timeSince($or->fecha_pedido)}}</small>
-                                    </div>
-                                </div>
-                            </li>
-                            <?php $count++; ?>
-                        @endforeach
+						@if($orders)
+							@foreach($orderedOrders as $or)
+								<?php if($count == \GrahamCampbell\BootstrapCMS\Http\Constants::NUMERO_PEDIDOS_NOTIFICACION) break; ?>
+								<li class="notification-box">
+									<div class="row">
+										<div class="col-lg-3 col-sm-3 col-3 text-center">
+											<img src="" class="w-50 rounded-circle">
+										</div>
+										<div class="col-lg-8 col-sm-8 col-8">
+											<strong class="text-info">{{$or->getClientById->nombres}}</strong>
+											<div>
+												Ha realizado un pedido
+											</div>
+											<small class="text-warning">Hace {{timeSince($or->fecha_pedido)}}</small>
+										</div>
+									</div>
+								</li>
+								<?php $count++; ?>
+							@endforeach
+						@else
+							<li class="notification-box">
+								<div class="row">
+									<div class="col-lg-3 col-sm-3 col-3 text-center">
+										<img src="" class="w-50 rounded-circle">
+									</div>
+									<div class="col-lg-8 col-sm-8 col-8">
+										<div>
+											No hay ordenes
+										</div>
+									</div>
+								</div>
+							</li>
+						@endif
                     </ul>
                 </li>
                 <li class="nav-item text-hide separador">
