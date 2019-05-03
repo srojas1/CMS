@@ -29,6 +29,7 @@ use GrahamCampbell\BootstrapCMS\Models\Cliente;
 use GrahamCampbell\BootstrapCMS\Models\Producto;
 use Illuminate\Support\Facades\Request;
 use League\Flysystem\Exception;
+use Illuminate\Support\Facades\Mail;
 
 class APIController extends AbstractController{
 
@@ -787,6 +788,15 @@ class APIController extends AbstractController{
 		}
 
 		if(!empty($pedido)) {
+			$mail = [
+				'email'   => 'samuelro444@gmail.com',
+				'subject' => 'Pedido realizado',
+			];
+
+			Mail::queue('pedidos.sendnew', $mail, function ($message) use ($mail) {
+				$message->to($mail['email'])->subject($mail['subject']);
+			});
+
 			$return['estado'] = true;
 			$return['mensaje'] = "Pedido creado exitosamente";
 			$return['data'] = $productoReturn;
