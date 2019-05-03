@@ -20,6 +20,13 @@
                 <!--- en blanco por favor */--->
             </li>
         </ul>
+        @foreach($user->getClientes as $nkey=>$cli)
+            @foreach($cli->orders as $nkey=>$or)
+               <?php $orderedOrders[$or->id] =  $or?>
+            @endforeach
+        @endforeach
+
+        <?php krsort($orderedOrders) ?>
 
         <!--- menu en dispositivos grandes --->
         <div class="d-none d-lg-block">
@@ -35,23 +42,27 @@
                                 <div class="col-lg-12 col-sm-12 col-12 notifications_lbl">
                                     <span class="notifications_lbl">Notificaciones</span>
                                 </div>
-                        </li>
-                        @foreach(array('1','2','3') as $nkey=>$ped)
-                        <li class="notification-box">
-                            <div class="row">
-                                <div class="col-lg-3 col-sm-3 col-3 text-center">
-                                    <img src="" class="w-50 rounded-circle">
-                                </div>
-                                <div class="col-lg-8 col-sm-8 col-8">
-                                    <strong class="text-info">Usuario {{$nkey+1}}</strong>
-                                    <div>
-                                        Acaba de hacer un pedido
-                                    </div>
-                                    <small class="text-warning">Hace 4 minutos</small>
-                                </div>
                             </div>
                         </li>
-                       @endforeach
+						<?php $count = 0; ?>
+                        @foreach($orderedOrders as $or)
+							<?php if($count == \GrahamCampbell\BootstrapCMS\Http\Constants::NUMERO_PEDIDOS_NOTIFICACION) break; ?>
+                            <li class="notification-box">
+                                <div class="row">
+                                    <div class="col-lg-3 col-sm-3 col-3 text-center">
+                                        <img src="" class="w-50 rounded-circle">
+                                    </div>
+                                    <div class="col-lg-8 col-sm-8 col-8">
+                                        <strong class="text-info">{{$or->getClientById->nombres}}</strong>
+                                        <div>
+                                            Ha realizado un pedido
+                                        </div>
+                                        <small class="text-warning">Hace {{timeSince($or->fecha_pedido)}}</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <?php $count++; ?>
+                        @endforeach
                     </ul>
                 </li>
                 <li class="nav-item text-hide separador">
@@ -59,7 +70,7 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="material-icons">account_circle</i>&nbsp;&nbsp;{{$user->last_name}}, {{$user->first_name}}
+                        <i class="material-icons">account_circle</i> {{$user->last_name}}, {{$user->first_name}}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="{!! URL::route('conf_empresa.index') !!}">Configuración</a>

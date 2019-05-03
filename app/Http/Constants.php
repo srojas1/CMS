@@ -15,4 +15,5 @@ class Constants {
     const IGV = 0.18;
     const DEFAULT_IMAGE_NAME = 'producto-icon.jpg';
     const OPTION_VALID = 1;
+    const NUMERO_PEDIDOS_NOTIFICACION = 3;
 }

@@ -97,6 +97,10 @@ class Cliente extends AbstractModel implements HasPresenter {
 		return $this->hasMany(Orden::class);
 	}
 
+	public function ordersDesc(){
+		return $this->hasMany(Orden::class)->orderBy('id', 'DESC')->take(3);
+	}
+
 	public function lastOrder() {
 		return $this->hasOne(Orden::class)->orderBy('fecha_compra', 'desc');
 	}
